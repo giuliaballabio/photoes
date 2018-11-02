@@ -5,11 +5,14 @@
 !          Created on March 2018
 !
 !           Compute forbidden lines for photoevaporative winds.
-!                Input file -> hydro simulations.
+!                Input file -> semianalythical solutions.
 !
 !        N.B. run the code with these flags:
-!        gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow
+!        > gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow
 !           -finit-real=snan -pedantic -fbounds-check -g -fopenmp -o output program.f90
+!        or alternatively with:
+!        > ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o output
+!           program.f90
 !
 ! ---------------------------------------------------------------------------------------
 
@@ -20,17 +23,21 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l
-integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800
+integer                                          :: i,j,k,l,index_i,index_j,npoints,nlines
+integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
+double precision,dimension(1:n)                  :: r_stream,theta_stream,rho_stream,v_r_stream,v_theta_stream,v_phi_stream
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi,sum_rho
+double precision                                 :: ratio_r,dtheta,dphi
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
 double precision                                 :: t_in,t_fin
+integer,dimension(1:n_r,1:n_theta0)              :: ncount
 double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d
+double precision,dimension(1:n_r,1:n_theta0)     :: sum_rho,sum_vr,sum_vth,sum_vphi
+!double precision,dimension(1:n_r,1:n_theta0)     :: rho_mean2d,v_r_mean2d,v_th_mean2d,v_phi_mean2d
 double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
 double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 double precision,dimension(1:n_r,1:n_theta)      :: rho_mean,v_r_mean,v_th_mean,v_phi_mean
@@ -38,7 +45,7 @@ double precision,dimension(1:n_v)                :: v,line_flux
 double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
 double precision                                 :: v_los_r,v_los_th,v_los_phi,peak
 logical,save                                     :: init=.false.
-character(len=5)                                 :: str_i
+character(len=5)                                 :: str_b,str_i
 
 !! PHYSICAL CONSTANTS !!
 double precision,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
@@ -62,19 +69,19 @@ vth=cs/sqrt(m_atom)                                                         ! [c
 !! CONVERSION: [km/s] in [au/years]
 vel_convert=km/s
 
-print *,'-----------------------------------------------------------'
-print *,' '
-print *,'    Compute forbidden lines for photoevaporative winds'
-print *,' '
-print *,'-----------------------------------------------------------'
-print *,'Scaling factors:'
-print *,'Rg=',Rg,'cm -',Rg/au,'au'
-print *,'ng=',ng,'cm^-3'
-print *,'rhog=',rhog,'g/cm^3'
-print *,'ng/rhog=',ng/rhog
+write(*,*) '-----------------------------------------------------------'
+write(*,*) ' '
+write(*,*) '    Compute forbidden lines for photoevaporative winds'
+write(*,*) ' '
+write(*,*) '-----------------------------------------------------------'
+write(*,*) 'Scaling factors:'
+write(*,*) 'Rg=',Rg,'cm -',Rg/au,'au'
+write(*,*) 'ng=',ng,'cm^-3'
+write(*,*) 'rhog=',rhog,'g/cm^3'
+write(*,*) 'ng/rhog=',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
-print *,'Creating the 2D grid...'
+write(*,*) 'Creating the 2D grid from the hydro simulations...'
 open(unit=1,file='../../../hydro_data/grid_r.dat')
 do i=1,n_r
 read(1,*) r(i)
@@ -85,14 +92,15 @@ do i=1,n_r
 r_in(i)=r(i)/ratio_r
 r_out(i)=r(i)*ratio_r
 dr(i)=r_out(i)-r_in(i)
+!write(*,*) i,r_in(i),r(i),r_out(i),dr(i),ratio_r
 enddo
 dtheta=pi/dble(n_theta)
 do j=1,n_theta
-theta(j)=(j+0.5)*dtheta
+theta(j)=(j-1)*dtheta
 enddo
 dphi=2.*pi/dble(n_phi)
 do k=1,n_phi
-phi(k)=(k+0.5)*dphi
+phi(k)=(k-1)*dphi
 enddo
 
 !! UNCOMMENT THESE LINES TO DEFINE AN ANGULAR GRID AT THE CENTRE OF THE CELL !!
@@ -120,32 +128,148 @@ cosphi(k)=cos(phi(k))
 enddo
 
 !! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
-print *,'Reading data from files...'
-open(unit=2,file='../../../hydro_data/rho_mean.dat')
-open(unit=3,file='../../../hydro_data/v_r_mean.dat')
-open(unit=4,file='../../../hydro_data/v_th_mean.dat')
-open(unit=5,file='../../../hydro_data/v_phi_mean.dat')
+!write(*,*) 'Reading data from files...'
+!open(unit=2,file='../../../hydro_data/rho_mean.dat')
+!open(unit=3,file='../../../hydro_data/v_r_mean.dat')
+!open(unit=4,file='../../../hydro_data/v_th_mean.dat')
+!open(unit=5,file='../../../hydro_data/v_phi_mean.dat')
+!do i=1,n_r
+!    do j=1,n_theta0
+!        read(2,*) rho2d(i,j)
+!        read(3,*) v_r2d(i,j)
+!        read(4,*) v_theta2d(i,j)
+!        read(5,*) v_phi2d(i,j)
+!    enddo
+!enddo
+!close(2)
+!close(3)
+!close(4)
+!close(5)
+
+!! CALCULATE THE NUMBER OF POINTS OF THE STREAMLINE !!
+!write(*,*) 'Write the value of b in the format for the name of the file: '
+!read(*,*) str_b
+str_b='1.5'
+write(*,*) 'Counting the number of points of the streamline...'
+open(unit=10,file='../../../input_from_model/b'//trim(str_b)//'/streamline_polar.txt')
+npoints=0
+do
+read(10,*,end=100)
+npoints=npoints+1
+enddo
+100 close(10)
+
+!! GET THE RADIUS AND THETA FROM THE FIRST STREAMLINE !!
+open(unit=11,file='../../../input_from_model/b'//trim(str_b)//'/streamline_polar.txt')
+do i=1,npoints
+read(11,*) r_stream(i),theta_stream(i)
+enddo
+close(11)
+!! SHIFT THE STREAMLINE AT 0.1Rg !!
+write(*,*) 'Shifting the first streamline at the boundary of the first cell of the grid...'
+do i=1,npoints
+r_stream(i)=r_stream(i)-r_stream(1)+r(232)
+enddo
+
+!! GET THE DATA FROM THE FIRST STREAMLINE !!
+write(*,*) 'Reading data from files...'
+open(unit=16,file='../../../input_from_model/b'//trim(str_b)//'/rho.txt',status='old')
+open(unit=17,file='../../../input_from_model/b'//trim(str_b)//'/v_r.txt',status='old')
+open(unit=18,file='../../../input_from_model/b'//trim(str_b)//'/v_th.txt',status='old')
+open(unit=19,file='../../../input_from_model/b'//trim(str_b)//'/v_phi.txt',status='old')
+do i=1,npoints
+read(16,*) rho_stream(i)
+read(17,*) v_r_stream(i)
+read(18,*) v_theta_stream(i)
+read(19,*) v_phi_stream(i)
+enddo
+close(16)
+close(17)
+close(18)
+close(19)
+
+!! MAP THE STREAMLINE INTO THE GRID !!
+write(*,*) 'Binning the streamline into the grid...'
+ncount(:,:)=0
+rho2d(:,:)=0.
+v_r2d(:,:)=0.
+v_theta2d(:,:)=0.
+v_phi2d(:,:)=0.
+sum_rho(:,:)=0.
+sum_vr(:,:)=0.
+sum_vth(:,:)=0.
+sum_vphi(:,:)=0.
+!! AT EACH STEP THE STREAMLINE IS SHIFTED BY dr(i) !!
+!! THEN WE RUN ALONG THE STREAMLINE AND CHECK AT WHICH CELL EACH POINT BELONGS TO !!
+
+!write(*,*) r(232),r(981)
+
+!$OMP PARALLEL &
+!$OMP DEFAULT(SHARED) &
+!$OMP PRIVATE(i,j,k,l,r_stream,r,index_i,theta_stream,theta,index_j) &
+!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
+!$OMP DO SCHEDULE(runtime)
+do l=232,981
+!! Progress bar !!
+if(MOD(l,INT((981-232)/100))==0 .or. l==981-232)then
+write(*,FMT='(A1,A,t38,I3,A)',ADVANCE='NO') achar(13),' Calculating...', (INT((real(l)/real(981-232))*100.0)- &
+INT((real(232)/real(981-232))*100.0)), '%'
+end if
+do k=1,npoints
+r_stream(k)=r_stream(k)-r(l)+r(l+1)
+do i=1,n_r-1
+if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
+index_i=i
+exit
+endif
+enddo
+do j=1,n_theta0-1
+if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
+index_j=j
+exit
+endif
+enddo
+!        write(*,*) index_j,index_i
+if (index_j==0) then
+write(*,*) 'Warning! i-index or j-index out of boundary'
+write(*,*) r_stream(k),r(1),r(n_r)
+write(*,*) theta_stream(k),theta(1),theta(n_theta0)
+endif
+sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
+sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
+sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
+sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
+ncount(index_i,index_j)=ncount(index_i,index_j)+1
+enddo
+enddo
+!$OMP END DO
+!$OMP END PARALLEL
+
+write(*,*)
+
+!! CALCULATE THE MEAN OF THE DENSITY AND VELOCITY IN EACH CELL !!
+write(*,*) 'Calculating the average density and velocity in each cell...'
 do i=1,n_r
 do j=1,n_theta0
-read(2,*) rho2d(i,j)
-read(3,*) v_r2d(i,j)
-read(4,*) v_theta2d(i,j)
-read(5,*) v_phi2d(i,j)
+if(ncount(i,j)>0)then
+rho2d(i,j)=sum_rho(i,j)/ncount(i,j)
+v_r2d(i,j)=sum_vr(i,j)/ncount(i,j)
+v_theta2d(i,j)=sum_vth(i,j)/ncount(i,j)
+v_phi2d(i,j)=sum_vphi(i,j)/ncount(i,j)
+endif
 enddo
 enddo
-close(2)
-close(3)
-close(4)
-close(5)
+
+write(*,*) shape(v_theta2d)
 
 !! REVERSE ALONG THETA AXIS !!
-print *,'Building the 3D field...'
+write(*,*) 'Building the 3D field...'
 do i=1,n_r
 do j=1,n_theta0
 !! DISC ZONE FOR z>0 !!
 rho(i,j)=rho2d(i,n_theta0+1-j)
 v_r(i,j)=v_r2d(i,n_theta0+1-j)
-v_theta(i,j)=v_theta2d(i,n_theta0+1-j)
+v_theta(i,j)=-1.*v_theta2d(i,n_theta0+1-j)
 v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
 !! DISC ZONE FOR z<0 !!
 rho(i,n_theta/2+50+j)=rho2d(i,j)
@@ -161,7 +285,7 @@ v_phi(i,n_theta0+1:n_theta/2+50)=0.d0 !v_phi2d(i,n_theta0)
 enddo
 
 !! CONVERT TO PHYSICAL UNITS !!
-print *,'Converting to physical units...'
+write(*,*) 'Converting to physical units...'
 !! CONVERSION: code units -> cm -> au !!
 r(:)=r(:)*Rg/au
 dr(:)=dr(:)*Rg/au
@@ -177,9 +301,9 @@ vth=vth*1.e-5
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
-open(unit=11,file='../../../output/hydro/bound_cond.txt')
+open(unit=11,file='../../../output/b'//trim(str_b)//'/bound_cond.txt')
 else
-open(unit=11,file='../../../output/hydro/bound_cond.txt',status='old',position='append')
+open(unit=11,file='../../../output/b'//trim(str_b)//'/bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
 write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
@@ -187,19 +311,24 @@ enddo
 close(11)
 
 !! COMPUTE THE MASS FLUX !!
-print *,'Calculating the mass flux...'
+!write(*,*) 'Calculating the mass flux...'
+!do j=1,n_theta
+!    dA(j)=2.0*r_out(1113)*r_out(1113)*sinth(j)*dtheta
+!    dmass(j)=rho(1113,j)*v_r(1113,j)*dA(j)
+!enddo
+write(*,*) 'Calculating the mass flux...'
 do j=1,n_theta
-dA(j)=2.0*r(1113)*r(1113)*sinth(j)*dtheta
-dmass(j)=rho(1113,j)*v_r(1113,j)*dA(j)
+dA(j)=2.0*r_out(981)*r_out(981)*sinth(j)*dtheta
+dmass(j)=rho(981,j)*v_r(981,j)*dA(j)
 enddo
 Mdot=sum(dmass)
-print *,'-----------------------------------------------------------'
-print *,'   Total mass flux=',Mdot,'Msun/yr'
-print *,'-----------------------------------------------------------'
+write(*,*) '-----------------------------------------------------------'
+write(*,*) '   Total mass flux=',Mdot,'Msun/yr'
+write(*,*) '-----------------------------------------------------------'
 
 !! COMPUTE THE FLUX FOR A SINGLE CELL !!
 !! N.B. THE CONSTANTS ARE ALL IN CGS: CONVERT QUANTITIES IN CGS !!
-print *,'Calculating the flux for a single cell...'
+write(*,*) 'Calculating the flux for a single cell...'
 nu=speed_light/lambda_ne
 A_hnu=A_ul*h_planck*nu
 constants=Ab_ne*A_hnu*X_II
@@ -218,9 +347,11 @@ endif
 enddo
 enddo
 tot_flux=sum(cell_flux)*n_phi
-print *,'-----------------------------------------------------------'
-print *,'   Total flux=',tot_flux,'erg/s' !=',tot_flux/Lsun,'Lsun'
-print *,'-----------------------------------------------------------'
+write(*,*) '-----------------------------------------------------------'
+write(*,*) '   Total flux=',tot_flux,'Lsun'
+write(*,*) '-----------------------------------------------------------'
+
+stop
 
 !! CREATE VELOCITY ARRAY !!
 do l=1,n_v
@@ -228,21 +359,24 @@ v(l)=l*0.1-40.
 enddo
 
 !! DEFINE THE INCLINATION ANGLE !!
-!print *,'Please enter the inclination angle of the disc in degrees: '
+!write(*,*) 'Please enter the inclination angle of the disc in degrees: '
 !read(*,*) incl_deg
+!write(*,*) 'Write the value of i in the format for the name of the file: '
+!read(*,*) str_i
 incl_deg=90.0
 str_i='90.0'
 !incl_deg=0.0
 !str_i='0.0'
 incl_rad=incl_deg*(pi/180.)
 
-!! COMPUTE THE LINE PROFILE !!
-print *,'Computing the line profile...'
-line_flux(:)=0.d0
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
 sinincl=sin(incl_rad)
 cosincl=cos(incl_rad)
+
+!! COMPUTE THE LINE PROFILE !!
+write(*,*) 'Computing the line profile...'
+line_flux(:)=0.d0
 
 !$OMP PARALLEL &
 !$OMP DEFAULT(SHARED) &
@@ -270,7 +404,7 @@ enddo
 !do l=1,n_v
 !    do while(v(l) >= 10.0)
 !        if(line_flux(l) == peak) then
-!            print *,'Error: supersonic emission..!'
+!            write(*,*) 'Error: supersonic emission..!'
 !            stop
 !        endif
 !    enddo
@@ -278,9 +412,9 @@ enddo
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE LINE PROFILE !!
 if(.not.init) then
-open(unit=12,file='../../../output/hydro/line_profile_i'//trim(str_i)//'.txt')
+open(unit=12,file='../../../output/b'//trim(str_b)//'/line_profile_i'//trim(str_i)//'.txt')
 else
-open(unit=12,file='../../../output/hydro/line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
+open(unit=12,file='../../../output/b'//trim(str_b)//'/line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
 write(12,'(2(es18.10,1X))') v(l),line_flux(l)
@@ -289,9 +423,10 @@ close(12)
 
 call cpu_time(t_fin)
 
-print *,t_fin-t_in,'seconds'
-print *,(t_fin-t_in)/60.,'minutes'
-print *,(t_fin-t_in)/3600.,'hours'
-print *,'-----------------------------------------------------------'
+write(*,*) t_fin-t_in,'seconds'
+write(*,*) (t_fin-t_in)/60.,'minutes'
+write(*,*) (t_fin-t_in)/3600.,'hours'
+write(*,*) '-----------------------------------------------------------'
 
 end program
+
