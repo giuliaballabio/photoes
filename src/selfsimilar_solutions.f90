@@ -31,14 +31,11 @@ double precision                                 :: x1,y1,u1,tanth1,a1,phi1,thet
 double precision                                 :: x2,y2,u2,ur2,uth2,tanth2,a2,phi2,theta2
 double precision                                 :: dudy,ddx1,ddx2,ddxdy
 double precision                                 :: rk4,dphi,dphidy,ft
-character(len=5)                                 :: str
 
 write (*,*) 'Insert a value for b: '
 read (*,*) b
 write (*,*) 'Now, insert the corrisponding value for ub: '
 read (*,*) ub
-write (*,*) 'Write the value of b in the format for the name of the file: '
-read (*,*) str
 
 !! INITIAL CONDITIONS
 x0=1.
@@ -49,10 +46,6 @@ u0=ub
 b=b
 theta=0.5*pi
 phi=datan(y0/x0)
-
-!! FORMATTING FOR THE OUTPUT
-!write(str,*) b
-!str='1.5'
 
 !! I don't know what this parameter does,but it's very important!
 !! It should be the gravity, therefore set to zero according to the model
