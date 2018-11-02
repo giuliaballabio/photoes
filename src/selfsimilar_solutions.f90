@@ -88,20 +88,14 @@ do i=1,n
     theta2=datan(tanth2)
     r=(x1*x1+y1*y1)**0.5
     uph=(G*Mstar/r)**0.5
-    open(unit=1,file='../../input_from_model/b'//trim(str)//'/streamline.txt')
+    open(unit=1,file='./streamline_cartcoord.txt')
     write(1,'(3(es18.10,1X))') x1,y1
-    open(unit=2,file='../../input_from_model/b'//trim(str)//'/streamline_polar.txt')
-    write(2,'(2(es18.10,1X))') r,phi1
-    open(unit=3,file='../../input_from_model/b'//trim(str)//'/velocity.txt')
-    write(3,'(1(es18.10,1X))') u1
-    open(unit=4,file='../../input_from_model/b'//trim(str)//'/rho.txt')
-    write(4,'(1(es18.10,1X))') rho
-    open(unit=5,file='../../input_from_model/b'//trim(str)//'/v_r.txt')
-    write(5,'(1(es18.10,1X))') ur2
-    open(unit=6,file='../../input_from_model/b'//trim(str)//'/v_th.txt')
-    write(6,'(1(es18.10,1X))') uth2
-    open(unit=7,file='../../input_from_model/b'//trim(str)//'/v_phi.txt')
-    write(7,'(1(es18.10,1X))') uph
+    !open(unit=2,file='../../input_from_model/b'//trim(str)//'/streamline_polar.txt')
+    !write(2,'(2(es18.10,1X))') r,phi1
+    !open(unit=3,file='../../input_from_model/b'//trim(str)//'/velocity.txt')
+    !write(3,'(1(es18.10,1X))') u1
+    open(unit=4,file='./rhov_fields.txt')
+    write(4,'(4(es18.10,1X))') rho, ur2, uth2, uph
     x1=x2
     y1=y2
     u1=u2
@@ -112,12 +106,9 @@ do i=1,n
 enddo
 
 close(1)
-close(2)
-close(3)
+!close(2)
+!close(3)
 close(4)
-close(5)
-close(6)
-close(7)
 end program
 
 !!--------------------------------------------------------------------------
