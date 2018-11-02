@@ -82,25 +82,25 @@ write(*,*) 'ng/rhog=',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=1,file='../../../hydro_data/grid_r.dat')
+open(unit=1,file='../data_hydro/grid_r.dat')
 do i=1,n_r
-read(1,*) r(i)
+    read(1,*) r(i)
 enddo
 close(1)
 ratio_r=sqrt(r(2)/r(1))
 do i=1,n_r
-r_in(i)=r(i)/ratio_r
-r_out(i)=r(i)*ratio_r
-dr(i)=r_out(i)-r_in(i)
-!write(*,*) i,r_in(i),r(i),r_out(i),dr(i),ratio_r
+    r_in(i)=r(i)/ratio_r
+    r_out(i)=r(i)*ratio_r
+    dr(i)=r_out(i)-r_in(i)
+    !write(*,*) i,r_in(i),r(i),r_out(i),dr(i),ratio_r
 enddo
 dtheta=pi/dble(n_theta)
 do j=1,n_theta
-theta(j)=(j-1)*dtheta
+    theta(j)=(j-1)*dtheta
 enddo
 dphi=2.*pi/dble(n_phi)
 do k=1,n_phi
-phi(k)=(k-1)*dphi
+    phi(k)=(k-1)*dphi
 enddo
 
 !! UNCOMMENT THESE LINES TO DEFINE AN ANGULAR GRID AT THE CENTRE OF THE CELL !!
@@ -119,20 +119,20 @@ enddo
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
 do j=1,n_theta
-sinth(j)=sin(theta(j))
-costh(j)=cos(theta(j))
+    sinth(j)=sin(theta(j))
+    costh(j)=cos(theta(j))
 enddo
 do k=1,n_phi
-sinphi(k)=sin(phi(k))
-cosphi(k)=cos(phi(k))
+    sinphi(k)=sin(phi(k))
+    cosphi(k)=cos(phi(k))
 enddo
 
 !! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
 !write(*,*) 'Reading data from files...'
-!open(unit=2,file='../../../hydro_data/rho_mean.dat')
-!open(unit=3,file='../../../hydro_data/v_r_mean.dat')
-!open(unit=4,file='../../../hydro_data/v_th_mean.dat')
-!open(unit=5,file='../../../hydro_data/v_phi_mean.dat')
+!open(unit=2,file='../data_hydro/rho_mean.dat')
+!open(unit=3,file='../data_hydro/v_r_mean.dat')
+!open(unit=4,file='../data_hydro/v_th_mean.dat')
+!open(unit=5,file='../data_hydro/v_phi_mean.dat')
 !do i=1,n_r
 !    do j=1,n_theta0
 !        read(2,*) rho2d(i,j)
@@ -151,42 +151,32 @@ enddo
 !read(*,*) str_b
 str_b='1.5'
 write(*,*) 'Counting the number of points of the streamline...'
-open(unit=10,file='../../../input_from_model/b'//trim(str_b)//'/streamline_polar.txt')
+open(unit=10,file='./streamline_polarcoord.txt')
 npoints=0
 do
-read(10,*,end=100)
-npoints=npoints+1
+    read(10,*,end=100)
+    npoints=npoints+1
 enddo
 100 close(10)
 
 !! GET THE RADIUS AND THETA FROM THE FIRST STREAMLINE !!
-open(unit=11,file='../../../input_from_model/b'//trim(str_b)//'/streamline_polar.txt')
+open(unit=11,file='./streamline_polarcoord.txt')
 do i=1,npoints
-read(11,*) r_stream(i),theta_stream(i)
+    read(11,*) r_stream(i),theta_stream(i)
 enddo
 close(11)
 !! SHIFT THE STREAMLINE AT 0.1Rg !!
 write(*,*) 'Shifting the first streamline at the boundary of the first cell of the grid...'
 do i=1,npoints
-r_stream(i)=r_stream(i)-r_stream(1)+r(232)
+    r_stream(i)=r_stream(i)-r_stream(1)+r(232)
 enddo
 
 !! GET THE DATA FROM THE FIRST STREAMLINE !!
 write(*,*) 'Reading data from files...'
-open(unit=16,file='../../../input_from_model/b'//trim(str_b)//'/rho.txt',status='old')
-open(unit=17,file='../../../input_from_model/b'//trim(str_b)//'/v_r.txt',status='old')
-open(unit=18,file='../../../input_from_model/b'//trim(str_b)//'/v_th.txt',status='old')
-open(unit=19,file='../../../input_from_model/b'//trim(str_b)//'/v_phi.txt',status='old')
-do i=1,npoints
-read(16,*) rho_stream(i)
-read(17,*) v_r_stream(i)
-read(18,*) v_theta_stream(i)
-read(19,*) v_phi_stream(i)
+open(unit=16,file='./rhov_fields.txt',status='old')
+    read(16,*) rho_stream(i),v_r_stream(i),v_theta_stream(i),v_phi_stream(i)
 enddo
 close(16)
-close(17)
-close(18)
-close(19)
 
 !! MAP THE STREAMLINE INTO THE GRID !!
 write(*,*) 'Binning the streamline into the grid...'
@@ -210,37 +200,36 @@ sum_vphi(:,:)=0.
 !$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
 !$OMP DO SCHEDULE(runtime)
 do l=232,981
-!! Progress bar !!
-if(MOD(l,INT((981-232)/100))==0 .or. l==981-232)then
-write(*,FMT='(A1,A,t38,I3,A)',ADVANCE='NO') achar(13),' Calculating...', (INT((real(l)/real(981-232))*100.0)- &
-INT((real(232)/real(981-232))*100.0)), '%'
-end if
-do k=1,npoints
-r_stream(k)=r_stream(k)-r(l)+r(l+1)
-do i=1,n_r-1
-if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
-index_i=i
-exit
-endif
-enddo
-do j=1,n_theta0-1
-if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
-index_j=j
-exit
-endif
-enddo
-!        write(*,*) index_j,index_i
-if (index_j==0) then
-write(*,*) 'Warning! i-index or j-index out of boundary'
-write(*,*) r_stream(k),r(1),r(n_r)
-write(*,*) theta_stream(k),theta(1),theta(n_theta0)
-endif
-sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
-sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
-sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
-sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
-ncount(index_i,index_j)=ncount(index_i,index_j)+1
-enddo
+    !! Progress bar !!
+    if(MOD(l,INT((981-232)/100))==0 .or. l==981-232)then
+        write(*,FMT='(A1,A,t38,I3,A)',ADVANCE='NO') achar(13),' Calculating...', (INT((real(l)/real(981-232))*100.0)- &
+        INT((real(232)/real(981-232))*100.0)), '%'
+    end if
+    do k=1,npoints
+        r_stream(k)=r_stream(k)-r(l)+r(l+1)
+        do i=1,n_r-1
+            if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
+                index_i=i
+                exit
+            endif
+        enddo
+        do j=1,n_theta0-1
+            if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
+                index_j=j
+                exit
+            endif
+        enddo
+        if (index_j==0) then
+            write(*,*) 'Warning! i-index or j-index out of boundary'
+            write(*,*) r_stream(k),r(1),r(n_r)
+            write(*,*) theta_stream(k),theta(1),theta(n_theta0)
+        endif
+        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
+        sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
+        sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
+        sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
+        ncount(index_i,index_j)=ncount(index_i,index_j)+1
+    enddo
 enddo
 !$OMP END DO
 !$OMP END PARALLEL
@@ -250,14 +239,14 @@ write(*,*)
 !! CALCULATE THE MEAN OF THE DENSITY AND VELOCITY IN EACH CELL !!
 write(*,*) 'Calculating the average density and velocity in each cell...'
 do i=1,n_r
-do j=1,n_theta0
-if(ncount(i,j)>0)then
-rho2d(i,j)=sum_rho(i,j)/ncount(i,j)
-v_r2d(i,j)=sum_vr(i,j)/ncount(i,j)
-v_theta2d(i,j)=sum_vth(i,j)/ncount(i,j)
-v_phi2d(i,j)=sum_vphi(i,j)/ncount(i,j)
-endif
-enddo
+    do j=1,n_theta0
+        if(ncount(i,j)>0)then
+            rho2d(i,j)=sum_rho(i,j)/ncount(i,j)
+            v_r2d(i,j)=sum_vr(i,j)/ncount(i,j)
+            v_theta2d(i,j)=sum_vth(i,j)/ncount(i,j)
+            v_phi2d(i,j)=sum_vphi(i,j)/ncount(i,j)
+        endif
+    enddo
 enddo
 
 write(*,*) shape(v_theta2d)
@@ -265,23 +254,23 @@ write(*,*) shape(v_theta2d)
 !! REVERSE ALONG THETA AXIS !!
 write(*,*) 'Building the 3D field...'
 do i=1,n_r
-do j=1,n_theta0
-!! DISC ZONE FOR z>0 !!
-rho(i,j)=rho2d(i,n_theta0+1-j)
-v_r(i,j)=v_r2d(i,n_theta0+1-j)
-v_theta(i,j)=-1.*v_theta2d(i,n_theta0+1-j)
-v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
-!! DISC ZONE FOR z<0 !!
-rho(i,n_theta/2+50+j)=rho2d(i,j)
-v_r(i,n_theta/2+50+j)=v_r2d(i,j)
-v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
-v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
-enddo
-!! DISC ZONE ON THE MIDPLANE !!
-rho(i,n_theta0+1:n_theta/2+50)=0.d0 !rho2d(i,n_theta0)
-v_r(i,n_theta0+1:n_theta/2+50)=0.d0 !v_r2d(i,n_theta0)
-v_theta(i,n_theta0+1:n_theta/2+50)=0.d0 !v_theta2d(i,n_theta0)
-v_phi(i,n_theta0+1:n_theta/2+50)=0.d0 !v_phi2d(i,n_theta0)
+    do j=1,n_theta0
+        !! DISC ZONE FOR z>0 !!
+        rho(i,j)=rho2d(i,n_theta0+1-j)
+        v_r(i,j)=v_r2d(i,n_theta0+1-j)
+        v_theta(i,j)=-1.*v_theta2d(i,n_theta0+1-j)
+        v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
+        !! DISC ZONE FOR z<0 !!
+        rho(i,n_theta/2+50+j)=rho2d(i,j)
+        v_r(i,n_theta/2+50+j)=v_r2d(i,j)
+        v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
+        v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
+    enddo
+    !! DISC ZONE ON THE MIDPLANE !!
+    rho(i,n_theta0+1:n_theta/2+50)=0.d0 !rho2d(i,n_theta0)
+    v_r(i,n_theta0+1:n_theta/2+50)=0.d0 !v_r2d(i,n_theta0)
+    v_theta(i,n_theta0+1:n_theta/2+50)=0.d0 !v_theta2d(i,n_theta0)
+    v_phi(i,n_theta0+1:n_theta/2+50)=0.d0 !v_phi2d(i,n_theta0)
 enddo
 
 !! CONVERT TO PHYSICAL UNITS !!
@@ -301,12 +290,12 @@ vth=vth*1.e-5
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
-open(unit=11,file='../../../output/b'//trim(str_b)//'/bound_cond.txt')
+    open(unit=11,file='./bound_cond.txt')
 else
-open(unit=11,file='../../../output/b'//trim(str_b)//'/bound_cond.txt',status='old',position='append')
+    open(unit=11,file='./bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
-write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
+    write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
 enddo
 close(11)
 
@@ -317,9 +306,9 @@ close(11)
 !    dmass(j)=rho(1113,j)*v_r(1113,j)*dA(j)
 !enddo
 write(*,*) 'Calculating the mass flux...'
-do j=1,n_theta
-dA(j)=2.0*r_out(981)*r_out(981)*sinth(j)*dtheta
-dmass(j)=rho(981,j)*v_r(981,j)*dA(j)
+    do j=1,n_theta
+    dA(j)=2.0*r_out(981)*r_out(981)*sinth(j)*dtheta
+    dmass(j)=rho(981,j)*v_r(981,j)*dA(j)
 enddo
 Mdot=sum(dmass)
 write(*,*) '-----------------------------------------------------------'
@@ -333,18 +322,18 @@ nu=speed_light/lambda_ne
 A_hnu=A_ul*h_planck*nu
 constants=Ab_ne*A_hnu*X_II
 do i=1,n_r
-do j=1,n_theta
-!! CONVERSION: volume [au**3] -> [cm**3] !!
-dV(i,j)=r(i)*r(i)*sinth(j)*dr(i)*dtheta*dphi*(au**3)
-!! CONVERSION: mass density [Msun/au**3] -> numerical density [particles/cm**3] !!
-n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
-if(n_e(i,j) > 0.0) then
-C(i,j)=1.d0+(n_cr/n_e(i,j))
-cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/T))+1.d0)*n_e(i,j)*dV(i,j)
-else
-cell_flux(i,j)=0.d0
-endif
-enddo
+    do j=1,n_theta
+        !! CONVERSION: volume [au**3] -> [cm**3] !!
+        dV(i,j)=r(i)*r(i)*sinth(j)*dr(i)*dtheta*dphi*(au**3)
+        !! CONVERSION: mass density [Msun/au**3] -> numerical density [particles/cm**3] !!
+        n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
+        if(n_e(i,j) > 0.0) then
+            C(i,j)=1.d0+(n_cr/n_e(i,j))
+            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/T))+1.d0)*n_e(i,j)*dV(i,j)
+        else
+            cell_flux(i,j)=0.d0
+        endif
+    enddo
 enddo
 tot_flux=sum(cell_flux)*n_phi
 write(*,*) '-----------------------------------------------------------'
@@ -355,7 +344,7 @@ stop
 
 !! CREATE VELOCITY ARRAY !!
 do l=1,n_v
-v(l)=l*0.1-40.
+    v(l)=l*0.1-40.
 enddo
 
 !! DEFINE THE INCLINATION ANGLE !!
@@ -384,18 +373,18 @@ line_flux(:)=0.d0
 !$OMP REDUCTION(+: line_flux)
 !$OMP DO SCHEDULE(runtime)
 do k=1,n_phi
-do j=1,n_theta
-do i=1,n_r
-v_los_r=(costh(j)*cosphi(k)*sinincl+sinth(j)*cosincl)*v_r(i,j)
-v_los_th=(-sinth(j)*cosphi(k)*sinincl+costh(j)*cosincl)*v_theta(i,j)
-v_los_phi=(-sinphi(k)*sinincl)*v_phi(i,j)
-v_los(i,j)=v_los_r+v_los_th+v_los_phi
-do l=1,n_v
-line_flux(l)=line_flux(l)+(cell_flux(i,j)/(sqrt(2.d0*pi)*vth)) &
-*exp((-1.d0*(v(l)-v_los(i,j))*(v(l)-v_los(i,j)))/(2.d0*(vth*vth)))
-enddo
-enddo
-enddo
+    do j=1,n_theta
+        do i=1,n_r
+            v_los_r=(costh(j)*cosphi(k)*sinincl+sinth(j)*cosincl)*v_r(i,j)
+            v_los_th=(-sinth(j)*cosphi(k)*sinincl+costh(j)*cosincl)*v_theta(i,j)
+            v_los_phi=(-sinphi(k)*sinincl)*v_phi(i,j)
+            v_los(i,j)=v_los_r+v_los_th+v_los_phi
+            do l=1,n_v
+                line_flux(l)=line_flux(l)+(cell_flux(i,j)/(sqrt(2.d0*pi)*vth)) &
+                    *exp((-1.d0*(v(l)-v_los(i,j))*(v(l)-v_los(i,j)))/(2.d0*(vth*vth)))
+            enddo
+        enddo
+    enddo
 enddo
 !$OMP END DO
 !$OMP END PARALLEL
@@ -412,12 +401,12 @@ enddo
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE LINE PROFILE !!
 if(.not.init) then
-open(unit=12,file='../../../output/b'//trim(str_b)//'/line_profile_i'//trim(str_i)//'.txt')
+    open(unit=12,file='./line_profile_i'//trim(str_i)//'.txt')
 else
-open(unit=12,file='../../../output/b'//trim(str_b)//'/line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
+    open(unit=12,file='./line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
-write(12,'(2(es18.10,1X))') v(l),line_flux(l)
+    write(12,'(2(es18.10,1X))') v(l),line_flux(l)
 enddo
 close(12)
 
