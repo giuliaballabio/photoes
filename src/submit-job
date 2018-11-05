@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+#PBS -N photoes_b3.0_r2.0
+#PBS -l walltime=12:00:00
+#PBS -l vmem=15gb
+#PBS -l nodes=1:ppn=16
+#PBS -m bea
+#PBS -M gb258@leicester.ac.uk
+#PBS -A dp005
+
+module load intel/compilers/17.0.4
+ulimit -s unlimited
+export OMP_SCHEDULE="dynamic"
+export OMP_NUM_THREADS=16
+export OMP_STACKSIZE=512M
+
+cd $PBS_O_WORKDIR
+./selfsimilar_solutions
+./photoes
