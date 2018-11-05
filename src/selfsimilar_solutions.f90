@@ -32,10 +32,13 @@ double precision                                 :: x2,y2,u2,ur2,uth2,tanth2,a2,
 double precision                                 :: dudy,ddx1,ddx2,ddxdy
 double precision                                 :: rk4,dphi,dphidy,ft
 
-write (*,*) 'Insert a value for b: '
-read (*,*) b
-write (*,*) 'Now, insert the corrisponding value for ub: '
-read (*,*) ub
+!write (*,*) 'Insert a value for b: '
+!read (*,*) b
+!write (*,*) 'Now, insert the corrisponding value for ub: '
+!read (*,*) ub
+
+b_input=0.75
+r_input=0.01
 
 !! INITIAL CONDITIONS
 x0=1.
