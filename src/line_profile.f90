@@ -150,6 +150,9 @@ enddo
 !write(*,*) 'Write the value of b in the format for the name of the file: '
 !read(*,*) str_b
 str_b='1.5'
+b_input=0.75
+r_input=0.01
+
 write(*,*) 'Counting the number of points of the streamline...'
 open(unit=10,file='./streamline_polarcoord.txt')
 npoints=0
