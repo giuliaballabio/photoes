@@ -25,7 +25,7 @@ integer                                          :: i
 integer,parameter                                :: n=10000000
 double precision,parameter                       :: cs=1.d6,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
 double precision,parameter                       :: pi=3.141592
-double precision                                 :: b,ub,reff0,gm
+double precision                                 :: b,ub,reff0,gm,b_input
 double precision                                 :: x0,y0,u0,dx,dy,rho,r,uph,phi,theta
 double precision                                 :: x1,y1,u1,tanth1,a1,phi1,theta1
 double precision                                 :: x2,y2,u2,ur2,uth2,tanth2,a2,phi2,theta2
@@ -37,8 +37,7 @@ double precision                                 :: rk4,dphi,dphidy,ft
 !write (*,*) 'Now, insert the corrisponding value for ub: '
 !read (*,*) ub
 
-b_input=0.75
-r_input=0.01
+b_input=3.0 
 
 !! INITIAL CONDITIONS
 x0=1.
@@ -46,7 +45,7 @@ y0=0.
 !ub=(0.92,0.85,0.77,0.56,0.29)
 !b=(0.5,0.75,1.,1.5,2.)
 u0=ub
-b=b
+b=b_input
 theta=0.5*pi
 phi=datan(y0/x0)
 
