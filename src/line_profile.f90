@@ -43,7 +43,7 @@ double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 double precision,dimension(1:n_r,1:n_theta)      :: rho_mean,v_r_mean,v_th_mean,v_phi_mean
 double precision,dimension(1:n_v)                :: v,line_flux
 double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
-double precision                                 :: v_los_r,v_los_th,v_los_phi,peak
+double precision                                 :: v_los_r,v_los_th,v_los_phi,peak,r_input
 logical,save                                     :: init=.false.
 character(len=5)                                 :: str_b,str_i
 
@@ -147,11 +147,7 @@ enddo
 !close(5)
 
 !! CALCULATE THE NUMBER OF POINTS OF THE STREAMLINE !!
-!write(*,*) 'Write the value of b in the format for the name of the file: '
-!read(*,*) str_b
-str_b='1.5'
-b_input=0.75
-r_input=0.01
+r_input=2.0 
 
 write(*,*) 'Counting the number of points of the streamline...'
 open(unit=10,file='./streamline_polarcoord.txt')
@@ -177,6 +173,7 @@ enddo
 !! GET THE DATA FROM THE FIRST STREAMLINE !!
 write(*,*) 'Reading data from files...'
 open(unit=16,file='./rhov_fields.txt',status='old')
+do i=1,npoints
     read(16,*) rho_stream(i),v_r_stream(i),v_theta_stream(i),v_phi_stream(i)
 enddo
 close(16)
