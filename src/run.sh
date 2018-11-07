@@ -4,7 +4,7 @@
 RUNDIR=${PWD}
 
 for b_input in 0.75; do
-	for r_input in 0.01; do
+	for r_input in 0.03; do
 
 		echo "up to" $b_input "and" $r_input
 
@@ -24,7 +24,10 @@ for b_input in 0.75; do
 
 		# Copy files to this new directory
 		cp selfsimilar_solutions photoes submit-job $RUNDIR/../data_b$b_input\_r$r_input
-
+		
+		# Remove unuseful files
+		rm *genmod* photoes selfsimilar_solutions 
+	
 		# Submit the job if on dial
 		#qsub $RUNDIR/../submit-job
 
