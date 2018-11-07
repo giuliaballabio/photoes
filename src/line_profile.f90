@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l,index_i,index_j,npoints,nlines
+integer                                          :: i,j,k,l,index_i,index_j,npoints
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
@@ -40,12 +40,11 @@ double precision,dimension(1:n_r,1:n_theta0)     :: sum_rho,sum_vr,sum_vth,sum_v
 !double precision,dimension(1:n_r,1:n_theta0)     :: rho_mean2d,v_r_mean2d,v_th_mean2d,v_phi_mean2d
 double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
 double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
-double precision,dimension(1:n_r,1:n_theta)      :: rho_mean,v_r_mean,v_th_mean,v_phi_mean
 double precision,dimension(1:n_v)                :: v,line_flux
 double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
-double precision                                 :: v_los_r,v_los_th,v_los_phi,peak,r_inner,r_outer
+double precision                                 :: v_los_r,v_los_th,v_los_phi,r_inner,r_outer
 logical,save                                     :: init=.false.
-character(len=5)                                 :: str_b,str_i
+character(len=5)                                 :: str_i
 
 !! PHYSICAL CONSTANTS !!
 double precision,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
