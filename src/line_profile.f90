@@ -43,7 +43,7 @@ double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 double precision,dimension(1:n_r,1:n_theta)      :: rho_mean,v_r_mean,v_th_mean,v_phi_mean
 double precision,dimension(1:n_v)                :: v,line_flux
 double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
-double precision                                 :: v_los_r,v_los_th,v_los_phi,peak,r_input
+double precision                                 :: v_los_r,v_los_th,v_los_phi,peak,r_inner,r_outer
 logical,save                                     :: init=.false.
 character(len=5)                                 :: str_b,str_i
 
@@ -147,8 +147,6 @@ enddo
 !close(5)
 
 !! CALCULATE THE NUMBER OF POINTS OF THE STREAMLINE !!
-r_input=2.0 
-
 write(*,*) 'Counting the number of points of the streamline...'
 open(unit=10,file='./streamline_polarcoord.txt')
 npoints=0
@@ -164,10 +162,12 @@ do i=1,npoints
     read(11,*) r_stream(i),theta_stream(i)
 enddo
 close(11)
-!! SHIFT THE STREAMLINE AT 0.1Rg !!
-write(*,*) 'Shifting the first streamline at the boundary of the first cell of the grid...'
+!! SHIFT THE STREAMLINE AT THE INNER RADIUS OF THE LAUNCHING REGION !!
+write(*,*) 'Setting the wind launching region...'
+r_inner=0.1
+r_outer=5.
 do i=1,npoints
-    r_stream(i)=r_stream(i)-r_stream(1)+r(232)
+    r_stream(i)=r_stream(i)-r_stream(1)+r_inner
 enddo
 
 !! GET THE DATA FROM THE FIRST STREAMLINE !!
@@ -189,47 +189,44 @@ sum_rho(:,:)=0.
 sum_vr(:,:)=0.
 sum_vth(:,:)=0.
 sum_vphi(:,:)=0.
-!! AT EACH STEP THE STREAMLINE IS SHIFTED BY dr(i) !!
+!! AT EACH STEP THE STREAMLINE IS SHIFTED AT THE CENTRE OF THE NEXT CELL !!
 !! THEN WE RUN ALONG THE STREAMLINE AND CHECK AT WHICH CELL EACH POINT BELONGS TO !!
-
-!write(*,*) r(232),r(981)
 
 !$OMP PARALLEL &
 !$OMP DEFAULT(SHARED) &
-!$OMP PRIVATE(i,j,k,l,r_stream,r,index_i,theta_stream,theta,index_j) &
+!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
 !$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
 !$OMP DO SCHEDULE(runtime)
-do l=232,981
-    !! Progress bar !!
-    if(MOD(l,INT((981-232)/100))==0 .or. l==981-232)then
-        write(*,FMT='(A1,A,t38,I3,A)',ADVANCE='NO') achar(13),' Calculating...', (INT((real(l)/real(981-232))*100.0)- &
-        INT((real(232)/real(981-232))*100.0)), '%'
-    end if
-    do k=1,npoints
-        r_stream(k)=r_stream(k)-r(l)+r(l+1)
-        do i=1,n_r-1
-            if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
-                index_i=i
-                exit
+l=1
+do while (r(l).le.r_outer)
+    if (r(l).ge.r_inner) then
+        do k=1,npoints
+            r_stream(k)=r_stream(k)-r(l)+r(l+1)
+            do i=1,n_r-1
+                if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
+                    index_i=i
+                    exit
+                endif
+            enddo
+            do j=1,n_theta0-1
+                if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
+                    index_j=j
+                    exit
+                endif
+            enddo
+            if (index_j==0) then
+                write(*,*) 'Warning! i-index or j-index out of boundary'
+                write(*,*) r_stream(k),r(1),r(n_r)
+                write(*,*) theta_stream(k),theta(1),theta(n_theta0)
             endif
+            sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
+            sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
+            sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
+            sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
+            ncount(index_i,index_j)=ncount(index_i,index_j)+1
         enddo
-        do j=1,n_theta0-1
-            if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
-                index_j=j
-                exit
-            endif
-        enddo
-        if (index_j==0) then
-            write(*,*) 'Warning! i-index or j-index out of boundary'
-            write(*,*) r_stream(k),r(1),r(n_r)
-            write(*,*) theta_stream(k),theta(1),theta(n_theta0)
-        endif
-        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
-        sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
-        sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
-        sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
-        ncount(index_i,index_j)=ncount(index_i,index_j)+1
-    enddo
+        l=l+1
+    endif
 enddo
 !$OMP END DO
 !$OMP END PARALLEL
@@ -418,4 +415,3 @@ write(*,*) (t_fin-t_in)/3600.,'hours'
 write(*,*) '-----------------------------------------------------------'
 
 end program
-
