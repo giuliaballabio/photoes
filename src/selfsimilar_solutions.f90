@@ -37,7 +37,7 @@ double precision                                 :: rk4,dphi,dphidy,ft
 !write (*,*) 'Now, insert the corrisponding value for ub: '
 !read (*,*) ub
 
-b_input=3.0 
+b_input=0.75
 
 !! INITIAL CONDITIONS
 x0=1.
@@ -180,5 +180,3 @@ ft=(1.+tanth**2.)**0.5
 gefft=gm*((tanth/(ft*x**3.))-((x*tanth-y)/(ft*r**3.)))
 return
 end function gefft
-
-
