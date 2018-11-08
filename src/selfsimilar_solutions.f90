@@ -21,7 +21,7 @@
 program selfsimilar
 
 implicit none
-integer                                          :: i,set
+integer                                          :: i
 integer,parameter                                :: n=10000000
 double precision,parameter                       :: cs=1.d6,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
 double precision,parameter                       :: pi=3.141592
@@ -40,8 +40,8 @@ double precision                                 :: rk4,dphi,dphidy,ft
 !b_array=(0.5,0.75,1.,1.5,2.)
 !ub_array=(0.92,0.85,0.77,0.56,0.29)
 
-b_input=1.0
-ub=0.77
+b_input=0.75
+ub=0.85
 
 !! INITIAL CONDITIONS
 x0=1.
