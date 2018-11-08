@@ -37,27 +37,11 @@ double precision                                 :: rk4,dphi,dphidy,ft
 !write (*,*) 'Now, insert the corrisponding value for ub: '
 !read (*,*) ub
 
-!b=(0.5,0.75,1.,1.5,2.)
-!ub=(0.92,0.85,0.77,0.56,0.29)
+!b_array=(0.5,0.75,1.,1.5,2.)
+!ub_array=(0.92,0.85,0.77,0.56,0.29)
 
-select case (set)
-    case (1)
-        b_input=0.75
-        ub=0.85
-    case (2)
-        b_input=1.0
-        ub=0.77
-    case (3)
-        b_input=1.5
-        ub=0.56
-    case (4)
-        b_input=2.0
-        ub=0.29
-    case default
-        write(*,*) 'Error! No (b,ub) values selected'
-end select
-
-write(*,*) b_input,ub
+b_input=1.0
+ub=0.77
 
 !! INITIAL CONDITIONS
 x0=1.
