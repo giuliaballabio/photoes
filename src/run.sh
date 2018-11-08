@@ -3,11 +3,11 @@
 
 RUNDIR=${PWD}
 
-array_b=( "0.75" ) #"1.00" "1.50" )
-array_ub=( "0.85" ) # "0.77" "0.56" )
+array_b=( 0.75 ) # 1.00 1.50 )
+array_ub=( 0.85 ) # 0.77 0.56 )
 
 for ((i=0;i<${#array_b[@]};++i)); do
-  echo "(${array_b[i]}, ${array_ub[i]})"
+  # echo "(${array_b[i]}, ${array_ub[i]})"
 	for r_input in 0.03; do
 
 		echo "up to" ${array_b[i]} "and" $r_input
@@ -21,8 +21,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 		sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_input/g" submit-job
 
 		# Actually compile the code
-		# ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
-		# ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o photoes line_profile.f90
+		ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
+		ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o photoes line_profile.f90
 
 		# Make a new directory if it doesn't exist
 		if [ ! -d $RUNDIR/../data_b${array_b[i]}\_r$r_input ]; then
@@ -30,10 +30,10 @@ for ((i=0;i<${#array_b[@]};++i)); do
 		fi
 
 		# Copy files to this new directory
-		# cp selfsimilar_solutions photoes submit-job $RUNDIR/../data_b${array_b[i]}\_r$r_input
+		cp selfsimilar_solutions photoes submit-job $RUNDIR/../data_b${array_b[i]}\_r$r_input
 
 		# Remove unuseful files
-		# rm *genmod* photoes selfsimilar_solutions
+		rm *genmod* photoes selfsimilar_solutions
 
 		# Submit the job if on dial
 		#qsub $RUNDIR/../submit-job
