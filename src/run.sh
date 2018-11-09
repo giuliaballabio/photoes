@@ -30,13 +30,14 @@ for ((i=0;i<${#array_b[@]};++i)); do
 		fi
 
 		# Copy files to this new directory
-		cp selfsimilar_solutions photoes submit-job $RUNDIR/../data_b${array_b[i]}\_r$r_input
+		cp selfsimilar_solutions photoes submit-job* $RUNDIR/../data_b${array_b[i]}\_r$r_input
 
 		# Remove unuseful files
 		rm *genmod* photoes selfsimilar_solutions
 
-		# Submit the job if on dial
-		#qsub $RUNDIR/../submit-job
+		# Submit the job on dial or alice
+		#qsub $RUNDIR/../submit-job-alice
+		#qsub $RUNDIR/../submit-job-dial
 
 	done
 done
