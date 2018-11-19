@@ -3,8 +3,8 @@
 
 RUNDIR=${PWD}
 
-array_b=( 0.75 ) # 1.00 1.50 )
-array_ub=( 0.85 ) # 0.77 0.56 )
+array_b=( 1.00 ) # 0.75 1.00 1.50 )
+array_ub=( 0.77 ) # 0.85 0.77 0.56 )
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
@@ -18,7 +18,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 		sed -i -e "s/r_input=.*/r_inner=$r_input /g" line_profile.f90
 
 		# Update the name in the submission script
-		sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_input/g" submit-job
+		sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_input/g" submit-job-dial
+		#sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_input/g" submit-job-alice
 
 		# Actually compile the code
 		ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
