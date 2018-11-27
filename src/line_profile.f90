@@ -190,11 +190,11 @@ sum_vth(:,:)=0.
 sum_vphi(:,:)=0.
 !! AT EACH STEP THE STREAMLINE IS SHIFTED AT THE CENTRE OF THE NEXT CELL !!
 !! THEN WE RUN ALONG THE STREAMLINE AND CHECK AT WHICH CELL EACH POINT BELONGS TO !!
-!!$OMP PARALLEL &
-!!$OMP DEFAULT(SHARED) &
-!!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
-!!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
-!!$OMP DO SCHEDULE(runtime)
+!$OMP PARALLEL &
+!$OMP DEFAULT(SHARED) &
+!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
+!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
+!$OMP DO SCHEDULE(runtime)
 l=1
 do while (r(l).le.r_outer)
     if (r(l).ge.r_inner) then
@@ -226,8 +226,8 @@ do while (r(l).le.r_outer)
         l=l+1
     endif
 enddo
-!!$OMP END DO
-!!$OMP END PARALLEL
+!$OMP END DO
+!$OMP END PARALLEL
 
 write(*,*)
 
