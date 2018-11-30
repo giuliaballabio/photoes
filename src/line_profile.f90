@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l,index_i,index_j,npoints
+integer                                          :: i,j,k,l,index_i,index_j,npoints,l_in,l_out
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
@@ -172,12 +172,12 @@ enddo
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
-    l++
+    l=l+1
 enddo
 l_in=l
 l=1
 do while (r(l).le.r_outer)
-    l++
+    l=l+1
 enddo
 l_out=l
 
