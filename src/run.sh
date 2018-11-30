@@ -3,14 +3,14 @@
 
 RUNDIR=${PWD}
 
-array_b=( 1.00 ) # 0.75 1.00 1.50 )
-array_ub=( 0.77 ) # 0.85 0.77 0.56 )
+array_b=( 0.75 1.00 1.50 )
+array_ub=( 0.85 0.77 0.56 )
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
-	for r_input in 0.03; do
+	for r_input in 0.03 0.1; do
 
-		echo "up to" ${array_b[i]} "and" $r_input
+		echo "up to b="${array_b[i]} "and R_in="$r_input
 
 		# Update the code with the new variables
 		sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
