@@ -223,11 +223,11 @@ do l=l_in,l_out
                 exit
             endif
         enddo
-        ! if (index_j==0) then
-        !     write(*,*) 'Warning! i-index or j-index out of boundary'
-        !     write(*,*) r_stream(k),r(1),r(n_r)
-        !     write(*,*) theta_stream(k),theta(1),theta(n_theta0)
-        ! endif
+        if (index_i.le.0.or.index_j.le.0) then
+            write(*,*) 'Warning! i-index or j-index out of boundary'
+            write(*,*) r_stream(k),r(1),r(n_r)
+            write(*,*) theta_stream(k),theta(1),theta(n_theta0)
+        endif
         sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
         sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
         sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
