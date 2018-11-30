@@ -161,6 +161,7 @@ do i=1,npoints
     read(11,*) r_stream(i),theta_stream(i)
 enddo
 close(11)
+
 !! SHIFT THE STREAMLINE AT THE INNER RADIUS OF THE LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
 r_inner=0.1
@@ -168,6 +169,17 @@ r_outer=5.
 do i=1,npoints
     r_stream(i)=r_stream(i)-r_stream(1)+r_inner
 enddo
+!! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
+l=1
+do while (r(l).le.r_inner)
+    l++
+enddo
+l_in=l
+l=1
+do while (r(l).le.r_outer)
+    l++
+enddo
+l_out=l
 
 !! GET THE DATA FROM THE FIRST STREAMLINE !!
 write(*,*) 'Reading data from files...'
@@ -178,6 +190,8 @@ enddo
 close(16)
 
 !! MAP THE STREAMLINE INTO THE GRID !!
+!! AT EACH STEP THE STREAMLINE IS SHIFTED AT THE CENTRE OF THE NEXT CELL !!
+!! THEN WE RUN ALONG THE STREAMLINE AND CHECK AT WHICH CELL EACH POINT BELONGS TO !!
 write(*,*) 'Binning the streamline into the grid...'
 ncount(:,:)=0
 rho2d(:,:)=0.
@@ -188,46 +202,42 @@ sum_rho(:,:)=0.
 sum_vr(:,:)=0.
 sum_vth(:,:)=0.
 sum_vphi(:,:)=0.
-!! AT EACH STEP THE STREAMLINE IS SHIFTED AT THE CENTRE OF THE NEXT CELL !!
-!! THEN WE RUN ALONG THE STREAMLINE AND CHECK AT WHICH CELL EACH POINT BELONGS TO !!
-l=1
-do while (r(l).le.r_outer)
-    if (r(l).ge.r_inner) then
-        !$OMP PARALLEL &
-        !$OMP DEFAULT(SHARED) &
-        !$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
-        !$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
-        !$OMP DO SCHEDULE(runtime)
-        do k=1,npoints
-            r_stream(k)=r_stream(k)-r(l)+r(l+1)
-            do i=1,n_r-1
-                if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
-                    index_i=i
-                    exit
-                endif
-            enddo
-            do j=1,n_theta0-1
-                if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
-                    index_j=j
-                    exit
-                endif
-            enddo
-            if (index_j==0) then
-                write(*,*) 'Warning! i-index or j-index out of boundary'
-                write(*,*) r_stream(k),r(1),r(n_r)
-                write(*,*) theta_stream(k),theta(1),theta(n_theta0)
+
+!$OMP PARALLEL &
+!$OMP DEFAULT(SHARED) &
+!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
+!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
+!$OMP DO SCHEDULE(runtime)
+do l=l_in,l_out
+    do k=1,npoints
+        r_stream(k)=r_stream(k)-r(l)+r(l+1)
+        do i=1,n_r-1
+            if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
+                index_i=i
+                exit
             endif
-            sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
-            sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
-            sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
-            sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
-            ncount(index_i,index_j)=ncount(index_i,index_j)+1
         enddo
-        !$OMP END DO
-        !$OMP END PARALLEL
-        l=l+1
-    endif
+        do j=1,n_theta0-1
+            if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
+                index_j=j
+                exit
+            endif
+        enddo
+        ! if (index_j==0) then
+        !     write(*,*) 'Warning! i-index or j-index out of boundary'
+        !     write(*,*) r_stream(k),r(1),r(n_r)
+        !     write(*,*) theta_stream(k),theta(1),theta(n_theta0)
+        ! endif
+        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
+        sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
+        sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
+        sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
+        ncount(index_i,index_j)=ncount(index_i,index_j)+1
+    enddo
+    l=l+1
 enddo
+!$OMP END DO
+!$OMP END PARALLEL
 
 write(*,*)
 
