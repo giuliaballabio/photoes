@@ -234,7 +234,6 @@ do l=l_in,l_out
         sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
         ncount(index_i,index_j)=ncount(index_i,index_j)+1
     enddo
-    l=l+1
 enddo
 !$OMP END DO
 !$OMP END PARALLEL
