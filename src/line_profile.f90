@@ -203,11 +203,11 @@ sum_vr(:,:)=0.
 sum_vth(:,:)=0.
 sum_vphi(:,:)=0.
 
-!$OMP PARALLEL &
-!$OMP DEFAULT(SHARED) &
-!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
-!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
-!$OMP DO SCHEDULE(runtime)
+!!$OMP PARALLEL &
+!!$OMP DEFAULT(SHARED) &
+!!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
+!!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
+!!$OMP DO SCHEDULE(runtime)
 do l=l_in,l_out
     do k=1,npoints
         r_stream(k)=r_stream(k)-r(l)+r(l+1)
@@ -235,8 +235,8 @@ do l=l_in,l_out
         ncount(index_i,index_j)=ncount(index_i,index_j)+1
     enddo
 enddo
-!$OMP END DO
-!$OMP END PARALLEL
+!!$OMP END DO
+!!$OMP END PARALLEL
 
 write(*,*)
 
