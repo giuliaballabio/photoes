@@ -253,8 +253,6 @@ do i=1,n_r
     enddo
 enddo
 
-write(*,*) shape(v_theta2d)
-
 !! REVERSE ALONG THETA AXIS !!
 write(*,*) 'Building the 3D field...'
 do i=1,n_r
@@ -344,8 +342,6 @@ write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total flux=',tot_flux,'Lsun'
 write(*,*) '-----------------------------------------------------------'
 
-stop
-
 !! CREATE VELOCITY ARRAY !!
 do l=1,n_v
     v(l)=l*0.1-40.
@@ -370,7 +366,6 @@ cosincl=cos(incl_rad)
 !! COMPUTE THE LINE PROFILE !!
 write(*,*) 'Computing the line profile...'
 line_flux(:)=0.d0
-
 !$OMP PARALLEL &
 !$OMP DEFAULT(SHARED) &
 !$OMP PRIVATE(i,j,l,v_los_r,v_los_th,v_los_phi,v_los) &
