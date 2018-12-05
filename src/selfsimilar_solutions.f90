@@ -40,8 +40,8 @@ double precision                                 :: rk4,dphi,dphidy,ft
 !b_array=(0.5,0.75,1.,1.5,2.)
 !ub_array=(0.92,0.85,0.77,0.56,0.29)
 
-b_input=0.75
-ub=0.85
+b_input=1.00
+ub=0.77
 
 !! INITIAL CONDITIONS
 x0=1.
@@ -84,7 +84,7 @@ do i=1,n
     phi2=datan(y2/x2)
     theta2=datan(tanth2)
     r=(x1*x1+y1*y1)**0.5
-    uph=(G*Mstar/r)**0.5
+    uph=(G*Mstar/x1)**0.5
     open(unit=1,file='./streamline_cartcoord.txt')
     write(1,'(3(es18.10,1X))') x1,y1
     open(unit=2,file='./streamline_polarcoord.txt')
