@@ -17,7 +17,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 			sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
 			sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" selfsimilar_solutions.f90
 			sed -i -e "s/r_input=.*/r_inner=$r_input /g" line_profile.f90
-			sed -i -e "s/incl=.*/incl_deg=$incl /g" line_profile.f90
+			sed -i -e "s/incl_deg=.*/incl_deg=$incl /g" line_profile.f90
+			sed -i -e "s/str_i=.*/str_i='$incl' /g" line_profile.f90
 
 			# Update the name in the submission script
 			sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_input\_i$incl/g" submit-job-dial
