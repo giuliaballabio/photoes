@@ -3,8 +3,8 @@
 
 RUNDIR=${PWD}
 
-array_b=( 0.75 1.00 1.50 ) # 2.00 )
-array_ub=( 0.85 0.77 0.56 ) # 0.29 )
+array_b=( 0.75 ) # 1.00 1.50 ) # 2.00 )
+array_ub=( 0.85 ) # 0.77 0.56 ) # 0.29 )
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
@@ -42,7 +42,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
 			cp selfsimilar_solutions photoes submit-job* $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl
 
 			# Submit the job on dial or alice
-			qsub $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl/submit-job-alice
+			#qsub $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl/submit-job-alice
 			#qsub $RUNDIR/../submit-job-dial
 
 			# Remove unuseful files
