@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l,index_i,index_j,npoints,l_in,l_out
+integer                                          :: i,j,k,l,index_i,index_j,npoints,l_in,l_out,index_Rg
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
@@ -306,7 +306,8 @@ else
     open(unit=11,file='./bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
-    write(11,'(4(es18.10,1X))') r(i),rho(i,248),v_theta(i,248),v_phi(i,250)
+    write(11,'(4(es18.10,1X))') r(i),rho(i,1),v_theta(i,1),v_phi(i,1)
+    !write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
 enddo
 close(11)
 
