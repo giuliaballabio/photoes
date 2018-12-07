@@ -310,16 +310,17 @@ do i=1,n_r
 enddo
 close(11)
 
-!! COMPUTE THE MASS FLUX !!
+!! COMPUTE THE MASS FLUX FROM THE HYDRO DATA !!
 !write(*,*) 'Calculating the mass flux...'
 !do j=1,n_theta
 !    dA(j)=2.0*r_out(1113)*r_out(1113)*sinth(j)*dtheta
 !    dmass(j)=rho(1113,j)*v_r(1113,j)*dA(j)
 !enddo
+!! COMPUTE THE MASS FLUX FROM THE ANALYTHICAL MODEL !!
 write(*,*) 'Calculating the mass flux...'
-    do j=1,n_theta
-    dA(j)=2.0*r_out(981)*r_out(981)*sinth(j)*dtheta
-    dmass(j)=rho(981,j)*v_r(981,j)*dA(j)
+do j=1,n_theta
+    dA(j)=2.0*r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
+    dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
 enddo
 Mdot=sum(dmass)
 write(*,*) '-----------------------------------------------------------'
@@ -363,8 +364,6 @@ enddo
 !read(*,*) str_i
 incl_deg=90.0
 str_i='90.0'
-!incl_deg=0.0
-!str_i='0.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
@@ -395,16 +394,6 @@ do k=1,n_phi
 enddo
 !$OMP END DO
 !$OMP END PARALLEL
-
-!peak=maxval(line_flux)
-!do l=1,n_v
-!    do while(v(l) >= 10.0)
-!        if(line_flux(l) == peak) then
-!            write(*,*) 'Error: supersonic emission..!'
-!            stop
-!        endif
-!    enddo
-!enddo
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE LINE PROFILE !!
 if(.not.init) then
