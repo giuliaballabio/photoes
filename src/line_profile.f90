@@ -74,10 +74,10 @@ write(*,*) '    Compute forbidden lines for photoevaporative winds'
 write(*,*) ' '
 write(*,*) '-----------------------------------------------------------'
 write(*,*) 'Scaling factors:'
-write(*,*) 'Rg=',Rg,'cm -',Rg/au,'au'
-write(*,*) 'ng=',ng,'cm^-3'
-write(*,*) 'rhog=',rhog,'g/cm^3'
-write(*,*) 'ng/rhog=',ng/rhog
+write(*,*) 'Rg =',Rg,'cm =',Rg/au,'au'
+write(*,*) 'ng =',ng,'cm^-3'
+write(*,*) 'rhog =',rhog,'g/cm^3'
+write(*,*) 'ng/rhog =',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
@@ -290,6 +290,15 @@ v_phi(:,:)=v_phi(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 !! CONVERSION: cm/s -> km/s !!
 vth=vth*1.e-5
 
+!! NORMALISATION FACTOR FOR THE DENSITY !!
+!! rho(R=Rg) = rhog !!
+do i=1,n_r
+    if(r(i).ge.(Rg/au-0.025).and.r(i).le.(Rg/au+0.025)) then
+        index_Rg=i
+    endif
+enddo
+rho(:,:)=rho(:,:)*rhog/(Msun/(au**3))/rho(index_Rg,248)
+
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
     open(unit=11,file='./bound_cond.txt')
@@ -297,7 +306,7 @@ else
     open(unit=11,file='./bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
-    write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
+    write(11,'(4(es18.10,1X))') r(i),rho(i,248),v_theta(i,248),v_phi(i,250)
 enddo
 close(11)
 
@@ -314,7 +323,7 @@ write(*,*) 'Calculating the mass flux...'
 enddo
 Mdot=sum(dmass)
 write(*,*) '-----------------------------------------------------------'
-write(*,*) '   Total mass flux=',Mdot,'Msun/yr'
+write(*,*) '   Total mass flux =',Mdot,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
 
 !! COMPUTE THE FLUX FOR A SINGLE CELL !!
@@ -339,7 +348,7 @@ do i=1,n_r
 enddo
 tot_flux=sum(cell_flux)*n_phi
 write(*,*) '-----------------------------------------------------------'
-write(*,*) '   Total flux=',tot_flux,'Lsun'
+write(*,*) '   Total flux =',tot_flux,'Lsun'
 write(*,*) '-----------------------------------------------------------'
 
 !! CREATE VELOCITY ARRAY !!
@@ -357,7 +366,6 @@ str_i='90.0'
 !incl_deg=0.0
 !str_i='0.0'
 incl_rad=incl_deg*(pi/180.)
-
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
 sinincl=sin(incl_rad)
