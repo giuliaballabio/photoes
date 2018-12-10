@@ -84,7 +84,7 @@ do i=1,n
     phi2=datan(y2/x2)
     theta2=datan(tanth2)
     r=(x1*x1+y1*y1)**0.5
-    uph=(G*Mstar/x1)**0.5
+    uph=(1/x1)**0.5
     open(unit=1,file='./streamline_cartcoord.txt')
     write(1,'(3(es18.10,1X))') x1,y1
     open(unit=2,file='./streamline_polarcoord.txt')
