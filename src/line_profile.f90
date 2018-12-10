@@ -27,7 +27,8 @@ integer                                          :: i,j,k,l,index_i,index_j,npoi
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
-double precision,dimension(1:n)                  :: r_stream,theta_stream,rho_stream,v_r_stream,v_theta_stream,v_phi_stream
+double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
+double precision,dimension(1:n)                  :: rho_stream,v_r_stream,v_theta_stream,v_phi_stream
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
@@ -155,19 +156,25 @@ do
 enddo
 100 close(10)
 
-!! GET THE RADIUS AND THETA FROM THE FIRST STREAMLINE !!
+!! GET r AND theta FOR THE FIRST STREAMLINE !!
 open(unit=11,file='./streamline_polarcoord.txt')
 do i=1,npoints
     read(11,*) r_stream(i),theta_stream(i)
 enddo
 close(11)
+!! GET x AND y FOR THE FIRST STREAMLINE !!
+open(unit=12,file='./streamline_cartcoord.txt')
+do i=1,npoints
+    read(12,*) x_stream(i),y_stream(i)
+enddo
+close(12)
 
 !! SHIFT THE STREAMLINE AT THE INNER RADIUS OF THE LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
 r_inner=0.1
 r_outer=5.
 do i=1,npoints
-    r_stream(i)=r_stream(i)-r_stream(1)+r_inner
+    x_stream(i)=x_stream(i)-x_stream(1)+r_inner
 enddo
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
@@ -185,9 +192,14 @@ l_out=l
 write(*,*) 'Reading data from files...'
 open(unit=16,file='./rhov_fields.txt',status='old')
 do i=1,npoints
-    read(16,*) rho_stream(i),v_r_stream(i),v_theta_stream(i),v_phi_stream(i)
+    read(16,*) rho_stream(i),v_r_stream(i),v_theta_stream(i) !!,v_phi_stream(i)
 enddo
 close(16)
+
+!! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR THE FIRST STREAMLINE !!
+do i=1,npoints
+    v_phi_stream(i)=x_stream(i)**(-0.5)
+enddo
 
 !! MAP THE STREAMLINE INTO THE GRID !!
 !! AT EACH STEP THE STREAMLINE IS SHIFTED AT THE CENTRE OF THE NEXT CELL !!
@@ -202,7 +214,6 @@ sum_rho(:,:)=0.
 sum_vr(:,:)=0.
 sum_vth(:,:)=0.
 sum_vphi(:,:)=0.
-
 !!$OMP PARALLEL &
 !!$OMP DEFAULT(SHARED) &
 !!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
@@ -211,6 +222,7 @@ sum_vphi(:,:)=0.
 do l=l_in,l_out
     do k=1,npoints
         r_stream(k)=r_stream(k)-r(l)+r(l+1)
+        v_phi_stream(k)=r_stream(k)**(-0.5)
         do i=1,n_r-1
             if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
                 index_i=i
