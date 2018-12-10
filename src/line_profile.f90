@@ -306,7 +306,7 @@ else
     open(unit=11,file='./bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
-    write(11,'(4(es18.10,1X))') r(i),rho(i,1),v_theta(i,1),v_phi(i,1)
+    write(11,'(4(es18.10,1X))') r(i),rho(i,2),v_theta(i,2),v_phi(i,2)
     !write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
 enddo
 close(11)
