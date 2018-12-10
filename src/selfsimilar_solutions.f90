@@ -71,7 +71,7 @@ do i=1,n
         +dphi(x1,y1,gm))*ft**3./(tanth1**2.*x1*(x1+y1*tanth1))
     ddx2=ft**2.*(x1*tanth1-y1)/(tanth1**3.*x1*(x1+y1*tanth1))
     ddxdy=ddx1+ddx2
-    rho=u1*a1*dexp(-0.5*(u1**2.-u0**2.)-dphi(x1,y1,gm))
+    rho=dexp(-0.5*(u1**2.-u0**2.)-dphi(x1,y1,gm)) !!*u1*a1
     a2=(x1**2.*tanth1-x1*y1)/(1.+tanth1**2.)**0.5
     x2=x1+dy/tanth1+0.5*ddxdy*dy**2.
     y2=y1+dy
