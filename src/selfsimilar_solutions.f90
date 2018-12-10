@@ -23,10 +23,10 @@ program selfsimilar
 implicit none
 integer                                          :: i
 integer,parameter                                :: n=10000000
-double precision,parameter                       :: cs=1.d6,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
+double precision,parameter                       :: cs=1.d6 !!,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
 double precision,parameter                       :: pi=3.141592
 double precision                                 :: b,ub,reff0,gm,b_input
-double precision                                 :: x0,y0,u0,dx,dy,rho,r,uph,phi,theta
+double precision                                 :: x0,y0,u0,dx,dy,rho,r,phi,theta !,uph
 double precision                                 :: x1,y1,u1,tanth1,a1,phi1,theta1
 double precision                                 :: x2,y2,u2,ur2,uth2,tanth2,a2,phi2,theta2
 double precision                                 :: dudy,ddx1,ddx2,ddxdy
