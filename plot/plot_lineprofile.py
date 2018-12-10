@@ -20,6 +20,7 @@ if incl_deg == 0.0:
 
     plt.figure()
     plt.plot(v, line_flux / np.amax(line_flux), 'r')
+    plt.vlines(0., 0., 1.3, 'k', linestyle='--')
     plt.title(r'Line profile: i='+str(round(incl_deg, 2))+'$^\circ$', fontsize=15)
     plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
     plt.ylabel(r'Normalized L(v)', fontsize=15)
@@ -29,6 +30,7 @@ if incl_deg == 0.0:
 else:
     plt.figure()
     plt.plot(v, line_flux / np.amax(line_flux), 'r')
+    plt.vlines(0., 0., 1.3, 'k', linestyle='--')
     plt.title(r'Line profile: i='+str(round(incl_deg, 2))+'$^\circ$', fontsize=15)
     plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
     plt.ylabel(r'Normalized L(v)', fontsize=15)
@@ -36,18 +38,18 @@ else:
     plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.png', format='png', bbox_inches='tight')
     plt.show()
 
-#r = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
-#rho = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
-#v_theta = np.array(map(float, [lines.split()[2] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
-#
-#plt.figure()
-#plt.loglog(r, rho, 'r')
-#plt.title(r'Boundary condition', fontsize=15)
-#plt.xlabel(r'r [au]', fontsize=15)
-#plt.ylabel(r'$rho_{0}$', fontsize=15)
-#plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/boundary_condition.png', format='png', bbox_inches='tight')
-#plt.show()
-#
+r = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
+rho = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
+v_theta = np.array(map(float, [lines.split()[2] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
+
+plt.figure()
+plt.loglog(r, rho, 'r')
+plt.title(r'Boundary condition', fontsize=15)
+plt.xlabel(r'r [au]', fontsize=15)
+plt.ylabel(r'$rho_{0}$', fontsize=15)
+plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/boundary_condition.png', format='png', bbox_inches='tight')
+plt.show()
+
 #plt.figure()
 #plt.plot(r, -1.*v_theta, 'r')
 #plt.axhline(y=3., color='k', linestyle='--')
