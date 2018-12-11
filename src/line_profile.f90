@@ -148,26 +148,26 @@ enddo
 
 !! CALCULATE THE NUMBER OF POINTS OF THE STREAMLINE !!
 write(*,*) 'Counting the number of points of the streamline...'
-open(unit=10,file='./streamline_polarcoord.txt')
+open(unit=2,file='./streamline_polarcoord.txt')
 npoints=0
 do
-    read(10,*,end=100)
+    read(2,*,end=100)
     npoints=npoints+1
 enddo
-100 close(10)
+100 close(2)
 
 !! GET r AND theta FOR THE FIRST STREAMLINE !!
-open(unit=11,file='./streamline_polarcoord.txt')
+open(unit=3,file='./streamline_polarcoord.txt')
 do i=1,npoints
-    read(11,*) r_stream(i),theta_stream(i)
+    read(3,*) r_stream(i),theta_stream(i)
 enddo
-close(11)
+close(3)
 !! GET x AND y FOR THE FIRST STREAMLINE !!
-open(unit=12,file='./streamline_cartcoord.txt')
+open(unit=4,file='./streamline_cartcoord.txt')
 do i=1,npoints
-    read(12,*) x_stream(i),y_stream(i)
+    read(4,*) x_stream(i),y_stream(i)
 enddo
-close(12)
+close(4)
 
 !! SHIFT THE STREAMLINE AT THE INNER RADIUS OF THE LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
@@ -190,11 +190,11 @@ l_out=l
 
 !! GET THE DATA FROM THE FIRST STREAMLINE !!
 write(*,*) 'Reading data from files...'
-open(unit=16,file='./rhov_fields.txt',status='old')
+open(unit=6,file='./rhov_fields.txt',status='old')
 do i=1,npoints
-    read(16,*) rho_stream(i),v_r_stream(i),v_theta_stream(i) !!,v_phi_stream(i)
+    read(6,*) rho_stream(i),v_r_stream(i),v_theta_stream(i) !!,v_phi_stream(i)
 enddo
-close(16)
+close(6)
 
 !! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR THE FIRST STREAMLINE !!
 do i=1,npoints
@@ -264,6 +264,25 @@ do i=1,n_r
         endif
     enddo
 enddo
+
+if(.not.init) then
+    open(unit=7,file='./rho_grid.txt')
+else
+    open(unit=7,file='./rho_grid.txt',status='old',position='append')
+endif
+if(.not.init) then
+    open(unit=8,file='./v_grid.txt')
+else
+    open(unit=8,file='./v_grid.txt',status='old',position='append')
+endif
+do i=1,n_r
+    do j=1,n_theta0
+        write(7,'(4(es18.10,1X))') rho2d(i,j)
+        write(8,'(4(es18.10,1X))') v_phi2d(i,j) !v_r2d(i,j),v_theta2d(i,j),
+    enddo
+enddo
+close(7)
+close(8)
 
 !! REVERSE ALONG THETA AXIS !!
 write(*,*) 'Building the 3D field...'
