@@ -35,7 +35,9 @@ for ((i=0;i<${#array_b[@]};++i)); do
 			#
 			# cd $RUNDIR/../data_b${array_b[i]}\_r$r_input
 			if [ ! -d $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl ]; then
-				mkdir $RUNDIR/../data_b${array_b[i]}\_r$r_input
+				if [ ! -d $RUNDIR/../data_b${array_b[i]}\_r$r_input ]; then
+					mkdir $RUNDIR/../data_b${array_b[i]}\_r$r_input
+				fi
 				mkdir $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl
 			fi
 
