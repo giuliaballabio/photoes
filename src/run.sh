@@ -34,19 +34,20 @@ for ((i=0;i<${#array_b[@]};++i)); do
 			# fi
 			#
 			# cd $RUNDIR/../data_b${array_b[i]}\_r$r_input
-			if [ ! -d $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl ]; then
-				mkdir $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl
+			if [ ! -d $RUNDIR/data_b${array_b[i]}\_r$r_input/incl_$incl ]; then
+				mkdir $RUNDIR/data_b${array_b[i]}\_r$r_input/incl_$incl
 			fi
+
 
 			# Copy files to this new directory
 			cp selfsimilar_solutions photoes submit-job* $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl
 
+			# Remove unuseful files
+			rm *genmod* photoes selfsimilar_solutions
+
 			# Submit the job on dial or alice
 			#qsub $RUNDIR/../data_b${array_b[i]}\_r$r_input/incl_$incl/submit-job-alice
 			#qsub $RUNDIR/../submit-job-dial
-
-			# Remove unuseful files
-			rm *genmod* photoes selfsimilar_solutions
 
 		done
 	done
