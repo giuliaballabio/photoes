@@ -32,7 +32,7 @@ double precision,dimension(1:n)                  :: rho_stream,v_r_stream,v_thet
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi
+double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,x1
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
 double precision                                 :: t_in,t_fin
 integer,dimension(1:n_r,1:n_theta0)              :: ncount
@@ -43,7 +43,7 @@ double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
 double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 double precision,dimension(1:n_v)                :: v,line_flux
 double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
-double precision                                 :: v_los_r,v_los_th,v_los_phi,r_inner,r_outer
+double precision                                 :: v_los_r,v_los_th,v_los_phi
 logical,save                                     :: init=.false.
 character(len=5)                                 :: str_i
 
@@ -82,7 +82,7 @@ write(*,*) 'ng/rhog =',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=1,file='../../data_hydro/grid_r.dat')
+open(unit=1,file='../data_hydro/grid_r.dat')
 do i=1,n_r
     read(1,*) r(i)
 enddo
@@ -173,9 +173,12 @@ close(4)
 write(*,*) 'Setting the wind launching region...'
 r_inner=0.1
 r_outer=5.
+! First value to shift the streamline at zero
+x1=x_stream(1)
 do i=1,npoints
-    x_stream(i)=x_stream(i)-x_stream(1)+r_inner
+    x_stream(i)=x_stream(i)-x1+r_inner
 enddo
+
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -222,7 +225,8 @@ sum_vphi(:,:)=0.
 do l=l_in,l_out
     do k=1,npoints
         r_stream(k)=r_stream(k)-r(l)+r(l+1)
-        v_phi_stream(k)=r_stream(k)**(-0.5)
+        x_stream(k)=x_stream(k)-r(l)+r(l+1)
+        v_phi_stream(k)=x_stream(k)**(-0.5)
         do i=1,n_r-1
             if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
                 index_i=i
@@ -271,9 +275,9 @@ else
     open(unit=7,file='./rho_grid.txt',status='old',position='append')
 endif
 if(.not.init) then
-    open(unit=8,file='./v_grid.txt')
+    open(unit=8,file='./v_phi_grid.txt')
 else
-    open(unit=8,file='./v_grid.txt',status='old',position='append')
+    open(unit=8,file='./v_phi_grid.txt',status='old',position='append')
 endif
 do i=1,n_r
     do j=1,n_theta0
