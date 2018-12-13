@@ -10,7 +10,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-from polar_contour import LogNorm
+from matplotlib.colors import LogNorm
 from physics_constant import *
 
 #plt.style.use('seaborn-darkgrid')
@@ -22,6 +22,12 @@ radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/
 theta = np.arange(0., 1.3089, np.pi/600.)+(np.pi/12.)
 
 ## ––––– get the data from the files ––––– ##
+# incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
+# b = input("Insert the value of b: ")
+# r_in = input("Insert the inner radius: ")
+# rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/rho_grid.txt', 'r')]))
+# v_phi = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/v_phi_grid.txt', 'r')]))
+
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
 v_r = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
 v_theta = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
@@ -44,8 +50,9 @@ plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 #plt.title(r'Boundary condition', fontsize=15)
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
+# plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/boundary_condition.png', format='png', bbox_inches='tight')
 plt.savefig('./boundary_condition.png', format='png', bbox_inches='tight')
-#plt.show()
+plt.show()
 plt.close()
 
 ## ––––– convert to a cartesian coordinate system ––––– ##
@@ -59,17 +66,18 @@ def fmt(x, pos):
     return r'${}$'.format(b)
 
 plt.figure()
-CS = plt.pcolormesh(r, z, rho_2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
-plt.contour(rho_cr_2d, colors='r')
+CS = plt.pcolormesh(r, z, rho_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20.)
+#plt.contour(rho_cr_2d, colors='r')
 #plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
 #cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
 cbar = plt.colorbar(CS)
-plt.axis([0., 1.25, 0, 0.9])
+#plt.axis([0., 1.25, 0, 0.9])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($\rho$ / $\rho_{g}$)')
+# plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
 plt.savefig('./density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
-#plt.show()
+plt.show()
 plt.close()
 
 # x = np.array(map(float, [lines.split()[0] for lines in open('../../input_from_model/b1.0/streamline.txt', 'r')]))
