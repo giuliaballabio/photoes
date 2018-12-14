@@ -82,7 +82,7 @@ write(*,*) 'ng/rhog =',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=1,file='../../data_hydro/grid_r.dat')
+open(unit=1,file='../data_hydro/grid_r.dat')
 do i=1,n_r
     read(1,*) r(i)
 enddo
@@ -171,13 +171,15 @@ close(4)
 
 !! SHIFT THE STREAMLINE AT THE INNER RADIUS OF THE LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1
+r_inner=0.03
 r_outer=5.
 ! First value to shift the streamline at zero
 x1=x_stream(1)
 do i=1,npoints
     x_stream(i)=x_stream(i)-x1+r_inner
 enddo
+
+write(*,*) x_stream(1:10)
 
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
@@ -224,11 +226,11 @@ sum_vphi(:,:)=0.
 !!$OMP DO SCHEDULE(runtime)
 do l=l_in,l_out
     do k=1,npoints
-        r_stream(k)=r_stream(k)-r(l)+r(l+1)
+        !r_stream(k)=r_stream(k)-r(l)+r(l+1)
         x_stream(k)=x_stream(k)-r(l)+r(l+1)
         v_phi_stream(k)=x_stream(k)**(-0.5)
         do i=1,n_r-1
-            if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
+            if (r(i).le.x_stream(k).and.x_stream(k).lt.r(i+1))then
                 index_i=i
                 exit
             endif
@@ -241,7 +243,7 @@ do l=l_in,l_out
         enddo
         if (index_i.le.0.or.index_j.le.0) then
             write(*,*) 'Warning! i-index or j-index out of boundary'
-            write(*,*) r_stream(k),r(1),r(n_r)
+            write(*,*) x_stream(k),r(1),r(n_r)
             write(*,*) theta_stream(k),theta(1),theta(n_theta0)
         endif
         sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
