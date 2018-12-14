@@ -32,7 +32,7 @@ double precision,dimension(1:n)                  :: rho_stream,v_r_stream,v_thet
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,x1,b,b_input
+double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,r1,x1,b,b_input
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
 double precision                                 :: t_in,t_fin
 integer,dimension(1:n_r,1:n_theta0)              :: ncount
@@ -82,11 +82,11 @@ write(*,*) 'ng/rhog =',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=1,file='../../data_hydro/grid_r.dat')
+open(unit=112,file='../photoes/data_hydro/grid_r.dat')
 do i=1,n_r
-    read(1,*) r(i)
+    read(112,*) r(i)
 enddo
-close(1)
+close(112)
 ratio_r=sqrt(r(2)/r(1))
 do i=1,n_r
     r_in(i)=r(i)/ratio_r
@@ -148,26 +148,26 @@ enddo
 
 !! CALCULATE THE NUMBER OF POINTS OF THE STREAMLINE !!
 write(*,*) 'Counting the number of points of the streamline...'
-open(unit=2,file='./streamline_polarcoord.txt')
+open(unit=123,file='./streamline_polarcoord.txt')
 npoints=0
 do
-    read(2,*,end=100)
+    read(123,*,end=100)
     npoints=npoints+1
 enddo
-100 close(2)
+100 close(123)
 
 !! GET r AND theta FOR THE FIRST STREAMLINE !!
-open(unit=3,file='./streamline_polarcoord.txt')
+open(unit=134,file='./streamline_polarcoord.txt')
 do i=1,npoints
-    read(3,*) r_stream(i),theta_stream(i)
+    read(134,*) r_stream(i),theta_stream(i)
 enddo
-close(3)
+close(134)
 !! GET x AND y FOR THE FIRST STREAMLINE !!
-open(unit=4,file='./streamline_cartcoord.txt')
+open(unit=145,file='./streamline_cartcoord.txt')
 do i=1,npoints
-    read(4,*) x_stream(i),y_stream(i)
+    read(145,*) x_stream(i),y_stream(i)
 enddo
-close(4)
+close(145)
 
 !! SHIFT THE STREAMLINE AT THE INNER RADIUS OF THE LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
@@ -175,7 +175,9 @@ r_inner=0.03
 r_outer=5.
 ! First value to shift the streamline at zero
 x1=x_stream(1)
+r1=r_stream(1)
 do i=1,npoints
+    r_stream(i)=r_stream(i)-r1+r_inner
     x_stream(i)=x_stream(i)-x1+r_inner
 enddo
 
@@ -195,11 +197,11 @@ l_out=l
 
 !! GET THE DATA FROM THE FIRST STREAMLINE !!
 write(*,*) 'Reading data from files...'
-open(unit=6,file='./rhov_fields.txt',status='old')
+open(unit=156,file='./rhov_fields.txt',status='old')
 do i=1,npoints
-    read(6,*) rho_stream(i),v_r_stream(i),v_theta_stream(i) !!,v_phi_stream(i)
+    read(156,*) rho_stream(i),v_r_stream(i),v_theta_stream(i) !!,v_phi_stream(i)
 enddo
-close(6)
+close(156)
 
 !! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR THE FIRST STREAMLINE !!
 do i=1,npoints
@@ -226,11 +228,13 @@ sum_vphi(:,:)=0.
 !!$OMP DO SCHEDULE(runtime)
 do l=l_in,l_out
     do k=1,npoints
-        !r_stream(k)=r_stream(k)-r(l)+r(l+1)
+        r_stream(k)=r_stream(k)-r(l)+r(l+1)
         x_stream(k)=x_stream(k)-r(l)+r(l+1)
+        write(*,*) r_stream(k)
+        write(*,*) x_stream(k)
         v_phi_stream(k)=x_stream(k)**(-0.5)
         do i=1,n_r-1
-            if (r(i).le.x_stream(k).and.x_stream(k).lt.r(i+1))then
+            if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
                 index_i=i
                 exit
             endif
@@ -257,6 +261,15 @@ enddo
 !!$OMP END PARALLEL
 
 write(*,*)
+if(.not.init) then
+    open(unit=167,file='./coordinates.txt')
+else
+    open(unit=167,file='./coordinates.txt',status='old',position='append')
+endif
+do k=1,npoints
+    write(167,'(4(es18.10,1X))') x_stream(k), r_stream(k)
+enddo
+close(167)
 
 !! CALCULATE THE MEAN OF THE DENSITY AND VELOCITY IN EACH CELL !!
 write(*,*) 'Calculating the average density and velocity in each cell...'
@@ -280,23 +293,23 @@ do i=1,n_r
 enddo
 
 if(.not.init) then
-    open(unit=7,file='./rho_grid.txt')
+    open(unit=178,file='./rho_grid.txt')
 else
-    open(unit=7,file='./rho_grid.txt',status='old',position='append')
+    open(unit=178,file='./rho_grid.txt',status='old',position='append')
 endif
 if(.not.init) then
-    open(unit=8,file='./v_phi_grid.txt')
+    open(unit=189,file='./v_phi_grid.txt')
 else
-    open(unit=8,file='./v_phi_grid.txt',status='old',position='append')
+    open(unit=189,file='./v_phi_grid.txt',status='old',position='append')
 endif
 do i=1,n_r
     do j=1,n_theta0
-        write(7,'(4(es18.10,1X))') rho2d(i,j)
-        write(8,'(4(es18.10,1X))') v_phi2d(i,j) !v_r2d(i,j),v_theta2d(i,j),
+        write(178,'(4(es18.10,1X))') rho2d(i,j)
+        write(189,'(4(es18.10,1X))') v_phi2d(i,j) !v_r2d(i,j),v_theta2d(i,j),
     enddo
 enddo
-close(7)
-close(8)
+close(178)
+close(189)
 
 !! REVERSE ALONG THETA AXIS !!
 write(*,*) 'Building the 3D field...'
@@ -337,15 +350,15 @@ vth=vth*1.e-5
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
-    open(unit=11,file='./bound_cond.txt')
+    open(unit=210,file='./bound_cond.txt')
 else
-    open(unit=11,file='./bound_cond.txt',status='old',position='append')
+    open(unit=210,file='./bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
-    write(11,'(4(es18.10,1X))') r(i),rho(i,250),v_theta(i,250),v_phi(i,250)
+    write(210,'(4(es18.10,1X))') r(i),rho(i,250),v_theta(i,250),v_phi(i,250)
     !write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
 enddo
-close(11)
+close(210)
 
 !! COMPUTE THE MASS FLUX FROM THE HYDRO DATA !!
 !write(*,*) 'Calculating the mass flux...'
@@ -434,14 +447,14 @@ enddo
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE LINE PROFILE !!
 if(.not.init) then
-    open(unit=12,file='./line_profile_i'//trim(str_i)//'.txt')
+    open(unit=223,file='./line_profile_i'//trim(str_i)//'.txt')
 else
-    open(unit=12,file='./line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
+    open(unit=223,file='./line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
-    write(12,'(2(es18.10,1X))') v(l),line_flux(l)
+    write(223,'(2(es18.10,1X))') v(l),line_flux(l)
 enddo
-close(12)
+close(223)
 
 call cpu_time(t_fin)
 
