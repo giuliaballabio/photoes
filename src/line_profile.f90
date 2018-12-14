@@ -181,8 +181,6 @@ do i=1,npoints
     x_stream(i)=x_stream(i)-x1+r_inner
 enddo
 
-write(*,*) x_stream(1:10)
-
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -267,7 +265,7 @@ else
     open(unit=167,file='./coordinates.txt',status='old',position='append')
 endif
 do k=1,npoints
-    write(167,'(4(es18.10,1X))') x_stream(k), r_stream(k)
+    write(167,'(4(es18.10,1X))') x_stream(k),r_stream(k)
 enddo
 close(167)
 
@@ -289,7 +287,7 @@ enddo
 b_input=0.75
 b=b_input
 do i=1,n_r
-    rho(i,:)=rho(i,:)*((r(i)/Rg)**(-b))
+    rho(i,:)=rho(i,:)*((r(i))**(-b))
 enddo
 
 if(.not.init) then
