@@ -32,7 +32,7 @@ double precision,dimension(1:n)                  :: rho_stream,v_r_stream,v_thet
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,x1
+double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,x1,b,b_input
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
 double precision                                 :: t_in,t_fin
 integer,dimension(1:n_r,1:n_theta0)              :: ncount
@@ -271,6 +271,14 @@ do i=1,n_r
     enddo
 enddo
 
+!! NORMALISATION FACTOR FOR THE DENSITY !!
+!! rho(R=Rg) = rhog !!
+b_input=0.75
+b=b_input
+do i=1,n_r
+    rho(i,:)=rho(i,:)*((r(i)/Rg)**(-b))
+enddo
+
 if(.not.init) then
     open(unit=7,file='./rho_grid.txt')
 else
@@ -326,15 +334,6 @@ v_phi(:,:)=v_phi(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 
 !! CONVERSION: cm/s -> km/s !!
 vth=vth*1.e-5
-
-!! NORMALISATION FACTOR FOR THE DENSITY !!
-!! rho(R=Rg) = rhog !!
-do i=1,n_r
-    if(r(i).ge.(Rg/au-0.025).and.r(i).le.(Rg/au+0.025)) then
-        index_Rg=i
-    endif
-enddo
-rho(:,:)=rho(:,:)*rhog/(Msun/(au**3))/rho(index_Rg,248)
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
