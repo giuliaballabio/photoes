@@ -22,20 +22,22 @@ radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/
 theta = np.arange(0., 1.3089, np.pi/600.)+(np.pi/12.)
 
 ## ––––– get the data from the files ––––– ##
-# incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
-# b = input("Insert the value of b: ")
-# r_in = input("Insert the inner radius: ")
-# rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/rho_grid.txt', 'r')]))
-# v_phi = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/v_phi_grid.txt', 'r')]))
+incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
+b = input("Insert the value of b: ")
+r_in = input("Insert the inner radius: ")
+rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/rho_grid.txt', 'r')]))
+v_phi = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/v_phi_grid.txt', 'r')]))
 
-rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
-v_r = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
-v_theta = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
-v_phi = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
+# rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
+# v_r = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
+# v_theta = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
+# v_phi = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
 
 ## ––––– create a grid (r, theta) ––––– ##
 grid_r, grid_theta = np.meshgrid(radius, theta, indexing='ij')
 rho_2d = rho_mean.reshape(len(radius), len(theta))
+
+v_phi_2d = v_phi.reshape(len(radius), len(theta))
 
 rho_cr = n_cr * m_h * mu / rhog
 rho_cr_2d = [[rho_cr for i in range(len(theta))] for j in range(len(radius))]
@@ -50,8 +52,8 @@ plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 #plt.title(r'Boundary condition', fontsize=15)
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
-# plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/boundary_condition.png', format='png', bbox_inches='tight')
-plt.savefig('./boundary_condition.png', format='png', bbox_inches='tight')
+plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/boundary_condition.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro/boundary_condition.png', format='png', bbox_inches='tight')
 plt.show()
 plt.close()
 
@@ -72,11 +74,29 @@ CS = plt.pcolormesh(r, z, rho_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20
 #cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
 cbar = plt.colorbar(CS)
 #plt.axis([0., 1.25, 0, 0.9])
+#plt.axis([0.02, 0.04, 0, 0.02])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($\rho$ / $\rho_{g}$)')
-# plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
-plt.savefig('./density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
+plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
+# plt.savefig('../data_hydro/density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
+plt.show()
+plt.close()
+
+plt.figure()
+CS = plt.pcolormesh(r, z, v_phi_2d, cmap='winter', norm=LogNorm(), vmin=0.05, vmax=20.)
+cbar = plt.colorbar(CS)
+#plt.axis([0., 1.25, 0, 0.9])
+plt.xlabel(r'R / R$_{g}$',fontsize=15)
+plt.ylabel(r'z / R$_{g}$',fontsize=15)
+cbar.set_label(r'Log($v_{K}$)')
+plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
+# plt.savefig('../data_hydro/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
+plt.show()
+plt.close()
+
+plt.figure()
+plt.plot(z,v_phi_2d[0.5,:])
 plt.show()
 plt.close()
 
