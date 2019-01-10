@@ -228,8 +228,8 @@ do l=l_in,l_out
     do k=1,npoints
         r_stream(k)=r_stream(k)-r(l)+r(l+1)
         x_stream(k)=x_stream(k)-r(l)+r(l+1)
-        write(*,*) r_stream(k)
-        write(*,*) x_stream(k)
+        ! write(*,*) r_stream(k)
+        ! write(*,*) x_stream(k)
         v_phi_stream(k)=x_stream(k)**(-0.5)
         do i=1,n_r-1
             if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
@@ -287,7 +287,7 @@ enddo
 b_input=0.75
 b=b_input
 do i=1,n_r
-    rho(i,:)=rho(i,:)*((r(i))**(-b))
+    rho2d(i,:)=rho2d(i,:)*((r(i)/(Rg/au))**(-b))
 enddo
 
 if(.not.init) then
