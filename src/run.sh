@@ -24,8 +24,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				sed -i -e "s/str_i=.*/str_i='$incl' /g" line_profile.f90
 
 				# Update the name in the submission script
-				sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_inner\_i$incl/g" submit-job-dial
-				sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_inner\_i$incl/g" submit-job-alice
+				sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl/g" submit-job-dial
+				sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl/g" submit-job-alice
 
 				# Actually compile the code
 				ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
