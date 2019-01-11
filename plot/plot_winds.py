@@ -95,11 +95,6 @@ plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_
 plt.show()
 plt.close()
 
-plt.figure()
-plt.plot(z,v_phi_2d[0.5,:])
-plt.show()
-plt.close()
-
 # x = np.array(map(float, [lines.split()[0] for lines in open('../../input_from_model/b1.0/streamline.txt', 'r')]))
 # y = np.array(map(float, [lines.split()[1] for lines in open('../../input_from_model/b1.0/streamline.txt', 'r')]))
 # #x = x / Rg
