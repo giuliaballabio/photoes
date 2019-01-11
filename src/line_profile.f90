@@ -47,7 +47,7 @@ double precision                                 :: v_los_r,v_los_th,v_los_phi
 logical,save                                     :: init=.false.
 character(len=5)                                 :: str_i
 
-!! PHYSICAL CONSTANTS !!
+!! PHYSICAL CONSTANTS IN CGS !!
 double precision,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
 double precision,parameter                       :: km=6.6846d-9,s=3.171d-8
 double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
@@ -63,9 +63,9 @@ call cpu_time(t_in)
 
 !! PHYSICS SCALING FACTORS !!
 Rg=(G*Mstar)/(cs**2)                                                      ! [cm]
-ng=CC*sqrt((3.0*Phi_star)/(4.0*pi*alphab*(Rg*Rg*Rg)))                   ! [cm^-3]
-rhog=mu*m_h*ng                                                          ! [g/cm^3]
-vth=cs/sqrt(m_atom)                                                         ! [cm/s]
+ng=CC*sqrt((3.0*Phi_star)/(4.0*pi*alphab*(Rg*Rg*Rg)))                     ! [cm^-3]
+rhog=mu*m_h*ng                                                            ! [g/cm^3]
+vth=cs/sqrt(m_atom)                                                       ! [cm/s]
 !! CONVERSION: [km/s] in [au/years]
 vel_convert=km/s
 
@@ -203,7 +203,7 @@ close(156)
 
 !! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR THE FIRST STREAMLINE !!
 do i=1,npoints
-    v_phi_stream(i)=x_stream(i)**(-0.5)
+    v_phi_stream(i)=(G*Mstar/x_stream(i))**(0.5)
 enddo
 
 !! MAP THE STREAMLINE INTO THE GRID !!
