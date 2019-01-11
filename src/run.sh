@@ -12,7 +12,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
 		for r_outer in 10.0; do
 				for incl in 0.0 90.0; do
 
-				echo "up to b="${array_b[i]} "and R_in="$r_input "for i="$incl
+				echo "up to b="${array_b[i]} ", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
 				# Update the code with the new variables
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
