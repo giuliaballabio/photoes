@@ -59,7 +59,7 @@ double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alp
 double precision,parameter                       :: m_atom=20.,Ab_ne=1.d-4,A_ul=8.39d-3,lambda_ne=12.81d-4
 double precision,parameter                       :: X_II=0.75,n_cr=5.0d5,T_ul=1122.8
 
-call cpu_time(t_in)
+! call cpu_time(t_in)
 
 !! PHYSICS SCALING FACTORS !!
 Rg=(G*Mstar)/(cs**2)                                                      ! [cm]
@@ -173,7 +173,7 @@ close(145)
 write(*,*) 'Setting the wind launching region...'
 r_inner=0.03
 r_outer=5.
-! First value to shift the streamline at zero
+! Get the first value to shift the streamline at zero
 x1=x_stream(1)
 r1=r_stream(1)
 do i=1,npoints
@@ -188,7 +188,7 @@ do while (r(l).le.r_inner)
 enddo
 l_in=l
 l=1
-do while (r(l).lt.r_outer)
+do while (r(l).le.r_outer)
     l=l+1
 enddo
 l_out=l
@@ -228,9 +228,7 @@ do l=l_in,l_out
     do k=1,npoints
         r_stream(k)=r_stream(k)-r(l)+r(l+1)
         x_stream(k)=x_stream(k)-r(l)+r(l+1)
-        ! write(*,*) r_stream(k)
-        ! write(*,*) x_stream(k)
-        v_phi_stream(k)=x_stream(k)**(-0.5)
+        v_phi_stream(k)=(G*Mstar/x_stream(i))**(0.5)
         do i=1,n_r-1
             if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
                 index_i=i
@@ -284,6 +282,7 @@ enddo
 
 !! NORMALISATION FACTOR FOR THE DENSITY !!
 !! rho(R=Rg) = rhog !!
+!! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 b_input=0.75
 b=b_input
 do i=1,n_r
@@ -342,7 +341,6 @@ rho(:,:)=rho(:,:)*rhog/(Msun/(au**3))
 v_r(:,:)=v_r(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 v_theta(:,:)=v_theta(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 v_phi(:,:)=v_phi(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
-
 !! CONVERSION: cm/s -> km/s !!
 vth=vth*1.e-5
 
@@ -454,11 +452,11 @@ do l=1,n_v
 enddo
 close(223)
 
-call cpu_time(t_fin)
-
-write(*,*) t_fin-t_in,'seconds'
-write(*,*) (t_fin-t_in)/60.,'minutes'
-write(*,*) (t_fin-t_in)/3600.,'hours'
+! call cpu_time(t_fin)
+!
+! write(*,*) t_fin-t_in,'seconds'
+! write(*,*) (t_fin-t_in)/60.,'minutes'
+! write(*,*) (t_fin-t_in)/3600.,'hours'
 write(*,*) '-----------------------------------------------------------'
 
 end program
