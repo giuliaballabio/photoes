@@ -8,8 +8,9 @@ plt.rcParams["font.family"] = 'Verdana'
 incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
 b = input("Insert the value of b: ")
 r_in = input("Insert the inner radius: ")
-v = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
-line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+r_out = input("And the outer radius: ")
+v = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 
 #print np.amax(line_flux)
 peak_edgeon = np.amax(line_flux)
@@ -25,7 +26,7 @@ if incl_deg == 0.0:
     plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
     plt.ylabel(r'Normalized L(v)', fontsize=15)
     plt.axis([-40., 40., 0., 1.2])
-    plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.png', format='png', bbox_inches='tight')
+    plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.png', format='png', bbox_inches='tight')
     plt.show()
 else:
     plt.figure()
@@ -35,12 +36,12 @@ else:
     plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
     plt.ylabel(r'Normalized L(v)', fontsize=15)
     plt.axis([-40., 40., 0., 1.2])
-    plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.png', format='png', bbox_inches='tight')
+    plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.png', format='png', bbox_inches='tight')
     plt.show()
 
-r = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
-rho = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
-v_theta = np.array(map(float, [lines.split()[2] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
+r = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
+rho = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
+v_theta = np.array(map(float, [lines.split()[2] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/bound_cond.txt', 'r')]))
 
 # plt.figure()
 # plt.loglog(r, rho, 'r')
