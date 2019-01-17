@@ -203,7 +203,7 @@ close(156)
 
 !! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR THE FIRST STREAMLINE !!
 do i=1,npoints
-    v_phi_stream(i)=(G*Mstar/x_stream(i))**(0.5)
+    v_phi_stream(i)=(x_stream(i))**(-0.5)
 enddo
 
 !! MAP THE STREAMLINE INTO THE GRID !!
@@ -224,11 +224,11 @@ sum_vphi(:,:)=0.
 !!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
 !!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
 !!$OMP DO SCHEDULE(runtime)
-do l=l_in,l_out
-    do k=1,npoints
+do l=l_in,l_out !! Number of streamlines
+    do k=1,npoints !! Number of points along each streamline
         r_stream(k)=r_stream(k)-r(l)+r(l+1)
         x_stream(k)=x_stream(k)-r(l)+r(l+1)
-        v_phi_stream(k)=(G*Mstar/x_stream(i))**(0.5)
+        v_phi_stream(k)=(x_stream(k))**(-0.5)
         do i=1,n_r-1
             if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
                 index_i=i
@@ -286,7 +286,7 @@ enddo
 b_input=0.75
 b=b_input
 do i=1,n_r
-    rho2d(i,:)=rho2d(i,:)*((r(i)/(Rg/au))**(-b))
+    rho2d(i,:)=(rho2d(i,:)/10.)*((r(i)/(Rg/au))**(-b))
 enddo
 
 if(.not.init) then
