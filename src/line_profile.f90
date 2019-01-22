@@ -1,5 +1,5 @@
 
-! ---------------------------------------------------------------------------------------
+! ----------------------------------------------------------------------------------------------
 !
 !          Giulia Ballabio,gb258@leicester.ac.uk
 !          Created on March 2018
@@ -8,13 +8,13 @@
 !                Input file -> semianalythical solutions.
 !
 !        N.B. run the code with these flags:
-!        > gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow
-!           -finit-real=snan -pedantic -fbounds-check -g -fopenmp -o output program.f90
+!        > gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow -pedantic
+!           -finit-real=snan -fbounds-check -g -fopenmp -o output line_profile.f90
 !        or alternatively with:
 !        > ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o output
-!           program.f90
+!           line_profile.f90
 !
-! ---------------------------------------------------------------------------------------
+! ----------------------------------------------------------------------------------------------
 
 
 program lineprofile
@@ -28,13 +28,13 @@ integer,parameter                                :: n_r=1113,n_theta0=250,n_thet
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
 double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
-double precision,dimension(1:n)                  :: rho_stream,v_r_stream,v_theta_stream,v_phi_stream
+double precision,dimension(1:n)                  :: rho_stream,rho_norm,v_r_stream,v_theta_stream,v_phi_stream
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,r1,x1,b,b_input
+double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,xbase,b,b_input
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
-double precision                                 :: t_in,t_fin
+!double precision                                 :: t_in,t_fin
 integer,dimension(1:n_r,1:n_theta0)              :: ncount
 double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d
 double precision,dimension(1:n_r,1:n_theta0)     :: sum_rho,sum_vr,sum_vth,sum_vphi
@@ -173,12 +173,10 @@ close(145)
 write(*,*) 'Setting the wind launching region...'
 r_inner=0.03
 r_outer=5.
-! Get the first value to shift the streamline at zero
-x1=x_stream(1)
-r1=r_stream(1)
+! First value to shift the streamline at zero
+xbase=x_stream(1)
 do i=1,npoints
-    r_stream(i)=r_stream(i)-r1+r_inner
-    x_stream(i)=x_stream(i)-x1+r_inner
+    x_stream(i)=x_stream(i)-xbase+r_inner
 enddo
 
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
@@ -201,10 +199,11 @@ do i=1,npoints
 enddo
 close(156)
 
-!! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR THE FIRST STREAMLINE !!
-do i=1,npoints
-    v_phi_stream(i)=(x_stream(i))**(-0.5)
-enddo
+!! NORMALISATION FACTOR FOR THE DENSITY DETERMINED AT THE FLOW BASE !!
+!! rho(R=Rg) = rhog !!
+!! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
+b_input=0.75
+b=b_input
 
 !! MAP THE STREAMLINE INTO THE GRID !!
 !! AT EACH STEP THE STREAMLINE IS SHIFTED AT THE CENTRE OF THE NEXT CELL !!
@@ -226,9 +225,19 @@ sum_vphi(:,:)=0.
 !!$OMP DO SCHEDULE(runtime)
 do l=l_in,l_out !! Number of streamlines
     do k=1,npoints !! Number of points along each streamline
-        r_stream(k)=r_stream(k)-r(l)+r(l+1)
-        x_stream(k)=x_stream(k)-r(l)+r(l+1)
-        v_phi_stream(k)=(x_stream(k))**(-0.5)
+      x_stream(k)=x_stream(k)+dr(l) !+r(l+1)-r(l)
+      theta_stream(k)=atan(y_stream(k)/x_stream(k))
+      r_stream(k)=x_stream(k)/cos(theta_stream(k))
+      !! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR EACH STREAMLINE !!
+      v_phi_stream(k)=(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
+      !! NORMALISATION FACTOR FOR THE DENSITY DETERMINED AT THE FLOW BASE !!
+      rho_norm(k)=(rho_stream(k))*((x_stream(1)/(Rg/au))**(-b))
+      if(.not.init) then
+          open(unit=158,file='./coordinates_xr.txt')
+      else
+          open(unit=158,file='./coordinates_xr.txt',status='old',position='append')
+      endif
+      write(158,'(4(es18.10,1X))') x_stream(k),r_stream(k)
         do i=1,n_r-1
             if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
                 index_i=i
@@ -246,25 +255,25 @@ do l=l_in,l_out !! Number of streamlines
             write(*,*) x_stream(k),r(1),r(n_r)
             write(*,*) theta_stream(k),theta(1),theta(n_theta0)
         endif
-        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_stream(k)
+        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_norm(k)
         sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
         sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
         sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
         ncount(index_i,index_j)=ncount(index_i,index_j)+1
     enddo
 enddo
+close(158)
 !!$OMP END DO
 !!$OMP END PARALLEL
 
-write(*,*)
 if(.not.init) then
-    open(unit=167,file='./coordinates.txt')
+    open(unit=167,file='./check.txt')
 else
-    open(unit=167,file='./coordinates.txt',status='old',position='append')
+    open(unit=167,file='./check.txt',status='old',position='append')
 endif
-do k=1,npoints
-    write(167,'(4(es18.10,1X))') x_stream(k),r_stream(k)
-enddo
+! do k=1,npoints
+write(167,'(4(es18.10,1X))') sum_rho
+! enddo
 close(167)
 
 !! CALCULATE THE MEAN OF THE DENSITY AND VELOCITY IN EACH CELL !!
@@ -278,15 +287,6 @@ do i=1,n_r
             v_phi2d(i,j)=sum_vphi(i,j)/ncount(i,j)
         endif
     enddo
-enddo
-
-!! NORMALISATION FACTOR FOR THE DENSITY !!
-!! rho(R=Rg) = rhog !!
-!! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
-b_input=0.75
-b=b_input
-do i=1,n_r
-    rho2d(i,:)=(rho2d(i,:)/10.)*((r(i)/(Rg/au))**(-b))
 enddo
 
 if(.not.init) then
@@ -309,25 +309,42 @@ close(178)
 close(189)
 
 !! REVERSE ALONG THETA AXIS !!
+!! THIS PART IS FOR THE HYDRO SIMULATIONS !!
+! write(*,*) 'Building the 3D field...'
+! do i=1,n_r
+!     do j=1,n_theta0
+!         !! DISC ZONE FOR z>0 !!
+!         rho(i,j)=rho2d(i,n_theta0+1-j)
+!         v_r(i,j)=v_r2d(i,n_theta0+1-j)
+!         v_theta(i,j)=-1.*v_theta2d(i,n_theta0+1-j)
+!         v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
+!         !! DISC ZONE FOR z<0 !!
+!         rho(i,n_theta/2+50+j)=rho2d(i,j)
+!         v_r(i,n_theta/2+50+j)=v_r2d(i,j)
+!         v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
+!         v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
+!     enddo
+!     !! DISC ZONE ON THE MIDPLANE !!
+!     rho(i,n_theta0+1:n_theta/2+50)=0.d0 !rho2d(i,n_theta0)
+!     v_r(i,n_theta0+1:n_theta/2+50)=0.d0 !v_r2d(i,n_theta0)
+!     v_theta(i,n_theta0+1:n_theta/2+50)=0.d0 !v_theta2d(i,n_theta0)
+!     v_phi(i,n_theta0+1:n_theta/2+50)=0.d0 !v_phi2d(i,n_theta0)
+! enddo
+!! THIS PART IS FOR THE SEMIANALYTICAL MODEL !!
 write(*,*) 'Building the 3D field...'
 do i=1,n_r
     do j=1,n_theta0
         !! DISC ZONE FOR z>0 !!
         rho(i,j)=rho2d(i,n_theta0+1-j)
         v_r(i,j)=v_r2d(i,n_theta0+1-j)
-        v_theta(i,j)=-1.*v_theta2d(i,n_theta0+1-j)
+        v_theta(i,j)=v_theta2d(i,n_theta0+1-j)
         v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
         !! DISC ZONE FOR z<0 !!
-        rho(i,n_theta/2+50+j)=rho2d(i,j)
-        v_r(i,n_theta/2+50+j)=v_r2d(i,j)
-        v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
-        v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
+        rho(i,n_theta+j)=rho2d(i,j)
+        v_r(i,n_theta+j)=v_r2d(i,j)
+        v_theta(i,n_theta+j)=v_theta2d(i,j)
+        v_phi(i,n_theta+j)=v_phi2d(i,j)
     enddo
-    !! DISC ZONE ON THE MIDPLANE !!
-    rho(i,n_theta0+1:n_theta/2+50)=0.d0 !rho2d(i,n_theta0)
-    v_r(i,n_theta0+1:n_theta/2+50)=0.d0 !v_r2d(i,n_theta0)
-    v_theta(i,n_theta0+1:n_theta/2+50)=0.d0 !v_theta2d(i,n_theta0)
-    v_phi(i,n_theta0+1:n_theta/2+50)=0.d0 !v_phi2d(i,n_theta0)
 enddo
 
 !! CONVERT TO PHYSICAL UNITS !!
