@@ -351,10 +351,10 @@ do i=1,n_r
     v_r(i,1:50)=0.d0 !v_r2d(i,n_theta0)
     v_theta(i,1:50)=0.d0 !v_theta2d(i,n_theta0)
     v_phi(i,1:50)=0.d0 !v_phi2d(i,n_theta0)
-    rho(i,550:ntheta)=0.d0 !rho2d(i,n_theta0)
-    v_r(i,550:ntheta)=0.d0 !v_r2d(i,n_theta0)
-    v_theta(i,550:ntheta)=0.d0 !v_theta2d(i,n_theta0)
-    v_phi(i,550:ntheta)=0.d0 !v_phi2d(i,n_theta0)
+    rho(i,550:n_theta)=0.d0 !rho2d(i,n_theta0)
+    v_r(i,550:n_theta)=0.d0 !v_r2d(i,n_theta0)
+    v_theta(i,550:n_theta)=0.d0 !v_theta2d(i,n_theta0)
+    v_phi(i,550:n_theta)=0.d0 !v_phi2d(i,n_theta0)
 enddo
 
 !! CONVERT TO PHYSICAL UNITS !!
