@@ -69,7 +69,7 @@ def fmt(x, pos):
     return r'${}$'.format(b)
 
 plt.figure()
-CS = plt.pcolormesh(r, z, rho_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20.)
+CS = plt.pcolormesh(r, z, rho_2d/30., cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20.)
 #plt.contour(rho_cr_2d, colors='r')
 #plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
 #cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
