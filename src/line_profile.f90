@@ -200,6 +200,17 @@ b_input=0.75
 b=b_input
 !! SHIFT AND NORMALIZE EACH STREAMLINE AND THE CORRESPONDING DENSITY !!
 write(*,*) 'Binning the streamlines into the grid...'
+x_new(:)=0.0
+y_new(:)=0.0
+theta_new(:)=0.0
+r_new(:)=0.0
+rho_new(:)=0.0
+v_phi_new(:)=0.0
+ncount(:,:)=0
+sum_rho(:,:)=0.0
+sum_vr(:,:)=0.0
+sum_vth(:,:)=0.0
+sum_vphi(:,:)=0.0
 do l=l_in,l_out
     do k=1,npoints
         x_new(k)=x_stream(k)*centre_r(l)
@@ -245,6 +256,10 @@ close(167)
 
 !! CALCULATE THE MEAN OF THE DENSITY AND VELOCITY IN EACH CELL !!
 write(*,*) 'Calculating the average density and velocity in each cell...'
+rho2d(:,:)=0.0 !1.5e-17
+v_r2d(:,:)=0.0
+v_theta2d(:,:)=0.0
+v_phi2d(:,:)=0.0 !0001
 do i=1,n_r
     do j=1,n_theta0
         if(ncount(i,j)>0)then
