@@ -27,8 +27,8 @@ integer                                          :: i,j,k,l,index_i,index_j,npoi
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
-double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
-double precision,dimension(1:n)                  :: rho_stream,rho_norm,v_r_stream,v_theta_stream,v_phi_stream
+double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream,x_new,y_new,r_new,theta_new
+double precision,dimension(1:n)                  :: rho_stream,rho_norm,rho_new,v_r_stream,v_theta_stream,v_phi_stream
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
