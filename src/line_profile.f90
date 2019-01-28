@@ -199,9 +199,9 @@ close(156)
 b_input=0.75
 b=b_input
 !! SHIFT AND NORMALIZE EACH STREAMLINE AND THE CORRESPONDING DENSITY !!
-write(*,*) 'Binning the streamlines into the grid'
+write(*,*) 'Binning the streamlines into the grid...'
 do l=l_in,l_out
-    do k=1,1000 !npoints
+    do k=1,npoints
         x_new(k)=x_stream(k)*centre_r(l)
         y_new(k)=y_stream(k)*centre_r(l)
         theta_new(k)=atan(y_new(k)/x_new(k))
