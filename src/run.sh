@@ -28,8 +28,10 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl/g" submit-job-alice
 
 				# Actually compile the code
-				ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
-				ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o photoes line_profile.f90
+				# ifort -g -check all -fpe0 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
+				# ifort -g -check all -fpe0 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o photoes line_profile.f90
+				gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
+				gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o photoes line_profile.f90
 
 				# Make a new directory if it doesn't exist
 				# if [ ! -d $RUNDIR/../data_b${array_b[i]}\_r$r_inner ]; then
