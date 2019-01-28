@@ -169,16 +169,10 @@ do i=1,npoints
 enddo
 close(145)
 
-!! SHIFT THE STREAMLINE AT THE INNER RADIUS OF THE LAUNCHING REGION !!
+!! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.03
+r_inner=0.1
 r_outer=5.
-! First value to shift the streamline at zero
-xbase=x_stream(1)
-do i=1,npoints
-    x_stream(i)=x_stream(i)-xbase+r_inner
-enddo
-
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -191,11 +185,11 @@ do while (r(l).le.r_outer)
 enddo
 l_out=l
 
-!! GET THE DATA FROM THE FIRST STREAMLINE !!
+!! GET THE DATA FROM THE SCLAE-FREE STREAMLINE !!
 write(*,*) 'Reading data from files...'
 open(unit=156,file='./rhov_fields.txt',status='old')
 do i=1,npoints
-    read(156,*) rho_stream(i),v_r_stream(i),v_theta_stream(i) !!,v_phi_stream(i)
+    read(156,*) rho_stream(i),v_r_stream(i),v_theta_stream(i)
 enddo
 close(156)
 
@@ -204,67 +198,40 @@ close(156)
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 b_input=0.75
 b=b_input
-
-!! MAP THE STREAMLINE INTO THE GRID !!
-!! AT EACH STEP THE STREAMLINE IS SHIFTED AT THE CENTRE OF THE NEXT CELL !!
-!! THEN WE RUN ALONG THE STREAMLINE AND CHECK AT WHICH CELL EACH POINT BELONGS TO !!
-write(*,*) 'Binning the streamline into the grid...'
-ncount(:,:)=0
-rho2d(:,:)=0.
-v_r2d(:,:)=0.
-v_theta2d(:,:)=0.
-v_phi2d(:,:)=0.
-sum_rho(:,:)=0.
-sum_vr(:,:)=0.
-sum_vth(:,:)=0.
-sum_vphi(:,:)=0.
-!!$OMP PARALLEL &
-!!$OMP DEFAULT(SHARED) &
-!!$OMP PRIVATE(i,j,k,l,index_i,index_j,r_stream) &
-!!$OMP REDUCTION(+: sum_rho,sum_vr,sum_vth,sum_vphi,ncount)
-!!$OMP DO SCHEDULE(runtime)
-do l=l_in,l_out !! Number of streamlines
-    do k=1,npoints !! Number of points along each streamline
-      x_stream(k)=x_stream(k)+dr(l) !+r(l+1)-r(l)
-      theta_stream(k)=atan(y_stream(k)/x_stream(k))
-      r_stream(k)=x_stream(k)/cos(theta_stream(k))
-      !! CALCULATE THE KEPLERIAN VELOCITY v_phi FOR EACH STREAMLINE !!
-      v_phi_stream(k)=(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
-      !! NORMALISATION FACTOR FOR THE DENSITY DETERMINED AT THE FLOW BASE !!
-      rho_norm(k)=(rho_stream(k))*((x_stream(1)/(Rg/au))**(-b))
-      if(.not.init) then
-          open(unit=158,file='./coordinates_xr.txt')
-      else
-          open(unit=158,file='./coordinates_xr.txt',status='old',position='append')
-      endif
-      write(158,'(4(es18.10,1X))') x_stream(k),r_stream(k)
+!! SHIFT AND NORMALIZE EACH STREAMLINE AND THE CORRESPONDING DENSITY !!
+write(*,*) 'Binning the streamlines into the grid'
+do l=l_in,l_out
+    do k=1,1000 !npoints
+        x_new(k)=x_stream(k)*centre_r(l)
+        y_new(k)=y_stream(k)*centre_r(l)
+        theta_new(k)=atan(y_new(k)/x_new(k))
+        r_new(k)=(x_new(k)**2.+y_new(k)**2.)**(0.5)
+        rho_new(k)=rho_stream(k)*((x_new(1)/(Rg/au))**(-b))
+        v_phi_new(k)=(x_new(k))**(-0.5) !(G*Mstar/(x_new(k)/(Rg/au)))**(0.5)
         do i=1,n_r-1
-            if (r(i).le.r_stream(k).and.r_stream(k).lt.r(i+1))then
+            if (r(i).le.r_new(k).and.r_new(k).lt.r(i+1))then
                 index_i=i
                 exit
             endif
         enddo
         do j=1,n_theta0-1
-            if (theta(j).le.theta_stream(k).and.theta_stream(k).lt.theta(j+1))then
+            if (theta(j).le.theta_new(k).and.theta_new(k).lt.theta(j+1))then
                 index_j=j
                 exit
             endif
         enddo
         if (index_i.le.0.or.index_j.le.0) then
             write(*,*) 'Warning! i-index or j-index out of boundary'
-            write(*,*) x_stream(k),r(1),r(n_r)
-            write(*,*) theta_stream(k),theta(1),theta(n_theta0)
+            write(*,*) x_new(k),r(1),r(n_r)
+            write(*,*) theta_new(k),theta(1),theta(n_theta0)
         endif
-        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_norm(k)
+        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_new(k)
         sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
         sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
-        sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_stream(k)
+        sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_new(k)
         ncount(index_i,index_j)=ncount(index_i,index_j)+1
     enddo
 enddo
-close(158)
-!!$OMP END DO
-!!$OMP END PARALLEL
 
 if(.not.init) then
     open(unit=167,file='./check.txt')
