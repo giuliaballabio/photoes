@@ -185,6 +185,15 @@ do while (r(l).le.r_outer)
 enddo
 l_out=l
 
+!! CALCULATING THE CENTRE OF EACH CELL !!
+write(*,*) 'Calculating the centre of the cell...'
+do i=1,n_r
+    centre_r(i)=r(i)+(dr(i)/2.)
+enddo
+do j=1,n_theta-1
+    centre_theta(j)=theta(j)+(dtheta/2.)
+enddo
+
 !! GET THE DATA FROM THE SCLAE-FREE STREAMLINE !!
 write(*,*) 'Reading data from files...'
 open(unit=156,file='./rhov_fields.txt',status='old')
