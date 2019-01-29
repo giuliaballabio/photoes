@@ -29,7 +29,7 @@ double precision,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !double precision,dimension(1:n_r-1)             :: dr
 double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream,x_new,y_new,r_new,theta_new
 double precision,dimension(1:n)                  :: rho_stream,rho_new,v_r_stream,v_theta_stream,v_phi_new
-double precision,dimension(1:n_theta)            :: theta,sinth,costh
+double precision,dimension(1:n_theta)            :: theta,sinth,costh,centre_theta
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
 double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input
