@@ -19,7 +19,7 @@ from physics_constant import *
 
 ## ––––– create a polar grid ––––– ##
 radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/grid_r.dat', 'r')]))
-theta = np.arange(0., 1.3089, np.pi/600.)+(np.pi/12.)
+theta = np.arange(0., 1.3089, np.pi/600.) #+(np.pi/12.)
 
 ## ––––– get the data from the files ––––– ##
 incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
@@ -69,13 +69,14 @@ def fmt(x, pos):
     return r'${}$'.format(b)
 
 plt.figure()
-CS = plt.pcolormesh(r, z, rho_2d/30., cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20.)
+CS = plt.pcolormesh(r, z, rho_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20.)
 #plt.contour(rho_cr_2d, colors='r')
 #plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
 #cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
 cbar = plt.colorbar(CS)
 #plt.axis([0., 1.25, 0, 0.9])
 #plt.axis([0.02, 0.04, 0, 0.02])
+plt.axis([0.02, 10., 0., 10.])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($\rho$ / $\rho_{g}$)')
@@ -85,9 +86,10 @@ plt.show()
 plt.close()
 
 plt.figure()
-CS = plt.pcolormesh(r, z, v_phi_2d, cmap='winter', norm=LogNorm(), vmin=0.05, vmax=20.)
+CS = plt.pcolormesh(r, z, v_phi_2d, cmap='winter', norm=LogNorm())#, vmin=0.25, vmax=10.)
 cbar = plt.colorbar(CS)
 #plt.axis([0., 1.25, 0, 0.9])
+plt.axis([0.02, 10., 0., 10.])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($v_{K}$)')
