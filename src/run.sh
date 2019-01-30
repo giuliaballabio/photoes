@@ -18,6 +18,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
 				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" selfsimilar_solutions.f90
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" line_profile.f90
+				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" line_profile.f90
 				sed -i -e "s/r_inner=.*/r_inner=$r_inner /g" line_profile.f90
 				sed -i -e "s/r_outer=.*/r_outer=$r_outer /g" line_profile.f90
 				sed -i -e "s/incl_deg=.*/incl_deg=$incl /g" line_profile.f90
