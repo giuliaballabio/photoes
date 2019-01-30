@@ -27,16 +27,16 @@ integer                                          :: i,j,k,l,index_i,index_j,npoi
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !double precision,dimension(1:n_r-1)             :: dr
-double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream,x_new,y_new,r_new,theta_new
-double precision,dimension(1:n)                  :: rho_stream,rho_new,v_r_stream,v_theta_stream,v_phi_new
+double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
+double precision,dimension(1:n)                  :: rho_stream,v_r_stream,v_theta_stream
 double precision,dimension(1:n_theta)            :: theta,sinth,costh,centre_theta
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input
+double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input,ub,theta_max
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
 !double precision                                 :: t_in,t_fin
 integer,dimension(1:n_r,1:n_theta0)              :: ncount
-double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d
+double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d,Rb
 double precision,dimension(1:n_r,1:n_theta0)     :: sum_rho,sum_vr,sum_vth,sum_vphi
 !double precision,dimension(1:n_r,1:n_theta0)     :: rho_mean2d,v_r_mean2d,v_th_mean2d,v_phi_mean2d
 double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
@@ -202,80 +202,34 @@ do i=1,npoints
 enddo
 close(156)
 
+!! DEFINE A THETA MAX FOR THE FORBIDDEN REGION !!
+theta_max=atan(y_stream(npoints)/x_stream(npoints))
+
 !! NORMALISATION FACTOR FOR THE DENSITY DETERMINED AT THE FLOW BASE !!
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
-b_input=0.75
+write(*,*) 'Normalizing the streamlines...'
+b_input=1.5
+ub=0.56
 b=b_input
-!! SHIFT AND NORMALIZE EACH STREAMLINE AND THE CORRESPONDING DENSITY !!
-write(*,*) 'Binning the streamlines into the grid...'
-x_new(:)=0.0
-y_new(:)=0.0
-theta_new(:)=0.0
-r_new(:)=0.0
-rho_new(:)=0.0
-v_phi_new(:)=0.0
-ncount(:,:)=0
-sum_rho(:,:)=0.0
-sum_vr(:,:)=0.0
-sum_vth(:,:)=0.0
-sum_vphi(:,:)=0.0
-do l=l_in,l_out
-    do k=1,npoints
-        x_new(k)=x_stream(k)*centre_r(l)
-        y_new(k)=y_stream(k)*centre_r(l)
-        theta_new(k)=atan(y_new(k)/x_new(k))
-        r_new(k)=(x_new(k)**2.+y_new(k)**2.)**(0.5)
-        rho_new(k)=rho_stream(k)*((x_new(1)/(Rg/au))**(-b))
-        v_phi_new(k)=(x_new(k))**(-0.5) !(G*Mstar/(x_new(k)/(Rg/au)))**(0.5)
-        do i=1,n_r-1
-            if (r(i).le.r_new(k).and.r_new(k).lt.r(i+1))then
-                index_i=i
-                exit
-            endif
-        enddo
-        do j=1,n_theta0-1
-            if (theta(j).le.theta_new(k).and.theta_new(k).lt.theta(j+1))then
-                index_j=j
-                exit
-            endif
-        enddo
-        if (index_i.le.0.or.index_j.le.0) then
-            write(*,*) 'Warning! i-index or j-index out of boundary'
-            write(*,*) x_new(k),r(1),r(n_r)
-            write(*,*) theta_new(k),theta(1),theta(n_theta0)
-        endif
-        sum_rho(index_i,index_j)=sum_rho(index_i,index_j)+rho_new(k)
-        sum_vr(index_i,index_j)=sum_vr(index_i,index_j)+v_r_stream(k)
-        sum_vth(index_i,index_j)=sum_vth(index_i,index_j)+v_theta_stream(k)
-        sum_vphi(index_i,index_j)=sum_vphi(index_i,index_j)+v_phi_new(k)
-        ncount(index_i,index_j)=ncount(index_i,index_j)+1
-    enddo
-enddo
 
-if(.not.init) then
-    open(unit=167,file='./check.txt')
-else
-    open(unit=167,file='./check.txt',status='old',position='append')
-endif
-! do k=1,npoints
-write(167,'(4(es18.10,1X))') sum_rho
-! enddo
-close(167)
-
-!! CALCULATE THE MEAN OF THE DENSITY AND VELOCITY IN EACH CELL !!
-write(*,*) 'Calculating the average density and velocity in each cell...'
 rho2d(:,:)=0.0 !1.5e-17
 v_r2d(:,:)=0.0
 v_theta2d(:,:)=0.0
 v_phi2d(:,:)=0.0 !0001
+Rb(:,:)=0.0
 do i=1,n_r
     do j=1,n_theta0
-        if(ncount(i,j)>0)then
-            rho2d(i,j)=sum_rho(i,j)/ncount(i,j)
-            v_r2d(i,j)=sum_vr(i,j)/ncount(i,j)
-            v_theta2d(i,j)=sum_vth(i,j)/ncount(i,j)
-            v_phi2d(i,j)=sum_vphi(i,j)/ncount(i,j)
+        k=1
+        if (centre_theta(j)<theta_max) then
+            do while (theta_stream(k)<centre_theta(j)) !.and.centre_theta(j).lt.theta_max)
+                k=k+1
+            enddo
+            Rb(i,j)=centre_r(i)/r_stream(k)
+            rho2d(i,j)=(rho_stream(k))*((Rb(i,j)/(Rg/au))**(-b))
+            v_r2d(i,j)=ub*v_r_stream(k)
+            v_theta2d(i,j)=ub*v_theta_stream(k)
+            v_phi2d(i,j)=(centre_r(i)*cos(centre_theta(j)))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
         endif
     enddo
 enddo
