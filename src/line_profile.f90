@@ -35,10 +35,7 @@ double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
 double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input,ub,theta_max
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
 !double precision                                 :: t_in,t_fin
-integer,dimension(1:n_r,1:n_theta0)              :: ncount
 double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d,Rb
-double precision,dimension(1:n_r,1:n_theta0)     :: sum_rho,sum_vr,sum_vth,sum_vphi
-!double precision,dimension(1:n_r,1:n_theta0)     :: rho_mean2d,v_r_mean2d,v_th_mean2d,v_phi_mean2d
 double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
 double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 double precision,dimension(1:n_v)                :: v,line_flux
@@ -226,10 +223,10 @@ do i=1,n_r
                 k=k+1
             enddo
             Rb(i,j)=centre_r(i)/r_stream(k)
-            rho2d(i,j)=(rho_stream(k))*((Rb(i,j)/(Rg/au))**(-b))
+            rho2d(i,j)=(rho_stream(k)/20.)*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
-            v_phi2d(i,j)=(centre_r(i)*cos(centre_theta(j)))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
+            v_phi2d(i,j)=(x_stream(k)*Rb(i,j))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
         endif
     enddo
 enddo
