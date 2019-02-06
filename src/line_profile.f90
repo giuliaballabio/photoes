@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l,index_i,index_j,npoints,l_in,l_out
+integer                                          :: i,j,k,l,npoints,l_in,l_out
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !double precision,dimension(1:n_r-1)             :: dr
@@ -223,7 +223,7 @@ do i=1,n_r
                 k=k+1
             enddo
             Rb(i,j)=centre_r(i)/r_stream(k)
-            rho2d(i,j)=(rho_stream(k)/20.)*((Rb(i,j)/(Rg/au))**(-b))
+            rho2d(i,j)=(rho_stream(k)/50.)*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
             v_phi2d(i,j)=(x_stream(k)*Rb(i,j))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
