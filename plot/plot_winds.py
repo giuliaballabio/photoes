@@ -29,16 +29,16 @@ r_out = input("And the outer radius: ")
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/rho_grid.txt', 'r')]))
 v_phi = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/v_phi_grid.txt', 'r')]))
 
-# rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
-# v_r = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
-# v_theta = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
-# v_phi = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
+rho_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
+v_r_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
+# v_theta_hydro = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
+# v_phi_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
 
 ## ––––– create a grid (r, theta) ––––– ##
 grid_r, grid_theta = np.meshgrid(radius, theta, indexing='ij')
 rho_2d = rho_mean.reshape(len(radius), len(theta))
-
 v_phi_2d = v_phi.reshape(len(radius), len(theta))
+rho_hydro_2d = rho_hydro.reshape(len(radius), len(theta))
 
 rho_cr = n_cr * m_h * mu / rhog
 rho_cr_2d = [[rho_cr for i in range(len(theta))] for j in range(len(radius))]
@@ -54,6 +54,24 @@ plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
 plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/boundary_condition.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro/boundary_condition.png', format='png', bbox_inches='tight')
+# plt.show()
+plt.close()
+
+## ––––– plot the density at a fixed theta as function of the radius ––––– ##
+rho_r = []
+rho_hydro_r = []
+for i in range(len(radius)):
+    rho_r.append(rho_2d[i][50])
+    rho_hydro_r.append(rho_hydro_2d[i][50])
+plt.figure()
+plt.loglog(radius, rho_r, 'r')
+plt.loglog(radius, rho_hydro_r, 'b')
+plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+#plt.title(r'Boundary condition', fontsize=15)
+plt.xlabel(r'R / R$_{g}$',fontsize=15)
+plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
+plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/density_fixedtheta.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/boundary_condition.png', format='png', bbox_inches='tight')
 plt.show()
 plt.close()
@@ -95,7 +113,7 @@ plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($v_{K}$)')
 plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
 # plt.savefig('../data_hydro/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
-plt.show()
+# plt.show()
 plt.close()
 
 # x = np.array(map(float, [lines.split()[0] for lines in open('../../input_from_model/b1.0/streamline.txt', 'r')]))
