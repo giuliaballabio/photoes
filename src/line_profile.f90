@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l,npoints,l_in,l_out
+integer                                          :: i,j,k,l,npoints,l_in,l_out,j_max
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !double precision,dimension(1:n_r-1)             :: dr
@@ -201,6 +201,11 @@ close(156)
 
 !! DEFINE A THETA MAX FOR THE FORBIDDEN REGION !!
 theta_max=atan(y_stream(npoints)/x_stream(npoints))
+j=1
+do while (centre_theta(j).le.theta_max)
+    j=j+1
+enddo
+j_max=j
 
 !! NORMALISATION FACTOR FOR THE DENSITY DETERMINED AT THE FLOW BASE !!
 !! rho(R=Rg) = rhog !!
@@ -227,6 +232,11 @@ do i=1,n_r
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
             v_phi2d(i,j)=(x_stream(k)*Rb(i,j))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
+        elseif (centre_theta(j)>theta_max) then
+            rho2d(i,j)=0.d0
+            v_r2d(i,j)=0.d0
+            v_theta2d(i,j)=0.d0
+            v_phi2d(i,j)=0.d0
         endif
     enddo
 enddo
@@ -298,6 +308,18 @@ do i=1,n_r
     v_theta(i,550:n_theta)=0.d0 !v_theta2d(i,n_theta0)
     v_phi(i,550:n_theta)=0.d0 !v_phi2d(i,n_theta0)
 enddo
+
+if(.not.init) then
+    open(unit=198,file='./rho.txt')
+else
+    open(unit=198,file='./rho.txt',status='old',position='append')
+endif
+do i=1,n_r
+    do j=1,n_theta
+        write(198,'(4(es18.10,1X))') rho(i,j)
+    enddo
+enddo
+close(198)
 
 !! CONVERT TO PHYSICAL UNITS !!
 write(*,*) 'Converting to physical units...'
