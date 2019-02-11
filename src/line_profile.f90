@@ -288,25 +288,25 @@ write(*,*) 'Building the 3D field...'
 do i=1,n_r
     do j=1,n_theta0
         !! DISC ZONE FOR z>0 UP TO 250 !!
-        rho(i,50+j)=rho2d(i,n_theta0+1-j)
-        v_r(i,50+j)=v_r2d(i,n_theta0+1-j)
-        v_theta(i,50+j)=v_theta2d(i,n_theta0+1-j)
-        v_phi(i,50+j)=v_phi2d(i,n_theta0+1-j)
-        !! DISC ZONE FOR z<0 !!
-        rho(i,n_theta/2+j)=rho2d(i,j)
-        v_r(i,n_theta/2+j)=v_r2d(i,j)
-        v_theta(i,n_theta/2+j)=v_theta2d(i,j)
-        v_phi(i,n_theta/2+j)=v_phi2d(i,j)
+        rho(i,j)=rho2d(i,j)
+        v_r(i,j)=v_r2d(i,j)
+        v_theta(i,j)=v_theta2d(i,j)
+        v_phi(i,j)=v_phi2d(i,j)
+        !! DISC ZONE FOR z<0 DOWN TO 250 !!
+        rho(i,n_theta/2+j)=rho2d(i,n_theta0+1-j)
+        v_r(i,n_theta/2+j)=v_r2d(i,n_theta0+1-j)
+        v_theta(i,n_theta/2+j)=v_theta2d(i,n_theta0+1-j)
+        v_phi(i,n_theta/2+j)=v_phi2d(i,n_theta0+1-j)
     enddo
     !! REGIONS NEAR THE Z AXIS !!
-    rho(i,1:50)=0.d0 !rho2d(i,n_theta0)
-    v_r(i,1:50)=0.d0 !v_r2d(i,n_theta0)
-    v_theta(i,1:50)=0.d0 !v_theta2d(i,n_theta0)
-    v_phi(i,1:50)=0.d0 !v_phi2d(i,n_theta0)
-    rho(i,550:n_theta)=0.d0 !rho2d(i,n_theta0)
-    v_r(i,550:n_theta)=0.d0 !v_r2d(i,n_theta0)
-    v_theta(i,550:n_theta)=0.d0 !v_theta2d(i,n_theta0)
-    v_phi(i,550:n_theta)=0.d0 !v_phi2d(i,n_theta0)
+    rho(i,n_theta0:n_theta/2)=0.d0 !1.5e-17
+    v_r(i,n_theta0:n_theta/2)=0.d0
+    v_theta(i,n_theta0:n_theta/2)=0.d0
+    v_phi(i,n_theta0:n_theta/2)=0.d0
+    rho(i,n_theta/2+ntheta0:n_theta)=0.d0
+    v_r(i,n_theta/2+ntheta0:n_theta)=0.d0
+    v_theta(i,n_theta/2+ntheta0:n_theta)=0.d0
+    v_phi(i,n_theta/2+ntheta0:n_theta)=0.d0
 enddo
 
 if(.not.init) then
@@ -315,7 +315,7 @@ else
     open(unit=198,file='./rho.txt',status='old',position='append')
 endif
 do i=1,n_r
-    do j=1,n_theta
+    do j=1,n_theta0
         write(198,'(4(es18.10,1X))') rho(i,j)
     enddo
 enddo
