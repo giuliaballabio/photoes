@@ -303,10 +303,10 @@ do i=1,n_r
     v_r(i,n_theta0:n_theta/2)=0.d0
     v_theta(i,n_theta0:n_theta/2)=0.d0
     v_phi(i,n_theta0:n_theta/2)=0.d0
-    rho(i,n_theta/2+ntheta0:n_theta)=0.d0
-    v_r(i,n_theta/2+ntheta0:n_theta)=0.d0
-    v_theta(i,n_theta/2+ntheta0:n_theta)=0.d0
-    v_phi(i,n_theta/2+ntheta0:n_theta)=0.d0
+    rho(i,n_theta/2+n_theta0:n_theta)=0.d0
+    v_r(i,n_theta/2+n_theta0:n_theta)=0.d0
+    v_theta(i,n_theta/2+n_theta0:n_theta)=0.d0
+    v_phi(i,n_theta/2+n_theta0:n_theta)=0.d0
 enddo
 
 if(.not.init) then
