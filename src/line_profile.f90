@@ -247,14 +247,14 @@ else
     open(unit=178,file='./rho_grid.txt',status='old',position='append')
 endif
 if(.not.init) then
-    open(unit=189,file='./v_phi_grid.txt')
+    open(unit=189,file='./v_grid.txt')
 else
-    open(unit=189,file='./v_phi_grid.txt',status='old',position='append')
+    open(unit=189,file='./v_grid.txt',status='old',position='append')
 endif
 do i=1,n_r
     do j=1,n_theta0
-        write(178,'(4(es18.10,1X))') rho2d(i,j)
-        write(189,'(4(es18.10,1X))') v_phi2d(i,j) !v_r2d(i,j),v_theta2d(i,j),
+        write(178,'(1(es18.10,1X))') rho2d(i,j)
+        write(189,'(3(es18.10,1X))') v_phi2d(i,j),v_r2d(i,j),v_theta2d(i,j)
     enddo
 enddo
 close(178)
@@ -314,12 +314,19 @@ if(.not.init) then
 else
     open(unit=198,file='./rho.txt',status='old',position='append')
 endif
+if(.not.init) then
+    open(unit=200,file='./velocities.txt')
+else
+    open(unit=200,file='./velocities.txt',status='old',position='append')
+endif
 do i=1,n_r
-    do j=1,n_theta0
-        write(198,'(4(es18.10,1X))') rho(i,j)
+    do j=1,n_theta
+        write(198,'(1(es18.10,1X))') rho(i,j)
+        write(200,'(3(es18.10,1X))') v_phi(i,j), v_r(i,j), v_theta(i,j)
     enddo
 enddo
 close(198)
+close(200)
 
 !! CONVERT TO PHYSICAL UNITS !!
 write(*,*) 'Converting to physical units...'
