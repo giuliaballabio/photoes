@@ -288,25 +288,25 @@ write(*,*) 'Building the 3D field...'
 do i=1,n_r
     do j=1,n_theta0
         !! DISC ZONE FOR z>0 UP TO 250 !!
-        rho(i,j)=rho2d(i,j)
-        v_r(i,j)=v_r2d(i,j)
-        v_theta(i,j)=v_theta2d(i,j)
-        v_phi(i,j)=v_phi2d(i,j)
+        rho(i,n_theta/2+j)=rho2d(i,j)
+        v_r(i,n_theta/2+j)=v_r2d(i,j)
+        v_theta(i,n_theta/2+j)=v_theta2d(i,j)
+        v_phi(i,n_theta/2+j)=v_phi2d(i,j)
         !! DISC ZONE FOR z<0 DOWN TO 250 !!
-        rho(i,n_theta/2+j)=rho2d(i,n_theta0+1-j)
-        v_r(i,n_theta/2+j)=v_r2d(i,n_theta0+1-j)
-        v_theta(i,n_theta/2+j)=v_theta2d(i,n_theta0+1-j)
-        v_phi(i,n_theta/2+j)=v_phi2d(i,n_theta0+1-j)
+        rho(i,n_theta/2-j)=rho2d(i,j) !(i,n_theta0+1-j)
+        v_r(i,n_theta/2-j)=v_r2d(i,j) !(i,n_theta0+1-j)
+        v_theta(i,n_theta/2-j)=v_theta2d(i,j) !(i,n_theta0+1-j)
+        v_phi(i,n_theta/2-j)=v_phi2d(i,j) !(i,n_theta0+1-j)
     enddo
     !! REGIONS NEAR THE Z AXIS !!
-    rho(i,n_theta0:n_theta/2)=0.d0 !1.5e-17
-    v_r(i,n_theta0:n_theta/2)=0.d0
-    v_theta(i,n_theta0:n_theta/2)=0.d0
-    v_phi(i,n_theta0:n_theta/2)=0.d0
-    rho(i,n_theta/2+n_theta0:n_theta)=0.d0
-    v_r(i,n_theta/2+n_theta0:n_theta)=0.d0
-    v_theta(i,n_theta/2+n_theta0:n_theta)=0.d0
-    v_phi(i,n_theta/2+n_theta0:n_theta)=0.d0
+    ! rho(i,n_theta0:n_theta/2)=0.d0 !1.5e-17
+    ! v_r(i,n_theta0:n_theta/2)=0.d0
+    ! v_theta(i,n_theta0:n_theta/2)=0.d0
+    ! v_phi(i,n_theta0:n_theta/2)=0.d0
+    ! rho(i,n_theta/2+n_theta0:n_theta)=0.d0
+    ! v_r(i,n_theta/2+n_theta0:n_theta)=0.d0
+    ! v_theta(i,n_theta/2+n_theta0:n_theta)=0.d0
+    ! v_phi(i,n_theta/2+n_theta0:n_theta)=0.d0
 enddo
 
 if(.not.init) then
