@@ -233,10 +233,10 @@ do i=1,n_r
             v_theta2d(i,j)=ub*v_theta_stream(k)
             v_phi2d(i,j)=(x_stream(k)*Rb(i,j))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
         elseif (centre_theta(j)>theta_max) then
-            rho2d(i,j)=0.d0
-            v_r2d(i,j)=0.d0
-            v_theta2d(i,j)=0.d0
-            v_phi2d(i,j)=0.d0
+            rho2d(i,j)=1.5e-15
+            v_r2d(i,j)=5.e-1
+            v_theta2d(i,j)=0.5
+            v_phi2d(i,j)=0.05
         endif
     enddo
 enddo
@@ -285,28 +285,48 @@ close(189)
 !! THIS PART IS FOR THE SEMIANALYTICAL MODEL !!
 !! THE STREAMLINES START FROM THE MIDPLANE !!
 write(*,*) 'Building the 3D field...'
+!! WIND STARTING FROM THE MIDPLANE
+! do i=1,n_r
+!     do j=1,n_theta0
+!         !! DISC ZONE FOR z>0 UP TO 250 !!
+!         rho(i,50+j)=rho2d(i,n_theta0+1-j)
+!         v_r(i,50+j)=v_r2d(i,n_theta0+1-j)
+!         v_theta(i,50+j)=v_theta2d(i,n_theta0+1-j)
+!         v_phi(i,50+j)=v_phi2d(i,n_theta0+1-j)
+!         !! DISC ZONE FOR z<0 DOWN TO 250 !!
+!         rho(i,n_theta/2+j)=rho2d(i,j) !(i,n_theta0+1-j)
+!         v_r(i,n_theta/2+j)=v_r2d(i,j) !(i,n_theta0+1-j)
+!         v_theta(i,n_theta/2+j)=v_theta2d(i,j) !(i,n_theta0+1-j)
+!         v_phi(i,n_theta/2+j)=v_phi2d(i,j) !(i,n_theta0+1-j)
+!     enddo
+!     !! REGIONS NEAR THE Z AXIS !!
+!     rho(i,1:50)=0.d0
+!     v_r(i,1:50)=0.d0
+!     v_theta(i,1:50)=0.d0
+!     v_phi(i,1:50)=0.d0
+!     rho(i,n_theta/2+n_theta0:n_theta)=0.d0
+!     v_r(i,n_theta/2+n_theta0:n_theta)=0.d0
+!     v_theta(i,n_theta/2+n_theta0:n_theta)=0.d0
+!     v_phi(i,n_theta/2+n_theta0:n_theta)=0.d0
+! enddo
 do i=1,n_r
     do j=1,n_theta0
-        !! DISC ZONE FOR z>0 UP TO 250 !!
-        rho(i,50+j)=rho2d(i,n_theta0+1-j)
-        v_r(i,50+j)=v_r2d(i,n_theta0+1-j)
-        v_theta(i,50+j)=v_theta2d(i,n_theta0+1-j)
-        v_phi(i,50+j)=v_phi2d(i,n_theta0+1-j)
-        !! DISC ZONE FOR z<0 DOWN TO 250 !!
-        rho(i,n_theta/2+j)=rho2d(i,j) !(i,n_theta0+1-j)
-        v_r(i,n_theta/2+j)=v_r2d(i,j) !(i,n_theta0+1-j)
-        v_theta(i,n_theta/2+j)=v_theta2d(i,j) !(i,n_theta0+1-j)
-        v_phi(i,n_theta/2+j)=v_phi2d(i,j) !(i,n_theta0+1-j)
+        !! DISC ZONE FOR z>0 !!
+        rho(i,j)=rho2d(i,n_theta0+1-j)
+        v_r(i,j)=v_r2d(i,n_theta0+1-j)
+        v_theta(i,j)=v_theta2d(i,n_theta0+1-j)
+        v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
+        !! DISC ZONE FOR z<0 !!
+        rho(i,n_theta/2+50+j)=rho2d(i,j)
+        v_r(i,n_theta/2+50+j)=v_r2d(i,j)
+        v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
+        v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
     enddo
-    !! REGIONS NEAR THE Z AXIS !!
-    rho(i,1:50)=0.d0
-    v_r(i,1:50)=0.d0
-    v_theta(i,1:50)=0.d0
-    v_phi(i,1:50)=0.d0
-    rho(i,n_theta/2+n_theta0:n_theta)=0.d0
-    v_r(i,n_theta/2+n_theta0:n_theta)=0.d0
-    v_theta(i,n_theta/2+n_theta0:n_theta)=0.d0
-    v_phi(i,n_theta/2+n_theta0:n_theta)=0.d0
+    !! DISC ZONE ON THE MIDPLANE !!
+    rho(i,n_theta0+1:n_theta/2+50)=0.d0
+    v_r(i,n_theta0+1:n_theta/2+50)=0.d0
+    v_theta(i,n_theta0+1:n_theta/2+50)=0.d0
+    v_phi(i,n_theta0+1:n_theta/2+50)=0.d0
 enddo
 
 if(.not.init) then
