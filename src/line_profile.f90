@@ -286,48 +286,49 @@ close(189)
 !! THE STREAMLINES START FROM THE MIDPLANE !!
 write(*,*) 'Building the 3D field...'
 !! WIND STARTING FROM THE MIDPLANE
-! do i=1,n_r
-!     do j=1,n_theta0
-!         !! DISC ZONE FOR z>0 UP TO 250 !!
-!         rho(i,50+j)=rho2d(i,n_theta0+1-j)
-!         v_r(i,50+j)=v_r2d(i,n_theta0+1-j)
-!         v_theta(i,50+j)=v_theta2d(i,n_theta0+1-j)
-!         v_phi(i,50+j)=v_phi2d(i,n_theta0+1-j)
-!         !! DISC ZONE FOR z<0 DOWN TO 250 !!
-!         rho(i,n_theta/2+j)=rho2d(i,j) !(i,n_theta0+1-j)
-!         v_r(i,n_theta/2+j)=v_r2d(i,j) !(i,n_theta0+1-j)
-!         v_theta(i,n_theta/2+j)=v_theta2d(i,j) !(i,n_theta0+1-j)
-!         v_phi(i,n_theta/2+j)=v_phi2d(i,j) !(i,n_theta0+1-j)
-!     enddo
-!     !! REGIONS NEAR THE Z AXIS !!
-!     rho(i,1:50)=0.d0
-!     v_r(i,1:50)=0.d0
-!     v_theta(i,1:50)=0.d0
-!     v_phi(i,1:50)=0.d0
-!     rho(i,n_theta/2+n_theta0:n_theta)=0.d0
-!     v_r(i,n_theta/2+n_theta0:n_theta)=0.d0
-!     v_theta(i,n_theta/2+n_theta0:n_theta)=0.d0
-!     v_phi(i,n_theta/2+n_theta0:n_theta)=0.d0
-! enddo
 do i=1,n_r
     do j=1,n_theta0
-        !! DISC ZONE FOR z>0 !!
-        rho(i,j)=rho2d(i,n_theta0+1-j)
-        v_r(i,j)=v_r2d(i,n_theta0+1-j)
-        v_theta(i,j)=v_theta2d(i,n_theta0+1-j)
-        v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
-        !! DISC ZONE FOR z<0 !!
-        rho(i,n_theta/2+50+j)=rho2d(i,j)
-        v_r(i,n_theta/2+50+j)=v_r2d(i,j)
-        v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
-        v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
+        !! DISC ZONE FOR z>0 UP TO 250 !!
+        rho(i,50+j)=rho2d(i,n_theta0+1-j)
+        v_r(i,50+j)=v_r2d(i,n_theta0+1-j)
+        v_theta(i,50+j)=v_theta2d(i,n_theta0+1-j)
+        v_phi(i,50+j)=v_phi2d(i,n_theta0+1-j)
+        !! DISC ZONE FOR z<0 DOWN TO 250 !!
+        rho(i,n_theta/2+j)=rho2d(i,j) !(i,n_theta0+1-j)
+        v_r(i,n_theta/2+j)=v_r2d(i,j) !(i,n_theta0+1-j)
+        v_theta(i,n_theta/2+j)=v_theta2d(i,j) !(i,n_theta0+1-j)
+        v_phi(i,n_theta/2+j)=v_phi2d(i,j) !(i,n_theta0+1-j)
     enddo
-    !! DISC ZONE ON THE MIDPLANE !!
-    rho(i,n_theta0+1:n_theta/2+50)=0.d0
-    v_r(i,n_theta0+1:n_theta/2+50)=0.d0
-    v_theta(i,n_theta0+1:n_theta/2+50)=0.d0
-    v_phi(i,n_theta0+1:n_theta/2+50)=0.d0
+    !! REGIONS NEAR THE Z AXIS !!
+    rho(i,1:50)=0.d0
+    v_r(i,1:50)=0.d0
+    v_theta(i,1:50)=0.d0
+    v_phi(i,1:50)=0.d0
+    rho(i,n_theta/2+n_theta0:n_theta)=0.d0
+    v_r(i,n_theta/2+n_theta0:n_theta)=0.d0
+    v_theta(i,n_theta/2+n_theta0:n_theta)=0.d0
+    v_phi(i,n_theta/2+n_theta0:n_theta)=0.d0
 enddo
+!! WIND STARTING AT A FIXED THETA, AS THE HYDRO SIMULATIONS
+! do i=1,n_r
+!     do j=1,n_theta0
+!         !! DISC ZONE FOR z>0 !!
+!         rho(i,j)=rho2d(i,n_theta0+1-j)
+!         v_r(i,j)=v_r2d(i,n_theta0+1-j)
+!         v_theta(i,j)=v_theta2d(i,n_theta0+1-j)
+!         v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
+!         !! DISC ZONE FOR z<0 !!
+!         rho(i,n_theta/2+50+j)=rho2d(i,j)
+!         v_r(i,n_theta/2+50+j)=v_r2d(i,j)
+!         v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
+!         v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
+!     enddo
+!     !! DISC ZONE ON THE MIDPLANE !!
+!     rho(i,n_theta0+1:n_theta/2+50)=0.d0
+!     v_r(i,n_theta0+1:n_theta/2+50)=0.d0
+!     v_theta(i,n_theta0+1:n_theta/2+50)=0.d0
+!     v_phi(i,n_theta0+1:n_theta/2+50)=0.d0
+! enddo
 
 if(.not.init) then
     open(unit=198,file='./rho.txt')
@@ -354,11 +355,11 @@ write(*,*) 'Converting to physical units...'
 r(:)=r(:)*Rg/au
 dr(:)=dr(:)*Rg/au
 !! CONVERSION: code units -> g/cm**3 -> Msun/au**3 !!
-rho(:,:)=rho(:,:)*rhog/(Msun/(au**3))
+rho(:,:)=rho(:,:)*rhog !/(Msun/(au**3))
 !! CONVERSION: code units -> cm/s -> km/s !!
-v_r(:,:)=v_r(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
-v_theta(:,:)=v_theta(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
-v_phi(:,:)=v_phi(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
+v_r(:,:)=v_r(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
+v_theta(:,:)=v_theta(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
+v_phi(:,:)=v_phi(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 !! CONVERSION: cm/s -> km/s !!
 vth=vth*1.e-5
 
