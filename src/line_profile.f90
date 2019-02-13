@@ -224,14 +224,14 @@ do i=1,n_r
     do j=1,n_theta0
         k=1
         if (centre_theta(j)<theta_max) then
-            do while (theta_stream(k)<centre_theta(j)) !.and.centre_theta(j).lt.theta_max)
+            do while (theta_stream(k)<centre_theta(j))
                 k=k+1
             enddo
             Rb(i,j)=centre_r(i)/r_stream(k)
-            rho2d(i,j)=(rho_stream(k)/50.)*((Rb(i,j)/(Rg/au))**(-b))
+            rho2d(i,j)=(rho_stream(k)/2.)*((Rb(i,j))**(-b)) !*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
-            v_phi2d(i,j)=((x_stream(k)/(Rg/au))*(Rb(i,j)/(Rg/au)))**(-0.5) !(x_stream(k)*Rb(i,j))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
+            v_phi2d(i,j)=(x_stream(k)*Rb(i,j))**(-0.5) !((x_stream(k)/(Rg/au))*(Rb(i,j)/(Rg/au)))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
