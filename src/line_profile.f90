@@ -231,12 +231,12 @@ do i=1,n_r
             rho2d(i,j)=(rho_stream(k)/50.)*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
-            v_phi2d(i,j)=(x_stream(k)*Rb(i,j))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
+            v_phi2d(i,j)=((x_stream(k)/(Rg/au))*(Rb(i,j)/(Rg/au)))**(-0.5) !(x_stream(k)*Rb(i,j))**(-0.5) !(G*Mstar/(x_stream(k)/(Rg/au)))**(0.5)
         elseif (centre_theta(j)>theta_max) then
-            rho2d(i,j)=1.5e-15
-            v_r2d(i,j)=5.e-1
-            v_theta2d(i,j)=0.5
-            v_phi2d(i,j)=0.05
+            rho2d(i,j)=0.d0 !1.5e-15
+            v_r2d(i,j)=0.d0 !5.e-1
+            v_theta2d(i,j)=0.d0 !0.5
+            v_phi2d(i,j)=0.d0 !0.05
         endif
     enddo
 enddo
@@ -355,7 +355,7 @@ write(*,*) 'Converting to physical units...'
 r(:)=r(:)*Rg/au
 dr(:)=dr(:)*Rg/au
 !! CONVERSION: code units -> g/cm**3 -> Msun/au**3 !!
-rho(:,:)=rho(:,:)*rhog !/(Msun/(au**3))
+rho(:,:)=rho(:,:)*rhog/(Msun/(au**3))
 !! CONVERSION: code units -> cm/s -> km/s !!
 v_r(:,:)=v_r(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 v_theta(:,:)=v_theta(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
@@ -414,7 +414,7 @@ do i=1,n_r
 enddo
 tot_flux=sum(cell_flux)*n_phi
 write(*,*) '-----------------------------------------------------------'
-write(*,*) '   Total flux =',tot_flux,'Lsun'
+write(*,*) '   Total flux =',tot_flux/Lsun,'Lsun'
 write(*,*) '-----------------------------------------------------------'
 
 !! CREATE VELOCITY ARRAY !!
