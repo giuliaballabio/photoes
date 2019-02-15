@@ -168,8 +168,8 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1 
-r_outer=5.0 
+r_inner=0.1
+r_outer=5.0
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -211,8 +211,8 @@ theta_max=atan(y_stream(npoints)/x_stream(npoints))
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 write(*,*) 'Normalizing the streamlines...'
-b_input=1.50 
-ub=0.56 
+b_input=1.50
+ub=0.56
 b=b_input
 
 rho2d(:,:)=0.0 !1.5e-17
@@ -220,7 +220,7 @@ v_r2d(:,:)=0.0
 v_theta2d(:,:)=0.0
 v_phi2d(:,:)=0.0 !0001
 Rb(:,:)=0.0
-do i=l_in,n_r
+do i=l_in,l_out
     do j=1,n_theta0
         k=1
         if (centre_theta(j)<theta_max) then
@@ -427,8 +427,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=90.0 
-str_i='90.0' 
+incl_deg=90.0
+str_i='90.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
