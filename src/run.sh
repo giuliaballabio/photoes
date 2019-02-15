@@ -3,14 +3,14 @@
 
 RUNDIR=${PWD}
 
-array_b=( 1.50 ) # 0.75 1.00 1.50 2.00 )
-array_ub=( 0.56 ) # 0.85 0.77 0.56 0.29 )
+array_b=( 0.75 1.00 1.50 2.00 )
+array_ub=( 0.85 0.77 0.56 0.29 )
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
-	for r_inner in 0.1; do
-		for r_outer in 5.0; do
-				for incl in 0.0 90.0; do
+	for r_inner in 0.03 0.1 1.; do
+		for r_outer in 5.0 9.5; do
+				for incl in 0.0 45.0 90.0; do
 
 				echo "up to b="${array_b[i]} ", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
@@ -55,8 +55,10 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				rm *genmod* photoes selfsimilar_solutions
 
 				# Submit the job on dial or alice
-				#qsub $RUNDIR/../data_b${array_b[i]}\_r$r_inner/incl_$incl/submit-job-alice
+				cd $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+				qsub submit-job-alice
 				#qsub $RUNDIR/../submit-job-dial
+				cd $RUNDIR
 
 				done
 		done
