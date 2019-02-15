@@ -168,8 +168,8 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1
-r_outer=5.
+r_inner=0.1 
+r_outer=5.0 
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -211,8 +211,8 @@ theta_max=atan(y_stream(npoints)/x_stream(npoints))
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 write(*,*) 'Normalizing the streamlines...'
-b_input=1.5
-ub=0.56
+b_input=1.50 
+ub=0.56 
 b=b_input
 
 rho2d(:,:)=0.0 !1.5e-17
@@ -228,10 +228,10 @@ do i=l_in,n_r
                 k=k+1
             enddo
             Rb(i,j)=centre_r(i)/r_stream(k)
-            rho2d(i,j)=(rho_stream(k)/1.5)*((Rb(i,j))**(-b)) !*((Rb(i,j)/(Rg/au))**(-b))
+            rho2d(i,j)=(rho_stream(k))*((Rb(i,j))**(-b)) !*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
-            v_phi2d(i,j)=(2.*pi)*(x_stream(k)*Rb(i,j))**(-0.5) !((x_stream(k)/(Rg/au))*(Rb(i,j)/(Rg/au)))**(-0.5)
+            v_phi2d(i,j)=((x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !((x_stream(k)/(Rg/au))*(Rb(i,j)/(Rg/au)))**(-0.5)
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
@@ -427,8 +427,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=90.0
-str_i='90.0'
+incl_deg=90.0 
+str_i='90.0' 
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
