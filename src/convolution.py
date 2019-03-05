@@ -5,10 +5,18 @@ from scipy.optimize import curve_fit
 speed_light=299792.458                     #km/s
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
-incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
-b = input("Insert the value of b: ")
-r_in = input("Insert the inner radius: ")
-r_out = input("And the outer radius: ")
+# incl_deg = 20.0
+# b = input("Insert the value of b: ")
+# r_in = input("Insert the inner radius: ")
+# r_out = input("And the outer radius: ")
+incl_deg = 20.0
+b_input = 0.75
+r_inner = 0.1
+r_outer = 5.0
+
+b = b_input
+r_in = r_inner
+r_out = r_outer
 
 v = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
