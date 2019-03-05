@@ -17,7 +17,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
         sed -i -e "s/b_input = .*/b_input = ${array_b[i]} /g" convolution.py
         sed -i -e "s/incl_deg = .*/incl_deg = $incl /g" convolution.py
         sed -i -e "s/r_inner = .*/r_inner = $r_inner /g" convolution.py
-				sed -i -e "s/r_outer = .*/r_outer = $r_outer /g" convolution.py
+        sed -i -e "s/r_outer = .*/r_outer = $r_outer /g" convolution.py
         python convolution.py
 
         cd $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
