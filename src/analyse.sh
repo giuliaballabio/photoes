@@ -9,7 +9,7 @@ array_ub=( 0.85 0.77 0.56 0.29 )
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
 	for r_inner in 0.1; do
-		for r_outer in 0.9, 1.0, 1.5; do
+		for r_outer in 0.9 1.0 1.5; do
 			for incl in 0.0 1.0 5.0 10.0 20.0 27.0 35.0 45.0 50.0 60.0 68.0 75.0 82.0 90.0; do
 
         cd $RUNDIR
