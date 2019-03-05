@@ -6,19 +6,23 @@ RUNDIR=${PWD}
 array_b=( 0.75 1.00 1.50 2.00 )
 array_ub=( 0.85 0.77 0.56 0.29 )
 
+cs=3.0e5 #5.0e5 10.e5
+
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
-	for r_inner in 0.03 0.1 1.0; do
+	for r_inner in 0.1 1.0; do
 		for r_outer in 5.0 9.5; do
 			for incl in 0.0 45.0 90.0; do
 
-				echo "up to b="${array_b[i]} ",R_out="$r_outer "and R_in="$r_inner "for i="$incl
+				echo "up to b="${array_b[i]}", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
 				# Update the code with the new variables
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
 				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" selfsimilar_solutions.f90
+				sed -i -e "s/cs=.*/cs=$cs /g" selfsimilar_solutions.f90
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" line_profile.f90
 				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" line_profile.f90
+				sed -i -e "s/cs=.*/cs=$cs /g" line_profile.f90
 				sed -i -e "s/r_inner=.*/r_inner=$r_inner /g" line_profile.f90
 				sed -i -e "s/r_outer=.*/r_outer=$r_outer /g" line_profile.f90
 				sed -i -e "s/incl_deg=.*/incl_deg=$incl /g" line_profile.f90
@@ -40,22 +44,22 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				# fi
 				#
 				# cd $RUNDIR/../data_b${array_b[i]}\_r$r_inner
-				if [ ! -d $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl ]; then
-					if [ ! -d $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer ]; then
-						mkdir $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer
+				if [ ! -d $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl ]; then
+					if [ ! -d $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer ]; then
+						mkdir $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer
 					fi
-					mkdir $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+					mkdir $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
 				fi
 
 
 				# Copy files to this new directory
-				cp selfsimilar_solutions photoes submit-job* $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+				cp selfsimilar_solutions photoes submit-job* $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
 
 				# Remove unuseful files
 				rm *genmod* photoes selfsimilar_solutions
 
 				# Submit the job on dial or alice
-				cd $RUNDIR/../data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+				cd $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
 				qsub submit-job-alice
 				#qsub $RUNDIR/../submit-job-dial
 				cd $RUNDIR
