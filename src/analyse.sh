@@ -12,7 +12,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 		for r_outer in 0.9 1.0 1.5; do
 			for incl in 0.0 1.0 5.0 10.0 20.0 27.0 35.0 45.0 50.0 60.0 68.0 75.0 82.0 90.0; do
 
-        cd $RUNDIR
+        echo "up to b="${array_b[i]} ",R_out="$r_outer "and R_in="$r_inner "for i="$incl
+
         # Update the code with the new variables
         sed -i -e "s/b_input = .*/b_input = ${array_b[i]} /g" convolution.py
         sed -i -e "s/incl_deg = .*/incl_deg = $incl /g" convolution.py
@@ -25,8 +26,10 @@ for ((i=0;i<${#array_b[@]};++i)); do
 
         # cd $RUNDIR/../plot
         # python plot_observables.py
+        
+        cd $RUNDIR
 
-				done
+			done
 		done
 	done
 done
