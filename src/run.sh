@@ -6,7 +6,7 @@ RUNDIR=${PWD}
 array_b=( 0.75 1.00 1.50 2.00 )
 array_ub=( 0.85 0.77 0.56 0.29 )
 
-cs=3.0e5 #5.0e5 10.e5
+cs=3.0d5 #5.0d5 10.d5
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
@@ -46,6 +46,9 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				# cd $RUNDIR/../data_b${array_b[i]}\_r$r_inner
 				if [ ! -d $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl ]; then
 					if [ ! -d $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer ]; then
+						if [! -d $RUNDIR/../cs$cs\kms]: then
+							mkdir $RUNDIR/../cs$cs
+						fi
 						mkdir $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer
 					fi
 					mkdir $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
