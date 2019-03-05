@@ -8,11 +8,11 @@ array_ub=( 0.85 0.77 0.56 0.29 )
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
-	for r_inner in 0.03 0.1 1.; do
+	for r_inner in 0.03 0.1 1.0; do
 		for r_outer in 5.0 9.5; do
-				for incl in 0.0 45.0 90.0; do
+			for incl in 0.0 45.0 90.0; do
 
-				echo "up to b="${array_b[i]} ", R_out="$r_outer "and R_in="$r_inner "for i="$incl
+				echo "up to b="${array_b[i]} ",R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
 				# Update the code with the new variables
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
@@ -60,7 +60,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				#qsub $RUNDIR/../submit-job-dial
 				cd $RUNDIR
 
-				done
+			done
 		done
 	done
 done
