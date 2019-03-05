@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l,npoints,l_in,l_out,j_max
+integer                                          :: i,j,k,l,npoints,l_in,l_out
 integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !double precision,dimension(1:n_r-1)             :: dr
@@ -48,7 +48,8 @@ character(len=5)                                 :: str_i
 double precision,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
 double precision,parameter                       :: km=6.6846d-9,s=3.171d-8
 double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
-double precision,parameter                       :: pi=3.14159,cs=1.0d6,m_h=1.6726d-24,mu=1.
+double precision,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.
+double precision,parameter                       :: cs=1.0d6
 double precision,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
 double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T=1.d4
 
