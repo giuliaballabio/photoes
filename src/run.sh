@@ -7,6 +7,7 @@ array_b=( 0.75 1.00 1.50 2.00 )
 array_ub=( 0.85 0.77 0.56 0.29 )
 
 cs=3.0d5 #5.0d5 10.d5
+string_cs=3 #5 10
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
@@ -44,25 +45,25 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				# fi
 				#
 				# cd $RUNDIR/../data_b${array_b[i]}\_r$r_inner
-				if [ ! -d $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl ]; then
-					if [ ! -d $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer ]; then
-						if [ ! -d $RUNDIR/../cs$cs\kms ]; then
-							mkdir $RUNDIR/../cs$cs
+				if [ ! -d $RUNDIR/../cs$string_cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl ]; then
+					if [ ! -d $RUNDIR/../cs$string_cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer ]; then
+						if [ ! -d $RUNDIR/../cs$string_cs\kms ]; then
+							mkdir $RUNDIR/../cs$string_cs\kms
 						fi
-						mkdir $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer
+						mkdir $RUNDIR/../cs$string_cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer
 					fi
-					mkdir $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+					mkdir $RUNDIR/../cs$string_cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
 				fi
 
 
 				# Copy files to this new directory
-				cp selfsimilar_solutions photoes submit-job* $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+				cp selfsimilar_solutions photoes submit-job* $RUNDIR/../cs$string_cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
 
 				# Remove unuseful files
 				rm *genmod* photoes selfsimilar_solutions
 
 				# Submit the job on dial or alice
-				cd $RUNDIR/../cs$cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+				cd $RUNDIR/../cs$string_cs\kms/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
 				qsub submit-job-alice
 				#qsub $RUNDIR/../submit-job-dial
 				cd $RUNDIR
