@@ -26,6 +26,7 @@ incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
 b = input("Insert the value of b: ")
 r_in = input("Insert the inner radius: ")
 r_out = input("And the outer radius: ")
+cs = 10 #3 5
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/rho_grid.txt', 'r')]))
 v_phi = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/v_phi_grid.txt', 'r')]))
 
