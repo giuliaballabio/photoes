@@ -16,8 +16,8 @@ v = []
 line_flux = []
 plt.figure()
 for i in range(len(quantity)):
-    v = -np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
-    line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
+    v = -np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
+    line_flux = np.array(map(float, [lines.split()[1] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
 
     c = [float(i)/float(len(quantity)), 0.0, float(len(quantity)-i)/float(len(quantity))]
     # if incl_deg[i] == 90.0:
