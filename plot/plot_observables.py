@@ -98,6 +98,7 @@ plt.savefig('./observables/fwhm_r'+str(r_in[1])+'_r'+str(r_out[len(r_out)-1])+'.
 
 ## ---------------------- PLOT THE FLUX AS A FUNCTION OF THE OUTER RADIUS ----------------------
 
+incl_deg = [90.0]
 r_out = [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
 
 value = []
