@@ -10,10 +10,10 @@ cs = 10 #3 5                                 #km/s
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 20.0
+incl_deg = 60.0
 b_input = 0.75
 r_inner = 0.1
-r_outer = 5.0
+r_outer = 0.9
 
 b = b_input
 r_in = r_inner
