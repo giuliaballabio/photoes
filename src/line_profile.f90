@@ -24,7 +24,7 @@ use omp_lib
 implicit none
 
 integer                                          :: i,j,k,l,npoints,l_in,l_out
-integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=800,n=1d7
+integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d7
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !double precision,dimension(1:n_r-1)             :: dr
 double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
@@ -49,7 +49,7 @@ double precision,parameter                       :: au=1.496d13,year=31536000.0,
 double precision,parameter                       :: km=6.6846d-9,s=3.171d-8
 double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
 double precision,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.
-double precision,parameter                       :: cs=1.0d6
+double precision,parameter                       :: cs=10.0d5 
 double precision,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
 double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T=1.d4
 
@@ -169,8 +169,8 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1
-r_outer=5.0
+r_inner=0.1 
+r_outer=1.5 
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -212,8 +212,8 @@ theta_max=atan(y_stream(npoints)/x_stream(npoints))
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 write(*,*) 'Normalizing the streamlines...'
-b_input=1.50
-ub=0.56
+b_input=2.00 
+ub=0.29 
 b=b_input
 
 rho2d(:,:)=0.0 !1.5e-17
@@ -420,7 +420,7 @@ write(*,*) '-----------------------------------------------------------'
 
 !! CREATE VELOCITY ARRAY !!
 do l=1,n_v
-    v(l)=l*0.1-40.
+    v(l)=l*0.1-80.
 enddo
 
 !! DEFINE THE INCLINATION ANGLE !!
@@ -428,8 +428,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=90.0
-str_i='90.0'
+incl_deg=82.0 
+str_i='82.0' 
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
