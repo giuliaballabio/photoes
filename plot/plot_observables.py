@@ -78,9 +78,9 @@ plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('R$_{in}$ = '+str(r_in[1])+' au - R$_{out}$ = '+str(r_out[len(r_out)-1]))
-plt.axis([-5.0, 95.0, -1.0, 14.0])
+# plt.axis([-5.0, 95.0, -1.0, 14.0])
 plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
-plt.savefig('./observables/vpeak_r'+str(r_in[1])+'_r'+str(r_out[len(r_out)-1])+'.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/vpeak_r'+str(r_in[1])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
 plt.show()
 
 plt.figure()
@@ -91,15 +91,15 @@ plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'FWHM', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('R$_{in}$ = '+str(r_in[1])+' au - R$_{out}$ = '+str(r_out[len(r_out)-1]))
-plt.axis([-5.0, 95.0, 5.0, 30.0])
+# plt.axis([-5.0, 95.0, 5.0, 30.0])
 plt.legend(loc='best')
-plt.savefig('./observables/fwhm_r'+str(r_in[1])+'_r'+str(r_out[len(r_out)-1])+'.png', format='png', bbox_inches='tight')
-# plt.show()
+plt.savefig('./observables/fwhm_r'+str(r_in[1])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
+plt.show()
 
 ## ---------------------- PLOT THE FLUX AS A FUNCTION OF THE OUTER RADIUS ----------------------
 
 incl_deg = [90.0]
-r_out = [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
+r_out = [0.9, 1.0, 1.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
 
 value = []
 for i in range(len(r_out)):
@@ -181,5 +181,5 @@ plt.title('R$_{in}$ = '+str(r_in[1])+' au - i = '+str(round(incl_deg[len(incl_de
 plt.axis([4.5, 10.0, 0.e-6, 6.e-6])
 plt.ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
 plt.legend(loc='best')
-plt.savefig('./observables/fluxNeII_r'+str(r_in[1])+'_i'+str(round(incl_deg[len(incl_deg)-1],2))+'.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/fluxNeII_r'+str(r_in[1])+'_i'+str(round(incl_deg[len(incl_deg)-1],2))+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
 plt.show()
