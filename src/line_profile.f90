@@ -468,7 +468,7 @@ else
     open(unit=223,file='./line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
-    write(223,'(2(es18.10,1X))') v(l),line_flux(l)
+    write(223,'(2(es18.10e5,1X))') v(l),line_flux(l)
 enddo
 close(223)
 
