@@ -3,17 +3,17 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 speed_light = 299792.458                     #km/s
-cs = 10 #3 5                                 #km/s
+cs = 3 
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
-# incl_deg = 20.0
+# incl_deg = 90.0 
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 60.0
-b_input = 0.75
-r_inner = 0.1
-r_outer = 0.9
+incl_deg = 90.0 
+b_input = 2.00 
+r_inner = 0.1 
+r_outer = 9.5 
 
 b = b_input
 r_in = r_inner
