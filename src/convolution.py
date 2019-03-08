@@ -3,17 +3,17 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 speed_light = 299792.458                     #km/s
-cs = 3 
+cs = 3
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
-# incl_deg = 90.0 
+# incl_deg = 90.0
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 90.0 
-b_input = 2.00 
-r_inner = 0.1 
-r_outer = 9.5 
+incl_deg = 90.0
+b_input = 2.00
+r_inner = 0.1
+r_outer = 9.5
 
 b = b_input
 r_in = r_inner
@@ -34,7 +34,7 @@ sigma_telescope = delta_v / 2.
 
 ## CALCULATE THE VELOCITY AT THE PEAK OF THE LINE
 peak_flux = np.amax(line_flux)
-i=0
+i = 0
 while (line_flux[i] < peak_flux):
     i += 1
 i_max = i
@@ -74,8 +74,8 @@ plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+
 ## FIT THE CONVOLUTION WITH A GAUSSIAN
 ## FIND THE MEAN OF THE CONVOLUTION
 peak_conv = np.amax(convolution)
-i=0
-while (line_flux[i] < peak_flux):
+i = 0
+while (convolution[i] < peak_conv):
     i += 1
 i_max_conv = i
 v_peak_conv = v[i_max_conv]
