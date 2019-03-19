@@ -27,11 +27,6 @@ if incl_deg == 90.0:
 else:
     v = -1. * v
 
-## PROPERTIES OF THE GAUSSIAN CONVOLUTION ##
-R = 3.e4 # Telescope resolution
-delta_v = speed_light / R
-sigma_telescope = delta_v / 2.
-
 ## CALCULATE THE VELOCITY AT THE PEAK OF THE LINE
 peak_flux = np.amax(line_flux)
 i = 0
@@ -57,8 +52,14 @@ def gaussian(x,norm,mean,sigma):
     # norm = 1./np.sqrt(2. * np.pi * sigma**2.)
     return norm*np.exp(-(x-mean)**2/(2.*sigma**2.))
 
+## PROPERTIES OF THE TELESCOPE BEAM ##
+R = 3.e4 # Telescope resolution
+delta_v = speed_light / R
+sigma_telescope = delta_v / 2.
 norm = 1./np.sqrt(2. * np.pi * sigma_telescope**2.)
 gauss_telescope = gaussian(v,norm,0.,sigma_telescope)
+
+## CONVOLUTION ##
 convolution = np.convolve(line_flux, gauss_telescope, mode="same")
 convolution = convolution / np.amax(convolution)
 
@@ -72,17 +73,17 @@ plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+
 # plt.show()
 
 ## FIT THE CONVOLUTION WITH A GAUSSIAN
-## FIND THE MEAN OF THE CONVOLUTION
+## FIND THE VELOCITY AT THE PEAK OF THE CONVOLUTION
 peak_conv = np.amax(convolution)
 i = 0
 while (convolution[i] < peak_conv):
     i += 1
 i_max_conv = i
 v_peak_conv = v[i_max_conv]
+
 ## FIND THE FWHM OF THE CONVOLUTION
 # st_dev = np.std(v)
 # sigma_conv = 2.*np.sqrt(2.*np.log(2.)) * st_dev
-
 def FWHM(X,Y):
     half_max = max(Y) / 2.
     #find when function crosses line half_max (when sign of diff flips)
@@ -107,7 +108,7 @@ plt.plot(v, gaussian(v,*popt),'k--',label='Gaussian fit')
 plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
 plt.ylabel(r'Normalized L(v)', fontsize=15)
 plt.axis([-40., 40., 0., 1.2])
-plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' au - R$_{out}$ = '+str(r_out)+'au - i = '+str(incl_deg))
+plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg - i = '+str(incl_deg))
 plt.legend(loc='best')
 plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit.png', format='png', bbox_inches='tight')
 # plt.show()
