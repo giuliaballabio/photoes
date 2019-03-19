@@ -8,9 +8,9 @@ import matplotlib.pyplot as plt
 # r_out = input("The outer radius: ")
 # cs = input("And the sound speed: ")
 b = 0.75 #[0.75, 1.00, 1.50, 2.00]
-incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
+incl_deg = 90.0 #[0.0, 20.0, 45.0, 60.0, 90.0]
 r_in = 0.1 #[0.03, 0.1, 1.0]
-r_out = 1.0 #[5.0, 9.5]
+r_out = [1.0, 9.5] #[5.0, 9.5]
 cs = 10 #3 5
 
 quantity = incl_deg
@@ -34,9 +34,9 @@ for i in range(len(quantity)):
     # plt.axis([-40., 40., 0., 1.2])
     plt.legend(loc='best')
     # plt.savefig('./lineprofiles/line_profile_i'+str(round(incl_deg, 2))+'_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
-    plt.savefig('./lineprofiles/line_profile_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'.png', format='png', bbox_inches='tight')
-    # plt.savefig('./lineprofiles/line_profile_b'+str('{:.2f}'.format(round(b, 2)))+'_i'+str(round(incl_deg, 2))+'_r'+str(r_out)+'.png', format='png', bbox_inches='tight')
-    # plt.savefig('./lineprofiles/line_profile_b'+str('{:.2f}'.format(round(b, 2)))+'_i'+str(round(incl_deg, 2))+'_r'+str(r_in)+'.png', format='png', bbox_inches='tight')
+    # plt.savefig('./lineprofiles/line_profile_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
+    # plt.savefig('./lineprofiles/line_profile_b'+str('{:.2f}'.format(round(b, 2)))+'_i'+str(round(incl_deg, 2))+'_r'+str(r_out)+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
+    plt.savefig('./lineprofiles/line_profile_b'+str('{:.2f}'.format(round(b, 2)))+'_i'+str(round(incl_deg, 2))+'_r'+str(r_in)+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
 plt.show()
 
 # v = np.array(map(float, [lines.split()[0] for lines in open('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
