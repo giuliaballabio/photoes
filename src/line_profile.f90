@@ -49,7 +49,7 @@ double precision,parameter                       :: au=1.496d13,year=31536000.0,
 double precision,parameter                       :: km=6.6846d-9,s=3.171d-8
 double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
 double precision,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.
-double precision,parameter                       :: cs=10.0d5 
+double precision,parameter                       :: cs=10.0d5
 double precision,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
 double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T=1.d4
 
@@ -169,8 +169,8 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1 
-r_outer=1.5 
+r_inner=0.1
+r_outer=1.5
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -212,8 +212,8 @@ theta_max=atan(y_stream(npoints)/x_stream(npoints))
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 write(*,*) 'Normalizing the streamlines...'
-b_input=2.00 
-ub=0.29 
+b_input=2.00
+ub=0.29
 b=b_input
 
 rho2d(:,:)=0.0 !1.5e-17
@@ -232,7 +232,7 @@ do i=l_in,l_out
             rho2d(i,j)=(rho_stream(k))*((Rb(i,j))**(-b)) !*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
-            v_phi2d(i,j)=((x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !((x_stream(k)/(Rg/au))*(Rb(i,j)/(Rg/au)))**(-0.5)
+            v_phi2d(i,j)=(Mstar/Msun)**0.5*((x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5)
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
@@ -356,11 +356,11 @@ write(*,*) 'Converting to physical units...'
 r(:)=r(:)*Rg/au
 dr(:)=dr(:)*Rg/au
 !! CONVERSION: code units -> g/cm**3 -> Msun/au**3 !!
-rho(:,:)=rho(:,:)*rhog/(Msun/(au**3))
+rho(:,:)=rho(:,:)*rhog/(Msun/(au**3.))
 !! CONVERSION: code units -> cm/s -> km/s !!
-v_r(:,:)=v_r(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
-v_theta(:,:)=v_theta(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
-v_phi(:,:)=v_phi(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
+v_r(:,:)=v_r(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5
+v_theta(:,:)=v_theta(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5
+v_phi(:,:)=v_phi(:,:) !(cs/(2.0*pi))*1.e-5
 !! CONVERSION: cm/s -> km/s !!
 vth=vth*1.e-5
 
@@ -388,7 +388,7 @@ do j=1,n_theta
     dA(j)=2.0*r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
     dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
 enddo
-Mdot=sum(dmass)
+Mdot=sum(dmass) !*n_phi
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total mass flux =',Mdot,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
@@ -428,8 +428,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=82.0 
-str_i='82.0' 
+incl_deg=82.0
+str_i='82.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
