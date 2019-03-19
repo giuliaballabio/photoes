@@ -22,16 +22,20 @@ radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/
 theta = np.arange(0., 1.3089, np.pi/600.) #+(np.pi/12.)
 
 ## ––––– get the data from the files ––––– ##
-incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
-b = input("Insert the value of b: ")
-r_in = input("Insert the inner radius: ")
-r_out = input("And the outer radius: ")
+# incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
+# b = input("Insert the value of b: ")
+# r_in = input("Insert the inner radius: ")
+# r_out = input("And the outer radius: ")
+incl_deg = 90.0
+b = 1.00
+r_in = 0.1
+r_out = 9.5
 cs = 10 #3 5
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/rho_grid.txt', 'r')]))
-v_phi = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/v_phi_grid.txt', 'r')]))
+v_phi = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/v_grid.txt', 'r')]))
 
-rho_hydro = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_hydro/rho_mean.dat', 'r')]))
-v_r_hydro = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_hydro/v_r_mean.dat', 'r')]))
+rho_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
+v_r_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
 # v_theta_hydro = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
 # v_phi_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
 
@@ -60,19 +64,26 @@ plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+
 plt.close()
 
 ## ––––– plot the density at a fixed theta as function of the radius ––––– ##
+angle = 30.
+angle_rad = angle * (np.pi/180.)
+j = 1
+while (theta[j] < angle_rad):
+    j += 1
+j_fixangle = j
 rho_r = []
 rho_hydro_r = []
 for i in range(len(radius)):
-    rho_r.append(rho_2d[i][50])
-    rho_hydro_r.append(rho_hydro_2d[i][50])
+    rho_r.append(rho_2d[i][j_fixangle])
+    rho_hydro_r.append(rho_hydro_2d[i][j_fixangle])
 plt.figure()
-plt.loglog(radius, rho_r, 'r')
-plt.loglog(radius, rho_hydro_r, 'b')
+plt.loglog(radius, rho_r, 'r', label='model')
+plt.loglog(radius, rho_hydro_r, 'b', label='hydro')
 plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 #plt.title(r'Boundary condition', fontsize=15)
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
-plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/density_fixedtheta.png', format='png', bbox_inches='tight')
+plt.legend(loc='best')
+plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/density_fixedtheta_'+str(angle)+'deg.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/boundary_condition.png', format='png', bbox_inches='tight')
 plt.show()
 plt.close()
@@ -89,7 +100,7 @@ def fmt(x, pos):
 
 plt.figure()
 CS = plt.pcolormesh(r, z, rho_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20.)
-#plt.contour(rho_cr_2d, colors='r')
+# plt.contour(r, z, cs, colors='cyan')
 #plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
 #cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
 cbar = plt.colorbar(CS)
@@ -112,7 +123,7 @@ plt.axis([0.02, 10., 0., 10.])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($v_{K}$)')
-plt.savefig('../data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
+plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
 # plt.savefig('../data_hydro/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
 # plt.show()
 plt.close()
