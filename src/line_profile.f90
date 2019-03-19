@@ -421,7 +421,7 @@ else
 endif
 do i=1,n_r
     do j=1,n_theta
-        write(219,'(1(es18.10e5,1X))') cell_flux(i,j)
+        write(219,'(1(es20.10e5,1X))') cell_flux(i,j)
     enddo
 enddo
 close(219)
@@ -481,7 +481,7 @@ else
     open(unit=223,file='./line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
-    write(223,'(2(es18.10e5,1X))') v(l),line_flux(l)
+    write(223,'(2(es20.10e5,1X))') v(l),line_flux(l)
 enddo
 close(223)
 
