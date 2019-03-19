@@ -51,7 +51,7 @@ double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,
 double precision,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.
 double precision,parameter                       :: cs=10.0d5
 double precision,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
-double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T=1.d4
+double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4
 
 !! NEII CONSTANTS !!
 double precision,parameter                       :: m_atom=20.,Ab_ne=1.d-4,A_ul=8.39d-3,lambda_ne=12.81d-4
@@ -399,6 +399,7 @@ write(*,*) 'Calculating the flux for a single cell...'
 nu=speed_light/lambda_ne
 A_hnu=A_ul*h_planck*nu
 constants=Ab_ne*A_hnu*X_II
+Temp=T0*(cs/10.0d5)**2.
 do i=1,n_r
     do j=1,n_theta
         !! CONVERSION: volume [au**3] -> [cm**3] !!
@@ -407,7 +408,7 @@ do i=1,n_r
         n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
         if(n_e(i,j) > 0.0) then
             C(i,j)=1.d0+(n_cr/n_e(i,j))
-            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/T))+1.d0)*n_e(i,j)*dV(i,j)
+            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
         else
             cell_flux(i,j)=0.d0
         endif
