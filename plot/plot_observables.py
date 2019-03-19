@@ -4,11 +4,11 @@ import re
 
 
 b = [0.75, 1.00, 1.50] #, 2.00]
-# incl_deg = [0.0, 45.0, 90.0]
-incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 35.0, 45.0, 50.0, 60.0, 75.0, 90.0]
+incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
+# incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 35.0, 45.0, 50.0, 60.0, 75.0, 90.0]
 # incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 27.0, 35.0, 45.0, 50.0, 60.0, 68.0, 75.0, 82.0, 90.0]
-r_in = [1.0] #[0.03, 0.1, 1.0]
-r_out = [9.5]
+r_in = [0.1] #[0.03, 0.1, 1.0]
+r_out = [1.0]
 cs = 10 #3 5
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
@@ -72,7 +72,7 @@ plt.plot(incl_deg, np.abs(v_peak3), color='#006837', linestyle='dashed', marker=
 plt.plot(incl_deg, np.abs(v_centr1), color='#fdcc8a', linestyle='dashed', marker='o', markeredgecolor='#fdcc8a', label='b=0.75 $v_{centr}$')
 plt.plot(incl_deg, np.abs(v_centr2), color='#fc8d59', linestyle='dashed', marker='o', markeredgecolor='#fc8d59', label='b=1.00 $v_{centr}$')
 plt.plot(incl_deg, np.abs(v_centr3), color='#d7301f', linestyle='dashed', marker='o', markeredgecolor='#d7301f', label='b=1.50 $v_{centr}$')
-plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted')
+plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', label='Sacco et al. (2012)')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
@@ -82,7 +82,7 @@ for i in range(len(name)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('R$_{in}$ = '+str(r_in[0])+' au - R$_{out}$ = '+str(r_out[len(r_out)-1])+' au')
+plt.title('R$_{in}$ = '+str(r_in[0])+' Rg - R$_{out}$ = '+str(r_out[len(r_out)-1])+' Rg')
 plt.axis([-5.0, 95.0, -1.0, 14.0])
 plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/vpeak_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
@@ -95,7 +95,7 @@ plt.plot(incl_deg, fwhm3, color='#8856a7', linestyle='dashed', marker='o', marke
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'FWHM', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('R$_{in}$ = '+str(r_in[0])+' au - R$_{out}$ = '+str(r_out[len(r_out)-1])+' au')
+plt.title('R$_{in}$ = '+str(r_in[0])+' Rg - R$_{out}$ = '+str(r_out[len(r_out)-1])+' Rg')
 plt.axis([-5.0, 95.0, 5.0, 30.0])
 plt.legend(loc='best')
 plt.savefig('./observables/fwhm_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
