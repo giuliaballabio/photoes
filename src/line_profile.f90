@@ -413,6 +413,19 @@ do i=1,n_r
         endif
     enddo
 enddo
+!! WRITE THE DATA INTO A FILE TO PLOT A MAP OF THE FLUX !!
+if(.not.init) then
+    open(unit=219,file='./cellflux.txt')
+else
+    open(unit=219,file='./cellflux.txt',status='old',position='append')
+endif
+do i=1,n_r
+    do j=1,n_theta
+        write(219,'(1(es18.10e5,1X))') cell_flux(i,j)
+    enddo
+enddo
+close(219)
+
 tot_flux=sum(cell_flux)*n_phi
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total flux =',tot_flux/Lsun,'Lsun'
