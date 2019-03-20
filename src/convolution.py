@@ -19,8 +19,12 @@ b = b_input
 r_in = r_inner
 r_out = r_outer
 
-v = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
-line_flux = np.array(map(float, [lines.split()[1] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+## DATA FROM MODEL
+# v = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+# line_flux = np.array(map(float, [lines.split()[1] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+## DATA FROM HYDRO SIMULATIONS
+v = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 
 if incl_deg == 90.0:
     v = v
@@ -69,7 +73,8 @@ plt.plot(v, line_flux / np.amax(line_flux), color='r', label='line')
 plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
 plt.ylabel(r'Normalized L(v)', fontsize=15)
 plt.legend(loc='best')
-plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/convolution.png', format='png', bbox_inches='tight')
+# plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/convolution.png', format='png', bbox_inches='tight')
+plt.savefig('../data_hydro/incl_'+str(round(incl_deg, 2))+'/convolution.png', format='png', bbox_inches='tight')
 # plt.show()
 
 ## FIT THE CONVOLUTION WITH A GAUSSIAN
@@ -110,7 +115,8 @@ plt.ylabel(r'Normalized L(v)', fontsize=15)
 plt.axis([-40., 40., 0., 1.2])
 plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg - i = '+str(incl_deg))
 plt.legend(loc='best')
-plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit.png', format='png', bbox_inches='tight')
+# plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit.png', format='png', bbox_inches='tight')
+plt.savefig('../data_hydro/incl_'+str(round(incl_deg, 2))+'/gaussian_fit.png', format='png', bbox_inches='tight')
 # plt.show()
 
 ## CALCULATE THE CUMULATIVE FUNCTION
@@ -147,11 +153,13 @@ plt.hlines(L_centr, -50., 50., 'k', linestyle='--')
 plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
 plt.ylabel(r'Cumulative flux', fontsize=15)
 plt.axis([-40., 40., 0., 1.2])
-plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
+# plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
+plt.savefig('../data_hydro/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
 # plt.show()
 
 ## WRITE THE OBSERVABLES INTO A FILE
-f = open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/observables.txt', 'w+')
+# f = open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/observables.txt', 'w+')
+f = open('../data_hydro/incl_'+str(round(incl_deg, 2))+'/observables.txt', 'w+')
 f.write('b = '+str(b)+' - R_in = '+str(r_in)+' au - R_out = '+str(r_out)+'au - i = '+str(incl_deg)+'\n')
 f.write('\n')
 f.write('------------------------------------------------------------------------------- \n')
