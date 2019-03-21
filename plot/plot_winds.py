@@ -26,11 +26,12 @@ theta = np.arange(0., 1.3089, np.pi/600.) #+(np.pi/12.)
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 90.0
-b = 1.00
+incl_deg = 0.0
+b = 0.75
 r_in = 0.1
-r_out = 9.5
-cs = 10 #3 5
+r_out = 1.0
+cs = 10
+
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/rho_grid.txt', 'r')]))
 v_phi = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/v_grid.txt', 'r')]))
 
@@ -55,7 +56,7 @@ for i in range(len(radius)):
 plt.figure()
 plt.loglog(radius, rho0, 'r')
 plt.axis([1.e-2, 50., 1.e-3, 1.e3])
-#plt.title(r'Boundary condition', fontsize=15)
+plt.title(r'Boundary condition', fontsize=15)
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
 plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/boundary_condition.png', format='png', bbox_inches='tight')
@@ -79,13 +80,12 @@ plt.figure()
 plt.loglog(radius, rho_r, 'r', label='model')
 plt.loglog(radius, rho_hydro_r, 'b', label='hydro')
 plt.axis([1.e-2, 50., 1.e-3, 1.e3])
-#plt.title(r'Boundary condition', fontsize=15)
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
 plt.legend(loc='best')
 plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/density_fixedtheta_'+str(angle)+'deg.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/boundary_condition.png', format='png', bbox_inches='tight')
-plt.show()
+# plt.show()
 plt.close()
 
 ## ––––– convert to a cartesian coordinate system ––––– ##
@@ -101,24 +101,24 @@ def fmt(x, pos):
 plt.figure()
 CS = plt.pcolormesh(r, z, rho_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=20.)
 # plt.contour(r, z, cs, colors='cyan')
-#plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
-#cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
+# plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
+# cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
 cbar = plt.colorbar(CS)
-#plt.axis([0., 1.25, 0, 0.9])
-#plt.axis([0.02, 0.04, 0, 0.02])
+# plt.axis([0., 1.25, 0, 0.9])
+# plt.axis([0.02, 0.04, 0, 0.02])
 plt.axis([0.02, 10., 0., 10.])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($\rho$ / $\rho_{g}$)')
 plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
 # plt.savefig('../data_hydro/density_polar.png', format='png', bbox_inches='tight')#, dpi=1000)
-plt.show()
+# plt.show()
 plt.close()
 
 plt.figure()
 CS = plt.pcolormesh(r, z, v_phi_2d, cmap='winter', norm=LogNorm())#, vmin=0.25, vmax=10.)
 cbar = plt.colorbar(CS)
-#plt.axis([0., 1.25, 0, 0.9])
+# plt.axis([0., 1.25, 0, 0.9])
 plt.axis([0.02, 10., 0., 10.])
 plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'z / R$_{g}$',fontsize=15)
@@ -126,6 +126,28 @@ cbar.set_label(r'Log($v_{K}$)')
 plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
 # plt.savefig('../data_hydro/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
 # plt.show()
+plt.close()
+
+## ––––– Creating a 2D map of the flux ––––– ##
+radius = radius
+theta = np.arange(0., 1.5707, np.pi/1200.)
+
+flux = np.array(map(float, [lines.split()[0] for lines in open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/cellflux.txt', 'r')]))
+
+grid_r, grid_theta = np.meshgrid(radius, theta, indexing='ij')
+flux_2d = flux.reshape(len(radius), len(theta))
+
+r = grid_r*np.cos(grid_theta)
+z = grid_r*np.sin(grid_theta)
+
+plt.figure()
+CS = plt.pcolormesh(r, z, flux_2d/Lsun, cmap='hot', norm=LogNorm() , vmin=1.e-16, vmax=1.e-14)
+cbar = plt.colorbar(CS)
+plt.xlabel(r'R / R$_{g}$',fontsize=15)
+plt.ylabel(r'z / R$_{g}$',fontsize=15)
+cbar.set_label(r'Log($L / L_{\odot}$)')
+plt.savefig('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))+'/line_flux.png', format='png', bbox_inches='tight')#, dpi=1000)
+plt.show()
 plt.close()
 
 # x = np.array(map(float, [lines.split()[0] for lines in open('../../input_from_model/b1.0/streamline.txt', 'r')]))
