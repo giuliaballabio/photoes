@@ -79,6 +79,7 @@ write(*,*) 'rhog =',rhog,'g/cm^3'
 write(*,*) 'ng/rhog =',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
+!! The values of radii are in units of Rg
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
 open(unit=112,file='../../../data_hydro/grid_r.dat')
 do i=1,n_r
@@ -184,6 +185,7 @@ enddo
 l_out=l
 
 !! CALCULATING THE CENTRE OF EACH CELL !!
+!! These quantites are in units of Rg !!
 write(*,*) 'Calculating the centre of the cell...'
 do i=1,n_r
     centre_r(i)=r(i)+(dr(i)/2.)
@@ -232,7 +234,7 @@ do i=l_in,l_out
             rho2d(i,j)=(rho_stream(k))*((Rb(i,j))**(-b)) !*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
-            v_phi2d(i,j)=(Mstar/Msun)**0.5*((x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5)
+            v_phi2d(i,j)=((x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !*(Mstar/Msun)**0.5
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
@@ -360,7 +362,7 @@ rho(:,:)=rho(:,:)*rhog/(Msun/(au**3.))
 !! CONVERSION: code units -> cm/s -> km/s !!
 v_r(:,:)=v_r(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5
 v_theta(:,:)=v_theta(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5
-v_phi(:,:)=v_phi(:,:) !(cs/(2.0*pi))*1.e-5
+v_phi(:,:)=v_phi(:,:)*cs*1.e-5 !(cs/(2.0*pi))*1.e-5
 !! CONVERSION: cm/s -> km/s !!
 vth=vth*1.e-5
 
