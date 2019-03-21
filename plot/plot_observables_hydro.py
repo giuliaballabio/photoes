@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import re
 
 
-incl_deg = [0.0, 90.0]
-cs = 10 #3 5
+incl_deg = [0.0, 10.0, 20.0, 45.0, 60.0, 75.0, 90.0]
+cs = 10
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
 
