@@ -26,16 +26,14 @@ double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 double precision,dimension(1:n_theta)            :: theta,sinth,costh
 double precision,dimension(1:n_theta)            :: dA,dmass
 double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi,sum_rho
+double precision                                 :: ratio_r,dtheta,dphi
 double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
-double precision                                 :: t_in,t_fin
 double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d
 double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
 double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
-double precision,dimension(1:n_r,1:n_theta)      :: rho_mean,v_r_mean,v_th_mean,v_phi_mean
 double precision,dimension(1:n_v)                :: v,line_flux
 double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
-double precision                                 :: v_los_r,v_los_th,v_los_phi,peak
+double precision                                 :: v_los_r,v_los_th,v_los_phi
 logical,save                                     :: init=.false.
 character(len=5)                                 :: str_i
 
@@ -50,8 +48,6 @@ double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alp
 !! NEII CONSTANTS !!
 double precision,parameter                       :: m_atom=20.,Ab_ne=1.d-4,A_ul=8.39d-3,lambda_ne=12.81d-4
 double precision,parameter                       :: X_II=0.75,n_cr=5.0d5,T_ul=1122.8
-
-call cpu_time(t_in)
 
 !! PHYSICS SCALING FACTORS !!
 Rg=(G*Mstar)/(cs**2)                                                      ! [cm]
@@ -274,11 +270,6 @@ do l=1,n_v
 enddo
 close(12)
 
-call cpu_time(t_fin)
-
-print *,t_fin-t_in,'seconds'
-print *,(t_fin-t_in)/60.,'minutes'
-print *,(t_fin-t_in)/3600.,'hours'
 print *,'-----------------------------------------------------------'
 
 end program
