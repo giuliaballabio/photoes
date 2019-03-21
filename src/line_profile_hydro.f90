@@ -265,12 +265,12 @@ enddo
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE LINE PROFILE !!
 if(.not.init) then
-open(unit=12,file='../data_hydro/incl_'//trim(str_i)//'/line_profile_i'//trim(str_i)//'.txt')
+		open(unit=12,file='../data_hydro/incl_'//trim(str_i)//'/line_profile_i'//trim(str_i)//'.txt')
 else
-open(unit=12,file='../data_hydro/incl_'//trim(str_i)//'/line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
+		open(unit=12,file='../data_hydro/incl_'//trim(str_i)//'/line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
-write(12,'(2(es18.10,1X))') v(l),line_flux(l)
+		write(12,'(2(es18.10,1X))') v(l),line_flux(l)
 enddo
 close(12)
 
