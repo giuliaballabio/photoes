@@ -39,7 +39,7 @@ double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2
 double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
 double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 double precision,dimension(1:n_v)                :: v,line_flux
-double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
+double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants,Temp
 double precision                                 :: v_los_r,v_los_th,v_los_phi
 logical,save                                     :: init=.false.
 character(len=5)                                 :: str_i
