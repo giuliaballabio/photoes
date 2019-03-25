@@ -81,15 +81,15 @@ do i=1,n_r
 		r_out(i)=r(i)*ratio_r
 		dr(i)=r_out(i)-r_in(i)
 enddo
-open(unit=110,file='../grid_th.dat')
-do j=1,n_theta0
-		read(110,*) theta(j)
-enddo
-close(110)
-! dtheta=pi/dble(n_theta)
-! do j=1,n_theta
-! 		theta(j)=(j+0.5)*dtheta
+! open(unit=110,file='../grid_th.dat')
+! do j=1,n_theta0
+! 		read(110,*) theta(j)
 ! enddo
+! close(110)
+dtheta=pi/dble(n_theta)
+do j=1,n_theta
+		theta(j)=(j+0.5)*dtheta
+enddo
 dphi=2.*pi/dble(n_phi)
 do k=1,n_phi
 		phi(k)=(k+0.5)*dphi
