@@ -4,12 +4,13 @@ import re
 
 
 b = [0.75, 1.00, 1.50] #, 2.00]
-incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
-# incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 35.0, 45.0, 50.0, 60.0, 75.0, 90.0]
+incl_deg = [0.0, 45.0, 90.0]
+# incl_deg = [0.0, 1.0, 10.0, 20.0, 35.0, 45.0, 50.0, 60.0, 75.0, 90.0]
 # incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 27.0, 35.0, 45.0, 50.0, 60.0, 68.0, 75.0, 82.0, 90.0]
 r_in = [0.1] #[0.03, 0.1, 1.0]
-r_out = [1.0]
-cs = 10 #3 5
+r_out = [9.5]
+cs = 3
+R = 10.e4
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
 
@@ -17,7 +18,7 @@ v_peak1 = []
 v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
-    with open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f1:
+    with open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
 
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
@@ -28,7 +29,7 @@ v_peak2 = []
 v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
-    with open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f2:
+    with open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
 
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
@@ -39,7 +40,7 @@ v_peak3 = []
 v_centr3 = []
 fwhm3 = []
 for i in range(len(incl_deg)):
-    with open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f3:
+    with open('../cs'+str(cs)+'kms/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
         lines = f3.readlines()[10:]
 
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
@@ -85,7 +86,7 @@ plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('R$_{in}$ = '+str(r_in[0])+' Rg - R$_{out}$ = '+str(r_out[len(r_out)-1])+' Rg')
 plt.axis([-5.0, 95.0, -1.0, 14.0])
 plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
-plt.savefig('./observables/vpeak_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/vpeak_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', bbox_inches='tight')
 plt.show()
 
 plt.figure()
@@ -96,9 +97,9 @@ plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'FWHM', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('R$_{in}$ = '+str(r_in[0])+' Rg - R$_{out}$ = '+str(r_out[len(r_out)-1])+' Rg')
-plt.axis([-5.0, 95.0, 5.0, 30.0])
+plt.axis([-5.0, 95.0, 0.0, 30.0])
 plt.legend(loc='best')
-plt.savefig('./observables/fwhm_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/fwhm_r'+str(r_in[0])+'_r'+str(r_out[len(r_out)-1])+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', bbox_inches='tight')
 plt.show()
 
 ## ---------------------- PLOT THE FLUX AS A FUNCTION OF THE OUTER RADIUS ----------------------
