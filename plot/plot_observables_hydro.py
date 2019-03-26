@@ -12,7 +12,8 @@ v_peak1 = []
 v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
-    with open('../data_hydro/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f1:
+    # with open('../data_hydro/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f1:
+    with open('../data_hydro_midplane/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f1:
         lines = f1.readlines()[10:]
 
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
@@ -54,7 +55,8 @@ plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.axis([-5.0, 95.0, -1.0, 14.0])
 plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
-plt.savefig('./observables/vpeak_hydro.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/vpeak_hydro_midplane.png', format='png', bbox_inches='tight')
+# plt.savefig('./observables/vpeak_hydro.png', format='png', bbox_inches='tight')
 plt.show()
 
 plt.figure()
@@ -62,7 +64,8 @@ plt.plot(incl_deg, fwhm1, color='#8856a7', linestyle='dashed', marker='o', marke
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'FWHM', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.axis([-5.0, 95.0, 5.0, 30.0])
+plt.axis([-5.0, 95.0, 5.0, 16.0])
 plt.legend(loc='best')
-plt.savefig('./observables/fwhm_hydro.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/fwhm_hydro_midplane.png', format='png', bbox_inches='tight')
+# plt.savefig('./observables/fwhm_hydro.png', format='png', bbox_inches='tight')
 plt.show()
