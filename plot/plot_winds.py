@@ -20,6 +20,8 @@ from physics_constant import *
 ## ––––– create a polar grid ––––– ##
 radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/grid_r.dat', 'r')]))
 theta = np.arange(0., 1.3089, np.pi/600.) #+(np.pi/12.)
+## This theta is to plot data_hydro_midplane
+# theta = np.arange(0., 1.5707, np.pi/600.)
 
 ## ––––– get the data from the files ––––– ##
 # incl_deg = input("Insert the inclination angle used in the code (in degrees): ")
