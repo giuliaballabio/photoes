@@ -46,16 +46,25 @@ character(len=5)                                 :: str_i
 
 !! PHYSICAL CONSTANTS IN CGS !!
 double precision,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
-double precision,parameter                       :: km=6.6846d-9,s=3.171d-8
+double precision,parameter                       :: km=6.6846d-9,s=3.171d-8,eV=1.60218d-12
 double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
-double precision,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.
+double precision,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.,m_e=9.1094d-28
 double precision,parameter                       :: cs=10.0d5
 double precision,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
-double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4
+double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
-!! NEII CONSTANTS !!
-double precision,parameter                       :: m_atom=20.,Ab_ne=1.d-4,A_ul=8.39d-3,lambda_ne=12.81d-4
-double precision,parameter                       :: X_II=0.75,n_cr=5.0d5,T_ul=1122.8
+!! [NEII] CONSTANTS !!
+double precision,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
+double precision,parameter                       :: X_II_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
+
+!! [SII] CONSTANTS !!
+double precision,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
+double precision,parameter                       :: X_II_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
+double precision,parameter                       :: Ipot_s=10.36 !value in eV
+
+!! [OI] CONSTANTS !!
+! double precision,parameter                       :: m_atom_o=16.,Ab_o=1.d-4,A_ul_o=8.39d-3,lambda_o=630.0d-7
+! double precision,parameter                       :: X_I_o=0.75,n_cr_o=5.0d5,T_ul_o=1122.8
 
 ! call cpu_time(t_in)
 
@@ -63,7 +72,7 @@ double precision,parameter                       :: X_II=0.75,n_cr=5.0d5,T_ul=11
 Rg=(G*Mstar)/(cs**2)                                                      ! [cm]
 ng=CC*sqrt((3.0*Phi_star)/(4.0*pi*alphab*(Rg*Rg*Rg)))                     ! [cm^-3]
 rhog=mu*m_h*ng                                                            ! [g/cm^3]
-vth=cs/sqrt(m_atom)                                                       ! [cm/s]
+vth=cs/sqrt(m_atom_s)                                                       ! [cm/s]
 !! CONVERSION: [km/s] in [au/years]
 vel_convert=km/s
 
@@ -398,10 +407,10 @@ write(*,*) '-----------------------------------------------------------'
 !! COMPUTE THE FLUX FOR A SINGLE CELL !!
 !! N.B. THE CONSTANTS ARE ALL IN CGS: CONVERT QUANTITIES IN CGS !!
 write(*,*) 'Calculating the flux for a single cell...'
-nu=speed_light/lambda_ne
-A_hnu=A_ul*h_planck*nu
-constants=Ab_ne*A_hnu*X_II
 Temp=T0*(cs/10.0d5)**2.
+nu=speed_light/lambda_s
+A_hnu=A_ul_s*h_planck*nu
+constants=Ab_s*A_hnu*X_II_s
 do i=1,n_r
     do j=1,n_theta
         !! CONVERSION: volume [au**3] -> [cm**3] !!
@@ -409,8 +418,8 @@ do i=1,n_r
         !! CONVERSION: mass density [Msun/au**3] -> numerical density [particles/cm**3] !!
         n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
         if(n_e(i,j) > 0.0) then
-            C(i,j)=1.d0+(n_cr/n_e(i,j))
-            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
+            C(i,j)=1.d0+(n_cr_s/n_e(i,j))
+            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul_s/Temp))+1.d0)*n_e(i,j)*dV(i,j)
         else
             cell_flux(i,j)=0.d0
         endif
