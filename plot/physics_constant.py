@@ -1,22 +1,26 @@
 import numpy as np
 
 ## ----- ASTRONOMICAL CONSTANTS ----- ##
-au = 1.496e13  			                                                #[cm] 
-G = 6.672e-8 			                                                #[cm3 g-1 s-2]
-Msun = 2.e33 		                                                        #[g]
+au = 1.496e13  			                                                        #[cm]
+G = 6.672e-8 			                                                        #[cm3 g-1 s-2]
+Msun = 2.e33 		                                                            #[g]
 Lsun = 3.826e33                                                                 #[erg/s]
-year = 31536000.0		                                                #[s]
-Mstar = 1.*Msun 		                                                #[g]
-MJ = 1.898e30  		                                                        #[g]
+year = 31536000.0		                                                        #[s]
+Mstar = 1.*Msun 		                                                        #[g]
+MJ = 1.898e30  		                                                            #[g]
+eV=1.60218e-12  		                                                        #[erg]
+h_planck=6.6261e-27
 
 N_part = 1.191e57
-cs = 1.0e6 			                                                #[cm/s]
+cs = 1.0e6 			                                                            #[cm/s]
 m_h = 1.6726e-24                                                                #[g]
+m_e=9.1094e-28                                                                  #[g]
 mu = 1.
 CC = 0.14
 Phi_star = 1.e41                                                                #[photons/s]
 alphab = 2.60e-13                                                               #[cm3 s-1]
 T = 1.e4                                                                        #[K]
+k_b=1.38e-16                                                                    #[erg K-1]
 
 ## ----- NeII CONSTANTS -----##
 m_ne = 20.*m_h                                                                  #[g]
