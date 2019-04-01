@@ -81,7 +81,7 @@ write(*,*) 'ng/rhog =',ng/rhog
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 !! The values of radii are in units of Rg
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=112,file='../../../data_hydro/grid_r.dat')
+open(unit=112,file='../../../../data_hydro/grid_r.dat')
 do i=1,n_r
     read(112,*) r(i)
 enddo
