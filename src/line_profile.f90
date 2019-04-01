@@ -512,8 +512,8 @@ subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x
     real,parameter                       :: Ipot_s=10.36 !value in eV
 
     !! [OI] CONSTANTS !!
-    real,parameter                       :: m_atom_o=16.,Ab_o=1.d-4,A_ul_o=8.39d-3,lambda_o=630.0d-7
-    real,parameter                       :: X_ion_o=0.75,n_cr_o=5.0d5,T_ul_o=1122.8
+    real,parameter                       :: m_atom_o=16.,Ab_o=5.37d-4,A_ul_o=5.6d-3,lambda_o=630.0d-7
+    real,parameter                       :: X_ion_o=1.0,n_cr_o=1.8d6,T_ul_o=22830.
 
     if (species_flag=='NeII') then
         m_atom_x=m_atom_ne
