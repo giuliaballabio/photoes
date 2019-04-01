@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                              :: i,j,k,l,npoints,l_in,l_out,species_flag
+integer                              :: i,j,k,l,npoints,l_in,l_out
 integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d7
 real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !real,dimension(1:n_r-1)             :: dr
@@ -55,54 +55,6 @@ real,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d1
 real,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
 ! call cpu_time(t_in)
-
-contains
-!! CHOOSE THE SPECIES !!
-subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x,lambda_x)
-    implicit none
-    character(len=6),intent(in)          :: species_flag
-    real,intent(out)                     :: m_atom_x,Ab_x,A_ul_x,lambda_x,X_ion_x,n_cr_x,T_ul_x
-
-    !! [NEII] CONSTANTS !!
-    real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
-    real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
-
-    !! [SII] CONSTANTS !!
-    real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
-    real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
-    real,parameter                       :: Ipot_s=10.36 !value in eV
-
-    !! [OI] CONSTANTS !!
-    real,parameter                       :: m_atom_o=16.,Ab_o=1.d-4,A_ul_o=8.39d-3,lambda_o=630.0d-7
-    real,parameter                       :: X_ion_o=0.75,n_cr_o=5.0d5,T_ul_o=1122.8
-
-    if (species_flag=='NeII') then
-        m_atom_x=m_atom_ne
-        Ab_x=Ab_ne
-        A_ul_x=A_ul_ne
-        lambda_x=lambda_ne
-        X_ion_x=X_ion_ne
-        n_cr_x=n_cr_ne
-        T_ul_x=T_ul_ne
-    else if (species_flag=='SII') then
-        m_atom_x=m_atom_s
-        Ab_x=Ab_s
-        A_ul_x=A_ul_s
-        lambda_x=lambda_s
-        X_ion_x=X_ion_s
-        n_cr_x=n_cr_s
-        T_ul_x=T_ul_s
-    else
-        m_atom_x=m_atom_o
-        Ab_x=Ab_o
-        A_ul_x=A_ul_o
-        lambda_x=lambda_o
-        X_ion_x=X_ion_o
-        n_cr_x=n_cr_o
-        T_ul_x=T_ul_o
-    endif
-
-end subroutine which_species
 
 species_flag='SII'
 call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
@@ -542,5 +494,53 @@ close(223)
 ! write(*,*) (t_fin-t_in)/60.,'minutes'
 ! write(*,*) (t_fin-t_in)/3600.,'hours'
 write(*,*) '-----------------------------------------------------------'
+
+contains
+!! CHOOSE THE SPECIES !!
+subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x,lambda_x)
+    implicit none
+    character(len=6),intent(in)          :: species_flag
+    real,intent(out)                     :: m_atom_x,Ab_x,A_ul_x,lambda_x,X_ion_x,n_cr_x,T_ul_x
+
+    !! [NEII] CONSTANTS !!
+    real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
+    real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
+
+    !! [SII] CONSTANTS !!
+    real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
+    real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
+    real,parameter                       :: Ipot_s=10.36 !value in eV
+
+    !! [OI] CONSTANTS !!
+    real,parameter                       :: m_atom_o=16.,Ab_o=1.d-4,A_ul_o=8.39d-3,lambda_o=630.0d-7
+    real,parameter                       :: X_ion_o=0.75,n_cr_o=5.0d5,T_ul_o=1122.8
+
+    if (species_flag=='NeII') then
+        m_atom_x=m_atom_ne
+        Ab_x=Ab_ne
+        A_ul_x=A_ul_ne
+        lambda_x=lambda_ne
+        X_ion_x=X_ion_ne
+        n_cr_x=n_cr_ne
+        T_ul_x=T_ul_ne
+    else if (species_flag=='SII') then
+        m_atom_x=m_atom_s
+        Ab_x=Ab_s
+        A_ul_x=A_ul_s
+        lambda_x=lambda_s
+        X_ion_x=X_ion_s
+        n_cr_x=n_cr_s
+        T_ul_x=T_ul_s
+    else
+        m_atom_x=m_atom_o
+        Ab_x=Ab_o
+        A_ul_x=A_ul_o
+        lambda_x=lambda_o
+        X_ion_x=X_ion_o
+        n_cr_x=n_cr_o
+        T_ul_x=T_ul_o
+    endif
+
+end subroutine which_species
 
 end program
