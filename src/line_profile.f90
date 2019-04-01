@@ -401,7 +401,7 @@ write(*,*) 'Calculating the flux for a single cell...'
 Temp=T0*(cs/10.0d5)**2.
 nu=speed_light/lambda
 A_hnu=A_ul*h_planck*nu
-constants=Ab*A_hnu*X_II
+constants=Ab*A_hnu*X_ion
 do i=1,n_r
     do j=1,n_theta
         !! CONVERSION: volume [au**3] -> [cm**3] !!
