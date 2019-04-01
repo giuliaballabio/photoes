@@ -35,10 +35,10 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl/g" submit-job-alice
 
 				# Actually compile the code
-				ifort -g -check all -fpe0 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
-				ifort -g -check all -fpe0 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o photoes line_profile.f90
-				# gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
-				# gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o photoes line_profile.f90
+				ifort -g -check all -fpe0 -fpp -r8 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
+				ifort -g -check all -fpe0 -fpp -r8 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o photoes line_profile.f90
+				# gfortran -Wunused-variable -fdefault-real-8 -fdefault-double-8 -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
+				# gfortran -Wunused-variable -fdefault-real-8 -fdefault-double-8 -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o photoes line_profile.f90
 
 				if [ ! -d $RUNDIR/../cs$string_cs\kms/$species/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl ]; then
 					if [ ! -d $RUNDIR/../cs$string_cs\kms/$species/data_b${array_b[i]}\_r$r_inner\_r$r_outer ]; then
