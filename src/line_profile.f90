@@ -23,56 +23,95 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l,npoints,l_in,l_out
-integer,parameter                                :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d7
-double precision,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
-!double precision,dimension(1:n_r-1)             :: dr
-double precision,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
-double precision,dimension(1:n)                  :: rho_stream,v_r_stream,v_theta_stream
-double precision,dimension(1:n_theta)            :: theta,sinth,costh,centre_theta
-double precision,dimension(1:n_theta)            :: dA,dmass
-double precision,dimension(1:n_phi)              :: phi,sinphi,cosphi
-double precision                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input,ub,theta_max
-double precision                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
-!double precision                                 :: t_in,t_fin
-double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d,Rb
-double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
-double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
-double precision,dimension(1:n_v)                :: v,line_flux
-double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants,Temp
-double precision                                 :: v_los_r,v_los_th,v_los_phi
-logical,save                                     :: init=.false.
-character(len=5)                                 :: str_i
+integer                              :: i,j,k,l,npoints,l_in,l_out,species_flag
+integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d7
+real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
+!real,dimension(1:n_r-1)             :: dr
+real,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
+real,dimension(1:n)                  :: rho_stream,v_r_stream,v_theta_stream
+real,dimension(1:n_theta)            :: theta,sinth,costh,centre_theta
+real,dimension(1:n_theta)            :: dA,dmass
+real,dimension(1:n_phi)              :: phi,sinphi,cosphi
+real                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input,ub,theta_max
+real                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
+!real                                 :: t_in,t_fin
+real,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d,Rb
+real,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
+real,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
+real,dimension(1:n_v)                :: v,line_flux
+real                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants,Temp
+real                                 :: v_los_r,v_los_th,v_los_phi
+logical,save                         :: init=.false.
+character(len=6)                     :: str_i,species_flag
+real                                 :: m_atom,Ab,A_ul,lambda,X_ion,n_cr,T_ul
 
 !! PHYSICAL CONSTANTS IN CGS !!
-double precision,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
-double precision,parameter                       :: km=6.6846d-9,s=3.171d-8,eV=1.60218d-12
-double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
-double precision,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.,m_e=9.1094d-28
-double precision,parameter                       :: cs=10.0d5
-double precision,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
-double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
-
-!! [NEII] CONSTANTS !!
-double precision,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
-double precision,parameter                       :: X_II_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
-
-!! [SII] CONSTANTS !!
-double precision,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
-double precision,parameter                       :: X_II_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
-double precision,parameter                       :: Ipot_s=10.36 !value in eV
-
-!! [OI] CONSTANTS !!
-! double precision,parameter                       :: m_atom_o=16.,Ab_o=1.d-4,A_ul_o=8.39d-3,lambda_o=630.0d-7
-! double precision,parameter                       :: X_I_o=0.75,n_cr_o=5.0d5,T_ul_o=1122.8
+real,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
+real,parameter                       :: km=6.6846d-9,s=3.171d-8,eV=1.60218d-12
+real,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
+real,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.,m_e=9.1094d-28
+real,parameter                       :: cs=10.0d5
+real,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
+real,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
 ! call cpu_time(t_in)
+
+contains
+!! CHOOSE THE SPECIES !!
+subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x,lambda_x)
+    implicit none
+    character(len=6),intent(in)          :: species_flag
+    real,intent(out)                     :: m_atom_x,Ab_x,A_ul_x,lambda_x,X_ion_x,n_cr_x,T_ul_x
+
+    !! [NEII] CONSTANTS !!
+    real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
+    real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
+
+    !! [SII] CONSTANTS !!
+    real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
+    real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
+    real,parameter                       :: Ipot_s=10.36 !value in eV
+
+    !! [OI] CONSTANTS !!
+    real,parameter                       :: m_atom_o=16.,Ab_o=1.d-4,A_ul_o=8.39d-3,lambda_o=630.0d-7
+    real,parameter                       :: X_ion_o=0.75,n_cr_o=5.0d5,T_ul_o=1122.8
+
+    if (species_flag=='NeII') then
+        m_atom_x=m_atom_ne
+        Ab_x=Ab_ne
+        A_ul_x=A_ul_ne
+        lambda_x=lambda_ne
+        X_ion_x=X_ion_ne
+        n_cr_x=n_cr_ne
+        T_ul_x=T_ul_ne
+    else if (species_flag=='SII') then
+        m_atom_x=m_atom_s
+        Ab_x=Ab_s
+        A_ul_x=A_ul_s
+        lambda_x=lambda_s
+        X_ion_x=X_ion_s
+        n_cr_x=n_cr_s
+        T_ul_x=T_ul_s
+    else
+        m_atom_x=m_atom_o
+        Ab_x=Ab_o
+        A_ul_x=A_ul_o
+        lambda_x=lambda_o
+        X_ion_x=X_ion_o
+        n_cr_x=n_cr_o
+        T_ul_x=T_ul_o
+    endif
+
+end subroutine which_species
+
+species_flag='SII'
+call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
 
 !! PHYSICS SCALING FACTORS !!
 Rg=(G*Mstar)/(cs**2)                                                      ! [cm]
 ng=CC*sqrt((3.0*Phi_star)/(4.0*pi*alphab*(Rg*Rg*Rg)))                     ! [cm^-3]
 rhog=mu*m_h*ng                                                            ! [g/cm^3]
-vth=cs/sqrt(m_atom_s)                                                       ! [cm/s]
+vth=cs/sqrt(m_atom)                                                       ! [cm/s]
 !! CONVERSION: [km/s] in [au/years]
 vel_convert=km/s
 
@@ -180,7 +219,7 @@ close(145)
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
 r_inner=0.1
-r_outer=1.5
+r_outer=9.5
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -223,8 +262,8 @@ theta_max=atan(y_stream(npoints)/x_stream(npoints))
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 write(*,*) 'Normalizing the streamlines...'
-b_input=2.00
-ub=0.29
+b_input=0.75
+ub=0.85
 b=b_input
 
 rho2d(:,:)=0.0 !1.5e-17
@@ -408,9 +447,9 @@ write(*,*) '-----------------------------------------------------------'
 !! N.B. THE CONSTANTS ARE ALL IN CGS: CONVERT QUANTITIES IN CGS !!
 write(*,*) 'Calculating the flux for a single cell...'
 Temp=T0*(cs/10.0d5)**2.
-nu=speed_light/lambda_s
-A_hnu=A_ul_s*h_planck*nu
-constants=Ab_s*A_hnu*X_II_s
+nu=speed_light/lambda
+A_hnu=A_ul*h_planck*nu
+constants=Ab*A_hnu*X_II
 do i=1,n_r
     do j=1,n_theta
         !! CONVERSION: volume [au**3] -> [cm**3] !!
@@ -418,8 +457,8 @@ do i=1,n_r
         !! CONVERSION: mass density [Msun/au**3] -> numerical density [particles/cm**3] !!
         n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
         if(n_e(i,j) > 0.0) then
-            C(i,j)=1.d0+(n_cr_s/n_e(i,j))
-            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul_s/Temp))+1.d0)*n_e(i,j)*dV(i,j)
+            C(i,j)=1.d0+(n_cr/n_e(i,j))
+            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
         else
             cell_flux(i,j)=0.d0
         endif
@@ -453,8 +492,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=82.0
-str_i='82.0'
+incl_deg=27.0
+str_i='27.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
