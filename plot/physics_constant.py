@@ -8,31 +8,49 @@ Lsun = 3.826e33                                                                 
 year = 31536000.0		                                                        #[s]
 Mstar = 1.*Msun 		                                                        #[g]
 MJ = 1.898e30  		                                                            #[g]
-eV=1.60218e-12  		                                                        #[erg]
-h_planck=6.6261e-27
+eV = 1.60218e-12  		                                                        #[erg]
+h_planck = 6.6261e-27
+speed_light = 2.9979e10                                                         #[cm/s]
 
 N_part = 1.191e57
 cs = 1.0e6 			                                                            #[cm/s]
 m_h = 1.6726e-24                                                                #[g]
-m_e=9.1094e-28                                                                  #[g]
+m_e = 9.1094e-28                                                                  #[g]
 mu = 1.
 CC = 0.14
 Phi_star = 1.e41                                                                #[photons/s]
 alphab = 2.60e-13                                                               #[cm3 s-1]
-T = 1.e4                                                                        #[K]
+T_gas = 1.e4                                                                    #[K]
 k_b=1.38e-16                                                                    #[erg K-1]
 
 ## ----- NeII CONSTANTS -----##
-m_ne = 20.*m_h                                                                  #[g]
+m_atom_ne = 20.                                                                 #[g]
 Ab_ne = 1.e-4
-A_ul = 8.39e-3                                                                  #[s-1]
-A_hnu = 1.332e-15
-X_II = 0.75
-T_ul = 1122.8                                                                   #[K]
-n_cr = 5.0e5                                                                    #[cm-3]
+A_ul_ne = 8.39e-3                                                               #[s-1]
+lambda_ne = 12.81e-4
+X_ion_ne = 0.75
+T_ul_ne = 1122.8                                                                #[K]
+n_cr_ne = 5.0e5                                                                 #[cm-3]
+
+## ----- SII CONSTANTS -----##
+m_atom_s = 32.                                                                  #[g]
+Ab_s = 1.45e-5
+A_ul_s = 1.9e-1                                                                 #[s-1]
+lambda_s = 406.98e-7
+X_ion_s = 1.0
+T_ul_s = 35354.                                                                 #[K]
+n_cr_s = 2.6e6                                                                  #[cm-3]
+
+## ----- OI CONSTANTS -----##
+m_atom_o = 16.                                                                  #[g]
+Ab_o = 5.37e-4
+A_ul_o = 5.6e-3                                                                 #[s-1]
+lambda_o = 630.0e-7
+X_ion_o = 1.0
+T_ul_o = 22830.                                                                 #[K]
+n_cr_o = 1.8e6                                                                  #[cm-3]
 
 ## ----- PHYSICS SCALING FACTORS ----- ##
 Rg = G*Mstar / (cs**2.)	                                                        #[cm]
 ng = CC * (3.*Phi_star / (4.*np.pi*alphab*((Rg)**3)))**0.5                      #[cm-3]
 rhog = ng * m_h * mu 	                                                        #[g cm-3]
-v_th = cs * ((m_h/m_ne)**0.5)                                                   #[cm/s]
