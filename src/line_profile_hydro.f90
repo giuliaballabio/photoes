@@ -152,6 +152,7 @@ do i=1,n_r
 				! v_r(i,n_theta/2+50+j)=v_r2d(i,j)
 				! v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
 				! v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
+				!! CODE FOR A WIND STARTING FROM THE MIDPLANE !!
 				rho(i,n_theta0+j)=rho2d(i,j)
 				v_r(i,n_theta0+j)=v_r2d(i,j)
 				v_theta(i,n_theta0+j)=v_theta2d(i,j)
