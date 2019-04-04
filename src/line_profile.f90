@@ -410,7 +410,7 @@ do i=1,n_r
         n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
         if(n_e(i,j) > 0.0) then
             C(i,j)=1.d0+(n_cr/n_e(i,j))
-            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
+            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
         else
             cell_flux(i,j)=0.d0
         endif
