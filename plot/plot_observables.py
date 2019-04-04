@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import re
 
 
-b = [0.75, 1.00, 1.50, 2.00]
+b = [0.75, 1.00, 1.50] #, 2.00]
 incl_deg = [0.0, 5.0, 10.0, 20.0, 35.0, 45.0, 50.0, 60.0, 70.0, 80.0, 90.0]
 # incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 27.0, 35.0, 45.0, 50.0, 60.0, 68.0, 75.0, 82.0, 90.0]
 r_in = 0.1
@@ -12,7 +12,9 @@ str_cs = 10
 R = 3.e4
 species = 'SII'
 
-path_file = '../cs'+str(str_cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
+path_file = []
+for j in range(len(b)):
+    path_file = '../cs'+str(str_cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out)
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
 
@@ -20,7 +22,7 @@ v_peak1 = []
 v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file)+'/observables_R'+str(R)+'.txt', 'r') as f1:
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
 
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
@@ -31,7 +33,7 @@ v_peak2 = []
 v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file)+'/observables_R'+str(R)+'.txt', 'r') as f2:
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
 
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
@@ -42,7 +44,7 @@ v_peak3 = []
 v_centr3 = []
 fwhm3 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file)+'/observables_R'+str(R)+'.txt', 'r') as f3:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
         lines = f3.readlines()[10:]
 
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
