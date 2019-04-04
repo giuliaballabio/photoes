@@ -8,7 +8,7 @@ array_ub=( 0.85 0.77 0.56 0.29 )
 
 cs=10.0d5 #5.0d5 10.d5
 string_cs=10 #5 10
-species_flag=SII
+species=SII
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
