@@ -8,13 +8,13 @@ incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
 # incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 27.0, 35.0, 45.0, 50.0, 60.0, 68.0, 75.0, 82.0, 90.0]
 r_in = 0.1
 r_out = 9.5
-str_cs = 10
+cs = 10
 R = 3.e4
 species = 'SII'
 
 path_file = []
 for j in range(len(b)):
-    path_file.append('../cs'+str(str_cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
 
