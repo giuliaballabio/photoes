@@ -3,18 +3,18 @@
 
 RUNDIR=${PWD}
 
-array_b=( 0.75 ) #1.00 1.50 2.00 )
-array_ub=( 0.85 ) #0.77 0.56 0.29 )
+array_b=( 0.75 1.00 1.50 2.00 )
+array_ub=( 0.85 0.77 0.56 0.29 )
 
 cs=10.0d5 #5.0d5 10.d5
 string_cs=10 #5 10
-species=SII
+species_flag=SII
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
 	for r_inner in 0.1; do
 		for r_outer in 9.5; do
-			for incl in 27.0; do #35.0 45.0 50.0 60.0 68.0 75.0 82.0; do
+			for incl in 0.0 20.0 45.0 60.0 90.0; do
 
 				echo "up to b="${array_b[i]}", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
@@ -22,6 +22,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
 				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" selfsimilar_solutions.f90
 				sed -i -e "s/cs=.*/cs=$cs /g" selfsimilar_solutions.f90
+				# sed -i -e "s/species_flag=.*/species_flag=$species_flag /g" line_profile.f90
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" line_profile.f90
 				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" line_profile.f90
 				sed -i -e "s/cs=.*/cs=$cs /g" line_profile.f90
