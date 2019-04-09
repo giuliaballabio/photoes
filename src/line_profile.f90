@@ -552,7 +552,7 @@ subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x
         Ab_x=5.37d-4
         A_ul_x=5.6d-3
         lambda_x=630.0d-7
-        X_ion_x=1.0
+        X_ion_x=0.1
         n_cr_x=1.8d6
         T_ul_x=22830.
     endif
