@@ -56,7 +56,7 @@ real,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13
 
 ! call cpu_time(t_in)
 
-species_flag='SII'
+species_flag='SIIb'
 call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
 
 !! PHYSICS SCALING FACTORS !!
@@ -502,43 +502,59 @@ subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x
     character(len=6),intent(in)          :: species_flag
     real,intent(out)                     :: m_atom_x,Ab_x,A_ul_x,lambda_x,X_ion_x,n_cr_x,T_ul_x
 
-    !! [NEII] CONSTANTS !!
-    real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
-    real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
-
-    !! [SII] CONSTANTS !!
-    real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
-    real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
-    real,parameter                       :: Ipot_s=10.36 !value in eV
-
-    !! [OI] CONSTANTS !!
-    real,parameter                       :: m_atom_o=16.,Ab_o=5.37d-4,A_ul_o=5.6d-3,lambda_o=630.0d-7
-    real,parameter                       :: X_ion_o=1.0,n_cr_o=1.8d6,T_ul_o=22830.
+    ! !! [NEII] CONSTANTS !!
+    ! real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
+    ! real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
+    !
+    ! !! [SII] CONSTANTS !!
+    ! real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
+    ! real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
+    ! real,parameter                       :: Ipot_s=10.36 !value in eV
+    !
+    ! !! [OI] CONSTANTS !!
+    ! real,parameter                       :: m_atom_o=16.,Ab_o=5.37d-4,A_ul_o=5.6d-3,lambda_o=630.0d-7
+    ! real,parameter                       :: X_ion_o=1.0,n_cr_o=1.8d6,T_ul_o=22830.
 
     if (species_flag=='NeII') then
-        m_atom_x=m_atom_ne
-        Ab_x=Ab_ne
-        A_ul_x=A_ul_ne
-        lambda_x=lambda_ne
-        X_ion_x=X_ion_ne
-        n_cr_x=n_cr_ne
-        T_ul_x=T_ul_ne
-    else if (species_flag=='SII') then
-        m_atom_x=m_atom_s
-        Ab_x=Ab_s
-        A_ul_x=A_ul_s
-        lambda_x=lambda_s
-        X_ion_x=X_ion_s
-        n_cr_x=n_cr_s
-        T_ul_x=T_ul_s
+        m_atom_x=20.
+        Ab_x=1.d-4
+        A_ul_x=8.39d-3
+        lambda_x=12.81d-4
+        X_ion_x=0.75
+        n_cr_x=5.0d5
+        T_ul_x=1122.8
+    else if (species_flag=='SIIa') then
+        m_atom_x=32.
+        Ab_x=1.45d-5
+        A_ul_x=1.9d-1
+        lambda_x=406.98d-7
+        X_ion_x=1.0
+        n_cr_x=2.6d6
+        T_ul_x=35354.
+    else if (species_flag=='SIIb') then
+        m_atom_x=32.
+        Ab_x=1.45d-5
+        A_ul_x=7.7d-2
+        lambda_x=407.75d-7
+        X_ion_x=1.0
+        n_cr_x=1.9e6
+        T_ul_x=35430.
+    else if (species_flag=='SIIc') then
+        m_atom_x=32.
+        Ab_x=1.45d-5
+        A_ul_x=2.0d-4
+        lambda_x=671.83d-7
+        X_ion_x=1.0
+        n_cr_x=1.7d3
+        T_ul_x=21416.
     else
-        m_atom_x=m_atom_o
-        Ab_x=Ab_o
-        A_ul_x=A_ul_o
-        lambda_x=lambda_o
-        X_ion_x=X_ion_o
-        n_cr_x=n_cr_o
-        T_ul_x=T_ul_o
+        m_atom_x=16.
+        Ab_x=5.37d-4
+        A_ul_x=5.6d-3
+        lambda_x=630.0d-7
+        X_ion_x=1.0
+        n_cr_x=1.8d6
+        T_ul_x=22830.
     endif
 
 end subroutine which_species
