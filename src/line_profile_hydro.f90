@@ -32,22 +32,23 @@ double precision,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2
 double precision,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
 double precision,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 double precision,dimension(1:n_v)                :: v,line_flux
-double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants
+double precision                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants,Temp
 double precision                                 :: v_los_r,v_los_th,v_los_phi
 logical,save                                     :: init=.false.
-character(len=5)                                 :: str_i
+character(len=6)                                 :: str_i,species_flag
+real                                             :: m_atom,Ab,A_ul,lambda,X_ion,n_cr,T_ul
 
 !! PHYSICAL CONSTANTS !!
 double precision,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
-double precision,parameter                       :: km=6.6846d-9,s=3.171d-8
+double precision,parameter                       :: km=6.6846d-9,s=3.171d-8,eV=1.60218d-12
 double precision,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
 double precision,parameter                       :: pi=3.14159,cs=1.0d6,m_h=1.6726d-24,mu=1.
 double precision,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
-double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T=1.d4
+double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
-!! NEII CONSTANTS !!
-double precision,parameter                       :: m_atom=20.,Ab_ne=1.d-4,A_ul=8.39d-3,lambda_ne=12.81d-4
-double precision,parameter                       :: X_II=0.75,n_cr=5.0d5,T_ul=1122.8
+
+species_flag='SIIa'
+call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
 
 !! PHYSICS SCALING FACTORS !!
 Rg=(G*Mstar)/(cs**2)                                                      ! [cm]
@@ -178,7 +179,7 @@ v_theta(:,:)=v_theta(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 v_phi(:,:)=v_phi(:,:)*(cs/(2.0*pi))*1.e-5 !*(year/au)/vel_convert
 
 !! CONVERSION: cm/s -> km/s !!
-vth=vth*1.e-5
+vth=vth*1.d-5
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
@@ -205,6 +206,7 @@ print *,'-----------------------------------------------------------'
 !! COMPUTE THE FLUX FOR A SINGLE CELL !!
 !! N.B. THE CONSTANTS ARE ALL IN CGS: CONVERT QUANTITIES IN CGS !!
 print *,'Calculating the flux for a single cell...'
+Temp=T0*(cs/10.0d5)**2.
 nu=speed_light/lambda_ne
 A_hnu=A_ul*h_planck*nu
 constants=Ab_ne*A_hnu*X_II
@@ -294,5 +296,69 @@ enddo
 close(500)
 
 print *,'-----------------------------------------------------------'
+
+contains
+!! CHOOSE THE SPECIES !!
+subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x,lambda_x)
+    implicit none
+    character(len=6),intent(in)          :: species_flag
+    real,intent(out)                     :: m_atom_x,Ab_x,A_ul_x,lambda_x,X_ion_x,n_cr_x,T_ul_x
+
+    ! !! [NEII] CONSTANTS !!
+    ! real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
+    ! real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
+    !
+    ! !! [SII] CONSTANTS !!
+    ! real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
+    ! real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
+    ! real,parameter                       :: Ipot_s=10.36 !value in eV
+    !
+    ! !! [OI] CONSTANTS !!
+    ! real,parameter                       :: m_atom_o=16.,Ab_o=5.37d-4,A_ul_o=5.6d-3,lambda_o=630.0d-7
+    ! real,parameter                       :: X_ion_o=1.0,n_cr_o=1.8d6,T_ul_o=22830.
+
+    if (species_flag=='NeII') then
+        m_atom_x=20.
+        Ab_x=1.d-4
+        A_ul_x=8.39d-3
+        lambda_x=12.81d-4
+        X_ion_x=0.75
+        n_cr_x=5.0d5
+        T_ul_x=1122.8
+    else if (species_flag=='SIIa') then
+        m_atom_x=32.
+        Ab_x=1.45d-5
+        A_ul_x=1.9d-1
+        lambda_x=406.98d-7
+        X_ion_x=1.0
+        n_cr_x=2.6d6
+        T_ul_x=35354.
+    else if (species_flag=='SIIb') then
+        m_atom_x=32.
+        Ab_x=1.45d-5
+        A_ul_x=7.7d-2
+        lambda_x=407.75d-7
+        X_ion_x=1.0
+        n_cr_x=1.9e6
+        T_ul_x=35430.
+    else if (species_flag=='SIIc') then
+        m_atom_x=32.
+        Ab_x=1.45d-5
+        A_ul_x=2.0d-4
+        lambda_x=671.83d-7
+        X_ion_x=1.0
+        n_cr_x=1.7d3
+        T_ul_x=21416.
+    else
+        m_atom_x=16.
+        Ab_x=5.37d-4
+        A_ul_x=5.6d-3
+        lambda_x=630.0d-7
+        X_ion_x=0.3
+        n_cr_x=1.8d6
+        T_ul_x=22830.
+    endif
+
+end subroutine which_species
 
 end program
