@@ -2,9 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 
+plt.style.use('classic')
+plt.rcParams['font.family'] = 'sans' #Courier New'
+plt.rcParams['font.serif'] = 'Helvetica'
 
-incl_deg = [0.0, 10.0, 20.0, 45.0, 60.0, 75.0, 90.0]
+incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
 cs = 10
+R = 3.e4
+species = 'SIIa'
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
 
@@ -12,10 +17,9 @@ v_peak1 = []
 v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
-    # with open('../data_hydro/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f1:
-    with open('../data_hydro_midplane/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f1:
+    with open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+    # with open('../data_hydro_midplane/incl_'+str(round(incl_deg[i],2))+'/observables.txt', 'r') as f1:
         lines = f1.readlines()[10:]
-
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -41,9 +45,9 @@ incl_data2 = [4.0, 45.0, 75.0]
 name = ['TW Hya', 'CS Cha', 'T Cha']
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_peak1), color='#006837', linestyle='dashed', marker='o', markeredgecolor='#006837', label='hydro')
-plt.plot(incl_deg, np.abs(v_centr1), color='#d7301f', linestyle='dashed', marker='o', markeredgecolor='#d7301f', label='hydro $v_{centr}$')
-plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='Alexander')
+# plt.plot(incl_deg, np.abs(v_peak1), color='#006837', linestyle='dashed', marker='o', markeredgecolor='#006837', label='hydro')
+plt.plot(incl_deg, np.abs(v_centr1), color='#d7301f', linestyle='dashed', marker='o', markeredgecolor='#d7301f')#, label='hydro $v_{centr}$')
+plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted')#, label='Alexander')
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', label='Sacco et al. (2012)')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
@@ -51,12 +55,12 @@ plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linest
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
+plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.axis([-5.0, 95.0, -1.0, 14.0])
 plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
-plt.savefig('./observables/vpeak_hydro_midplane.png', format='png', bbox_inches='tight')
-# plt.savefig('./observables/vpeak_hydro.png', format='png', bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/vpeak_hydro_midplane.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/vcentr_hydro_R'+str(R)+'.eps', format='eps', bbox_inches='tight', dpi=300)
 plt.show()
 
 plt.figure()
@@ -66,6 +70,6 @@ plt.ylabel(r'FWHM', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.axis([-5.0, 95.0, 5.0, 16.0])
 plt.legend(loc='best')
-plt.savefig('./observables/fwhm_hydro_midplane.png', format='png', bbox_inches='tight')
-# plt.savefig('./observables/fwhm_hydro.png', format='png', bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/fwhm_hydro_midplane.png', format='png', bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/fwhm_hydro_R'+str(R)+'.png', format='png', bbox_inches='tight', dpi=300)
 plt.show()
