@@ -23,10 +23,10 @@ program selfsimilar
 implicit none
 integer                                          :: i
 integer,parameter                                :: n=10000000
-double precision,parameter                       :: cs=1.d6
+double precision,parameter                       :: cs=10.0d5
 double precision,parameter                       :: pi=3.141592  !!,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
 double precision                                 :: b,ub,reff0,gm,b_input
-double precision                                 :: x0,y0,u0,dx,dy,rho,r,phi,theta !,uph
+double precision                                 :: x0,y0,u0,dx,dy,rho,r,phi,theta,flux !,uph
 double precision                                 :: x1,y1,u1,tanth1,a1,phi1,theta1
 double precision                                 :: x2,y2,u2,ur2,uth2,tanth2,a2,phi2,theta2
 double precision                                 :: dudy,ddx1,ddx2,ddxdy
@@ -40,8 +40,8 @@ double precision                                 :: rk4,dphi,dphidy,ft
 !b_array=(0.5,0.75,1.,1.5,2.)
 !ub_array=(0.92,0.85,0.77,0.56,0.29)
 
-b_input=1.00
-ub=0.77
+b_input=0.75
+ub=0.85
 
 !! INITIAL CONDITIONS
 x0=1.
@@ -71,7 +71,8 @@ do i=1,n
         +dphi(x1,y1,gm))*ft**3./(tanth1**2.*x1*(x1+y1*tanth1))
     ddx2=ft**2.*(x1*tanth1-y1)/(tanth1**3.*x1*(x1+y1*tanth1))
     ddxdy=ddx1+ddx2
-    rho=dexp(-0.5*(u1**2.-u0**2.)-dphi(x1,y1,gm)) !!*u1*a1
+    rho=dexp(-0.5*(u1**2.-u0**2.)-dphi(x1,y1,gm))
+    flux=rho*u1*a1
     a2=(x1**2.*tanth1-x1*y1)/(1.+tanth1**2.)**0.5
     x2=x1+dy/tanth1+0.5*ddxdy*dy**2.
     y2=y1+dy
