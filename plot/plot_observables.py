@@ -5,12 +5,12 @@ import re
 
 b = [0.75, 1.00, 1.50] #, 2.00]
 incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
-# incl_deg = [0.0, 1.0, 5.0, 10.0, 20.0, 27.0, 35.0, 45.0, 50.0, 60.0, 68.0, 75.0, 82.0, 90.0]
+# incl_deg = [0.0, 5.0, 10.0, 20.0, 45.0, 50.0, 60.0, 70.0, 80.0, 90.0]
 r_in = 0.1
 r_out = 9.5
 cs = 10
 R = 3.e4
-species = 'SII'
+species = 'SIIc'
 
 path_file = []
 for j in range(len(b)):
@@ -24,7 +24,6 @@ fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
-
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -35,7 +34,6 @@ fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
-
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -46,7 +44,6 @@ fwhm3 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
         lines = f3.readlines()[10:]
-
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
