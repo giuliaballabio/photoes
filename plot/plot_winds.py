@@ -35,14 +35,14 @@ dtheta = np.pi / len(theta)
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
 incl_deg = 0.0
-b = 0.75
+b = 1.50
 r_in = 0.1
 r_out = 9.5
 cs = 10.
 str_cs = 10
 
 ## ––––– choose the species ––––– ##
-species = 'SII'
+species = 'NeII'
 if (species == 'NeII'):
     m_atom = m_atom_ne
     Ab = Ab_ne
@@ -78,21 +78,25 @@ rho_2d = rho_mean.reshape(len(radius), len(theta))
 v_phi_2d = v_phi.reshape(len(radius), len(theta))
 rho_hydro_2d = rho_hydro.reshape(len(radius), len(theta))
 
-rho_cr = n_cr * m_h * mu / rhog
+rho_cr = n_cr * m_h * mu
 rho_cr_2d = [[rho_cr for i in range(len(theta))] for j in range(len(radius))]
 
 ## ––––– plot the boundary condition ––––– ##
 rho0 = []
+rho0_hydro = []
 for i in range(len(radius)):
-    rho0.append(rho_2d[i][0])
+    rho0.append(rho_2d[i][0]*rhog)
+    rho0_hydro.append(rho_hydro_2d[i][0]*rhog)
 plt.figure()
-plt.loglog(radius, rho0, 'r')
-plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+plt.loglog(radius*Rg/au, rho0, 'k')
+plt.hlines(rho_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$\rho_{cr}$')
+# plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 plt.title(r'Boundary condition', fontsize=15)
-plt.xlabel(r'R / R$_{g}$',fontsize=15)
-plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
-plt.savefig(str(path_file)+'/boundary_condition.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro/boundary_condition.png', format='png', bbox_inches='tight')
+plt.xlabel(r'R / AU', fontsize=15)
+plt.ylabel(r'$\rho_0$ / $\rho_{g}$', fontsize=15)
+plt.legend(loc='best')
+plt.savefig(str(path_file)+'/boundary_condition.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('../data_hydro/boundary_condition.png', format='png', dpi=300, bbox_inches='tight')
 # plt.show()
 plt.close()
 
@@ -162,35 +166,71 @@ plt.close()
 
 ## ––––– Creating a 2D map of the flux ––––– ##
 v_th = cs / ((m_atom)**0.5)
-Temp = T_gas * (cs/10.e5)**2.
+Temp = T_gas * (cs/10.)**2.
 nu = speed_light/lambda_ion
 A_hnu = A_ul*h_planck*nu
 constants = Ab*A_hnu*X_ion
 
 dV = np.zeros((len(radius), len(theta)))
+r_cr = np.zeros((len(theta)))
+z_cr = np.zeros((len(theta)))
 n_e = np.zeros((len(radius), len(theta)))
 C_ul = np.zeros((len(radius), len(theta)))
 P_u = np.zeros((len(radius), len(theta)))
 cell_flux = np.zeros((len(radius), len(theta)))
 for i in range(len(radius)):
     for j in range(len(theta)):
-        dV[i][j] = (2.*np.pi) * radius[i] * radius[i] * np.sin(theta[j]) * dr[i] * dtheta[j] * (au**3)
-        n_e[i][j] = rho_2d[i][j] * (ng/rhog) * (Msun/(au**3))
+        dV[i][j] = (2.*np.pi) * radius[i]*Rg * radius[i]*Rg * np.sin(theta[j]) * dr[i]*Rg * dtheta[j] #* (au**3)
+        n_e[i][j] = rho_2d[i][j]*rhog * (ng/rhog) #* (Msun/(au**3))
         if (n_e[i][j] > 0.0):
             C_ul[i][j] = 1. + (n_cr/n_e[i][j])
-            P_u[i][j] = 1. / ((2.*C_ul[i][j]*np.exp(-1.*T_ul/Temp)) + 1.)
-            cell_flux[i][j] = constants * P_u[i][j] * n_e[i][j] * dV[i][j]
+            P_u[i][j] = 1. / ((2.*C_ul[i][j]*np.exp(T_ul/Temp)) + 1.)
+            cell_flux[i][j] = constants * P_u[i][j] * n_e[i][j] #* dV[i][j]
         else:
             cell_flux[j][j] = 0.0
+# if (species == 'NeII'):
+#     max_flux = np.amax(cell_flux)
 
 plt.figure()
-CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm() , vmin=1.e-2, vmax=1.e0)
+CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm())# , vmin=1.e-1, vmax=1.e0)
+# plt.contour(r_cr*Rg/au, z_cr*Rg/au, n_cr_2d, color='k')
 cbar = plt.colorbar(CS)
-# plt.axis([0., 20., 0., 15.])
+plt.axis([0., 20., 0., 15.])
 plt.xlabel(r'R / AU',fontsize=15)
 plt.ylabel(r'z / AU',fontsize=15)
 cbar.set_label(r'Log($L$)') # / L_{\odot}
-plt.savefig(str(path_file)+'/line_flux_disc.png', format='png', dpi=300, bbox_inches='tight')#, dpi=1000)
+plt.savefig(str(path_file)+'/line_flux_zoom.png', format='png', dpi=300, bbox_inches='tight')
 # plt.savefig('../data_hydro/line_flux.png', format='png', bbox_inches='tight', dpi=300)
+plt.show()
+plt.close()
+
+ne_r = []
+for i in range(len(radius)):
+    ne_r.append(n_e[i][0])
+plt.figure()
+plt.loglog(radius*Rg/au, ne_r, 'k')
+plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$n_{cr}$')
+# plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+plt.xlabel(r'R / AU',fontsize=15)
+plt.ylabel(r'$n_e$', fontsize=15)
+plt.legend(loc='best')
+plt.savefig(str(path_file)+'/numerical_density_midplane.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('../data_hydro/numerical_density_midplane.png', format='png', bbox_inches='tight')
+plt.show()
+plt.close()
+
+flux_r = []
+for i in range(len(radius)):
+    flux_r.append(cell_flux[i][1]/np.amax(cell_flux))
+plt.figure()
+plt.loglog(radius*Rg/au, flux_r, 'k')
+plt.plot(radius*Rg/au, (radius*Rg/au)**(-b), 'r', label='$R^{-b}$')
+# plt.yscale('log')
+# plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+plt.xlabel(r'R / AU',fontsize=15)
+plt.ylabel(r'Flux(R)', fontsize=15)
+plt.legend(loc='best')
+plt.savefig(str(path_file)+'/flux_midplane.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('../data_hydro/flux_midplane.png', format='png', bbox_inches='tight')
 plt.show()
 plt.close()
