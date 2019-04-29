@@ -126,25 +126,6 @@ do k=1,n_phi
     cosphi(k)=cos(phi(k))
 enddo
 
-!! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
-!write(*,*) 'Reading data from files...'
-!open(unit=2,file='../data_hydro/rho_mean.dat')
-!open(unit=3,file='../data_hydro/v_r_mean.dat')
-!open(unit=4,file='../data_hydro/v_th_mean.dat')
-!open(unit=5,file='../data_hydro/v_phi_mean.dat')
-!do i=1,n_r
-!    do j=1,n_theta0
-!        read(2,*) rho2d(i,j)
-!        read(3,*) v_r2d(i,j)
-!        read(4,*) v_theta2d(i,j)
-!        read(5,*) v_phi2d(i,j)
-!    enddo
-!enddo
-!close(2)
-!close(3)
-!close(4)
-!close(5)
-
 !! CALCULATE THE NUMBER OF POINTS OF THE STREAMLINE !!
 write(*,*) 'Counting the number of points of the streamline...'
 open(unit=123,file='./streamline_polarcoord.txt')
@@ -264,28 +245,6 @@ close(178)
 close(189)
 
 !! REVERSE ALONG THETA AXIS !!
-!! THIS PART IS FOR THE HYDRO SIMULATIONS !!
-! write(*,*) 'Building the 3D field...'
-! do i=1,n_r
-!     do j=1,n_theta0
-!         !! DISC ZONE FOR z>0 !!
-!         rho(i,j)=rho2d(i,n_theta0+1-j)
-!         v_r(i,j)=v_r2d(i,n_theta0+1-j)
-!         v_theta(i,j)=-1.*v_theta2d(i,n_theta0+1-j)
-!         v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
-!         !! DISC ZONE FOR z<0 !!
-!         rho(i,n_theta/2+50+j)=rho2d(i,j)
-!         v_r(i,n_theta/2+50+j)=v_r2d(i,j)
-!         v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
-!         v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
-!     enddo
-!     !! DISC ZONE ON THE MIDPLANE !!
-!     rho(i,n_theta0+1:n_theta/2+50)=0.d0 !rho2d(i,n_theta0)
-!     v_r(i,n_theta0+1:n_theta/2+50)=0.d0 !v_r2d(i,n_theta0)
-!     v_theta(i,n_theta0+1:n_theta/2+50)=0.d0 !v_theta2d(i,n_theta0)
-!     v_phi(i,n_theta0+1:n_theta/2+50)=0.d0 !v_phi2d(i,n_theta0)
-! enddo
-!! THIS PART IS FOR THE SEMIANALYTICAL MODEL !!
 !! THE STREAMLINES START FROM THE MIDPLANE !!
 write(*,*) 'Building the 3D field...'
 !! WIND STARTING FROM THE MIDPLANE
@@ -378,12 +337,6 @@ do i=1,n_r
 enddo
 close(210)
 
-!! COMPUTE THE MASS FLUX FROM THE HYDRO DATA !!
-!write(*,*) 'Calculating the mass flux...'
-!do j=1,n_theta
-!    dA(j)=2.0*r_out(1113)*r_out(1113)*sinth(j)*dtheta
-!    dmass(j)=rho(1113,j)*v_r(1113,j)*dA(j)
-!enddo
 !! COMPUTE THE MASS FLUX FROM THE ANALYTHICAL MODEL !!
 write(*,*) 'Calculating the mass flux...'
 do j=1,n_theta
@@ -393,6 +346,40 @@ enddo
 Mdot=sum(dmass) !*n_phi
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total mass flux =',Mdot,'Msun/yr'
+write(*,*) '-----------------------------------------------------------'
+
+l=1
+do while (r(l).le.25.)
+    l=l+1
+enddo
+l_25=l
+do j=1,n_theta
+    dA(j)=2.0*r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
+    dmass(j)=rho(l_25,j)*v_r(l_25,j)*dA(j)
+enddo
+Mdot_25=sum(dmass) !*n_phi
+write(*,*) '-----------------------------------------------------------'
+write(*,*) '   Mass flux (r<25 au) =',Mdot_25,'Msun/yr'
+write(*,*) '-----------------------------------------------------------'
+
+!! NORMALIZE THE DENSITY SUCH AS Mdot(r<25au) = 10^-9 Msun/yr
+rho(:,:)=rho(:,:)*(1.d-9/Mdot_25)
+do j=1,n_theta
+    dA(j)=2.0*r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
+    dmass(j)=rho(l_25,j)*v_r(l_25,j)*dA(j)
+enddo
+Mdot_25=sum(dmass) !*n_phi
+write(*,*) '-----------------------------------------------------------'
+write(*,*) '   Normalised mass flux (r<25 au) =',Mdot_25,'Msun/yr'
+write(*,*) '-----------------------------------------------------------'
+
+do j=1,n_theta
+    dA(j)=2.0*r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
+    dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
+enddo
+Mdot=sum(dmass) !*n_phi
+write(*,*) '-----------------------------------------------------------'
+write(*,*) '   Normalised total mass flux =',Mdot,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
 
 !! COMPUTE THE FLUX FOR A SINGLE CELL !!
@@ -428,7 +415,6 @@ do i=1,n_r
     enddo
 enddo
 close(219)
-
 tot_flux=sum(cell_flux)*n_phi
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total flux =',tot_flux/Lsun,'Lsun'
@@ -552,7 +538,7 @@ subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x
         Ab_x=5.37d-4
         A_ul_x=5.6d-3
         lambda_x=630.0d-7
-        X_ion_x=0.1
+        X_ion_x=0.3
         n_cr_x=1.8d6
         T_ul_x=22830.
     endif
