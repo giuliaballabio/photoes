@@ -3,11 +3,11 @@
 
 RUNDIR=${PWD}
 
-array_b=( 0.75 1.00 1.50 )
-array_ub=( 0.85 0.77 0.56 )
+array_b=( 0.75 1.00 1.50 2.00 )
+array_ub=( 0.85 0.77 0.56 0.29 )
 
 cs=10
-species=SII
+species=OI
 
 for ((i=0;i<${#array_b[@]};++i)); do
 	# echo "(${array_b[i]}, ${array_ub[i]})"
@@ -28,6 +28,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 
         			cd $RUNDIR/../cs$cs\kms/$species/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
         			cp photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.o* photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.txt
+							# cd $RUNDIR/../data_hydro/$species/incl_$incl
+							# cp photoes_hydro_i$incl.o* photoes_hydro_i$incl.txt
 
         			# cd $RUNDIR/../plot
         			# python plot_observables.py
