@@ -4,15 +4,15 @@ from scipy.optimize import curve_fit
 
 speed_light = 299792.458                     #km/s
 cs = 10
-species = 'SII'
+species = 'OI'
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
-# incl_deg = 80.0
+# incl_deg = 90.0
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 80.0
-b_input = 1.50
+incl_deg = 90.0
+b_input = 2.00
 r_inner = 0.1
 r_outer = 9.5
 
@@ -28,8 +28,8 @@ line_flux = np.array(map(float, [lines.split()[1] for lines in open(str(path_fil
 ## DATA FROM HYDRO SIMULATIONS
 # v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 # line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
-# v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
-# line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+# v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+# line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 
 # if incl_deg == 90.0:
 #     v = v
@@ -80,7 +80,7 @@ plt.ylabel(r'Normalized L(v)', fontsize=15)
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.show()
 
 ## FIT THE CONVOLUTION WITH A GAUSSIAN
@@ -123,7 +123,7 @@ plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_ou
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.show()
 
 ## CALCULATE THE CUMULATIVE FUNCTION
@@ -162,19 +162,19 @@ plt.ylabel(r'Cumulative flux', fontsize=15)
 plt.axis([-40., 40., 0., 1.2])
 plt.savefig(str(path_file)+'/cumulative.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
 # plt.show()
 
 ## WRITE THE OBSERVABLES INTO A FILE
 f = open(str(path_file)+'/observables_R'+str(R)+'.txt', 'w+')
 # f = open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/observables_R'+str(R)+'.txt', 'w+')
-# f = open('../data_hydro/incl_'+str(round(incl_deg, 2))+'/observables_R'+str(R)+'.txt', 'w+')
+# f = open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/observables_R'+str(R)+'.txt', 'w+')
 f.write('b = '+str(b)+' - R_in = '+str(r_in)+' Rg - R_out = '+str(r_out)+' Rg - i = '+str(incl_deg)+'\n')
 f.write('\n')
 f.write('------------------------------------------------------------------------------- \n')
 f.write('PROPERTIES OF THE CONVOLUTION \n')
-f.write('Velocity at peak [km/s] \t Centroid velocity [km/s] \t FWHM \n')
-f.write(str(v_peak_conv)+'\t\t\t'+str(v_centr)+'\t\t\t'+str(sigma_conv[0])+'\n')
+f.write('Velocity at peak NOT convolved [km/s] \t Velocity at peak [km/s] \t FWHM \n')
+f.write(str(v_peak)+'\t\t\t'+str(v_peak_conv)+'\t\t\t'+str(sigma_conv[0])+'\n')
 f.write('\n')
 f.write('------------------------------------------------------------------------------- \n')
 f.write('PROPERTIES OF THE GAUSSIAN FIT \n')
