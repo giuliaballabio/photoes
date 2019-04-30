@@ -23,7 +23,7 @@ use omp_lib
 
 implicit none
 
-integer                              :: i,j,k,l,npoints,l_in,l_out
+integer                              :: i,j,k,l,npoints,l_in,l_out,l_25
 integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d7
 real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !real,dimension(1:n_r-1)             :: dr
@@ -33,7 +33,7 @@ real,dimension(1:n_theta)            :: theta,sinth,costh,centre_theta
 real,dimension(1:n_theta)            :: dA,dmass
 real,dimension(1:n_phi)              :: phi,sinphi,cosphi
 real                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input,ub,theta_max
-real                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot
+real                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot,Mdot_25
 !real                                 :: t_in,t_fin
 real,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d,Rb
 real,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
