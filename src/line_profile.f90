@@ -52,7 +52,7 @@ real,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msu
 real,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.,m_e=9.1094d-28
 real,parameter                       :: cs=10.0d5
 real,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
-real,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
+real,parameter                       :: CC=0.14,Phi_star=1.0d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
 ! call cpu_time(t_in)
 
@@ -340,7 +340,7 @@ close(210)
 !! COMPUTE THE MASS FLUX FROM THE ANALYTHICAL MODEL !!
 write(*,*) 'Calculating the mass flux...'
 do j=1,n_theta
-    dA(j)=2.0*r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
+    dA(j)=r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
     dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
 enddo
 Mdot=sum(dmass) !*n_phi
@@ -354,7 +354,7 @@ do while (r(l).le.25.)
 enddo
 l_25=l
 do j=1,n_theta
-    dA(j)=2.0*r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
+    dA(j)=r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
     dmass(j)=rho(l_25,j)*v_r(l_25,j)*dA(j)
 enddo
 Mdot_25=sum(dmass) !*n_phi
@@ -365,7 +365,7 @@ write(*,*) '-----------------------------------------------------------'
 !! NORMALIZE THE DENSITY SUCH AS Mdot(r<25au) = 10^-9 Msun/yr
 rho(:,:)=rho(:,:)*(1.d-9/Mdot_25)
 do j=1,n_theta
-    dA(j)=2.0*r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
+    dA(j)=r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
     dmass(j)=rho(l_25,j)*v_r(l_25,j)*dA(j)
 enddo
 Mdot_25=sum(dmass) !*n_phi
@@ -374,7 +374,7 @@ write(*,*) '   Normalised mass flux (r<25 au) =',Mdot_25,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
 
 do j=1,n_theta
-    dA(j)=2.0*r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
+    dA(j)=r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
     dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
 enddo
 Mdot=sum(dmass) !*n_phi
