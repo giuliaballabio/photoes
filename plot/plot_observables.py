@@ -4,17 +4,18 @@ import re
 
 
 b = [0.75, 1.00, 1.50] #, 2.00]
-incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
+incl_deg = [0.0, 20.0, 45.0, 60.0, 75.0, 90.0]
 # incl_deg = [0.0, 5.0, 10.0, 20.0, 45.0, 50.0, 60.0, 70.0, 80.0, 90.0]
 r_in = 0.1
 r_out = 9.5
 cs = 10
 R = 3.e4
-species = 'SIIc'
+species = 'NeII'
 
 path_file = []
 for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    # path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/mdot10e-9/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
 
@@ -87,7 +88,8 @@ plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-5.0, 95.0, -1.0, 14.0])
 plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
-plt.savefig('./observables/'+str(species)+'/vpeak_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/vpeak_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/vpeak_mdot10e-9_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
 plt.figure()
@@ -100,7 +102,8 @@ plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-5.0, 95.0, 0.0, 30.0])
 plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/fwhm_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/fwhm_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/fwhm_mdot10e-9_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
 ## ---------------------- PLOT THE FLUX AS A FUNCTION OF THE OUTER RADIUS ----------------------
