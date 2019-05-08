@@ -7,14 +7,14 @@ array_b=( 0.75 1.00 1.50 2.00 )
 array_ub=( 0.85 0.77 0.56 0.29 )
 
 cs=10
-species=OI
+species=NeII
+mdot=mdot10e-8
 
 for ((i=0;i<${#array_b[@]};++i)); do
 	# echo "(${array_b[i]}, ${array_ub[i]})"
-	for r_inner in 0.1; do
-		for r_outer in 9.5; do
-			for incl in 0.0 20.0 45.0 60.0 90.0; do
-			# for incl in 0.0 1.0 5.0 10.0 20.0 35.0 45.0 50.0 60.0 75.0 90.0; do
+	for r_inner in 0.1 1.0; do
+		for r_outer in 5.0 9.5; do
+			for incl in 0.0 45.0 90.0; do
 
         			echo "up to b="${array_b[i]}", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
@@ -27,7 +27,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
         			python convolution.py
 
         			cd $RUNDIR/../cs$cs\kms/$species/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
-        			cp photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.o* photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.txt
+							cp photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.o* photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.txt
 							# cd $RUNDIR/../data_hydro/$species/incl_$incl
 							# cp photoes_hydro_i$incl.o* photoes_hydro_i$incl.txt
 
