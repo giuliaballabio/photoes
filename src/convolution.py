@@ -2,39 +2,45 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
+plt.style.use('classic')
+plt.rcParams['font.size'] = 10
+plt.rcParams['axes.labelsize'] = 10
+plt.rcParams['axes.titlesize'] = 10
+plt.rcParams['xtick.labelsize'] = 8
+plt.rcParams['ytick.labelsize'] = 8
+plt.rcParams['legend.fontsize'] = 10
+plt.rcParams['figure.titlesize'] = 12
+
 speed_light = 299792.458                     #km/s
-cs = 10
-species = 'OI'
+cs = 10 
+species = 'NeII'
+mdot = 'mdot10e-8'
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
-# incl_deg = 90.0
+# incl_deg = 90.0 
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 90.0
-b_input = 2.00
-r_inner = 0.1
-r_outer = 9.5
+incl_deg = 90.0 
+b_input = 2.00 
+r_inner = 1.0 
+r_outer = 9.5 
 
 b = b_input
 r_in = r_inner
 r_out = r_outer
 
 path_file = '../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
+# path_file = '../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
 
 ## DATA FROM MODEL
-v = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+v = -1.*np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 line_flux = np.array(map(float, [lines.split()[1] for lines in open(str(path_file)+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 ## DATA FROM HYDRO SIMULATIONS
 # v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 # line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 # v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 # line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
-
-# if incl_deg == 90.0:
-#     v = v
-# else:
-#     v = -1. * v
 
 ## CALCULATE THE VELOCITY AT THE PEAK OF THE LINE
 peak_flux = np.amax(line_flux)
@@ -46,17 +52,6 @@ v_peak = v[i_max]
 # print 'v_peak = '+str(v_peak)+' km/s'
 
 ## CONVOLUTION WITH A GAUSSIAN FUNCTION
-# convoluted = []
-# total = []
-# for i in range(len(v)):
-#     for j in range(len(v)):
-#         convoluted = ((1./np.sqrt(2. * np.pi * sigma**2.))*np.exp(-((v[i]-v[j])/sigma)**2./2.) * line_flux[j])
-#     total.append(np.sum(convoluted))
-#
-# convoluted = np.array(convoluted)
-# total = np.array(total)
-# print convoluted.shape
-# print total.shape
 def gaussian(x,norm,mean,sigma):
     # norm = 1./np.sqrt(2. * np.pi * sigma**2.)
     return norm*np.exp(-(x-mean)**2/(2.*sigma**2.))
@@ -146,15 +141,9 @@ while (L_cum[i] < L_centr):
     i = i+1
 i_centr = i
 v_centr = v[i_centr]
-# print 'v_centr = '+str(v_centr)
-
-# if incl_deg == 90.0:
-#     v = v
-# else:
-#     v = -1. * v
 
 plt.figure()
-plt.plot(v, L_cum, color='r')
+plt.plot(-v, L_cum, color='r')
 plt.vlines(v_centr, 0., 2.5, 'k', linestyle='--')
 plt.hlines(L_centr, -50., 50., 'k', linestyle='--')
 plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)

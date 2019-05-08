@@ -64,7 +64,7 @@ species = 'NeII'
 path_file = []
 path_file_hydro = []
 for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/mdot10e-9/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/mdot10e-8/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v1 = []
 line_flux1 = []
@@ -93,11 +93,11 @@ for i in range(len(incl_deg)):
 fig, ax = plt.subplots(3, 2, sharex='col', sharey='row')
 for row in range(3):
     for col in range(2):
-        ax[row,col].plot(v1[2*row+col], line_flux1[2*row+col] / np.amax(line_flux1[2*row+col]), color='#a50f15', label='$b='+str('{:.2f}'.format(round(b[0], 2)))+'$')
-        ax[row,col].plot(v2[2*row+col], line_flux2[2*row+col] / np.amax(line_flux2[2*row+col]), color='#de2d26', label='$b='+str('{:.2f}'.format(round(b[1], 2)))+'$')
-        ax[row,col].plot(v3[2*row+col], line_flux3[2*row+col] / np.amax(line_flux3[2*row+col]), color='#fb6a4a', label='$b='+str('{:.2f}'.format(round(b[2], 2)))+'$')
-        # ax[row,col].plot(v4[2*row+col], line_flux4[2*row+col] / np.amax(line_flux4[2*row+col]), color='#fcae91', label='$b='+str('{:.2f}'.format(round(b[3], 2)))+'$')
-        ax[row,col].plot(v_hydro[2*row+col], line_flux_hydro[2*row+col] / np.amax(line_flux_hydro[2*row+col]), color='blue', label='$hydro$') #, label='$i='+str(incl_deg[2*row+col])+'$')
+        ax[row,col].plot(v1[2*row+col], line_flux1[2*row+col] / np.amax(line_flux1[2*row+col]), color='#fecc5c', label='$b='+str('{:.2f}'.format(round(b[0], 2)))+'$')
+        ax[row,col].plot(v2[2*row+col], line_flux2[2*row+col] / np.amax(line_flux2[2*row+col]), color='#fd8d3c', label='$b='+str('{:.2f}'.format(round(b[1], 2)))+'$')
+        ax[row,col].plot(v3[2*row+col], line_flux3[2*row+col] / np.amax(line_flux3[2*row+col]), color='#f03b20', label='$b='+str('{:.2f}'.format(round(b[2], 2)))+'$')
+        # ax[row,col].plot(v4[2*row+col], line_flux4[2*row+col] / np.amax(line_flux4[2*row+col]), color='#bd0026', label='$b='+str('{:.2f}'.format(round(b[3], 2)))+'$')
+        ax[row,col].plot(v_hydro[2*row+col], line_flux_hydro[2*row+col] / np.amax(line_flux_hydro[2*row+col]), color='#2171b5', label='$hydro$') #, label='$i='+str(incl_deg[2*row+col])+'$')
         leg1 = ax[0,0].legend(loc='upper left')
         leg2 = ax[row,col].legend(['$i='+str(incl_deg[2*row+col])+'$'], loc='upper right', frameon=False, handlelength=0, handletextpad=0)
         for item in leg2.legendHandles:
@@ -110,7 +110,7 @@ ax[0,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[1,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[2,0].set_ylabel(r'$Normalized \, L(v)$')
 plt.subplots_adjust(hspace=0., wspace=0.)
-plt.savefig('./lineprofiles/'+str(species)+'/line_profile_comp_mdot10e-9.eps', format='eps', bbox_inches='tight', dpi=300)
+plt.savefig('./lineprofiles/'+str(species)+'/line_profile_comp_mdot10e-8.eps', format='eps', bbox_inches='tight', dpi=300)
 plt.show()
 
 # plt.figure()

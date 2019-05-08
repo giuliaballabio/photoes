@@ -20,7 +20,7 @@ plt.style.use('classic')
 
 ## ––––– create a polar grid ––––– ##
 radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/grid_r.dat', 'r')]))
-theta = np.arange(0., 1.3089, np.pi/600.) #+ (np.pi/12.)
+theta = np.arange(0., 1.3089, np.pi/600.) + (np.pi/12.)
 ## This theta is to plot data_hydro_midplane
 # theta = np.arange(0., 1.5707, np.pi/600.)
 
@@ -35,7 +35,7 @@ dtheta = np.pi / len(theta)
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
 incl_deg = 0.0
-b = 1.50
+b = 1.00
 r_in = 0.1
 r_out = 9.5
 cs = 10.
@@ -60,15 +60,15 @@ else:
     n_cr = n_cr_s
     T_ul = T_ul_s
 
-path_file = '../cs'+str(str_cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
+path_file = '../cs'+str(str_cs)+'kms/'+str(species)+'/mdot10e-9/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
 
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/rho_grid.txt', 'r')]))
 v_phi = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/v_grid.txt', 'r')]))
 
 rho_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
 v_r_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
-# v_theta_hydro = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
-# v_phi_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
+v_theta_hydro = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
+v_phi_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
 
 ## ––––– create a grid (r, theta) ––––– ##
 grid_r, grid_theta = np.meshgrid(radius, theta, indexing='ij')
@@ -120,7 +120,6 @@ plt.xlabel(r'R / R$_{g}$',fontsize=15)
 plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/density_fixedtheta_'+str(angle)+'deg.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro/boundary_condition.png', format='png', bbox_inches='tight')
 # plt.show()
 plt.close()
 
@@ -180,26 +179,27 @@ P_u = np.zeros((len(radius), len(theta)))
 cell_flux = np.zeros((len(radius), len(theta)))
 for i in range(len(radius)):
     for j in range(len(theta)):
-        dV[i][j] = (2.*np.pi) * radius[i]*Rg * radius[i]*Rg * np.sin(theta[j]) * dr[i]*Rg * dtheta[j] #* (au**3)
-        n_e[i][j] = rho_2d[i][j]*rhog * (ng/rhog) #* (Msun/(au**3))
+        ## N.B. n_cr is in cm^-3 so must be also n_e and dV
+        dV[i][j] = (2.*np.pi) * radius[i]*Rg * radius[i]*Rg * np.sin(theta[j]) * dr[i]*Rg * dtheta[j]
+        n_e[i][j] = rho_2d[i][j]*rhog * (ng/rhog)
         if (n_e[i][j] > 0.0):
             C_ul[i][j] = 1. + (n_cr/n_e[i][j])
             P_u[i][j] = 1. / ((2.*C_ul[i][j]*np.exp(T_ul/Temp)) + 1.)
-            cell_flux[i][j] = constants * P_u[i][j] * n_e[i][j] #* dV[i][j]
+            cell_flux[i][j] = constants * P_u[i][j] * n_e[i][j] * dV[i][j]
         else:
             cell_flux[j][j] = 0.0
 # if (species == 'NeII'):
 #     max_flux = np.amax(cell_flux)
 
 plt.figure()
-CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm())# , vmin=1.e-1, vmax=1.e0)
+CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm() , vmin=1.e-1, vmax=1.e0)
 # plt.contour(r_cr*Rg/au, z_cr*Rg/au, n_cr_2d, color='k')
 cbar = plt.colorbar(CS)
-plt.axis([0., 20., 0., 15.])
+# plt.axis([0., 20., 0., 15.])
 plt.xlabel(r'R / AU',fontsize=15)
 plt.ylabel(r'z / AU',fontsize=15)
 cbar.set_label(r'Log($L$)') # / L_{\odot}
-plt.savefig(str(path_file)+'/line_flux_zoom.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig(str(path_file)+'/line_flux.png', format='png', dpi=300, bbox_inches='tight')
 # plt.savefig('../data_hydro/line_flux.png', format='png', bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()

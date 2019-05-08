@@ -2,20 +2,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 import re
 
+plt.style.use('classic')
+plt.rcParams['font.size'] = 10
+plt.rcParams['axes.labelsize'] = 10
+plt.rcParams['axes.titlesize'] = 10
+plt.rcParams['xtick.labelsize'] = 8
+plt.rcParams['ytick.labelsize'] = 8
+plt.rcParams['legend.fontsize'] = 10
+plt.rcParams['figure.titlesize'] = 12
 
 b = [0.75, 1.00, 1.50] #, 2.00]
-incl_deg = [0.0, 20.0, 45.0, 60.0, 75.0, 90.0]
-# incl_deg = [0.0, 5.0, 10.0, 20.0, 45.0, 50.0, 60.0, 70.0, 80.0, 90.0]
-r_in = 0.1
-r_out = 9.5
+# incl_deg = [0.0, 20.0, 45.0, 60.0, 75.0, 90.0]
+incl_deg = [0.0, 45.0, 90.0]
+r_in = 1.0
+r_out = 5.0
 cs = 10
 R = 3.e4
 species = 'NeII'
+mdot = 'mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
-    # path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/mdot10e-9/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    # path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 ## ---------------- PLOT THE VELOCITY AT PEAK AND FWHM AS FUNCTIONS OF THE INCLINATION ----------------------
 
@@ -52,6 +61,7 @@ f3.close()
 
 ## UPLOAD THE DATA FROM RICHARD'S HYDRO SIMULATIONS
 vpeak_hydro = np.array(map(float, [lines.split()[3] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
+fwhm_hydro = np.array(map(float, [lines.split()[4] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
 incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
 
 ## CONSIDER THE DATA FROM Sacco et al. 2012
@@ -85,111 +95,24 @@ for i in range(len(name)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+plt.title('$R_{in}$ = '+str(r_in)+' $R_g - R_{out}$ = '+str(r_out)+' $R_g$')
 plt.axis([-5.0, 95.0, -1.0, 14.0])
 plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
-# plt.savefig('./observables/'+str(species)+'/vpeak_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/vpeak_mdot10e-9_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/vpeak_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/vpeak_mdot10e-9_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#b3cde3', linestyle='dashed', marker='o', markeredgecolor='#b3cde3', label='b=0.75')
 plt.plot(incl_deg, fwhm2, color='#8c96c6', linestyle='dashed', marker='o', markeredgecolor='#8c96c6', label='b=1.00')
 plt.plot(incl_deg, fwhm3, color='#8856a7', linestyle='dashed', marker='o', markeredgecolor='#8856a7', label='b=1.50')
+plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='hydro sim')
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'FWHM', fontsize=15)
+plt.ylabel(r'$FWHM$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-5.0, 95.0, 0.0, 30.0])
+plt.title('$R_{in}$ = '+str(r_in)+' $R_g - R_{out}$ = '+str(r_out)+' $R_g$')
+plt.axis([-5.0, 95.0, 0.0, 40.0])
 plt.legend(loc='best')
-# plt.savefig('./observables/'+str(species)+'/fwhm_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/fwhm_mdot10e-9_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/fwhm_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/fwhm_mdot10e-9_r'+str(r_in)+'_r'+str(r_out)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
-
-## ---------------------- PLOT THE FLUX AS A FUNCTION OF THE OUTER RADIUS ----------------------
-
-# incl_deg = [90.0]
-# r_out = [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
-#
-# value = []
-# for i in range(len(r_out)):
-#     with open('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg[len(incl_deg)-1],2))+'/photoes_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in[1])+'_r'+str(r_out[i])+'_i'+str(round(incl_deg[len(incl_deg)-1],2))+'.txt', 'r') as f:
-#         lines = f.readlines()[24:]
-#         value.append([x.split('\n')[0] for x in lines])
-# f.close()
-# string = []
-# array = []
-# d = []
-# flux1 = []
-# for i in range(len(r_out)):
-#     string.append(value[i][0])
-#     ## This array contains all the numbers in the line 'Total Flux etc'
-#     ## array[0] = integer part
-#     ## array[1] = decimal part
-#     ## array[2] = exponent
-#     array.append(map(float, re.findall('\d+', string[i])))
-#     ## We need to move the decimal point to get the right number
-#     d.append(np.floor(np.log10(np.abs(array[i][1])))+1)
-#     array[i][1] = array[i][1]*(10.**(-d[i]))
-#     ## Now we build the value of the flux
-#     flux1.append((array[i][0]+array[i][1])*(10.**(-array[i][2])))
-#
-# value = []
-# for i in range(len(r_out)):
-#     with open('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg[len(incl_deg)-1],2))+'/photoes_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in[1])+'_r'+str(r_out[i])+'_i'+str(round(incl_deg[len(incl_deg)-1],2))+'.txt', 'r') as f:
-#         lines = f.readlines()[24:]
-#         value.append([x.split('\n')[0] for x in lines])
-# f.close()
-# string = []
-# array = []
-# d = []
-# flux2 = []
-# for i in range(len(r_out)):
-#     string.append(value[i][0])
-#     ## This array contains all the numbers in the line 'Total Flux etc'
-#     ## array[0] = integer part
-#     ## array[1] = decimal part
-#     ## array[2] = exponent
-#     array.append(map(float, re.findall('\d+', string[i])))
-#     ## We need to move the decimal point to get the right number
-#     d.append(np.floor(np.log10(np.abs(array[i][1])))+1)
-#     array[i][1] = array[i][1]*(10.**(-d[i]))
-#     ## Now we build the value of the flux
-#     flux2.append((array[i][0]+array[i][1])*(10.**(-array[i][2])))
-#
-# value = []
-# for i in range(len(r_out)):
-#     with open('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in[0])+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg[len(incl_deg)-1],2))+'/photoes_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in[1])+'_r'+str(r_out[i])+'_i'+str(round(incl_deg[len(incl_deg)-1],2))+'.txt', 'r') as f:
-#         lines = f.readlines()[24:]
-#         value.append([x.split('\n')[0] for x in lines])
-# f.close()
-# string = []
-# array = []
-# d = []
-# flux3 = []
-# for i in range(len(r_out)):
-#     string.append(value[i][0])
-#     ## This array contains all the numbers in the line 'Total Flux etc'
-#     ## array[0] = integer part
-#     ## array[1] = decimal part
-#     ## array[2] = exponent
-#     array.append(map(float, re.findall('\d+', string[i])))
-#     ## We need to move the decimal point to get the right number
-#     d.append(np.floor(np.log10(np.abs(array[i][1])))+1)
-#     array[i][1] = array[i][1]*(10.**(-d[i]))
-#     ## Now we build the value of the flux
-#     flux3.append((array[i][0]+array[i][1])*(10.**(-array[i][2])))
-#
-# plt.figure()
-# plt.plot(r_out, flux1, color='#41b6c4', linestyle='dashed', marker='o', markeredgecolor='#41b6c4', label='b=0.75')
-# plt.plot(r_out, flux2, color='#225ea8', linestyle='dashed', marker='o', markeredgecolor='#225ea8', label='b=1.00')
-# plt.plot(r_out, flux3, color='#081d58', linestyle='dashed', marker='o', markeredgecolor='#081d58', label='b=1.50')
-# plt.xlabel(r'$R_{out}$', fontsize=15)
-# plt.ylabel(r'$L_{NeII}$', fontsize=15)
-# plt.xticks(np.arange(min(r_out), max(r_out)+0.5, 0.5))
-# plt.title('R$_{in}$ = '+str(r_in[0])+' au - i = '+str(round(incl_deg[len(incl_deg)-1],2)))
-# plt.axis([4.5, 10.0, 0.e-6, 6.e-6])
-# plt.ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
-# plt.legend(loc='best')
-# plt.savefig('./observables/'+str(species)+'/fluxNeII_r'+str(r_in[0])+'_i'+str(round(incl_deg[len(incl_deg)-1],2))+'_cs'+str(cs)+'.png', format='png', dpi=300, bbox_inches='tight')
-# plt.show()
