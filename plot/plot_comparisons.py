@@ -27,7 +27,7 @@ species = 'NeII'
 
 path_file = []
 for j in range(len(cs)):
-    path_file.append('../cs'+str(cs[j])+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs[j])+'kms/'+str(species)+'/mdot10e-8/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
 v_centr1 = []
@@ -147,7 +147,7 @@ species = ['NeII', 'SIIa', 'SIIc', 'OI']
 
 path_file = []
 for j in range(len(species)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species[j])+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species[j])+'/mdot10e-8/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
 v_centr1 = []
