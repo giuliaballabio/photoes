@@ -33,7 +33,7 @@ v_peak1 = []
 v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg2[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
@@ -43,7 +43,7 @@ v_peak2 = []
 v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg2[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
@@ -53,7 +53,7 @@ v_peak3 = []
 v_centr3 = []
 fwhm3 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg1[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
         lines = f3.readlines()[10:]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
@@ -105,7 +105,7 @@ v_peak1 = []
 v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg1[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
@@ -115,7 +115,7 @@ v_peak2 = []
 v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg1[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
@@ -123,8 +123,8 @@ for i in range(len(incl_deg)):
 f2.close()
 
 plt.figure()
-plt.plot(incl_deg1, fwhm1, color='#8c96c6', linestyle='dashed', marker='o', markeredgecolor='#8c96c6', label='R = '+str(R[0]))
-plt.plot(incl_deg1, fwhm2, color='#8856a7', linestyle='dashed', marker='o', markeredgecolor='#8856a7', label='R = '+str(R[1]))
+plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='dashed', marker='o', markeredgecolor='#8c96c6', label='R = '+str(R[0]))
+plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='dashed', marker='o', markeredgecolor='#8856a7', label='R = '+str(R[1]))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -204,7 +204,7 @@ plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='None', marker='
 #     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
-plt.xticks(np.arange(min(incl_deg1), max(incl_deg1)+10., 10.0))
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-5., 95., -1., 6.])
 plt.legend(loc='best')
@@ -220,7 +220,7 @@ plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='None', marker='o', markere
 plt.plot(incl_deg, fwhm3, color='#810f7c', linestyle='None', marker='o', markeredgecolor='#810f7c', label='SII 671.83nm')
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
-plt.xticks(np.arange(min(incl_deg1), max(incl_deg1)+10., 10.0))
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-5.0, 95.0, 5.0, 20.0])
 plt.legend(loc='best')
@@ -280,7 +280,7 @@ for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$- v_{peakline} \, [km/s]$', fontsize=15)
-plt.xticks(np.arange(min(incl_deg1), max(incl_deg1)+10., 10.0))
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-5., 95., -1., 14.])
 plt.legend(loc='lower right', bbox_to_anchor=(1.26, 0.05), fontsize = 'small')
@@ -369,7 +369,7 @@ plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='dashed', marker
 #     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
-plt.xticks(np.arange(min(incl_deg1), max(incl_deg1)+10., 10.0))
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-2., 92., -0.5, 5.5])
 plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
@@ -386,7 +386,7 @@ plt.plot(incl_deg, fwhm_modelhydro, color='#31a354', linestyle='dashed', marker=
 plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
-plt.xticks(np.arange(min(incl_deg1), max(incl_deg1)+10., 10.0))
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-5.0, 95.0, 0.0, 40.0])
 plt.legend(loc='best')
