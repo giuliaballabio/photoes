@@ -99,40 +99,40 @@ plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/'+str(species)+'/vcentr_b'+str(b)+'_r'+str(r_in)+'_r'+str(r_out)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
 # plt.show()
 
-R = [3.e4, 10.e4]
-
-v_peak1 = []
-v_centr1 = []
-fwhm1 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
-        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f1.close()
-v_peak2 = []
-v_centr2 = []
-fwhm2 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
-        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f2.close()
-
-plt.figure()
-plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='dashed', marker='o', markeredgecolor='#8c96c6', label='R = '+str(R[0]))
-plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='dashed', marker='o', markeredgecolor='#8856a7', label='R = '+str(R[1]))
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$FWHM$', fontsize=15)
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-5.0, 95.0, 0.0, 30.0])
-plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/fwhm_b'+str(b)+'_r'+str(r_in)+'_r'+str(r_out)+'.png', format='png', dpi=300, bbox_inches='tight')
-# plt.show()
+# R = [3.e4, 10.e4]
+#
+# v_peak1 = []
+# v_centr1 = []
+# fwhm1 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+#         lines = f1.readlines()[10:]
+#         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f1.close()
+# v_peak2 = []
+# v_centr2 = []
+# fwhm2 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
+#         lines = f2.readlines()[10:]
+#         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f2.close()
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='dashed', marker='o', markeredgecolor='#8c96c6', label='R = '+str(R[0]))
+# plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='dashed', marker='o', markeredgecolor='#8856a7', label='R = '+str(R[1]))
+# plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
+# plt.ylabel(r'$FWHM$', fontsize=15)
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+# plt.axis([-5.0, 95.0, 0.0, 30.0])
+# plt.legend(loc='best')
+# plt.savefig('./observables/'+str(species)+'/fwhm_b'+str(b)+'_r'+str(r_in)+'_r'+str(r_out)+'.png', format='png', dpi=300, bbox_inches='tight')
+# # plt.show()
 
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SPECIES ----------------------
