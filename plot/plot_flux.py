@@ -18,6 +18,9 @@ r_out = [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
 cs = 10
 R = 3.e4
 species = 'NeII'
+
+## N.B. When you change to nonorm, remember to change also f.readlines()[24:]
+## for mdot10e-8 etc is f.readlines()[33:]
 mdot = 'mdot10e-8'
 
 path_file = []
@@ -30,71 +33,47 @@ for j in range(len(b)):
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
+        # lines = f.readlines()[24:]
         lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
-array = []
-d = []
 flux1 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    ## This array contains all the numbers in the line 'Total Flux etc'
-    ## array[0] = integer part
-    ## array[1] = decimal part
-    ## array[2] = exponent
-    array.append(map(float, re.findall('\d+', string[i])))
-    ## We need to move the decimal point to get the right number
-    d.append(np.floor(np.log10(np.abs(array[i][1])))+1)
-    array[i][1] = array[i][1]*(10.**(-d[i]))
-    ## Now we build the value of the flux
-    flux1.append((array[i][0]+array[i][1])) #*(10.**(-array[i][2])))
+    # flux1.append(string[i][18:24])
+    flux1.append(float(string[i][18:40]))
+flux1 = np.array(flux1)
 
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
+        # lines = f.readlines()[24:]
         lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
-array = []
-d = []
 flux2 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    ## This array contains all the numbers in the line 'Total Flux etc'
-    ## array[0] = integer part
-    ## array[1] = decimal part
-    ## array[2] = exponent
-    array.append(map(float, re.findall('\d+', string[i])))
-    ## We need to move the decimal point to get the right number
-    d.append(np.floor(np.log10(np.abs(array[i][1])))+1)
-    array[i][1] = array[i][1]*(10.**(-d[i]))
-    ## Now we build the value of the flux
-    flux2.append((array[i][0]+array[i][1])) #*(10.**(-array[i][2])))
+    # flux2.append(string[i][18:24])
+    flux2.append(float(string[i][18:40]))
+flux2 = np.array(flux2)
 
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
+        # lines = f.readlines()[24:]
         lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
-array = []
-d = []
 flux3 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    ## This array contains all the numbers in the line 'Total Flux etc'
-    ## array[0] = integer part
-    ## array[1] = decimal part
-    ## array[2] = exponent
-    array.append(map(float, re.findall('\d+', string[i])))
-    ## We need to move the decimal point to get the right number
-    d.append(np.floor(np.log10(np.abs(array[i][1])))+1)
-    array[i][1] = array[i][1]*(10.**(-d[i]))
-    ## Now we build the value of the flux
-    flux3.append((array[i][0]+array[i][1])) #*(10.**(-array[i][2])))
+    # flux3.append(string[i][18:24])
+    flux3.append(float(string[i][18:40]))
+flux3 = np.array(flux3)
 
 plt.figure()
 plt.plot(r_out, flux1, color='#addd8e', linestyle='None', marker='o', markeredgecolor='#addd8e', label='b=0.75')
@@ -104,8 +83,7 @@ plt.xlabel(r'$R_{out}$', fontsize=15)
 plt.ylabel(r'$L_{NeII}$', fontsize=15)
 plt.xticks(np.arange(min(r_out), max(r_out)+0.5, 0.5))
 plt.title('R$_{in}$ = '+str(r_in)+' au - i = '+str(round(incl_deg,2)))
-#plt.axis([4.5, 10.0, 0.e-6, 6.e-6])
-plt.axis([4.5, 10.0, 0.5, 4.0])
+plt.axis([4.5, 10.0, 0.e-6, 6.e-6])
 plt.ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/flux_r'+str(r_in)+'_i'+str(round(incl_deg,2))+'_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
