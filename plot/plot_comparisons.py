@@ -339,7 +339,7 @@ r_in = 0.1
 r_out = 9.5
 cs = 10
 R = 3.e4
-species = ['NeII']
+species = 'NeII'
 mdot = ['mdot10e-10', 'mdot10e-9', 'mdot10e-8']
 
 path_file = []
