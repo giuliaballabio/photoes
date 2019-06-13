@@ -213,10 +213,10 @@ for i in range(len(incl_deg)):
 f4.close()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_centr1), color='#c6dbef', linestyle='None', marker='o', markeredgecolor='#c6dbef', label=str(species[0]))
-plt.plot(incl_deg, np.abs(v_centr4), color='#6baed6', linestyle='None', marker='o', markeredgecolor='#6baed6', label=str(species[3]))
-plt.plot(incl_deg, np.abs(v_centr2), color='#2171b5', linestyle='None', marker='o', markeredgecolor='#2171b5', label='SII 406.98nm')
-plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='None', marker='o', markeredgecolor='#08306b', label='SII 671.83nm')
+plt.plot(incl_deg, np.abs(v_centr1), color='#b3cde3', linestyle='None', marker='o', markeredgecolor='#b3cde3', label=str(species[0]))
+plt.plot(incl_deg, np.abs(v_centr4), color='#8c96c6', linestyle='None', marker='o', markeredgecolor='#8c96c6', label=str(species[3]))
+plt.plot(incl_deg, np.abs(v_centr2), color='#8856a7', linestyle='None', marker='o', markeredgecolor='#8856a7', label='SII 406.98nm')
+plt.plot(incl_deg, np.abs(v_centr3), color='#810f7c', linestyle='None', marker='o', markeredgecolor='#810f7c', label='SII 671.83nm')
 plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
@@ -235,10 +235,10 @@ plt.savefig('./observables/comparisons/vcentr_species_b'+str(b)+'_R'+str(R)+'_'+
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='None', marker='o', markeredgecolor='#c6dbef', label=str(species[0]))
-plt.plot(incl_deg, np.abs(v_peak4), color='#6baed6', linestyle='None', marker='o', markeredgecolor='#6baed6', label=str(species[3]))
-plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='None', marker='o', markeredgecolor='#2171b5', label='SII 406.98nm')
-plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='None', marker='o', markeredgecolor='#08306b', label='SII 671.83nm')
+plt.plot(incl_deg, np.abs(v_peak1), color='#b3cde3', linestyle='None', marker='o', markeredgecolor='#b3cde3', label=str(species[0]))
+plt.plot(incl_deg, np.abs(v_peak4), color='#8c96c6', linestyle='None', marker='o', markeredgecolor='#8c96c6', label=str(species[3]))
+plt.plot(incl_deg, np.abs(v_peak2), color='#8856a7', linestyle='None', marker='o', markeredgecolor='#8856a7', label='SII 406.98nm')
+plt.plot(incl_deg, np.abs(v_peak3), color='#810f7c', linestyle='None', marker='o', markeredgecolor='#810f7c', label='SII 671.83nm')
 plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
@@ -273,63 +273,63 @@ plt.show()
 
 ## ---------------------- PLOT THE VELOCITY AT PEAK OF THE NON CONVOLVED LINES FOR DIFFERENT SPECIES ----------------------
 
-b = 1.00
-incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
-r_in = 0.1
-r_out = 9.5
-cs = 10
-R = 3.e4
-species = ['NeII', 'SIIa', 'SIIc', 'OI']
-
-path_file = []
-for j in range(len(species)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species[j])+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
-
-v_peak_line1 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        line = f1.readlines()[5:6]
-        v_peak_line1.append(map(float, [x.split('\t\t\t')[0] for x in line]))
-f1.close()
-v_peak_line2 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        line = f2.readlines()[5:6]
-        v_peak_line2.append(map(float, [x.split('\t\t\t')[0] for x in line]))
-f2.close()
-v_peak_line3 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        line = f3.readlines()[5:6]
-        v_peak_line3.append(map(float, [x.split('\t\t\t')[0] for x in line]))
-f3.close()
-v_peak_line4 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
-        line = f4.readlines()[5:6]
-        v_peak_line4.append(map(float, [x.split('\t\t\t')[0] for x in line]))
-f4.close()
-
-plt.figure()
-plt.plot(incl_deg, np.abs(v_peak_line1), color='#c6dbef', linestyle='dashed', marker='o', markeredgecolor='#c6dbef', label=str(species[0]))
-plt.plot(incl_deg, np.abs(v_peak_line4), color='#6baed6', linestyle='dashed', marker='o', markeredgecolor='#6baed6', label=str(species[3]))
-plt.plot(incl_deg, np.abs(v_peak_line2), color='#2171b5', linestyle='dashed', marker='o', markeredgecolor='#2171b5', label='SII 406.98nm')
-plt.plot(incl_deg, np.abs(v_peak_line3), color='#08306b', linestyle='dashed', marker='o', markeredgecolor='#08306b', label='SII 671.83nm')
-plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
-plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='o', markerfacecolor='None', capsize=3, label='Pascucci & Sterzik (2009)')
-for i in range(len(name)):
-    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$- v_{peakline} \, [km/s]$', fontsize=15)
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-5., 95., -1., 14.])
-plt.legend(loc='lower right', bbox_to_anchor=(1.26, 0.05), fontsize = 'small')
-plt.savefig('./observables/comparisons/vpeakline_species_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
-plt.show()
+# b = 1.00
+# incl_deg = [0.0, 20.0, 45.0, 60.0, 90.0]
+# r_in = 0.1
+# r_out = 9.5
+# cs = 10
+# R = 3.e4
+# species = ['NeII', 'SIIa', 'SIIc', 'OI']
+#
+# path_file = []
+# for j in range(len(species)):
+#     path_file.append('../cs'+str(cs)+'kms/'+str(species[j])+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+#
+# v_peak_line1 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+#         line = f1.readlines()[5:6]
+#         v_peak_line1.append(map(float, [x.split('\t\t\t')[0] for x in line]))
+# f1.close()
+# v_peak_line2 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+#         line = f2.readlines()[5:6]
+#         v_peak_line2.append(map(float, [x.split('\t\t\t')[0] for x in line]))
+# f2.close()
+# v_peak_line3 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+#         line = f3.readlines()[5:6]
+#         v_peak_line3.append(map(float, [x.split('\t\t\t')[0] for x in line]))
+# f3.close()
+# v_peak_line4 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
+#         line = f4.readlines()[5:6]
+#         v_peak_line4.append(map(float, [x.split('\t\t\t')[0] for x in line]))
+# f4.close()
+#
+# plt.figure()
+# plt.plot(incl_deg, np.abs(v_peak_line1), color='#b3cde3', linestyle='dashed', marker='o', markeredgecolor='#b3cde3', label=str(species[0]))
+# plt.plot(incl_deg, np.abs(v_peak_line4), color='#8c96c6', linestyle='dashed', marker='o', markeredgecolor='#8c96c6', label=str(species[3]))
+# plt.plot(incl_deg, np.abs(v_peak_line2), color='#8856a7', linestyle='dashed', marker='o', markeredgecolor='#8856a7', label='SII 406.98nm')
+# plt.plot(incl_deg, np.abs(v_peak_line3), color='#810f7c', linestyle='dashed', marker='o', markeredgecolor='#810f7c', label='SII 671.83nm')
+# plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
+# plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
+# plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='o', markerfacecolor='None', capsize=3, label='Pascucci & Sterzik (2009)')
+# for i in range(len(name)):
+#     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+# plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
+# plt.ylabel(r'$- v_{peakline} \, [km/s]$', fontsize=15)
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+# plt.axis([-5., 95., -1., 14.])
+# plt.legend(loc='lower right', bbox_to_anchor=(1.26, 0.05), fontsize = 'small')
+# plt.savefig('./observables/comparisons/vpeakline_species_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+# plt.show()
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT DENSITY NORMALISATION FACTORS ----------------------
 
@@ -378,9 +378,9 @@ for i in range(len(incl_deg)):
 f3.close()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_centr1), color='#c6dbef', linestyle='None', marker='o', markeredgecolor='#c6dbef', label=str(mdot[0]))
-plt.plot(incl_deg, np.abs(v_centr2), color='#2171b5', linestyle='None', marker='o', markeredgecolor='#2171b5', label=str(mdot[1]))
-plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='None', marker='o', markeredgecolor='#08306b', label=str(mdot[2]))
+plt.plot(incl_deg, np.abs(v_centr1), color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label=str(mdot[0]))
+plt.plot(incl_deg, np.abs(v_centr2), color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label=str(mdot[1]))
+plt.plot(incl_deg, np.abs(v_centr3), color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label=str(mdot[2]))
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
@@ -399,9 +399,9 @@ plt.savefig('./observables/'+str(species)+'/vcentr_densitynorm_b'+str(b)+'_R'+st
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='None', marker='o', markeredgecolor='#c6dbef', label=str(mdot[0]))
-plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='None', marker='o', markeredgecolor='#2171b5', label=str(mdot[1]))
-plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='None', marker='o', markeredgecolor='#08306b', label=str(mdot[2]))
+plt.plot(incl_deg, np.abs(v_peak1), color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label=str(mdot[0]))
+plt.plot(incl_deg, np.abs(v_peak2), color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label=str(mdot[1]))
+plt.plot(incl_deg, np.abs(v_peak3), color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label=str(mdot[2]))
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
@@ -420,9 +420,9 @@ plt.savefig('./observables/'+str(species)+'/vpeak_densitynorm_b'+str(b)+'_R'+str
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, fwhm1, color='#b3cde3', linestyle='None', marker='o', markeredgecolor='#b3cde3', label=str(mdot[0]))
-plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='None', marker='o', markeredgecolor='#8856a7', label=str(mdot[1]))
-plt.plot(incl_deg, fwhm3, color='#810f7c', linestyle='None', marker='o', markeredgecolor='#810f7c', label=str(mdot[2]))
+plt.plot(incl_deg, fwhm1, color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label=str(mdot[0]))
+plt.plot(incl_deg, fwhm2, color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label=str(mdot[1]))
+plt.plot(incl_deg, fwhm3, color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label=str(mdot[2]))
 # plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
@@ -528,7 +528,7 @@ plt.plot(incl_deg, np.abs(v_peak1), color='#fecc5c', linestyle='None', marker='o
 plt.plot(incl_deg, np.abs(v_peak2), color='#fd8d3c', linestyle='None', marker='o', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
 plt.plot(incl_deg, np.abs(v_peak3), color='#f03b20', linestyle='None', marker='o', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
 # plt.plot(incl_deg, np.abs(v_peak4), color='#bd0026', linestyle='None', marker='o', markeredgecolor='#bd0026', label=str(b[3])) #fcae91
-# plt.plot(incl_deg, np.abs(vpeak_modelhydro), color='#2171b5', linestyle='dashed', marker='o', markeredgecolor='#2171b5', label='$hydro$')
+# plt.plot(incl_deg, np.abs(vpeak_modelhydro), color='#31a354', linestyle='dashed', marker='o', markeredgecolor='#31a354', label='$hydro$')
 plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
@@ -546,10 +546,10 @@ plt.savefig('./observables/'+str(species)+'/vpeak_b_R'+str(R)+'_'+str(mdot)+'.pn
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, fwhm1, color='#b3cde3', linestyle='None', marker='o', markeredgecolor='#b3cde3', label='$b='+str(b[0])+'$')
-plt.plot(incl_deg, fwhm2, color='#8c96c6', linestyle='None', marker='o', markeredgecolor='#8c96c6', label='$b='+str(b[1])+'$')
-plt.plot(incl_deg, fwhm3, color='#8856a7', linestyle='None', marker='o', markeredgecolor='#8856a7', label='$b='+str(b[2])+'$')
-# plt.plot(incl_deg, fwhm4, color='#810f7c', linestyle='None', marker='o', markeredgecolor='#810f7c', label=str(b[3]))
+plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='None', marker='o', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
+plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='None', marker='o', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$')
+plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='None', marker='o', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
+# plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='None', marker='o', markeredgecolor='#bd0026', label=str(b[3]))
 #plt.plot(incl_deg, fwhm_modelhydro, color='#31a354', linestyle='dashed', marker='o', markeredgecolor='#31a354', label='$hydro$')
 #plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
