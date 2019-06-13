@@ -378,9 +378,9 @@ for i in range(len(incl_deg)):
 f3.close()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_centr1), color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label='$\dot{M} \, 10^{-10}$')
-plt.plot(incl_deg, np.abs(v_centr2), color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label='$\dot{M} \, 10^{-9}$')
-plt.plot(incl_deg, np.abs(v_centr3), color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label='$\dot{M} \, 10^{-8}$')
+plt.plot(incl_deg, np.abs(v_centr1), color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label='$\dot{M}(<25 \, au) = 10^{-10} \textup{M}_{odot}/yr$')
+plt.plot(incl_deg, np.abs(v_centr2), color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label='$\dot{M}(<25 \, au) = 10^{-9} \textup{M}_{odot}/yr$')
+plt.plot(incl_deg, np.abs(v_centr3), color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label='$\dot{M}(<25 \, au) = 10^{-8} \textup{M}_{odot}/yr$')
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
@@ -399,9 +399,9 @@ plt.savefig('./observables/'+str(species)+'/vcentr_densitynorm_b'+str(b)+'_R'+st
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_peak1), color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label='$\dot{M} \, 10^{-10}$')
-plt.plot(incl_deg, np.abs(v_peak2), color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label='$\dot{M} \, 10^{-9}$')
-plt.plot(incl_deg, np.abs(v_peak3), color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label='$\dot{M} \, 10^{-8}$')
+plt.plot(incl_deg, np.abs(v_peak1), color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label='$\dot{M}(<25 \, au) = 10^{-10} \textup{M}_{odot}/yr$')
+plt.plot(incl_deg, np.abs(v_peak2), color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label='$\dot{M}(<25 \, au) = 10^{-10} \textup{M}_{odot}/yr$')
+plt.plot(incl_deg, np.abs(v_peak3), color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label='$\dot{M}(<25 \, au) = 10^{-10} \textup{M}_{odot}/yr$')
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
@@ -420,9 +420,9 @@ plt.savefig('./observables/'+str(species)+'/vpeak_densitynorm_b'+str(b)+'_R'+str
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, fwhm1, color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label='$\dot{M} \, 10^{-10}$')
-plt.plot(incl_deg, fwhm2, color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label='$\dot{M} \, 10^{-9}$')
-plt.plot(incl_deg, fwhm3, color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label='$\dot{M} \, 10^{-8}$')
+plt.plot(incl_deg, fwhm1, color='#fc9272', linestyle='None', marker='o', markeredgecolor='#fc9272', label='$\dot{M}(<25 \, au) = 10^{-10} \textup{M}_{odot}/yr$')
+plt.plot(incl_deg, fwhm2, color='#ef3b2c', linestyle='None', marker='o', markeredgecolor='#ef3b2c', label='$\dot{M}(<25 \, au) = 10^{-10} \textup{M}_{odot}/yr$')
+plt.plot(incl_deg, fwhm3, color='#99000d', linestyle='None', marker='o', markeredgecolor='#99000d', label='$\dot{M}(<25 \, au) = 10^{-10} \textup{M}_{odot}/yr$')
 # plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
