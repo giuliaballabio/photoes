@@ -32,14 +32,23 @@ X_ion_ne = 0.75
 T_ul_ne = 1122.8                                                                #[K]
 n_cr_ne = 5.0e5                                                                 #[cm-3]
 
-## ----- SII CONSTANTS -----##
-m_atom_s = 32.                                                                  #[g]
-Ab_s = 1.45e-5
-A_ul_s = 1.9e-1                                                                 #[s-1]
-lambda_s = 406.98e-7
-X_ion_s = 1.0
-T_ul_s = 35354.                                                                 #[K]
-n_cr_s = 2.6e6                                                                  #[cm-3]
+## ----- SIIa CONSTANTS -----##
+m_atom_sa = 32.                                                                  #[g]
+Ab_sa = 1.45e-5
+A_ul_sa = 1.9e-1                                                                 #[s-1]
+lambda_sa = 406.98e-7
+X_ion_sa = 1.0
+T_ul_sa = 35354.                                                                 #[K]
+n_cr_sa = 2.6e6                                                                  #[cm-3]
+
+## ----- SIIc CONSTANTS -----##
+m_atom_sc = 32.                                                                  #[g]
+Ab_sc = 1.45e-5
+A_ul_sc = 2.0e-4                                                                 #[s-1]
+lambda_sc = 671.83e-7
+X_ion_sc = 1.0
+T_ul_sc = 21416.                                                                 #[K]
+n_cr_sc = 1.7e3                                                                  #[cm-3]
 
 ## ----- OI CONSTANTS -----##
 m_atom_o = 16.                                                                  #[g]

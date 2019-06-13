@@ -21,7 +21,7 @@ species = 'NeII'
 
 ## N.B. When you change to nonorm, remember to change also f.readlines()[24:]
 ## for mdot10e-8 etc is f.readlines()[33:]
-mdot = 'mdot10e-8'
+mdot = 'nonorm'
 
 path_file = []
 for j in range(len(b)):
@@ -33,8 +33,8 @@ for j in range(len(b)):
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        # lines = f.readlines()[24:]
-        lines = f.readlines()[33:]
+        lines = f.readlines()[24:]
+        # lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
@@ -48,8 +48,8 @@ flux1 = np.array(flux1)
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        # lines = f.readlines()[24:]
-        lines = f.readlines()[33:]
+        lines = f.readlines()[24:]
+        # lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
@@ -63,8 +63,8 @@ flux2 = np.array(flux2)
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        # lines = f.readlines()[24:]
-        lines = f.readlines()[33:]
+        lines = f.readlines()[24:]
+        # lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
@@ -76,9 +76,9 @@ for i in range(len(r_out)):
 flux3 = np.array(flux3)
 
 plt.figure()
-plt.plot(r_out, flux1, color='#addd8e', linestyle='None', marker='o', markeredgecolor='#addd8e', label='b=0.75')
-plt.plot(r_out, flux2, color='#31a354', linestyle='None', marker='o', markeredgecolor='#31a354', label='b=1.00')
-plt.plot(r_out, flux3, color='#006837', linestyle='None', marker='o', markeredgecolor='#006837', label='b=1.50')
+plt.plot(r_out, flux1, color='#addd8e', linestyle='None', marker='o', markeredgecolor='#addd8e', label='$b=0.75$')
+plt.plot(r_out, flux2, color='#31a354', linestyle='None', marker='o', markeredgecolor='#31a354', label='$b=1.00$')
+plt.plot(r_out, flux3, color='#006837', linestyle='None', marker='o', markeredgecolor='#006837', label='$b=1.50$')
 plt.xlabel(r'$R_{out}$', fontsize=15)
 plt.ylabel(r'$L_{NeII}$', fontsize=15)
 plt.xticks(np.arange(min(r_out), max(r_out)+0.5, 0.5))
@@ -86,5 +86,5 @@ plt.title('R$_{in}$ = '+str(r_in)+' au - i = '+str(round(incl_deg,2)))
 plt.axis([4.5, 10.0, 0.e-6, 6.e-6])
 plt.ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
 plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/flux_r'+str(r_in)+'_i'+str(round(incl_deg,2))+'_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/flux_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
