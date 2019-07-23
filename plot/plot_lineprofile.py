@@ -24,7 +24,8 @@ incl_deg = 4.0 #[0.0, 20.0, 45.0, 60.0, 90.0] #[0.0, 20.0, 45.0, 60.0, 90.0]
 r_in = 0.03 #[0.03, 0.1, 1.0]
 r_out = 9.9 #[5.0, 9.5]
 cs = 10 #3 5
-species = 'TWHya_NeII'
+species = 'SIIc'
+mdot= 'mdot10e-9'
 
 quantity = b
 v = []
@@ -32,7 +33,7 @@ line_flux = []
 path_file = []
 plt.figure()
 for i in range(len(quantity)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[i], 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2)))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[i], 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2)))
     v = -1.*np.array(map(float, [lines.split()[0] for lines in open(str(path_file[i])+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
     line_flux = np.array(map(float, [lines.split()[1] for lines in open(str(path_file[i])+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 
@@ -66,7 +67,7 @@ species = 'NeII'
 path_file = []
 path_file_hydro = []
 for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/mdot10e-8/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v1 = []
 line_flux1 = []
@@ -118,7 +119,7 @@ ax[0,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[1,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[2,0].set_ylabel(r'$Normalized \, L(v)$')
 plt.subplots_adjust(hspace=0., wspace=0.)
-plt.savefig('./lineprofiles/'+str(species)+'/line_profile_b_mdot10e-8.eps', format='eps', bbox_inches='tight', dpi=300)
+plt.savefig('./lineprofiles/'+str(species)+'/line_profile_b_'+str(mdot)+'.eps', format='eps', bbox_inches='tight', dpi=300)
 plt.show()
 
 # plt.figure()
@@ -145,7 +146,7 @@ species = 'NeII'
 path_file = []
 path_file_hydro = []
 for j in range(len(r_out)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/mdot10e-8/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out[j]))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out[j]))
 
 v1 = []
 line_flux1 = []
@@ -197,5 +198,5 @@ ax[0,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[1,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[2,0].set_ylabel(r'$Normalized \, L(v)$')
 plt.subplots_adjust(hspace=0., wspace=0.)
-plt.savefig('./lineprofiles/'+str(species)+'/line_profile_Rout_mdot10e-8.eps', format='eps', bbox_inches='tight', dpi=300)
+plt.savefig('./lineprofiles/'+str(species)+'/line_profile_Rout_'+str(mdot)+'.eps', format='eps', bbox_inches='tight', dpi=300)
 plt.show()
