@@ -24,7 +24,7 @@ r_out = 9.5
 cs = [3, 5, 10]
 R = 3.e4
 species = 'NeII'
-mdot='mdot10e-8'
+mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(cs)):
@@ -304,6 +304,40 @@ plt.legend(loc='best')
 plt.savefig('./observables/comparisons/fwhm_species_b'+str(b)+'_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
+## ---------------------- PLOT THE LAUNCHING RADIUS DERIVED FROM THE FWHM ----------------------
+rlaunch1 = []
+rlaunch2 = []
+rlaunch3 = []
+rlaunch4 = []
+rlaunch1 = np.array(rlaunch1)
+rlaunch2 = np.array(rlaunch2)
+rlaunch3 = np.array(rlaunch3)
+rlaunch4 = np.array(rlaunch4)
+fwhm1 = np.array(fwhm1)
+fwhm2 = np.array(fwhm2)
+fwhm3 = np.array(fwhm3)
+fwhm4 = np.array(fwhm4)
+
+const = 4.*G*Mstar/au
+## The units of rlaunch are cm, but the velocity is in km/s
+rlaunch1 = const/(fwhm1*fwhm1*10.**5.*10.**5.)
+rlaunch2 = const/(fwhm2*fwhm2*10.**5.*10.**5.)
+rlaunch3 = const/(fwhm3*fwhm3*10.**5.*10.**5.)
+rlaunch4 = const/(fwhm4*fwhm4*10.**5.*10.**5.)
+
+plt.figure()
+plt.plot(incl_deg, rlaunch1, color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
+plt.plot(incl_deg, rlaunch2, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[3])+']$')
+plt.plot(incl_deg, rlaunch3, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,406.98\,nm$')
+plt.plot(incl_deg, rlaunch4, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,671.83\,nm$')
+plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
+plt.ylabel(r'$R_0 \, [au]$', fontsize=15)
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+plt.axis([-5.0, 95.0, 5.0, 20.0])
+plt.legend(loc='best')
+plt.savefig('./observables/comparisons/rlaunch_species_b'+str(b)+'_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.show()
 
 ## ---------------------- PLOT THE VELOCITY AT PEAK OF THE NON CONVOLVED LINES FOR DIFFERENT SPECIES ----------------------
 
