@@ -12,19 +12,19 @@ plt.rcParams['legend.fontsize'] = 10
 plt.rcParams['figure.titlesize'] = 12
 
 speed_light = 299792.458                     #km/s
-cs = 10 
+cs = 10
 species = 'NeII'
 mdot = 'mdot10e-8'
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
-# incl_deg = 90.0 
+# incl_deg = 90.0
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 90.0 
-b_input = 2.00 
-r_inner = 1.0 
-r_outer = 9.5 
+incl_deg = 90.0
+b_input = 2.00
+r_inner = 1.0
+r_outer = 9.5
 
 b = b_input
 r_in = r_inner
