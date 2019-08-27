@@ -22,7 +22,7 @@ R = 3.e4
 ## ---------------- PLOT THE VELOCITY AT PEAK AS FUNCTIONS OF THE INCLINATION FOR THE [NEII] ----------------------
 
 species = 'NeII'
-mdot = 'mdot10e-8'
+mdot = 'mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
@@ -88,6 +88,12 @@ err_vpeak2 = [0.3, 0.7, 2.5]
 incl_data2 = [4.0, 45.0, 75.0]
 name = ['TW Hya', 'CS Cha', 'T Cha']
 
+## MORE DATA FROM Baldovic-Saavedra et al. 2012
+vpeak_data3 = [-2.13, -3.6, -2.9]
+err_vpeak3 = [6.5, 1.5, 0.7]
+incl_data3 = [60.0, 87.0, 35.0]
+name3 = ['V892 Tau', 'CoKu Tau 1', 'FS Tau A']
+
 plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
 plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
@@ -97,9 +103,12 @@ plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='o', markerfacecolor='None', capsize=3, label='Pascucci & Sterzik (2009)')
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='Pascucci & Sterzik (2009)')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovic-Saavedra\,(2012)$')
+for i in range(len(name3)):
+    plt.annotate(name3[i], (incl_data3[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -117,9 +126,12 @@ plt.plot(incl_deg, np.abs(v_peak4), color='#bd0026', linestyle='-', linewidth=2.
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='o', markerfacecolor='None', capsize=3, label='Pascucci & Sterzik (2009)')
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='Pascucci & Sterzik (2009)')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovic-Saavedra\,(2012)$')
+for i in range(len(name3)):
+    plt.annotate(name3[i], (incl_data3[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -131,7 +143,7 @@ plt.show()
 
 ## ---------------- PLOT THE FWHM AS FUNCTIONS OF THE INCLINATION FOR THE [OI] ----------------------
 species = 'OI'
-mdot = 'mdot10e-8'
+mdot = 'mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
