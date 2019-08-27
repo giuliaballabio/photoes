@@ -59,6 +59,7 @@ dx=1.d-6
 dy=1.d-6
 x1=x0+dx
 y1=(2.*reff0*dx-dx*dx)**0.5
+! dy=y1-y0
 u1=u0
 theta1=datan((reff0-dx)/y1)
 phi1=datan(y1/x1)
