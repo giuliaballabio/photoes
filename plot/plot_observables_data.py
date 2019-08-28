@@ -239,7 +239,7 @@ plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker=
 #plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
