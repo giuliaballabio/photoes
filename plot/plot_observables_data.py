@@ -106,7 +106,7 @@ for i in range(len(ID)):
 plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovic-Saavedra\,(2012)$')
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
     plt.annotate(name3[i], (incl_data3[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
@@ -129,7 +129,7 @@ for i in range(len(ID)):
 plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovic-Saavedra\,(2012)$')
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
     plt.annotate(name3[i], (incl_data3[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
@@ -192,14 +192,14 @@ f4.close()
 
 ## CONSIDER THE DATA FROM Banzatti et al. 2018
 ## Narrow Component
-fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 23.5, 25.4, 22., 12., 25., 29., 47., 32., 37., 67., 47., 15., 26., 46., 18., 18.] # km/s
-err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.7, 0.9, 0.5, 1., 0.7, 1.5, 2., 1.5, 4., 4., 2., 1., 1., 2., 1., 2.]
+fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 25.4, 12., 25., 29., 67., 47., 15., 26., 18., 18.] # km/s
+err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.9, 1., 0.7, 1.5, 4., 2., 1., 1., 1., 2.]
 ## Broad Component
-fwhm_data1 = [96., 54., 120., 111., 80., 67., 42., 81., 177., 65., 53., 86., 162., 146., 123., 137., 223., 288., 44., 84., 200., 79., 36.] # km/s
-err_fwhm1 = [4.6, 2., 9., 6., 2., 2., 2., 3., 7., 20., 5., 3., 10., 8., 8., 10., 17., 28., 6., 6., 14., 8., 6.]
+fwhm_data1 = [96., 54., 120., 111., 80., 67., 42., 177., 53., 86., 162., 223., 288., 44., 84., 79., 36.] # km/s
+err_fwhm1 = [4.6, 2., 9., 6., 2., 2., 2., 7., 5., 3., 10., 17., 28., 6., 6., 8., 6.]
 
-incl_data = [71., 20., 18., 39., 65., 60., 32., 0., 26., 0., 9., 55., 38., 0., 0., 0., 66., 37., 35., 54., 0., 54., 50.]
-ID = ['AATau', 'AS205N', 'AS353A', 'BPTau', 'CWTau', 'DFTau', 'DGTau', 'DHTau', 'DKTau', 'DPTau', 'DRTau', 'FMTau', 'FZTau', 'GHTau', 'GITau', 'GKTau', 'ITTau', 'RNO90', 'RULup', 'RXJ1842', 'V773Tau', 'V853Oph', 'VVCrAS']
+incl_data = [71., 20., 18., 39., 65., 60., 32., 26., 9., 55., 38., 66., 37., 35., 54., 54., 50.]
+ID = ['AATau', 'AS205N', 'AS353A', 'BPTau', 'CWTau', 'DFTau', 'DGTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RNO90', 'RULup', 'RXJ1842', 'V853Oph', 'VVCrAS']
 
 ## CONSIDER THE DATA FROM Rigliaco et al. 2013
 fwhm_data2 = [14.1, 42.6, 47.1, 8.2, 42.8, 44.1, 40.5, 34.8, 55.7, 45.1, 57.6, 28.3, 51.1, 28.9, 38.8] # km/s
