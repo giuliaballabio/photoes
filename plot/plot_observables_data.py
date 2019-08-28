@@ -190,11 +190,22 @@ for i in range(len(incl_deg)):
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f4.close()
 
+## CONSIDER THE DATA FROM Banzatti et al. 2018
+## Narrow Component
+fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 23.5, 25.4, 22., 12., 25., 29., 47., 32., 37., 67., 47., 15., 26., 46., 18., 18.] # km/s
+err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.7, 0.9, 0.5, 1., 0.7, 1.5, 2., 1.5, 4., 4., 2., 1., 1., 2., 1., 2.]
+## Broad Component
+fwhm_data1 = [96., 54., 120., 111., 80., 67., 42., 81., 177., 65., 53., 86., 162., 146., 123., 137., 223., 288., 44., 84., 200., 79., 36.] # km/s
+err_fwhm1 = [4.6, 2., 9., 6., 2., 2., 2., 3., 7., 20., 5., 3., 10., 8., 8., 10., 17., 28., 6., 6., 14., 8., 6.]
+
+incl_data = [71., 20., 18., 39., 65., 60., 32., 0., 26., 0., 9., 55., 38., 0., 0., 0., 66., 37., 35., 54., -, 54., 50.]
+ID = ['AATau', 'AS205N', 'AS353A', 'BPTau', 'CWTau', 'DFTau', 'DGTau', 'DHTau', 'DKTau', 'DPTau', 'DRTau', 'FMTau', 'FZTau', 'GHTau', 'GITau', 'GKTau', 'ITTau', 'RNO90', 'RULup', 'RXJ1842', 'V773Tau', 'V853Oph', 'VVCrAS']
+
 ## CONSIDER THE DATA FROM Rigliaco et al. 2013
-fwhm_data = [14.1, 42.6, 47.1, 8.2, 42.8, 44.1, 40.5, 34.8, 55.7, 45.1, 57.6, 28.3, 51.1, 28.9, 38.8] # km/s
-err_fwhm = [2.7, 13.6, 8.4, 0.6, 20.0, 1.5, 6.6, 2., 6.3, 1.1, 6.9, 7.0, 5.6, 8.5, 5.9]
-incl_data = [37., 30., 35., 4., 60., 80., 52., 63., 78., 35., 70., 37., 23., 45., 42.]
-ID = ['DR Tau', 'MP Mus', 'V4046 Sgr', 'TW Hya', 'AS 353A', 'CW Tau', 'CY Tau', 'DF Tau', 'DN Tau', 'DQ Tau', 'FM Tau', 'GG Tau', 'GK Tau', 'GM Aur', 'UY Aur']
+fwhm_data2 = [14.1, 42.6, 47.1, 8.2, 42.8, 44.1, 40.5, 34.8, 55.7, 45.1, 57.6, 28.3, 51.1, 28.9, 38.8] # km/s
+err_fwhm2 = [2.7, 13.6, 8.4, 0.6, 20.0, 1.5, 6.6, 2., 6.3, 1.1, 6.9, 7.0, 5.6, 8.5, 5.9]
+incl_data2 = [37., 30., 35., 4., 60., 80., 52., 63., 78., 35., 70., 37., 23., 45., 42.]
+ID2 = ['DR Tau', 'MP Mus', 'V4046 Sgr', 'TW Hya', 'AS 353A', 'CW Tau', 'CY Tau', 'DF Tau', 'DN Tau', 'DQ Tau', 'FM Tau', 'GG Tau', 'GK Tau', 'GM Aur', 'UY Aur']
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
@@ -202,14 +213,20 @@ plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker=
 plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
 plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
 #plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='Rigliaco et al. (2013)')
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='*', capsize=3, label='$BC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data1[i])+0.3))
+# plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='gray', linestyle='None', marker='d', capsize=3, label='$Rigliaco\,et\,al.\,(2013)$')
+# for i in range(len(ID2)):
+#     plt.annotate(ID2[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-5.0, 95.0, 0.0, 67.0])
+plt.axis([-5.0, 95.0, 0.0, 300.0])
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
