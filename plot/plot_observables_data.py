@@ -216,7 +216,7 @@ plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker=
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
-plt.errorbar(incl_data, np.abs(fwhm_data1), yerr=err_fwhm1, color='k', linestyle='None', marker='*', capsize=3, label='$BC$')
+plt.errorbar(incl_data, np.abs(fwhm_data1), yerr=err_fwhm1, color='gray', linestyle='None', marker='*', capsize=3, label='$BC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data1[i])+0.3))
 # plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='gray', linestyle='None', marker='d', capsize=3, label='$Rigliaco\,et\,al.\,(2013)$')
@@ -244,7 +244,7 @@ plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-1.0, 96.0, 0.0, 54.0])
+plt.axis([-1.0, 91.0, 0.0, 54.0])
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
