@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-# import matplotlib as mpl
-# print(mpl.font_manager.get_cachedir())
+from physics_constant import *
 
 plt.style.use('classic')
 plt.rcParams['font.family'] = 'sans' #Courier New'
@@ -24,7 +23,7 @@ r_out = 9.5
 cs = [3, 5, 10]
 R = 3.e4
 species = 'NeII'
-mdot='mdot10e-9'
+mdot='mdot10e-8'
 
 path_file = []
 for j in range(len(cs)):
@@ -334,7 +333,7 @@ plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$R_0 \, [au]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-5.0, 95.0, 5.0, 20.0])
+# plt.axis([-5.0, 95.0, 5.0, 20.0])
 plt.legend(loc='best')
 plt.savefig('./observables/comparisons/rlaunch_species_b'+str(b)+'_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
@@ -449,7 +448,7 @@ plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#fc9272', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fc9272', label='$\dot{M}(<25 \, au) = 10^{-10} M_{\odot}/yr$')
 plt.plot(incl_deg, np.abs(v_centr2), color='#ef3b2c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#ef3b2c', label='$\dot{M}(<25 \, au) = 10^{-9} M_{\odot}/yr$')
 plt.plot(incl_deg, np.abs(v_centr3), color='#99000d', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#99000d', label='$\dot{M}(<25 \, au) = 10^{-8} M_{\odot}/yr$')
-plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
+# plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
 #     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
@@ -470,7 +469,7 @@ plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#fc9272', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fc9272', label='$\dot{M}(<25 \, au) = 10^{-10} M_{\odot}/yr$')
 plt.plot(incl_deg, np.abs(v_peak2), color='#ef3b2c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#ef3b2c', label='$\dot{M}(<25 \, au) = 10^{-9} M_{\odot}/yr$')
 plt.plot(incl_deg, np.abs(v_peak3), color='#99000d', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#99000d', label='$\dot{M}(<25 \, au) = 10^{-8} M_{\odot}/yr$')
-plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
+# plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 # plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='Sacco et al. (2012)')
 # for i in range(len(ID)):
 #     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
