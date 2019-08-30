@@ -630,71 +630,71 @@ plt.show()
 
 ## ---------------------- PLOT THE FWHM FOR DIFFERENT Rout ---------------------- ##
 
-b = [0.75, 1.00, 1.50, 2.00]
-incl_deg = 90.0
-r_in = 0.1
-# r_out = [0.9, 1.0, 1.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
-r_out = [0.9, 1.0, 1.5, 5.0, 9.5]
-cs = 10
-R = 3.e4
-species = 'NeII'
-mdot='mdot10e-8'
-
-path_file = []
-for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
-
-v_peak1 = []
-v_centr1 = []
-fwhm1 = []
-for i in range(len(r_out)):
-    with open(str(path_file[0])+'/incl_'+str(round(r_out,2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
-        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f1.close()
-v_peak2 = []
-v_centr2 = []
-fwhm2 = []
-for i in range(len(r_out)):
-    with open(str(path_file[1])+'/incl_'+str(round(r_out[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
-        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f2.close()
-v_peak3 = []
-v_centr3 = []
-fwhm3 = []
-for i in range(len(r_out)):
-    with open(str(path_file[2])+'/incl_'+str(round(r_out[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
-        v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f3.close()
-v_peak4 = []
-v_centr4 = []
-fwhm4 = []
-for i in range(len(r_out)):
-    with open(str(path_file[2])+'/incl_'+str(round(r_out[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:]
-        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f4.close()
-
-plt.figure()
-plt.plot(r_out, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
-plt.plot(r_out, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$')
-plt.plot(r_out, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
-plt.plot(r_out, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
-plt.xlabel(r'$R_{out} [R_g]$', fontsize=15)
-plt.ylabel(r'$FWHM$', fontsize=15)
-plt.xticks(np.arange(min(r_out), max(r_out)+0.5, 0.5))
-plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([4.5, 10.0, 0.0, 30.0])
-plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/fwhm_rout_b'+str(b)+'_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
-plt.show()
+# b = [0.75, 1.00, 1.50, 2.00]
+# incl_deg = 90.0
+# r_in = 0.1
+# # r_out = [0.9, 1.0, 1.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
+# r_out = [0.9, 1.0, 1.5, 5.0, 9.5]
+# cs = 10
+# R = 3.e4
+# species = 'NeII'
+# mdot='mdot10e-8'
+#
+# path_file = []
+# for j in range(len(b)):
+#     path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+#
+# v_peak1 = []
+# v_centr1 = []
+# fwhm1 = []
+# for i in range(len(r_out)):
+#     with open(str(path_file[0])+'/incl_'+str(round(r_out,2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+#         lines = f1.readlines()[10:]
+#         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f1.close()
+# v_peak2 = []
+# v_centr2 = []
+# fwhm2 = []
+# for i in range(len(r_out)):
+#     with open(str(path_file[1])+'/incl_'+str(round(r_out[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+#         lines = f2.readlines()[10:]
+#         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f2.close()
+# v_peak3 = []
+# v_centr3 = []
+# fwhm3 = []
+# for i in range(len(r_out)):
+#     with open(str(path_file[2])+'/incl_'+str(round(r_out[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+#         lines = f3.readlines()[10:]
+#         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f3.close()
+# v_peak4 = []
+# v_centr4 = []
+# fwhm4 = []
+# for i in range(len(r_out)):
+#     with open(str(path_file[2])+'/incl_'+str(round(r_out[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
+#         lines = f4.readlines()[10:]
+#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f4.close()
+#
+# plt.figure()
+# plt.plot(r_out, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
+# plt.plot(r_out, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$')
+# plt.plot(r_out, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
+# plt.plot(r_out, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
+# plt.xlabel(r'$R_{out} [R_g]$', fontsize=15)
+# plt.ylabel(r'$FWHM$', fontsize=15)
+# plt.xticks(np.arange(min(r_out), max(r_out)+0.5, 0.5))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+# plt.axis([4.5, 10.0, 0.0, 30.0])
+# plt.legend(loc='best')
+# plt.savefig('./observables/'+str(species)+'/fwhm_rout_b'+str(b)+'_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+# plt.show()
