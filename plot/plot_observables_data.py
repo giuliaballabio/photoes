@@ -19,7 +19,7 @@ r_out = 9.5
 cs = 10
 R = 3.e4
 
-## ---------------- PLOT THE VELOCITY AT PEAK AS FUNCTIONS OF THE INCLINATION FOR THE [NEII] ----------------------
+## ---------------- COMPARE WITH DATA OF [NeII] LINE ----------------------
 
 species = 'NeII'
 mdot = 'mdot10e-9'
@@ -113,7 +113,7 @@ plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-2., 92., -0.5, 14.])
+plt.axis([-1., 91., -0.5, 14.])
 plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
@@ -136,12 +136,35 @@ plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-2., 92., -0.5, 14.0])
+plt.axis([-1., 91., -0.5, 14.0])
 plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/'+str(species)+'/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
-## ---------------- PLOT THE FWHM AS FUNCTIONS OF THE INCLINATION FOR THE [OI] ----------------------
+plt.figure()
+plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+for i in range(len(name)):
+    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+for i in range(len(name3)):
+    plt.annotate(name3[i], (incl_data3[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
+plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+plt.axis([-1., 91., -0.5, 14.])
+plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
+#plt.legend(loc='upper left')
+plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.show()
+
+## ---------------- COMPARE WITH DATA OF [OI] LINE ----------------------
 species = 'OI'
 mdot = 'mdot10e-9'
 
@@ -190,7 +213,7 @@ for i in range(len(incl_deg)):
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f4.close()
 
-## CONSIDER THE DATA FROM Banzatti et al. 2018
+## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
 fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 25.4, 12., 25., 29., 67., 47., 15., 26., 18., 18.] # km/s
 err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.9, 1., 0.7, 1.5, 4., 2., 1., 1., 1., 2.]
