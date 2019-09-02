@@ -12,15 +12,14 @@ plt.rcParams['ytick.labelsize'] = 8
 plt.rcParams['legend.fontsize'] = 10
 plt.rcParams['figure.titlesize'] = 12
 
+## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT b ----------------------
+
 b = [0.75, 1.00, 1.50, 2.00]
 incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
 r_in = 0.1
 r_out = 9.5
 cs = 10
 R = 3.e4
-
-## ---------------- COMPARE WITH DATA OF [NeII] LINE ----------------------
-
 species = 'NeII'
 mdot = 'mdot10e-9'
 
@@ -141,6 +140,52 @@ plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = '
 plt.savefig('./observables/'+str(species)+'/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
+## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT cs ----------------------
+
+b = 1.00
+incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+r_in = 0.1
+r_out = 9.5
+cs = [3, 5, 10]
+R = 3.e4
+species = 'NeII'
+mdot='mdot10e-9'
+
+path_file = []
+for j in range(len(cs)):
+    path_file.append('../cs'+str(cs[j])+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+
+v_peak1 = []
+v_centr1 = []
+fwhm1 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+        lines = f1.readlines()[10:]
+        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f1.close()
+v_peak2 = []
+v_centr2 = []
+fwhm2 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+        lines = f2.readlines()[10:]
+        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f2.close()
+v_peak3 = []
+v_centr3 = []
+fwhm3 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+        lines = f3.readlines()[10:]
+        v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f3.close()
+
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
@@ -164,7 +209,13 @@ plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
 plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
-## ---------------- COMPARE WITH DATA OF [OI] LINE ----------------------
+## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT b ----------------------
+b = [0.75, 1.00, 1.50, 2.00]
+incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+r_in = 0.1
+r_out = 9.5
+cs = 10
+R = 3.e4
 species = 'OI'
 mdot = 'mdot10e-9'
 
