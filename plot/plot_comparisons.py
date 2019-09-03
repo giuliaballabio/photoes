@@ -159,7 +159,7 @@ r_out = 9.5
 cs = 10
 R = 3.e4
 species = ['NeII', 'SIIa', 'SIIc', 'OI']
-mdot='mdot10e-8'
+mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(species)):
@@ -395,7 +395,7 @@ r_out = 9.5
 cs = 10
 R = 3.e4
 species = 'NeII'
-mdot='mdot10e-8'
+mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
