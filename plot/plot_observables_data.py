@@ -270,6 +270,8 @@ f4.close()
 
 ## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
+centr_data = [0.3, -0.4, -4., 0.9, -2.6, -1.3, -11., -5.3, -0.3, 0.4, -2.5, 5., -4., -12., 0.5, -0.9, -4.6]
+err_centr = [1.1, 0.5, 1., 0.9, 0.5, 5., 0.7, 0.6, 5., 5., 3.6, 5.1, 1., 5., 0.6, 1.1, 5.]
 fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 25.4, 12., 25., 29., 67., 47., 15., 26., 18., 18.] # km/s
 err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.9, 1., 0.7, 1.5, 4., 2., 1., 1., 1., 2.]
 ## Broad Component
@@ -327,4 +329,23 @@ plt.axis([-1., 91., 5., 32.])
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, np.abs(v_centr1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
+plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
+plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
+plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
+# plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
+plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(vcentr_data[i])+0.5), color='#969696')
+plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
+plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+plt.axis([-1., 91., -0.5, 14.])
+plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
+plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
