@@ -3,16 +3,13 @@ import matplotlib.pyplot as plt
 from physics_constant import *
 
 plt.style.use('classic')
-plt.rcParams['font.family'] = 'sans'
-plt.rcParams['font.serif'] = 'Helvetica'
-# plt.rcParams['font.monospace'] = 'Ubuntu Mono'
-#plt.rcParams['font.size'] = 10
-#plt.rcParams['axes.labelsize'] = 10
-#plt.rcParams['axes.titlesize'] = 10
-#plt.rcParams['xtick.labelsize'] = 8
-#plt.rcParams['ytick.labelsize'] = 8
-#plt.rcParams['legend.fontsize'] = 10
-#plt.rcParams['figure.titlesize'] = 12
+plt.rcParams['font.size'] = 12
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['axes.titlesize'] = 12
+plt.rcParams['xtick.labelsize'] = 10
+plt.rcParams['ytick.labelsize'] = 10
+plt.rcParams['legend.fontsize'] = 10
+plt.rcParams['figure.titlesize'] = 14
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SOUND SPEEDS ----------------------
 
