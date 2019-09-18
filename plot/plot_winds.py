@@ -102,46 +102,46 @@ rho_cr = n_cr * m_h * mu
 rho_cr_2d = [[rho_cr for i in range(len(theta))] for j in range(len(radius))]
 
 ## ––––– plot the boundary condition ––––– ##
-# rho0 = []
-# rho0_hydro = []
-# for i in range(len(radius)):
-#     rho0.append(rho_2d[i][0]*rhog)
-#     rho0_hydro.append(rho_hydro_2d[i][0]*rhog)
-# plt.figure()
-# plt.loglog(radius*Rg/au, rho0, 'k')
-# plt.hlines(rho_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$\rho_{cr}$')
-# # plt.axis([1.e-2, 50., 1.e-3, 1.e3])
-# plt.title(r'Boundary condition', fontsize=15)
-# plt.xlabel(r'R / AU', fontsize=15)
-# plt.ylabel(r'$\rho_0$ / $\rho_{g}$', fontsize=15)
-# plt.legend(loc='best')
-# plt.savefig(str(path_file)+'/boundary_condition.png', format='png', dpi=300, bbox_inches='tight')
-# # plt.savefig('../data_hydro/'+str(species)+'/boundary_condition.png', format='png', dpi=300, bbox_inches='tight')
-# # plt.show()
-# plt.close()
+rho0 = []
+rho0_hydro = []
+for i in range(len(radius)):
+    rho0.append(rho_2d[i][0]*rhog)
+    rho0_hydro.append(rho_hydro_2d[i][0]*rhog)
+plt.figure()
+plt.loglog(radius*Rg/au, rho0, 'k')
+plt.hlines(rho_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$\rho_{cr}$')
+# plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+plt.title(r'Boundary condition', fontsize=15)
+plt.xlabel(r'R / AU', fontsize=15)
+plt.ylabel(r'$\rho_0$ / $\rho_{g}$', fontsize=15)
+plt.legend(loc='best')
+plt.savefig(str(path_file)+'/boundary_condition.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('../data_hydro/'+str(species)+'/boundary_condition.png', format='png', dpi=300, bbox_inches='tight')
+# plt.show()
+plt.close()
 
 ## ––––– plot the density at a fixed theta as function of the radius ––––– ##
-# angle = 30.
-# angle_rad = angle * (np.pi/180.)
-# j = 1
-# while (theta[j] < angle_rad):
-#     j += 1
-# j_fixangle = j
-# rho_r = []
-# rho_hydro_r = []
-# for i in range(len(radius)):
-#     rho_r.append(rho_2d[i][j_fixangle])
-#     rho_hydro_r.append(rho_hydro_2d[i][j_fixangle])
-# plt.figure()
-# plt.loglog(radius, rho_r, 'r', label='model')
-# plt.loglog(radius, rho_hydro_r, 'b', label='hydro')
-# plt.axis([1.e-2, 50., 1.e-3, 1.e3])
-# plt.xlabel(r'R / R$_{g}$',fontsize=15)
-# plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
-# plt.legend(loc='best')
-# plt.savefig(str(path_file)+'/density_fixedtheta_'+str(angle)+'deg.png', format='png', bbox_inches='tight')
-# # plt.show()
-# plt.close()
+angle = 30.
+angle_rad = angle * (np.pi/180.)
+j = 1
+while (theta[j] < angle_rad):
+    j += 1
+j_fixangle = j
+rho_r = []
+rho_hydro_r = []
+for i in range(len(radius)):
+    rho_r.append(rho_2d[i][j_fixangle])
+    rho_hydro_r.append(rho_hydro_2d[i][j_fixangle])
+plt.figure()
+plt.loglog(radius, rho_r, 'r', label='model')
+plt.loglog(radius, rho_hydro_r, 'b', label='hydro')
+plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+plt.xlabel(r'R / R$_{g}$',fontsize=15)
+plt.ylabel(r'$\rho$ / $\rho_{g}$', fontsize=15)
+plt.legend(loc='best')
+plt.savefig(str(path_file)+'/density_fixedtheta_'+str(angle)+'deg.png', format='png', bbox_inches='tight')
+# plt.show()
+plt.close()
 
 ## ––––– convert to a cartesian coordinate system ––––– ##
 r = grid_r*np.cos(grid_theta)
@@ -153,36 +153,36 @@ def fmt(x, pos):
     b = int(b)
     return r'${}$'.format(b)
 
-# plt.figure()
-# CS = plt.pcolormesh(r, z, rho_hydro_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=50.)
-# # plt.contour(r, z, cs, colors='cyan')
-# # plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
-# # cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
-# cbar = plt.colorbar(CS)
-# plt.axis([0., 1.25, 0., 0.9])
-# # plt.axis([0.02, 0.04, 0, 0.02])
-# # plt.axis([0.02, 10., 0., 10.])
-# plt.xlabel(r'R / R$_{g}$',fontsize=15)
-# plt.ylabel(r'z / R$_{g}$',fontsize=15)
-# cbar.set_label(r'Log($\rho$ / $\rho_{g}$)')
-# # plt.savefig(str(path_file)+'/density_polar.png', format='png', bbox_inches='tight', dpi=300)
-# plt.savefig('../data_hydro/'+str(species)+'/density_polar_zoom.png', format='png', bbox_inches='tight', dpi=300)
-# plt.show()
-# plt.close()
-#
-# plt.figure()
-# CS = plt.pcolormesh(r, z, v_phi_2d, cmap='winter', norm=LogNorm())#, vmin=0.25, vmax=10.)
-# cbar = plt.colorbar(CS)
-# # plt.axis([0., 1.25, 0, 0.9])
+plt.figure()
+CS = plt.pcolormesh(r, z, rho_hydro_2d, cmap='hot', norm=LogNorm(), vmin=0.05, vmax=50.)
+# plt.contour(r, z, cs, colors='cyan')
+# plt.pcolormesh(r, -z, rho2d, cmap='viridis', norm=LogNorm(), vmin=0.05, vmax=20.)
+# cbar = plt.colorbar(format=ticker.FuncFormatter(fmt))
+cbar = plt.colorbar(CS)
+plt.axis([0., 1.25, 0., 0.9])
+# plt.axis([0.02, 0.04, 0, 0.02])
 # plt.axis([0.02, 10., 0., 10.])
-# plt.xlabel(r'R / R$_{g}$',fontsize=15)
-# plt.ylabel(r'z / R$_{g}$',fontsize=15)
-# cbar.set_label(r'Log($v_{K}$)')
-# plt.savefig(str(path_file)+'/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
-# # plt.savefig('../data_hydro/'+str(species)+'/keplerian_velocity.png', format='png', bbox_inches='tight', dpi=300)
-# # plt.show()
-# plt.close()
-#
+plt.xlabel(r'R / R$_{g}$',fontsize=15)
+plt.ylabel(r'z / R$_{g}$',fontsize=15)
+cbar.set_label(r'Log($\rho$ / $\rho_{g}$)')
+# plt.savefig(str(path_file)+'/density_polar.png', format='png', bbox_inches='tight', dpi=300)
+plt.savefig('../data_hydro/'+str(species)+'/density_polar_zoom.png', format='png', bbox_inches='tight', dpi=300)
+plt.show()
+plt.close()
+
+plt.figure()
+CS = plt.pcolormesh(r, z, v_phi_2d, cmap='winter', norm=LogNorm())#, vmin=0.25, vmax=10.)
+cbar = plt.colorbar(CS)
+# plt.axis([0., 1.25, 0, 0.9])
+plt.axis([0.02, 10., 0., 10.])
+plt.xlabel(r'R / R$_{g}$',fontsize=15)
+plt.ylabel(r'z / R$_{g}$',fontsize=15)
+cbar.set_label(r'Log($v_{K}$)')
+plt.savefig(str(path_file)+'/keplerian_velocity.png', format='png', bbox_inches='tight')#, dpi=1000)
+# plt.savefig('../data_hydro/'+str(species)+'/keplerian_velocity.png', format='png', bbox_inches='tight', dpi=300)
+# plt.show()
+plt.close()
+
 ## ––––– Creating a 2D map of the flux ––––– ##
 v_th = cs / ((m_atom)**0.5)
 Temp = T_gas * (cs/10.)**2.
@@ -211,61 +211,47 @@ for i in range(len(radius)):
 # if (species == 'NeII'):
 #     max_flux = np.amax(cell_flux)
 
-def fmt(x, pos):
-    a, b = '{:.1e}'.format(x).split('e')
-    #print a,b,pos
-    b = int(b)
-    #print (x, pos)
-    #print (a, b)
-    #aint=int(a)
-    if(pos==0):
-        return r''
-    if (pos!=1):
-        return r'${}$'.format(a)
-    else:
-        return r'$0.0$'
-
 plt.figure()
 CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm() , vmin=1.e-1, vmax=1.e0)
 # plt.contour(r_cr*Rg/au, z_cr*Rg/au, n_cr_2d, color='k')
-cbar = plt.colorbar(CS) #, format=ticker.FuncFormatter(fmt))
+cbar = plt.colorbar(CS)
 # plt.axis([0., 20., 0., 15.])
 plt.xlabel(r'R / AU',fontsize=15)
 plt.ylabel(r'z / AU',fontsize=15)
 cbar.set_label(r'Log(L)') # / L_{\odot}
 # plt.savefig(str(path_file)+'/line_flux.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('../data_hydro/'+str(species)+'/line_flux.png', format='png', bbox_inches='tight', dpi=300)
-plt.savefig('../data_hydro/'+str(species)+'/line_flux.eps', format='eps', bbox_inches='tight', dpi=300)
+plt.savefig('../data_hydro/'+str(species)+'/line_flux.pdf', format='pdf', bbox_inches='tight', dpi=300)
 plt.show()
 plt.close()
 
-# ne_r = []
-# for i in range(len(radius)):
-#     ne_r.append(n_e[i][0])
-# # plt.figure()
-# plt.loglog(radius*Rg/au, ne_r, 'k')
-# plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$n_{cr}$')
-# # plt.axis([1.e-2, 50., 1.e-3, 1.e3])
-# plt.xlabel(r'R / AU',fontsize=15)
-# plt.ylabel(r'$n_e$', fontsize=15)
-# # plt.legend(loc='best')
-# plt.savefig(str(path_file)+'/numerical_density_midplane.png', format='png', dpi=300, bbox_inches='tight')
-# # plt.savefig('../data_hydro/'+str(species)+'/numerical_density_midplane.png', format='png', bbox_inches='tight')
-# plt.show()
-# plt.close()
-#
-# flux_r = []
-# for i in range(len(radius)):
-#     flux_r.append(cell_flux[i][1]/np.amax(cell_flux))
+ne_r = []
+for i in range(len(radius)):
+    ne_r.append(n_e[i][0])
 # plt.figure()
-# plt.loglog(radius*Rg/au, flux_r, 'k')
-# plt.plot(radius*Rg/au, (radius*Rg/au)**(-b), 'r', label='$R^{-b}$')
-# # plt.yscale('log')
-# # plt.axis([1.e-2, 50., 1.e-3, 1.e3])
-# plt.xlabel(r'R / AU',fontsize=15)
-# plt.ylabel(r'Flux(R)', fontsize=15)
+plt.loglog(radius*Rg/au, ne_r, 'k')
+plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$n_{cr}$')
+# plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+plt.xlabel(r'R / AU',fontsize=15)
+plt.ylabel(r'$n_e$', fontsize=15)
 # plt.legend(loc='best')
-# plt.savefig(str(path_file)+'/flux_midplane.png', format='png', dpi=300, bbox_inches='tight')
-# # plt.savefig('../data_hydro/'+str(species)+'/flux_midplane.png', format='png', bbox_inches='tight')
-# plt.show()
-# plt.close()
+plt.savefig(str(path_file)+'/numerical_density_midplane.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('../data_hydro/'+str(species)+'/numerical_density_midplane.png', format='png', bbox_inches='tight')
+plt.show()
+plt.close()
+
+flux_r = []
+for i in range(len(radius)):
+    flux_r.append(cell_flux[i][1]/np.amax(cell_flux))
+plt.figure()
+plt.loglog(radius*Rg/au, flux_r, 'k')
+plt.plot(radius*Rg/au, (radius*Rg/au)**(-b), 'r', label='$R^{-b}$')
+# plt.yscale('log')
+# plt.axis([1.e-2, 50., 1.e-3, 1.e3])
+plt.xlabel(r'R / AU',fontsize=15)
+plt.ylabel(r'Flux(R)', fontsize=15)
+plt.legend(loc='best')
+plt.savefig(str(path_file)+'/flux_midplane.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('../data_hydro/'+str(species)+'/flux_midplane.png', format='png', bbox_inches='tight')
+plt.show()
+plt.close()
