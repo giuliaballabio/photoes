@@ -3,13 +3,14 @@ import matplotlib.pyplot as plt
 import re
 
 plt.style.use('classic')
-plt.rcParams['font.size'] = 10
-plt.rcParams['axes.labelsize'] = 10
-plt.rcParams['axes.titlesize'] = 10
-plt.rcParams['xtick.labelsize'] = 8
-plt.rcParams['ytick.labelsize'] = 8
-plt.rcParams['legend.fontsize'] = 10
-plt.rcParams['figure.titlesize'] = 12
+plt.rcParams['font.family'] = 'serif'
+# plt.rcParams['font.size'] = 10
+# plt.rcParams['axes.labelsize'] = 10
+# plt.rcParams['axes.titlesize'] = 10
+# plt.rcParams['xtick.labelsize'] = 8
+# plt.rcParams['ytick.labelsize'] = 8
+# plt.rcParams['legend.fontsize'] = 10
+# plt.rcParams['figure.titlesize'] = 12
 
 b = [0.75, 1.00, 1.50] #, 2.00]
 incl_deg = 90.0
@@ -82,9 +83,10 @@ plt.plot(r_out, flux3, color='#006837', linestyle='None', marker='o', markeredge
 plt.xlabel(r'$R_{out}$', fontsize=15)
 plt.ylabel(r'$L_{NeII}$', fontsize=15)
 plt.xticks(np.arange(min(r_out), max(r_out)+0.5, 0.5))
-plt.title('R$_{in}$ = '+str(r_in)+' au - i = '+str(round(incl_deg,2)))
+# plt.title('R$_{in}$ = '+str(r_in)+' au - i = '+str(round(incl_deg,2)))
 plt.axis([4.5, 10.0, 0.e-6, 6.e-6])
 plt.ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/flux_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/flux_cs'+str(cs)+'_'+str(mdot)+'.pdf', format='pdf', dpi=300, bbox_inches='tight')
 plt.show()
