@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from physics_constant import *
 
 plt.style.use('classic')
-plt.rcParams['font.family'] = 'sans' #Courier New'
+plt.rcParams['font.family'] = 'sans'
 plt.rcParams['font.serif'] = 'Helvetica'
 # plt.rcParams['font.monospace'] = 'Ubuntu Mono'
 #plt.rcParams['font.size'] = 10
