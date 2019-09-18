@@ -9,9 +9,11 @@ r_in = 0.1
 r_out = 9.5
 cs = 10
 species = 'NeII'
+mdot = 'nonorm'
+
 path_file = []
 for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg,2)))
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg,2)))
 
 x1 = np.array(map(float, [lines.split()[0] for lines in open(str(path_file[0])+'/streamline_cartcoord.txt', 'r')]))
 y1 = np.array(map(float, [lines.split()[1] for lines in open(str(path_file[0])+'/streamline_cartcoord.txt', 'r')]))
@@ -59,7 +61,8 @@ plt.plot(1.23+1.5, 0.16, 'kx', linewidth=2.)
 # plt.title(r'Streamline topology',fontsize=15)
 plt.xlabel(r'$R / R_g$',fontsize=15)
 plt.ylabel(r'$z / R_g$',fontsize=15)
-plt.axis([0.,5.,0.,2.0])
+plt.axis([0.,5.,0.,1.6])
 plt.legend(loc='upper left', bbox_to_anchor=(0.0, 1.1))
-plt.savefig('./streamlines/selfsimilar_solutions_2.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./streamlines/selfsimilar_solutions.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./streamlines/selfsimilar_solutions.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
