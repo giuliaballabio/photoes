@@ -77,9 +77,9 @@ for i in range(len(r_out)):
 flux3 = np.array(flux3)
 
 plt.figure()
-plt.plot(r_out, flux1, color='#addd8e', linestyle='None', marker='o', markeredgecolor='#addd8e', label='$b=0.75$')
-plt.plot(r_out, flux2, color='#31a354', linestyle='None', marker='o', markeredgecolor='#31a354', label='$b=1.00$')
-plt.plot(r_out, flux3, color='#006837', linestyle='None', marker='o', markeredgecolor='#006837', label='$b=1.50$')
+plt.plot(r_out, flux1, color='#addd8e', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#addd8e', label='$b=0.75$')
+plt.plot(r_out, flux2, color='#31a354', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#31a354', label='$b=1.00$')
+plt.plot(r_out, flux3, color='#006837', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#006837', label='$b=1.50$')
 plt.xlabel(r'$R_{out}$', fontsize=15)
 plt.ylabel(r'$L_{NeII}$', fontsize=15)
 plt.xticks(np.arange(min(r_out), max(r_out)+0.5, 0.5))
