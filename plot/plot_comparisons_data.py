@@ -4,13 +4,13 @@ import re
 from physics_constant import *
 
 plt.style.use('classic')
-plt.rcParams['font.size'] = 10
-plt.rcParams['axes.labelsize'] = 10
-plt.rcParams['axes.titlesize'] = 10
-plt.rcParams['xtick.labelsize'] = 8
-plt.rcParams['ytick.labelsize'] = 8
+plt.rcParams['font.size'] = 12
+plt.rcParams['axes.labelsize'] = 12
+plt.rcParams['axes.titlesize'] = 12
+plt.rcParams['xtick.labelsize'] = 10
+plt.rcParams['ytick.labelsize'] = 10
 plt.rcParams['legend.fontsize'] = 10
-plt.rcParams['figure.titlesize'] = 12
+plt.rcParams['figure.titlesize'] = 14
 
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT b ----------------------
 
@@ -204,7 +204,7 @@ for i in range(len(ID)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[NeII] 12.81 \mu m$')
+plt.title('$[NeII] \, 12.81 \mu m$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
 # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
@@ -229,6 +229,7 @@ plt.show()
 # plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 # plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 # plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[NeII] \, 12.81 \mu m$')
 # # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 # plt.axis([-1., 91., -0.5, 14.])
 # # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
@@ -330,7 +331,7 @@ for i in range(len(ID)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] 6300 \AA$')
+plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1.0, 91.0, 0.0, 300.0])
 plt.legend(loc='best')
@@ -350,7 +351,7 @@ for i in range(len(ID)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$FWHM$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] 6300 \AA$')
+plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., 5., 32.])
 plt.legend(loc='best')
@@ -370,7 +371,7 @@ for i in range(len(ID)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] 6300 \AA$')
+plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
 plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
@@ -447,7 +448,7 @@ for i in range(len(ID)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] 6300 \AA$')
+plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
 # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
@@ -466,7 +467,7 @@ for i in range(len(ID)):
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] 6300 \AA$')
+plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., 5., 32.])
 # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
