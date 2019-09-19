@@ -22,14 +22,14 @@ species = 'NeII'
 
 ## N.B. When you change to nonorm, remember to change also f.readlines()[24:]
 ## for mdot10e-8 etc is f.readlines()[33:]
-mdot = 'mdot10e-8'
+mdot = 'mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
     path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 
-## ---------------------- PLOT THE FLUX AS A FUNCTION OF THE OUTER RADIUS ----------------------
+## ---------------------- PLOT FLUX AS A FUNCTION OF THE OUTER RADIUS FOR DIFFERENT b ----------------------
 
 value = []
 for i in range(len(r_out)):
@@ -89,4 +89,67 @@ plt.ticklabel_format(axis='y', style='sci', scilimits=(-2,2))
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/flux_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/flux_cs'+str(cs)+'_'+str(mdot)+'.pdf', format='pdf', dpi=300, bbox_inches='tight')
+plt.show()
+
+
+## ---------------------- PLOT FLUX AS FUNCTION OF OUTER RADIUS FOR DIFFERENT DENSITY NORMALISATION FACTORS ----------------------
+
+b = 1.00
+incl_deg = 90.0
+r_in = 0.1
+r_out = [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
+cs = 10
+R = 3.e4
+species = 'NeII'
+mdot = ['mdot10e-10', 'mdot10e-9', 'mdot10e-8']
+
+path_file = []
+for j in range(len(mdot)):
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot[j])+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+
+v_peak1 = []
+v_centr1 = []
+fwhm1 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+        lines = f1.readlines()[10:]
+        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f1.close()
+v_peak2 = []
+v_centr2 = []
+fwhm2 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+        lines = f2.readlines()[10:]
+        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f2.close()
+v_peak3 = []
+v_centr3 = []
+fwhm3 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+        lines = f3.readlines()[10:]
+        v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f3.close()
+
+plt.figure()
+plt.plot(incl_deg, np.abs(v_centr1), color='#fc9272', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fc9272', label='$\dot{M}(<25 \, au) = 10^{-10} M_{\odot}/yr$')
+plt.plot(incl_deg, np.abs(v_centr2), color='#ef3b2c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#ef3b2c', label='$\dot{M}(<25 \, au) = 10^{-9} M_{\odot}/yr$')
+plt.plot(incl_deg, np.abs(v_centr3), color='#99000d', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#99000d', label='$\dot{M}(<25 \, au) = 10^{-8} M_{\odot}/yr$')
+# plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
+plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
+plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+plt.axis([-1., 91., -0.5, 6.5])
+plt.legend(loc='best')
+# plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
+plt.savefig('./observables/'+str(species)+'/vcentr_densitynorm_b'+str(b)+'_cs'+str(cs)+'_R'+str(R)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vcentr_densitynorm_b'+str(b)+'_cs'+str(cs)+'_R'+str(R)+'.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
