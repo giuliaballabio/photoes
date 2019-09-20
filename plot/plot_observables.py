@@ -155,7 +155,7 @@ r_in = 0.1
 r_out = 9.5
 cs = 10
 R = 3.e4
-species = ['NeII', 'SIIa', 'SIIc', 'OI']
+species = ['NeII', 'OI', 'SIIa', 'SIIc']
 mdot='mdot10e-8'
 
 path_file = []
@@ -205,9 +205,9 @@ f4.close()
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
-plt.plot(incl_deg, np.abs(v_centr4), color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[3])+']$')
-plt.plot(incl_deg, np.abs(v_centr2), color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,4069\,\AA$')
-plt.plot(incl_deg, np.abs(v_centr3), color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
+plt.plot(incl_deg, np.abs(v_centr2), color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[1])+']$')
+plt.plot(incl_deg, np.abs(v_centr3), color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,4069\,\AA$')
+plt.plot(incl_deg, np.abs(v_centr4*1.2), color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
 plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
