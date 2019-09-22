@@ -408,13 +408,13 @@ plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.2, np.abs(vcentr_data[i])+0.5), color='k')
+    plt.annotate(ID[i], (incl_data[i]+0.2, np.abs(vcentr_data[i])+0.1), color='k')
 plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_sx)):
     plt.annotate(ID_sx[i], (incl_sx[i]-10., np.abs(vcentr_sx[i])-0.3), color='k')
 plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.3), color='k')
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
