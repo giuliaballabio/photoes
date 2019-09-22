@@ -4,13 +4,12 @@ import re
 from physics_constant import *
 
 plt.style.use('classic')
-plt.rcParams['font.size'] = 12
-plt.rcParams['axes.labelsize'] = 12
-plt.rcParams['axes.titlesize'] = 12
-plt.rcParams['xtick.labelsize'] = 10
-plt.rcParams['ytick.labelsize'] = 10
-plt.rcParams['legend.fontsize'] = 10
-plt.rcParams['figure.titlesize'] = 14
+plt.rc('font', family='serif')
+plt.rc('xtick', labelsize='medium')
+plt.rc('ytick', labelsize='medium')
+plt.rc('axes', titlesize='xx-large')
+plt.rc('axes', labelsize='xx-large')
+plt.rc('legend', fontsize='large')
 
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT b ----------------------
 
@@ -108,11 +107,12 @@ for i in range(len(name3)):
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
 plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
@@ -132,11 +132,12 @@ for i in range(len(name3)):
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$- v_{peak} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.0])
+plt.tight_layout()
 plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/'+str(species)+'/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
@@ -151,7 +152,7 @@ r_out = 9.5
 cs = [3, 5, 10]
 R = 3.e4
 species = 'NeII'
-mdot='mdot10e-8'
+mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(cs)):
@@ -201,42 +202,44 @@ for i in range(len(name3)):
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$- v_{peak} \, [km/s]$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$- v_{peak} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[NeII] \, 12.81 \mu m$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
 # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
-# plt.figure()
-# plt.plot(incl_deg, np.abs(v_centr1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-# plt.plot(incl_deg, np.abs(v_centr2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-# plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-# plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-# for i in range(len(name)):
-#     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-# plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
-# for i in range(len(name3)):
-#     plt.annotate(name3[i], (incl_data3[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-# plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
-# for i in range(len(ID)):
-#     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-# plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-# plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
-# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-# plt.title('$[NeII] \, 12.81 \mu m$')
-# # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-# plt.axis([-1., 91., -0.5, 14.])
-# # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
-# plt.legend(loc='best')
-# plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-# plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-# plt.show()
+plt.figure()
+plt.plot(incl_deg, np.abs(v_centr1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(incl_deg, np.abs(v_centr2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+for i in range(len(name)):
+    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+for i in range(len(name3)):
+    plt.annotate(name3[i], (incl_data3[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$v_{centroid} \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[NeII] \, 12.81 \mu m$')
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
+# plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
+plt.legend(loc='best')
+plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT b ----------------------
 
@@ -328,12 +331,13 @@ for i in range(len(ID)):
 # plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='d', capsize=3, label='$Rigliaco\,et\,al.\,(2013)$')
 # for i in range(len(ID2)):
 #     plt.annotate(ID2[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$FWHM$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1.0, 91.0, 0.0, 300.0])
+plt.tight_layout()
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
@@ -348,12 +352,13 @@ plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker=
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='#969696')
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$FWHM$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., 5., 32.])
+plt.tight_layout()
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.eps', format='eps', dpi=300, bbox_inches='tight')
@@ -368,12 +373,13 @@ plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2
 plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(vcentr_data[i])+0.5), color='#969696')
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
 plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
@@ -445,12 +451,13 @@ plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='-', linewidth=2
 plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(vcentr_data[i])+0.5), color='#969696')
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
 # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
@@ -464,12 +471,13 @@ plt.plot(incl_deg, np.abs(fwhm3), color='#08306b', linestyle='-', linewidth=2.5,
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='#969696')
-plt.xlabel(r'$i \, [^{\circ}]$', fontsize=15)
-plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., 5., 32.])
+plt.tight_layout()
 # plt.legend(loc='upper center', bbox_to_anchor=(1., 1.05), fontsize='small')
 plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
