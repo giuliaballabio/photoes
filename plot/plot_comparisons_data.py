@@ -198,14 +198,14 @@ for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
 plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
-    plt.annotate(name3[i], (incl_data3[i]-0.3, np.abs(vpeak_data3[i])-0.3))
+    plt.annotate(name3[i], (incl_data3[i]-5.0, np.abs(vpeak_data3[i])+0.3))
 plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$- v_{peak} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[NeII] \, 12.81 \mu m$', loc='right')
+plt.title('$[NeII] \, 12.81 \mu m$')#, loc='right')
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 17.])
 plt.tight_layout()
