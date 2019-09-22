@@ -4,13 +4,17 @@ from physics_constant import *
 
 plt.style.use('classic')
 plt.rc('font', family='serif')
-plt.rcParams['font.size'] = 12
-plt.rcParams['axes.labelsize'] = 12
-plt.rcParams['axes.titlesize'] = 12
-plt.rcParams['xtick.labelsize'] = 10
-plt.rcParams['ytick.labelsize'] = 10
-plt.rcParams['legend.fontsize'] = 10
-plt.rcParams['figure.titlesize'] = 14
+plt.rc('xtick', labelsize='x-medium')
+plt.rc('ytick', labelsize='x-medium')
+plt.rc('axes', labelsize='x-large')
+plt.rc('legend', labelsize='x-medium')
+# plt.rcParams['font.size'] = 12
+# plt.rcParams['axes.labelsize'] = 12
+# plt.rcParams['axes.titlesize'] = 12
+# plt.rcParams['xtick.labelsize'] = 10
+# plt.rcParams['ytick.labelsize'] = 10
+# plt.rcParams['legend.fontsize'] = 10
+# plt.rcParams['figure.titlesize'] = 14
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SOUND SPEEDS ----------------------
 
