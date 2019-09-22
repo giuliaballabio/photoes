@@ -4,10 +4,10 @@ from physics_constant import *
 
 plt.style.use('classic')
 plt.rc('font', family='serif')
-plt.rc('xtick', labelsize='x-medium')
-plt.rc('ytick', labelsize='x-medium')
-plt.rc('axes', labelsize='x-large')
-plt.rc('legend', labelsize='x-medium')
+plt.rc('xtick', labelsize='medium')
+plt.rc('ytick', labelsize='medium')
+plt.rc('axes', labelsize='large')
+plt.rc('legend', labelsize='medium')
 # plt.rcParams['font.size'] = 12
 # plt.rcParams['axes.labelsize'] = 12
 # plt.rcParams['axes.titlesize'] = 12
