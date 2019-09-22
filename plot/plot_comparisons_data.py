@@ -297,22 +297,42 @@ f4.close()
 
 ## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
-vcentr_data = [0.3, -0.4, -4., 0.9, -2.6, -1.3, -11., -5.3, -0.3, 0.4, -2.5, 5., -4., -12., 0.5, -0.9, -4.6]
-err_vcentr = [1.1, 0.5, 1., 0.9, 0.5, 5., 0.7, 0.6, 5., 5., 3.6, 5.1, 1., 5., 0.6, 1.1, 5.]
-fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 25.4, 12., 25., 29., 67., 47., 15., 26., 18., 18.] # km/s
-err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.9, 1., 0.7, 1.5, 4., 2., 1., 1., 1., 2.]
+vcentr_data = [0.3, -0.4, 0.9, -1.3, -5.3, -0.3, 0.4, -2.5, 5., -4., -12., -4.6]
+err_vcentr = [1.1, 0.5, 0.9, 5., 0.6, 5., 5., 3.6, 5.1, 1., 5., 5.]
+fwhm_data = [26., 14.5, 18., 13., 25.4, 12., 25., 29., 67., 47., 15., 18.] # km/s
+err_fwhm = [2., 0.4, 2., 1.2, 0.9, 1., 0.7, 1.5, 4., 2., 1., 2.]
 ## Broad Component
-fwhm_data1 = [96., 54., 120., 111., 80., 67., 42., 177., 53., 86., 162., 223., 288., 44., 84., 79., 36.] # km/s
-err_fwhm1 = [4.6, 2., 9., 6., 2., 2., 2., 7., 5., 3., 10., 17., 28., 6., 6., 8., 6.]
+fwhm_data1 = [96., 54., 111., 67., 177., 53., 86., 162., 223., 288., 44., 36.] # km/s
+err_fwhm1 = [4.6, 2., 6., 2., 7., 5., 3., 10., 17., 28., 6., 6.]
 
-incl_data = [71., 20., 18., 39., 65., 60., 32., 26., 9., 55., 38., 66., 37., 35., 54., 54., 50.]
-ID = ['AATau', 'AS205N', 'AS353A', 'BPTau', 'CWTau', 'DFTau', 'DGTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RNO90', 'RULup', 'RXJ1842', 'V853Oph', 'VVCrAS']
+incl_data = [71., 20., 39., 60., 26., 9., 55., 38., 66., 37., 35., 50.]
+ID = ['AATau', 'AS205N', 'BPTau', 'DFTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RNO90', 'RULup', 'VVCrAS']
+
+## Divide the data in order to plot the ID labels clearly
+vcentr_sx = [-4., -11., 0.5]
+err_vcentr_sx = [1.,0.7, 0.6]
+fwhm_sx = [25., 18., 26.]
+err_fwhm_sx =[1.1, 0.5, 1.]
+fwhm1_sx = [120., 42., 84.]
+err_fwhm1_sx = [9., 2., 6.]
+incl_sx = [18., 32., 54.]
+ID_sx = ['AS353A', 'DGTau', 'RXJ1842']
+
+vcentr_down = [-2.6, -0.9]
+err_vcentr_down = [0.5, 1.1]
+fwhm_down = [24., 18.]
+err_fwhm_down =[0.6, 1.]
+fwhm1_down =[80., 79.]
+err_fwhm1_down = [2., 8.]
+incl_down = [65., 54.]
+ID_down = ['CWtau', 'V853Oph']
+
 
 ## CONSIDER THE DATA FROM Rigliaco et al. 2013
-fwhm_data2 = [14.1, 42.6, 47.1, 8.2, 42.8, 44.1, 40.5, 34.8, 55.7, 45.1, 57.6, 28.3, 51.1, 28.9, 38.8] # km/s
-err_fwhm2 = [2.7, 13.6, 8.4, 0.6, 20.0, 1.5, 6.6, 2., 6.3, 1.1, 6.9, 7.0, 5.6, 8.5, 5.9]
-incl_data2 = [37., 30., 35., 4., 60., 80., 52., 63., 78., 35., 70., 37., 23., 45., 42.]
-ID2 = ['DR Tau', 'MP Mus', 'V4046 Sgr', 'TW Hya', 'AS 353A', 'CW Tau', 'CY Tau', 'DF Tau', 'DN Tau', 'DQ Tau', 'FM Tau', 'GG Tau', 'GK Tau', 'GM Aur', 'UY Aur']
+# fwhm_data2 = [14.1, 42.6, 47.1, 8.2, 42.8, 44.1, 40.5, 34.8, 55.7, 45.1, 57.6, 28.3, 51.1, 28.9, 38.8] # km/s
+# err_fwhm2 = [2.7, 13.6, 8.4, 0.6, 20.0, 1.5, 6.6, 2., 6.3, 1.1, 6.9, 7.0, 5.6, 8.5, 5.9]
+# incl_data2 = [37., 30., 35., 4., 60., 80., 52., 63., 78., 35., 70., 37., 23., 45., 42.]
+# ID2 = ['DR Tau', 'MP Mus', 'V4046 Sgr', 'TW Hya', 'AS 353A', 'CW Tau', 'CY Tau', 'DF Tau', 'DN Tau', 'DQ Tau', 'FM Tau', 'GG Tau', 'GK Tau', 'GM Aur', 'UY Aur']
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
@@ -323,9 +343,21 @@ plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker=
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3), color='k')
+plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(fwhm_sx[i])+0.3), color='k')
+plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])+0.3), color='k')
 plt.errorbar(incl_data, np.abs(fwhm_data1), yerr=err_fwhm1, color='#969696', markeredgecolor='None', linestyle='None', marker='*', capsize=3, label='$BC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data1[i])+0.3), color='#969696')
+plt.errorbar(incl_sx, np.abs(fwhm1_sx), yerr=err_fwhm1_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(fwhm1_sx[i])+0.3), color='k')
+plt.errorbar(incl_down, np.abs(fwhm1_down), yerr=err_fwhm1_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm1_down[i])+0.3), color='k')
 # plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='d', capsize=3, label='$Rigliaco\,et\,al.\,(2013)$')
 # for i in range(len(ID2)):
 #     plt.annotate(ID2[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
@@ -350,6 +382,12 @@ plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker=
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(fwhm_sx[i])+0.3), color='k')
+plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])+0.3), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -371,6 +409,12 @@ plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2
 plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(vcentr_data[i])+0.5), color='k')
+plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(vcentr_sx[i])+0.3), color='k')
+plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(vcentr_down[i])+0.3), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -429,18 +473,18 @@ for i in range(len(incl_deg)):
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
 
-## CONSIDER THE DATA FROM Banzatti et al. 2019
-## Narrow Component
-vcentr_data = [0.3, -0.4, -4., 0.9, -2.6, -1.3, -11., -5.3, -0.3, 0.4, -2.5, 5., -4., -12., 0.5, -0.9, -4.6]
-err_vcentr = [1.1, 0.5, 1., 0.9, 0.5, 5., 0.7, 0.6, 5., 5., 3.6, 5.1, 1., 5., 0.6, 1.1, 5.]
-fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 25.4, 12., 25., 29., 67., 47., 15., 26., 18., 18.] # km/s
-err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.9, 1., 0.7, 1.5, 4., 2., 1., 1., 1., 2.]
-## Broad Component
-fwhm_data1 = [96., 54., 120., 111., 80., 67., 42., 177., 53., 86., 162., 223., 288., 44., 84., 79., 36.] # km/s
-err_fwhm1 = [4.6, 2., 9., 6., 2., 2., 2., 7., 5., 3., 10., 17., 28., 6., 6., 8., 6.]
-
-incl_data = [71., 20., 18., 39., 65., 60., 32., 26., 9., 55., 38., 66., 37., 35., 54., 54., 50.]
-ID = ['AATau', 'AS205N', 'AS353A', 'BPTau', 'CWTau', 'DFTau', 'DGTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RNO90', 'RULup', 'RXJ1842', 'V853Oph', 'VVCrAS']
+# ## CONSIDER THE DATA FROM Banzatti et al. 2019
+# ## Narrow Component
+# vcentr_data = [0.3, -0.4, -4., 0.9, -2.6, -1.3, -11., -5.3, -0.3, 0.4, -2.5, 5., -4., -12., 0.5, -0.9, -4.6]
+# err_vcentr = [1.1, 0.5, 1., 0.9, 0.5, 5., 0.7, 0.6, 5., 5., 3.6, 5.1, 1., 5., 0.6, 1.1, 5.]
+# fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 25.4, 12., 25., 29., 67., 47., 15., 26., 18., 18.] # km/s
+# err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.9, 1., 0.7, 1.5, 4., 2., 1., 1., 1., 2.]
+# ## Broad Component
+# fwhm_data1 = [96., 54., 120., 111., 80., 67., 42., 177., 53., 86., 162., 223., 288., 44., 84., 79., 36.] # km/s
+# err_fwhm1 = [4.6, 2., 9., 6., 2., 2., 2., 7., 5., 3., 10., 17., 28., 6., 6., 8., 6.]
+#
+# incl_data = [71., 20., 18., 39., 65., 60., 32., 26., 9., 55., 38., 66., 37., 35., 54., 54., 50.]
+# ID = ['AATau', 'AS205N', 'AS353A', 'BPTau', 'CWTau', 'DFTau', 'DGTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RNO90', 'RULup', 'RXJ1842', 'V853Oph', 'VVCrAS']
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
@@ -449,6 +493,12 @@ plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='-', linewidth=2
 plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(vcentr_data[i])+0.5), color='k')
+plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(vcentr_sx[i])+0.3), color='k')
+plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(vcentr_down[i])+0.3), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -469,7 +519,11 @@ plt.plot(incl_deg, np.abs(fwhm3), color='#08306b', linestyle='-', linewidth=2.5,
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(fwhm_sx[i])+0.3), color='k')
+plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])+0.3), color='k')
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
