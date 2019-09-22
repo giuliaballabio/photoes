@@ -40,8 +40,8 @@ string = []
 flux1 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    flux1.append(string[i][18:24])
-    # flux1.append(float(string[i][18:40]))
+    # flux1.append(string[i][18:24])
+    flux1.append(float(string[i][18:40]))
 flux1 = np.array(flux1)
 
 value = []
@@ -55,8 +55,8 @@ string = []
 flux2 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    flux2.append(string[i][18:24])
-    # flux2.append(float(string[i][18:40]))
+    # flux2.append(string[i][18:24])
+    flux2.append(float(string[i][18:40]))
 flux2 = np.array(flux2)
 
 value = []
@@ -70,8 +70,8 @@ string = []
 flux3 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    flux3.append(string[i][18:24])
-    # flux3.append(float(string[i][18:40]))
+    # flux3.append(string[i][18:24])
+    flux3.append(float(string[i][18:40]))
 flux3 = np.array(flux3)
 
 plt.figure()
