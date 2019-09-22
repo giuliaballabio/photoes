@@ -20,7 +20,7 @@ species = 'NeII'
 
 ## N.B. When you change to nonorm, remember to change also f.readlines()[24:]
 ## for mdot10e-8 etc is f.readlines()[33:]
-mdot = 'mdot10e-8'
+mdot = 'nonorm'
 
 path_file = []
 for j in range(len(b)):
@@ -32,46 +32,46 @@ for j in range(len(b)):
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        # lines = f.readlines()[24:]
-        lines = f.readlines()[33:]
+        lines = f.readlines()[24:]
+        # lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
 flux1 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    # flux1.append(string[i][18:24])
-    flux1.append(float(string[i][18:40]))
+    flux1.append(string[i][18:24])
+    # flux1.append(float(string[i][18:40]))
 flux1 = np.array(flux1)
 
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        # lines = f.readlines()[24:]
-        lines = f.readlines()[33:]
+        lines = f.readlines()[24:]
+        # lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
 flux2 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    # flux2.append(string[i][18:24])
-    flux2.append(float(string[i][18:40]))
+    flux2.append(string[i][18:24])
+    # flux2.append(float(string[i][18:40]))
 flux2 = np.array(flux2)
 
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        # lines = f.readlines()[24:]
-        lines = f.readlines()[33:]
+        lines = f.readlines()[24:]
+        # lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
 flux3 = []
 for i in range(len(r_out)):
     string.append(value[i][0])
-    # flux3.append(string[i][18:24])
-    flux3.append(float(string[i][18:40]))
+    flux3.append(string[i][18:24])
+    # flux3.append(float(string[i][18:40]))
 flux3 = np.array(flux3)
 
 plt.figure()
