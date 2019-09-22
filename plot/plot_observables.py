@@ -9,13 +9,6 @@ plt.rc('ytick', labelsize='medium')
 plt.rc('axes', titlesize='xx-large')
 plt.rc('axes', labelsize='xx-large')
 plt.rc('legend', fontsize='large')
-# plt.rcParams['font.size'] = 12
-# plt.rcParams['axes.labelsize'] = 12
-# plt.rcParams['axes.titlesize'] = 12
-# plt.rcParams['xtick.labelsize'] = 10
-# plt.rcParams['ytick.labelsize'] = 10
-# plt.rcParams['legend.fontsize'] = 10
-# plt.rcParams['figure.titlesize'] = 14
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SOUND SPEEDS ----------------------
 
@@ -26,7 +19,7 @@ r_out = 9.5
 cs = [3, 5, 10]
 R = 3.e4
 species = 'NeII'
-mdot='mdot10e-9'
+mdot='mdot10e-8'
 
 path_file = []
 for j in range(len(cs)):
