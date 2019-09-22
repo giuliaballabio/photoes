@@ -3,13 +3,16 @@ import matplotlib.pyplot as plt
 from physics_constant import *
 
 plt.style.use('classic')
-plt.rcParams['font.size'] = 12
-plt.rcParams['axes.labelsize'] = 12
-plt.rcParams['axes.titlesize'] = 12
-plt.rcParams['xtick.labelsize'] = 10
-plt.rcParams['ytick.labelsize'] = 10
-plt.rcParams['legend.fontsize'] = 10
-plt.rcParams['figure.titlesize'] = 14
+plt.rc('font', family='serif')
+plt.rc('xtick', labelsize='x-small')
+plt.rc('ytick', labelsize='x-small')
+# plt.rcParams['font.size'] = 12
+# plt.rcParams['axes.labelsize'] = 12
+# plt.rcParams['axes.titlesize'] = 12
+# plt.rcParams['xtick.labelsize'] = 10
+# plt.rcParams['ytick.labelsize'] = 10
+# plt.rcParams['legend.fontsize'] = 10
+# plt.rcParams['figure.titlesize'] = 14
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SOUND SPEEDS ----------------------
 
@@ -214,7 +217,7 @@ plt.ylabel(r'$v_{centroid} \, [km/s]$', fontsize=15)
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 6.5])
-plt.axes().set_aspect('auto')
+plt.axes().set_aspect('1.0')
 plt.legend(loc='best')
 # plt.legend(loc='upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
 plt.savefig('./observables/comparisons/vcentr_species_b'+str(b)+'_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
