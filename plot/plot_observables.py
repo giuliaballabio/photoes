@@ -7,6 +7,7 @@ plt.rc('font', family='serif')
 plt.rc('xtick', labelsize='medium')
 plt.rc('ytick', labelsize='medium')
 plt.rc('axes', titlesize='x-large')
+plt.rc('axes', labelsize='x-large')
 plt.rc('legend', fontsize='large')
 # plt.rcParams['font.size'] = 12
 # plt.rcParams['axes.labelsize'] = 12
