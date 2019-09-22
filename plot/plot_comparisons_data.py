@@ -316,7 +316,7 @@ err_fwhm_sx =[1.1, 0.5, 1.]
 fwhm1_sx = [120., 42., 84.]
 err_fwhm1_sx = [9., 2., 6.]
 incl_sx = [18., 32., 54.]
-ID_sx = ['AS353A', 'DGTau', 'RXJ1842']
+ID_sx = ['AS353A', '  DGTau', 'RXJ1842']
 
 vcentr_down = [-2.6, -0.9]
 err_vcentr_down = [0.5, 1.1]
@@ -387,7 +387,7 @@ for i in range(len(ID_sx)):
     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.3), color='k')
 plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])-0.9), color='k')
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])-1.1), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
