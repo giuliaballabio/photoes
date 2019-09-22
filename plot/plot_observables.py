@@ -4,8 +4,8 @@ from physics_constant import *
 
 plt.style.use('classic')
 plt.rc('font', family='serif')
-plt.rc('xtick', labelsize='x-small')
-plt.rc('ytick', labelsize='x-small')
+plt.rc('xtick', labelsize='x-large')
+plt.rc('ytick', labelsize='x-large')
 # plt.rcParams['font.size'] = 12
 # plt.rcParams['axes.labelsize'] = 12
 # plt.rcParams['axes.titlesize'] = 12
