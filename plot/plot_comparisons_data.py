@@ -322,12 +322,12 @@ plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker=
 plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
 # plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
 #plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3), color='#969696')
-plt.errorbar(incl_data, np.abs(fwhm_data1), yerr=err_fwhm1, color='#252525', markeredgecolor='None', linestyle='None', marker='*', capsize=3, label='$BC$')
+    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3), color='k')
+plt.errorbar(incl_data, np.abs(fwhm_data1), yerr=err_fwhm1, color='#969696', markeredgecolor='None', linestyle='None', marker='*', capsize=3, label='$BC$')
 for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data1[i])+0.3), color='#252525')
+    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data1[i])+0.3), color='#969696')
 # plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='d', capsize=3, label='$Rigliaco\,et\,al.\,(2013)$')
 # for i in range(len(ID2)):
 #     plt.annotate(ID2[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
@@ -349,9 +349,9 @@ plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker=
 plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
 # plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
 #plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='#969696')
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -370,9 +370,9 @@ plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2
 plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
 # plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='#969696', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(vcentr_data[i])+0.5), color='#969696')
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(vcentr_data[i])+0.5), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
