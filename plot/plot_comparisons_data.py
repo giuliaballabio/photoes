@@ -387,7 +387,7 @@ for i in range(len(ID_sx)):
     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.3), color='k')
 plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])-0.5), color='k')
+    plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])-0.9), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
