@@ -426,7 +426,7 @@ plt.show()
 
 ## ---------------------- PLOT THE [OI] FWHM FOR DIFFERENT RESOLUTIONS ---------------------- ##
 
-R = [30.e3, 19.e3, 10.e3]
+R = [30.e3, 19.e3, 15.e3, 10.e3]
 
 v_peak1 = []
 v_centr1 = []
@@ -458,22 +458,22 @@ for i in range(len(incl_deg)):
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
-# v_peak4 = []
-# v_centr4 = []
-# fwhm4 = []
-# for i in range(len(incl_deg)):
-#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[3])+'.txt', 'r') as f4:
-#         lines = f4.readlines()[10:]
-#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-# f4.close()
+v_peak4 = []
+v_centr4 = []
+fwhm4 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[3])+'.txt', 'r') as f4:
+        lines = f4.readlines()[10:]
+        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f4.close()
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#edf8b1', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#edf8b1', label='$R = '+str(R[0])+'$')
 plt.plot(incl_deg, fwhm2, color='#a1dab4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#a1dab4', label='$R = '+str(R[1])+'$')
 plt.plot(incl_deg, fwhm3, color='#41b6c4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#41b6c4', label='$R = '+str(R[2])+'$')
-# plt.plot(incl_deg, fwhm4, color='#225ea8', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#225ea8', label='$R = '+str(R[3])+'$')
+plt.plot(incl_deg, fwhm4, color='#225ea8', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#225ea8', label='$R = '+str(R[3])+'$')
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
