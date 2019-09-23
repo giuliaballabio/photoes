@@ -458,16 +458,16 @@ for i in range(len(incl_deg)):
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
-v_peak4 = []
-v_centr4 = []
-fwhm4 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[3])+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:]
-        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f4.close()
+# v_peak4 = []
+# v_centr4 = []
+# fwhm4 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[3])+'.txt', 'r') as f4:
+#         lines = f4.readlines()[10:]
+#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f4.close()
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#edf8b1', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#edf8b1', label='$R = '+str(R[0])+'$')
