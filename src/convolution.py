@@ -57,7 +57,7 @@ def gaussian(x,norm,mean,sigma):
     return norm*np.exp(-(x-mean)**2/(2.*sigma**2.))
 
 ## PROPERTIES OF THE TELESCOPE BEAM ##
-# Telescope resolution
+# Telescope spectral resolution
 # VLT/VISIR R=30000
 # MIKE R=21000
 R = 21000.
