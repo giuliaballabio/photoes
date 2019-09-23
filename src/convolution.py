@@ -59,7 +59,7 @@ def gaussian(x,norm,mean,sigma):
 # Telescope spectral resolution
 # VISIR R=30000
 # MIKE R=19000 25000
-R = 19000.
+R = 15000.
 delta_v = speed_light / R
 sigma_telescope = delta_v / 2.
 norm = 1./np.sqrt(2. * np.pi * sigma_telescope**2.)
