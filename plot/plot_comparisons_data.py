@@ -426,7 +426,7 @@ plt.show()
 
 ## ---------------------- PLOT THE [OI] FWHM FOR DIFFERENT RESOLUTIONS ---------------------- ##
 
-R = [30.e3, 19.e3, 15.e3, 10.e3]
+R = [30.e3, 19.e3, 12.e3, 10.e3]
 
 v_peak1 = []
 v_centr1 = []
