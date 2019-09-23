@@ -468,8 +468,8 @@ plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 2., 17.])
 plt.tight_layout()
 plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_'+str(mdot)+'.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b[2])+'_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b[2])+'_cs'+str(cs)+'_'+str(mdot)+'.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT cs ----------------------
