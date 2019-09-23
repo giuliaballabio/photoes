@@ -245,7 +245,7 @@ b = [0.75, 1.00, 1.50, 2.00]
 incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
 r_in = 0.1
 r_out = 9.5
-cs = 5
+cs = 10
 R = 3.e4
 species = 'OI'
 mdot = 'mdot10e-9'
@@ -327,7 +327,6 @@ err_fwhm1_down = [2., 8.]
 incl_down = [65., 54.]
 ID_down = ['CWtau', 'V853Oph']
 
-
 ## CONSIDER THE DATA FROM Rigliaco et al. 2013
 # fwhm_data2 = [14.1, 42.6, 47.1, 8.2, 42.8, 44.1, 40.5, 34.8, 55.7, 45.1, 57.6, 28.3, 51.1, 28.9, 38.8] # km/s
 # err_fwhm2 = [2.7, 13.6, 8.4, 0.6, 20.0, 1.5, 6.6, 2., 6.3, 1.1, 6.9, 7.0, 5.6, 8.5, 5.9]
@@ -392,7 +391,6 @@ plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
-# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., 5., 51.])
 plt.tight_layout()
 plt.legend(loc='best')
@@ -419,12 +417,59 @@ plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
-# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
 plt.tight_layout()
-plt.legend(loc='best') #'upper right', bbox_to_anchor=(1.26, 1.05), fontsize = 'small')
+plt.legend(loc='best')
 plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+## ---------------------- PLOT THE [OI] FWHM FOR DIFFERENT RESOLUTIONS ---------------------- ##
+
+R = [30.e3, 21.e3]
+
+v_peak1 = []
+v_centr1 = []
+fwhm1 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+        lines = f1.readlines()[10:]
+        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f1.close()
+v_peak2 = []
+v_centr2 = []
+fwhm2 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
+        lines = f2.readlines()[10:]
+        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f2.close()
+
+plt.figure()
+plt.plot(incl_deg, fwhm1, color='#c7e9b4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c7e9b4', label='$R = '+str(R[0])+'$')
+plt.plot(incl_deg, fwhm2, color='#7fcdbb', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#7fcdbb', label='$R = '+str(R[1])+'$')
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
+plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[OI] \, 6300 \AA$')
+plt.axis([-1., 91., 2., 17.])
+plt.tight_layout()
+plt.legend(loc='best')
+plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_'+str(mdot)+'.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT cs ----------------------
@@ -503,7 +548,6 @@ plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
-# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., -0.5, 14.])
 plt.tight_layout()
 plt.legend(loc='upper right')
@@ -527,7 +571,6 @@ for i in range(len(ID_down)):
 plt.ylabel(r'$v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
-# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., 5., 32.])
 plt.tight_layout()
 plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
