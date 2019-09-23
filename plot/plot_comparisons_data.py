@@ -462,7 +462,7 @@ f3.close()
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#edf8b1', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#edf8b1', label='$R = '+str(R[0])+'$')
 plt.plot(incl_deg, fwhm2, color='#7fcdbb', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#7fcdbb', label='$R = '+str(R[1])+'$')
-plt.plot(incl_deg, fwhm2, color='#2c7fb8', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2c7fb8', label='$R = '+str(R[2])+'$')
+plt.plot(incl_deg, fwhm3, color='#2c7fb8', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2c7fb8', label='$R = '+str(R[2])+'$')
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
