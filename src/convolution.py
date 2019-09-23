@@ -13,8 +13,8 @@ plt.rcParams['figure.titlesize'] = 12
 
 speed_light = 299792.458                     #km/s
 cs = 10
-species = 'NeII'
-mdot = 'mdot10e-8'
+species = 'OI'
+mdot = 'mdot10e-9'
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
 # incl_deg = 90.0
@@ -30,8 +30,7 @@ b = b_input
 r_in = r_inner
 r_out = r_outer
 
-path_file = '../cs'+str(cs)+'kms/'+str(species)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
-# path_file = '../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
+path_file = '../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
 
 ## DATA FROM MODEL
 v = -1.*np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
@@ -58,7 +57,7 @@ def gaussian(x,norm,mean,sigma):
 
 ## PROPERTIES OF THE TELESCOPE BEAM ##
 # Telescope spectral resolution
-# VLT/VISIR R=30000
+# VISIR R=30000
 # MIKE R=21000
 R = 21000.
 delta_v = speed_light / R
@@ -105,7 +104,6 @@ def FWHM(X,Y):
     return np.abs(X[right_idx] - X[left_idx]) #return the difference (full width)
 
 sigma_conv = FWHM(v,convolution)/2.
-# print sigma_conv[0]
 
 ## FIND THE PARAMETERS OF THE GAUSSIAN FIT
 popt,pcov = curve_fit(gaussian,v,convolution,p0=[1.,v_peak_conv,sigma_conv[0]])
