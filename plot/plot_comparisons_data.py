@@ -76,6 +76,8 @@ incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hy
 ## RX J1615.3-3255 IS TAKEN FROM de Boer et al. 2016
 vpeak_data = [-10.5, -4.4, -7.5, -8.3, -10.5] # km/s
 err_vpeak = [2.7, 2.1, 2.8, 2.7, 2.0]
+fwhm_data = [44.9, 15.9, 20.5, 15.1, 22.5]
+err_fwhm = [3.2, 1.4, 2.7, 1.2, 0.5]
 incl_data = [75.0, 30.0, 47.0, 20.0, 35.0]
 #incl_data = [75.0, 30.0, 5.0, 20.0, 35.0]
 ID = ['T Cha', 'MP Mus', 'RX J1615.3-3255', 'SR 21', 'V4046 Sgr']
@@ -83,12 +85,16 @@ ID = ['T Cha', 'MP Mus', 'RX J1615.3-3255', 'SR 21', 'V4046 Sgr']
 ## WE PLOT ALSO THE DATA FROM Pascucci & Sterzik 2009
 vpeak_data2 = [-6.2, -3.3, -4.7]
 err_vpeak2 = [0.3, 0.7, 2.5]
+fwhm_data2 = [14.6, 27., 42.]
+err_fwhm2 = [0.7, 2., 4.]
 incl_data2 = [4.0, 45.0, 75.0]
 name = ['TW Hya', 'CS Cha', 'T Cha']
 
 ## MORE DATA FROM Baldovic-Saavedra et al. 2012
 vpeak_data3 = [-2.13, -3.6, -2.9]
 err_vpeak3 = [6.5, 1.5, 0.7]
+fwhm_data3 = [26., 55.2, 26.8]
+err_fwhm3 = [3.4, 3.3, 1.7]
 incl_data3 = [60.0, 87.0, 35.0]
 name3 = ['V892 Tau', 'CoKu Tau 1', 'FS Tau A']
 
@@ -237,6 +243,30 @@ plt.tight_layout()
 plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
 plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, np.abs(fwhm1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(incl_deg, np.abs(fwhm2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(incl_deg, np.abs(fwhm3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+for i in range(len(name)):
+    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
+plt.errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+for i in range(len(name3)):
+    plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[NeII] \, 12.81 \mu m$')
+plt.axis([-1., 91., -0.5, 17.5])
+plt.tight_layout()
+plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT b ----------------------
@@ -388,7 +418,7 @@ plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', marker
 for i in range(len(ID_down)):
     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM$')
+plt.ylabel(r'$FWHM \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 5., 51.])
@@ -484,7 +514,7 @@ plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', marker
 for i in range(len(ID_down)):
     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM$')
+plt.ylabel(r'$FWHM \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 5., 51.])
@@ -590,7 +620,8 @@ for i in range(len(ID_sx)):
 plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_down)):
     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
-plt.ylabel(r'$v_{centroid} \, [km/s]$')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 5., 32.])
