@@ -269,6 +269,29 @@ plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
+plt.plot(np.abs(v_centr1), fwhm1, color='#c6dbef', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(np.abs(v_centr2), fwhm2, color='#2171b5', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(np.abs(v_centr3), fwhm3, color='#08306b', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.errorbar(vpeak_data2, np.abs(fwhm_data2), xerr=err_vpeak2, yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+for i in range(len(name)):
+    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
+plt.errorbar(vpeak_data3, np.abs(fwhm_data3), xerr=err_vpeak3, yerr=err_fwhm3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+for i in range(len(name3)):
+    plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
+plt.errorbar(vpeak_data, np.abs(fwhm_data), xerr=err_vpeak, yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
+plt.xlabel(r'$- v_{centroid} \, [km/s]$')
+plt.ylabel(r'$FWHM \, [km/s]$')
+# plt.axis([-1., 91., 5., 17.])
+plt.xscale('log')
+plt.yscale('log')
+plt.tight_layout()
+plt.legend(loc='best')
+plt.savefig('./observables/'+str(species)+'/obs_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/obs_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT b ----------------------
 
 b = [0.75, 1.00, 1.50, 2.00]
