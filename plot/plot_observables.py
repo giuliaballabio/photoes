@@ -110,9 +110,9 @@ plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
-plt.plot(v_centr1, fwhm1, color='#c6dbef', linestyle='dashed', linewidth=2.5, marker='o', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(v_centr2, fwhm2, color='#2171b5', linestyle='dashed', linewidth=2.5, marker='o', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(v_centr3, fwhm3, color='#08306b', linestyle='dashed', linewidth=2.5, marker='o', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.plot(v_centr1, fwhm1, color='#c6dbef', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(v_centr2, fwhm2, color='#2171b5', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(v_centr3, fwhm3, color='#08306b', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
 plt.xlabel(r'$v_{centroid} \, [km/s]$')
 plt.ylabel(r'$FWHM \, [km/s]$')
 # plt.axis([-1., 91., 5., 17.])
