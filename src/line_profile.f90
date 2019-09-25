@@ -215,8 +215,7 @@ do i=l_in,l_out
             rho2d(i,j)=(rho_stream(k))*((Rb(i,j))**(-b)) !*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
-            !!v_phi2d(i,j)=((x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !*(Mstar/Msun)**0.5
-            v_phi2d(i,j)=(Rb(i,j))**(-0.5)
+            v_phi2d(i,j)=((r_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !*(Mstar/Msun)**0.5
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
