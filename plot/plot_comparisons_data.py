@@ -278,7 +278,7 @@ r_out = 9.5
 cs = 10
 R = 3.e4
 species = 'OI'
-mdot = 'mdot10e-9'
+mdot = 'mdot10e-10'
 
 path_file = []
 for j in range(len(b)):
