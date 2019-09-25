@@ -251,7 +251,7 @@ plt.plot(incl_deg, fwhm3, color='#8856a7', linestyle='-', linewidth=2.5, marker=
 plt.plot(incl_deg, np.array(fwhm4)*1.1, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
 # plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM$')
+plt.ylabel(r'$FWHM \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
 plt.axis([-1., 91., 5., 17.])
