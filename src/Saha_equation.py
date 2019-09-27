@@ -9,7 +9,7 @@ print 'Computing the Saha equation for the ionization fraction...'
 cs = 10.
 T_gas = 1.e4*(cs/10.)**2.
 
-species = 'NeII'
+species = 'OI'
 if (species == 'NeII'):
     g1 = 4.
     g2 = 2.
@@ -18,17 +18,17 @@ elif (species == 'SIIa'):
     g1 = 4.
     g2 = 2.
     Ipot = 10.36*eV
-elif (species == 'SIIb'):
-    g1 = 4.
-    g2 = 2.
-    Ipot = 10.36*eV
+elif (species == 'OI'):
+    g1 = 5.
+    g2 = 5.
+    Ipot = 13.6*eV
 elif (species == 'SIIc'):
     g1 = 4.
     g2 = 6.
     Ipot = 10.36*eV
 
 # Saha equation, but the number density of free electron is not included
-N2overN1 = 2. *(2.*np.pi*m_e*k_b*T_gas)**1.5 / (h_planck)**3. * (g2/g1) * np.exp(-(Ipot / (k_b*T_gas)))
+# N2overN1 = 2. *(2.*np.pi*m_e*k_b*T_gas)**1.5 / (h_planck)**3. * (g2/g1) * np.exp(-(Ipot / (k_b*T_gas)))
 # X_II = N2overN1 / (1. + N2overN1)
 
 # print X_II
@@ -44,4 +44,5 @@ n2n1 = n2n1_H * np.exp((Ipot_H-Ipot)/(k_b*T_gas))
 X_II = n2n1 / (1. + n2n1)
 X_I_O = 1. - X_II
 
-print X_II
+print 'X_[OII]= ', X_II
+print 'X_[OI]= ', X_I_O
