@@ -498,7 +498,7 @@ plt.show()
 
 R = [30.e3, 21.e3, 15.e3, 10.e3]
 species = 'OI'
-mdot = 'mdot10e-10'
+mdot = 'mdot10e-9'
 
 v_peak1 = []
 v_centr1 = []
