@@ -6,8 +6,8 @@ RUNDIR=${PWD}
 array_b=( 0.75 1.00 1.50 2.00 )
 array_ub=( 0.85 0.77 0.56 0.29 )
 
-cs=10
-species=NeII_newvphi
+cs=3
+species=OI
 mdot=mdot10e-9
 
 for ((i=0;i<${#array_b[@]};++i)); do
