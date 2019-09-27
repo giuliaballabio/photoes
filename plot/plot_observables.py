@@ -56,6 +56,11 @@ for i in range(len(incl_deg)):
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
 
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
+
 ## UPLOAD THE DATA FROM RICHARD'S HYDRO SIMULATIONS
 vpeak_hydro = np.array(map(float, [lines.split()[3] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
 fwhm_hydro = np.array(map(float, [lines.split()[4] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
@@ -149,6 +154,10 @@ for i in range(len(incl_deg)):
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f2.close()
 
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$R = '+str(R[0])+'$')
 plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$R = '+str(R[1])+'$')
@@ -220,6 +229,12 @@ for i in range(len(incl_deg)):
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f4.close()
 
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
+fwhm4 = np.array(fwhm4)*2.
+
 plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
 plt.plot(incl_deg, np.abs(v_centr2), color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[1])+']$')
@@ -259,10 +274,10 @@ plt.savefig('./observables/comparisons/eps/vpeak_species_b'+str(b)+'_cs'+str(cs)
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, np.array(fwhm1), color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
-plt.plot(incl_deg, np.array(fwhm2), color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[1])+']$')
-plt.plot(incl_deg, np.array(fwhm3), color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,4069\,\AA$')
-plt.plot(incl_deg, np.array(fwhm4)*1.1, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
+plt.plot(incl_deg, fwhm1, color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
+plt.plot(incl_deg, fwhm2, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[1])+']$')
+plt.plot(incl_deg, fwhm3, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,4069\,\AA$')
+plt.plot(incl_deg, fwhm4, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
 # plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM \, [km/s]$')
@@ -357,6 +372,11 @@ for i in range(len(incl_deg)):
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
+
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#fc9272', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fc9272', label='$\dot{M}(<25 \, au) = 10^{-10} M_{\odot}/yr$')
@@ -464,6 +484,12 @@ for i in range(len(incl_deg)):
         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f4.close()
+
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
+fwhm4 = np.array(fwhm4)*2.
 
 #vpeak_modelhydro = []
 #vcentr_modelhydro = []
