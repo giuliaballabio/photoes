@@ -359,6 +359,12 @@ for i in range(len(incl_deg)):
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f4.close()
 
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
+fwhm4 = np.array(fwhm4)*2.
+
 ## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
 vcentr_data = [0.3, -0.4, 0.9, -1.3, -5.3, -0.3, 0.4, -2.5, 5., -4., -12., -4.6]
