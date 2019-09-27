@@ -281,7 +281,7 @@ plt.plot(incl_deg, fwhm4*1.1, color='#810f7c', linestyle='-', linewidth=2.5, mar
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.axis([-1., 91., np.min(fwhm1)-2., np.max(fwhm4)+2.])
+plt.axis([-1., 91., np.min(fwhm1)-2., np.max(fwhm4*1.1)+2.])
 plt.tight_layout()
 plt.legend(loc='best')
 plt.savefig('./observables/comparisons/fwhm_species_b'+str(b)+'_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
