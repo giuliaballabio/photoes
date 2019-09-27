@@ -56,7 +56,7 @@ real,parameter                       :: CC=0.14,Phi_star=1.0d41,alphab=2.60d-13,
 
 ! call cpu_time(t_in)
 
-species_flag='SIIb'
+species_flag='NeII'
 call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
 
 !! PHYSICS SCALING FACTORS !!
@@ -215,7 +215,10 @@ do i=l_in,l_out
             rho2d(i,j)=(rho_stream(k))*((Rb(i,j))**(-b)) !*((Rb(i,j)/(Rg/au))**(-b))
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
+            !! V_PHI: KEPLERIAN ANGULAR MOMENTUM CONSERVATION
             v_phi2d(i,j)=((r_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !*(Mstar/Msun)**0.5
+            !! V_PHI: KEPLERIAN VELOCITY
+            !v_phi2d(i,j)=(x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !*(Mstar/Msun)**0.5
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
