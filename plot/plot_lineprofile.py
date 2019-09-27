@@ -87,8 +87,8 @@ for i in range(len(incl_deg)):
     line_flux2.append(map(float, [lines.split()[1] for lines in open(str(path_file[1])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
     v3.append(map(float, [lines.split()[0] for lines in open(str(path_file[2])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
     line_flux3.append(map(float, [lines.split()[1] for lines in open(str(path_file[2])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
-    v4.append(map(float, [lines.split()[0] for lines in open(str(path_file[3])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
-    line_flux4.append(map(float, [lines.split()[1] for lines in open(str(path_file[3])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
+    # v4.append(map(float, [lines.split()[0] for lines in open(str(path_file[3])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
+    # line_flux4.append(map(float, [lines.split()[1] for lines in open(str(path_file[3])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
 
     path_file_hydro.append('../data_hydro/NeII/incl_'+str(round(incl_deg[i], 2)))
     v_hydro.append(map(float, [lines.split()[0] for lines in open(str(path_file_hydro[i])+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
@@ -97,7 +97,7 @@ for i in range(len(incl_deg)):
 v1 = -1.*np.array(v1)
 v2 = -1.*np.array(v2)
 v3 = -1.*np.array(v3)
-v4 = -1.*np.array(v4)
+# v4 = -1.*np.array(v4)
 v_hydro = -1.*np.array(v_hydro)
 
 fig, ax = plt.subplots(3, 2, sharex='col', sharey='row')
