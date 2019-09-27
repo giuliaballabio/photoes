@@ -6,7 +6,7 @@ RUNDIR=${PWD}
 array_b=( 0.75 1.00 1.50 2.00 )
 array_ub=( 0.85 0.77 0.56 0.29 )
 
-cs=3
+cs=5
 species=OI
 mdot=mdot10e-9
 
@@ -23,7 +23,7 @@ for ((i=0;i<${#array_b[@]};++i)); do
         			sed -i -e "s/incl_deg = .*/incl_deg = $incl /g" convolution.py
         			sed -i -e "s/r_inner = .*/r_inner = $r_inner /g" convolution.py
         			sed -i -e "s/r_outer = .*/r_outer = $r_outer /g" convolution.py
-				sed -i -e "s/cs = .*/cs = $cs /g" convolution.py
+							sed -i -e "s/cs = .*/cs = $cs /g" convolution.py
         			python convolution.py
 
         			# cd $RUNDIR/../cs$cs\kms/$species/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
