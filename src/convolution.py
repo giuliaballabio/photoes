@@ -13,7 +13,7 @@ plt.rcParams['figure.titlesize'] = 12
 
 speed_light = 299792.458                     #km/s
 cs = 10
-species = 'OI'
+species = 'NeII_newvphi'
 mdot = 'mdot10e-9'
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
@@ -59,7 +59,7 @@ def gaussian(x,norm,mean,sigma):
 # Telescope spectral resolution
 # VISIR R=30000
 # MIKE R=19000 25000
-R = 12000.
+R = 30000.
 delta_v = speed_light / R
 sigma_telescope = delta_v / 2.
 norm = 1./np.sqrt(2. * np.pi * sigma_telescope**2.)
@@ -163,11 +163,11 @@ f.write('b = '+str(b)+' - R_in = '+str(r_in)+' Rg - R_out = '+str(r_out)+' Rg - 
 f.write('\n')
 f.write('------------------------------------------------------------------------------- \n')
 f.write('PROPERTIES OF THE CONVOLUTION \n')
-f.write('Velocity at peak NOT convolved [km/s] \t Velocity at peak [km/s] \t FWHM \n')
+f.write('Velocity at peak NOT convolved [km/s] \t Velocity at peak [km/s] \t Half FWHM \n')
 f.write(str(v_peak)+'\t\t\t'+str(v_peak_conv)+'\t\t\t'+str(sigma_conv[0])+'\n')
 f.write('\n')
 f.write('------------------------------------------------------------------------------- \n')
 f.write('PROPERTIES OF THE GAUSSIAN FIT \n')
-f.write('Velocity at peak [km/s] \t Centroid velocity [km/s] \t FWHM \n')
+f.write('Velocity at peak [km/s] \t Centroid velocity [km/s] \t Half FWHM \n')
 f.write(str(popt[1])+'\t\t\t'+str(v_centr)+'\t\t\t'+str(popt[2]))
 f.close()
