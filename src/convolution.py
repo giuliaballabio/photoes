@@ -12,7 +12,7 @@ plt.rcParams['legend.fontsize'] = 10
 plt.rcParams['figure.titlesize'] = 12
 
 speed_light = 299792.458                     #km/s
-cs = 3
+cs = 5
 species = 'OI'
 mdot = 'mdot10e-9'
 
