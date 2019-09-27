@@ -67,7 +67,13 @@ for i in range(len(incl_deg)):
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f4.close()
 
-# UPLOAD THE DATA FROM RICHARD'S HYDRO SIMULATIONS
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
+fwhm4 = np.array(fwhm4)*2.
+
+## UPLOAD THE DATA FROM RICHARD'S HYDRO SIMULATIONS
 vpeak_hydro = np.array(map(float, [lines.split()[3] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
 fwhm_hydro = np.array(map(float, [lines.split()[4] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
 incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
@@ -195,6 +201,11 @@ for i in range(len(incl_deg)):
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
 
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
+
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
@@ -246,9 +257,9 @@ plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(fwhm1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, np.abs(fwhm2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, np.abs(fwhm3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
 plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
@@ -524,6 +535,12 @@ for i in range(len(incl_deg)):
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f4.close()
 
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
+fwhm4 = np.array(fwhm4)*2.
+
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#edf8b1', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#edf8b1', label='$R = '+str(R[0])+'$')
 plt.plot(incl_deg, fwhm2, color='#a1dab4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#a1dab4', label='$R = '+str(R[1])+'$')
@@ -594,6 +611,11 @@ for i in range(len(incl_deg)):
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
+
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+fwhm3 = np.array(fwhm3)*2.
 
 # ## CONSIDER THE DATA FROM Banzatti et al. 2019
 # ## Narrow Component
