@@ -8,7 +8,7 @@ array_ub=( 0.85 0.77 0.56 ) #0.29 )
 
 cs=10.0d5
 string_cs=10
-species=SIIc_newvphi # REMEMBER to change it also in line_profile.f90
+species=NeII # REMEMBER to change it also in line_profile.f90
 mdot=mdot10e-9 # REMEMBER to change it also in line_profile.f90
 
 for ((i=0;i<${#array_b[@]};++i)); do
@@ -16,7 +16,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 	for r_inner in 0.1; do
 		for r_outer in 9.5; do
 			#for incl in 0.0 5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0 85.0 90.0; do
-			for incl in 0.0 20.0 45.0 60.0 75.0 90.0; do
+			#for incl in 0.0 20.0 45.0 60.0 75.0 90.0; do
+			for incl in 2. 7. 12. 17. 22. 27. 32. 37. 42. 47. 52. 57. 62. 67. 72. 77. 82. 87.; do
 
 				echo "up to b="${array_b[i]}", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
