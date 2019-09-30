@@ -646,19 +646,6 @@ fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
 
-# ## CONSIDER THE DATA FROM Banzatti et al. 2019
-# ## Narrow Component
-# vcentr_data = [0.3, -0.4, -4., 0.9, -2.6, -1.3, -11., -5.3, -0.3, 0.4, -2.5, 5., -4., -12., 0.5, -0.9, -4.6]
-# err_vcentr = [1.1, 0.5, 1., 0.9, 0.5, 5., 0.7, 0.6, 5., 5., 3.6, 5.1, 1., 5., 0.6, 1.1, 5.]
-# fwhm_data = [26., 14.5, 25., 18., 24., 13., 18., 25.4, 12., 25., 29., 67., 47., 15., 26., 18., 18.] # km/s
-# err_fwhm = [2., 0.4, 1.1, 2., 0.6, 1.2, 0.5, 0.9, 1., 0.7, 1.5, 4., 2., 1., 1., 1., 2.]
-# ## Broad Component
-# fwhm_data1 = [96., 54., 120., 111., 80., 67., 42., 177., 53., 86., 162., 223., 288., 44., 84., 79., 36.] # km/s
-# err_fwhm1 = [4.6, 2., 9., 6., 2., 2., 2., 7., 5., 3., 10., 17., 28., 6., 6., 8., 6.]
-#
-# incl_data = [71., 20., 18., 39., 65., 60., 32., 26., 9., 55., 38., 66., 37., 35., 54., 54., 50.]
-# ID = ['AATau', 'AS205N', 'AS353A', 'BPTau', 'CWTau', 'DFTau', 'DGTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RNO90', 'RULup', 'RXJ1842', 'V853Oph', 'VVCrAS']
-
 plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, np.abs(v_centr2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
