@@ -660,7 +660,7 @@ plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', ma
 for i in range(len(ID_down)):
     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$- v_{centroid} \, [km/s]$')
+plt.ylabel(r'$- v_{peak} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., -0.5, 14.])
