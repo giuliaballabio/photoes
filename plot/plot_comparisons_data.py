@@ -713,7 +713,7 @@ plt.plot(incl_deg, fwhm1, color='k', linestyle='-', linewidth=0.1, label='$R = '
 plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.plot(incl_deg, fwhm4, color='k', linestyle='-', linewidth=0.1, label='$R = '+str(R[1])+'$')
+plt.plot(incl_deg, fwhm4, color='k', linestyle='--', linewidth=0.1, label='$R = '+str(R[1])+'$')
 plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
 plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
