@@ -280,30 +280,6 @@ plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
-plt.figure()
-plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-for i in range(len(name)):
-    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
-for i in range(len(name3)):
-    plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[NeII] \, 12.81 \mu m$')
-plt.axis([-1., 91., 9., 59.])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
-
 # plt.plot(np.abs(v_centr1), fwhm1, color='#c6dbef', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 # plt.plot(np.abs(v_centr2), fwhm2, color='#2171b5', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 # plt.plot(np.abs(v_centr3), fwhm3, color='#08306b', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
@@ -754,12 +730,12 @@ plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 9., 32.])
 plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=1)
+plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left', ncol=1)
 plot_lines = [l1, l2]
-# leg2 = plt.legend(plot_lines[0], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='lower left')
-legend_elements = [Line2D([0], [0], linestyle = '-' , linewidth=2.5, color='k', label='$R = '+str(R[0])+'$'),
-                   Line2D([0], [0], linestyle = '--', linewidth=2.5, color='k', label='$R = '+str(R[1])+'$')]
-leg2 = plt.legend(handles=legend_elements, loc='best')
+leg2 = plt.legend(plot_lines[:2], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='lower left')
+# legend_elements = [Line2D([0], [0], linestyle = '-' , linewidth=2.5, color='k', label='$R = '+str(R[0])+'$'),
+#                    Line2D([0], [0], linestyle = '--', linewidth=2.5, color='k', label='$R = '+str(R[1])+'$')]
+# leg2 = plt.legend(handles=legend_elements, loc='best')
 plt.gca().add_artist(leg2)
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
