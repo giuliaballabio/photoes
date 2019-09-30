@@ -739,8 +739,7 @@ plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker=
 l2 = plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
 plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-plot_lines = [l1, l2]
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
 plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
@@ -755,9 +754,10 @@ plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 5., 32.])
 plt.tight_layout()
-leg2 = plt.legend(plot_lines[2:], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], bbox_to_anchor=(0., 0.75), loc='upper left')
+plot_lines = [l1, l2]
+leg2 = plt.legend(plot_lines[2:], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='lower left')
 plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-# plt.gca().add_artist(leg2)
+plt.gca().add_artist(leg2)
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
