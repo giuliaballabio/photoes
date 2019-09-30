@@ -709,10 +709,12 @@ fwhm5 = np.array(fwhm5)*2.
 fwhm6 = np.array(fwhm6)*2.
 
 plt.figure()
-l1 = plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(incl_deg, fwhm1, color='k', linestyle='-', linewidth=0.1, label='$R = '+str(R[0])+'$')
+plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-l2 = plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
+plt.plot(incl_deg, fwhm4, color='k', linestyle='-', linewidth=0.1, label='$R = '+str(R[1])+'$')
+plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
 plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
@@ -728,15 +730,9 @@ plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., 9., 32.])
+plt.axis([-1., 91., 9., 39.])
 plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left', ncol=1)
-plot_lines = [l1, l2]
-leg2 = plt.legend(plot_lines[:2], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='lower left')
-# legend_elements = [Line2D([0], [0], linestyle = '-' , linewidth=2.5, color='k', label='$R = '+str(R[0])+'$'),
-#                    Line2D([0], [0], linestyle = '--', linewidth=2.5, color='k', label='$R = '+str(R[1])+'$')]
-# leg2 = plt.legend(handles=legend_elements, loc='best')
-plt.gca().add_artist(leg2)
+plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left', ncol=2)
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
