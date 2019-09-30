@@ -68,13 +68,15 @@ fwhm_hydro = np.array(map(float, [lines.split()[4] for lines in open('../data_hy
 incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
 
 ## SMOOTH THE CENTROID VELOCITY FUNCTION
-incl_new = np.linspace(np.min(incl_deg), np.max(incl_deg), 50)
-power_smooth1 = spline(incl_deg, np.abs(v_centr1), incl_new)
+incl_new = np.linspace(np.min(incl_deg), np.max(incl_deg), 100)
+power_smooth1 = spline(incl_deg, v_centr1, incl_new)
+power_smooth2 = spline(incl_deg, v_centr2, incl_new)
+power_smooth3 = spline(incl_deg, v_centr3, incl_new)
 
 plt.figure()
 plt.plot(incl_new, power_smooth1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_new, power_smooth1, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_new, power_smooth1, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.plot(incl_new, power_smooth2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(incl_new, power_smooth3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$- v_{centroid} \, [km/s]$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
