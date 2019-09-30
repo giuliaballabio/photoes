@@ -754,9 +754,12 @@ plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 9., 32.])
 plt.tight_layout()
+plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=1)
 plot_lines = [l1, l2]
-leg2 = plt.legend(plot_lines[2:], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='lower left')
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+# leg2 = plt.legend(plot_lines[0], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='lower left')
+legend_elements = [Line2D([0], [0], linestyle = '-' , linewidth=2.5, color='k', label='$R = '+str(R[0])+'$'),
+                   Line2D([0], [0], linestyle = '--', linewidth=2.5, color='k', label='$R = '+str(R[1])+'$')]
+leg2 = plt.legend(handles=legend_elements, loc='best')
 plt.gca().add_artist(leg2)
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
