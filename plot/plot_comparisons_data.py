@@ -709,14 +709,14 @@ fwhm5 = np.array(fwhm5)*2.
 fwhm6 = np.array(fwhm6)*2.
 
 plt.figure()
-plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
-plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
-plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-plt.plot([], [], color='k', linestyle='--', linewidth=2.5, label='$R = '+str(R[0])+'$')
+plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
+plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
+plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
 plt.plot([], [], color='k', linestyle='-', linewidth=2.5, label='$R = '+str(R[1])+'$')
+plt.plot([], [], color='k', linestyle='--', linewidth=2.5, label='$R = '+str(R[0])+'$')
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
