@@ -746,14 +746,14 @@ fwhm5 = np.array(fwhm5)*2.
 fwhm6 = np.array(fwhm6)*2.
 
 plt.figure()
-line1, = plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+l1 = plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-line2, = plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
+l2 = plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
 plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
 plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-plot_lines = [line1, line2]
+plot_lines = [l1, l2]
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
 plt.errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
@@ -768,9 +768,9 @@ plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[NeII] \, 12.81 \mu m$')
 plt.axis([-1., 91., 9., 59.])
 plt.tight_layout()
-# leg2 = plt.legend(plot_lines[0], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='best')
+leg2 = plt.legend(plot_lines[2:], ['$R = '+str(R[0])+'$', '$R = '+str(R[1])+'$'], loc='best')
 plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-# plt.gca().add_artist(leg2)
+plt.gca().add_artist(leg2)
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
