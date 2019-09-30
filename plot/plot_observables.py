@@ -69,9 +69,9 @@ incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hy
 
 ## SMOOTH THE CENTROID VELOCITY FUNCTION
 incl_new = np.linspace(np.min(incl_deg), np.max(incl_deg), 100)
-power_smooth1 = spline(incl_deg, -v_centr1, incl_new)
-power_smooth2 = spline(incl_deg, -v_centr2, incl_new)
-power_smooth3 = spline(incl_deg, -v_centr3, incl_new)
+power_smooth1 = spline(incl_deg, np.abs(v_centr1), incl_new)
+power_smooth2 = spline(incl_deg, np.abs(v_centr2), incl_new)
+power_smooth3 = spline(incl_deg, np.abs(v_centr3), incl_new)
 
 plt.figure()
 plt.plot(incl_new, power_smooth1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
