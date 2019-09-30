@@ -79,9 +79,12 @@ incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hy
 # interp3 = interp1d(incl_deg, np.abs(v_centr3), kind='cubic')
 
 incl_new = np.linspace(np.min(incl_deg), np.max(incl_deg), num=50, endpoint=True)
-interp1 = np.interp(incl_new, incl_deg, np.abs(v_centr1))
-interp2 = np.interp(incl_new, incl_deg, np.abs(v_centr2))
-interp3 = np.interp(incl_new, incl_deg, np.abs(v_centr3))
+# interp1 = np.interp(incl_new, incl_deg, np.abs(v_centr1))
+# interp2 = np.interp(incl_new, incl_deg, np.abs(v_centr2))
+# interp3 = np.interp(incl_new, incl_deg, np.abs(v_centr3))
+interp1 = np.array([np.interp(incl_new[i], incl_deg, np.abs(v_centr1)) for i in range(len(incl_new))])
+interp2 = np.array([np.interp(incl_new[i], incl_deg, np.abs(v_centr2)) for i in range(len(incl_new))])
+interp3 = np.array([np.interp(incl_new[i], incl_deg, np.abs(v_centr3)) for i in range(len(incl_new))])
 
 plt.figure()
 plt.plot(incl_new, interp1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
