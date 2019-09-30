@@ -74,9 +74,9 @@ power_smooth1 = spline(incl_deg, np.abs(v_centr1), incl_new)
 power_smooth2 = spline(incl_deg, np.abs(v_centr2), incl_new)
 power_smooth3 = spline(incl_deg, np.abs(v_centr3), incl_new)
 
-ysmoothed1 = gaussian_filter1d(np.abs(v_centr1), sigma=2)
-ysmoothed2 = gaussian_filter1d(np.abs(v_centr2), sigma=2)
-ysmoothed3 = gaussian_filter1d(np.abs(v_centr3), sigma=2)
+ysmoothed1 = gaussian_filter1d(np.abs(v_centr1), sigma=5)
+ysmoothed2 = gaussian_filter1d(np.abs(v_centr2), sigma=5)
+ysmoothed3 = gaussian_filter1d(np.abs(v_centr3), sigma=5)
 
 plt.figure()
 plt.plot(incl_deg, ysmoothed1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
