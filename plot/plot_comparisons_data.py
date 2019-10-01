@@ -751,7 +751,7 @@ for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
 plt.errorbar(incl_sx, np.abs(fwhm_sx)/np.abs(vcentr_sx), yerr=(np.abs(err_fwhm_sx)/np.abs(err_vcentr_sx)), color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))+0.5), color='k')
+    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
 plt.errorbar(incl_down, np.abs(fwhm_down)/np.abs(vcentr_down), yerr=(np.abs(err_fwhm_down)/np.abs(err_vcentr_down)), color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_down)):
     plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
