@@ -15,13 +15,13 @@ plt.rc('legend', fontsize='large')
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SOUND SPEEDS ----------------------
 
 b = 1.00
-incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+incl_deg = [0.0, 2.0, 5.0, 7.0, 10.0, 12.0, 15.0, 17.0, 20.0, 22.0, 25.0, 27.0, 30.0, 32.0, 35.0, 37.0, 40.0, 42.0, 45.0, 47.0, 50.0, 52.0, 55.0, 57.0, 60.0, 62.0, 65.0, 67.0, 70.0, 72.0, 75.0, 77.0, 80.0, 82.0, 85.0, 87.0, 90.0]
 r_in = 0.1
 r_out = 9.5
 cs = [3, 5, 10]
 R = 3.e4
 species = 'NeII'
-mdot='mdot10e-8'
+mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(cs)):
@@ -146,46 +146,46 @@ plt.show()
 
 ## ---------------------- PLOT THE FWHM FOR DIFFERENT RESOLUTIONS ---------------------- ##
 
-R = [3.e4, 10.e4]
-
-v_peak1 = []
-v_centr1 = []
-fwhm1 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
-        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f1.close()
-v_peak2 = []
-v_centr2 = []
-fwhm2 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
-        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f2.close()
-
-## WE NEED TO PLOT THE FWHM, NOT HALF
-fwhm1 = np.array(fwhm1)*2.
-fwhm2 = np.array(fwhm2)*2.
-
-plt.figure()
-plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$R = '+str(R[0])+'$')
-plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$R = '+str(R[1])+'$')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-1., 91., np.min(fwhm2)-2., np.max(fwhm2)+2.])
-plt.tight_layout()
-plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# R = [3.e4, 10.e4]
+#
+# v_peak1 = []
+# v_centr1 = []
+# fwhm1 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+#         lines = f1.readlines()[10:]
+#         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f1.close()
+# v_peak2 = []
+# v_centr2 = []
+# fwhm2 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
+#         lines = f2.readlines()[10:]
+#         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f2.close()
+#
+# ## WE NEED TO PLOT THE FWHM, NOT HALF
+# fwhm1 = np.array(fwhm1)*2.
+# fwhm2 = np.array(fwhm2)*2.
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$R = '+str(R[0])+'$')
+# plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$R = '+str(R[1])+'$')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+# plt.axis([-1., 91., np.min(fwhm2)-2., np.max(fwhm2)+2.])
+# plt.tight_layout()
+# plt.legend(loc='best')
+# plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
 
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SPECIES ----------------------
@@ -444,8 +444,8 @@ plt.show()
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT b ----------------------
 
-b = [0.75, 1.00, 1.50, 2.00]
-incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+b = [0.75, 1.00, 1.50] #, 2.00]
+incl_deg = [0.0, 2.0, 5.0, 7.0, 10.0, 12.0, 15.0, 17.0, 20.0, 22.0, 25.0, 27.0, 30.0, 32.0, 35.0, 37.0, 40.0, 42.0, 45.0, 47.0, 50.0, 52.0, 55.0, 57.0, 60.0, 62.0, 65.0, 67.0, 70.0, 72.0, 75.0, 77.0, 80.0, 82.0, 85.0, 87.0, 90.0]
 r_in = 0.1
 r_out = 9.5
 cs = 10
