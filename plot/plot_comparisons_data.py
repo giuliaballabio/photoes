@@ -282,9 +282,9 @@ plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 ## Error propagation
-err_ratio2 = ((np.abs(err_fwhm2)/np.abs(vpeak_data2))**2. - (np.abs(err_vpeak2)*np.abs(fwhm_data2)/(np.abs(vpeak_data2)**2.))**2.)**0.5
-err_ratio3 = ((np.abs(err_fwhm3)/np.abs(vpeak_data3))**2. - (np.abs(err_vpeak3)*np.abs(fwhm_data3)/(np.abs(vpeak_data3)**2.))**2.)**0.5
-err_ratio = ((np.abs(err_fwhm)/np.abs(vpeak_data))**2. - (np.abs(err_vpeak)*np.abs(fwhm_data)/(np.abs(vpeak_data)**2.))**2.)**0.5
+err_ratio2 = ((np.abs(err_fwhm2)/np.abs(vpeak_data2))**2. + (np.abs(err_vpeak2)*np.abs(fwhm_data2)/(np.abs(vpeak_data2)**2.))**2.)**0.5
+err_ratio3 = ((np.abs(err_fwhm3)/np.abs(vpeak_data3))**2. + (np.abs(err_vpeak3)*np.abs(fwhm_data3)/(np.abs(vpeak_data3)**2.))**2.)**0.5
+err_ratio = ((np.abs(err_fwhm)/np.abs(vpeak_data))**2. + (np.abs(err_vpeak)*np.abs(fwhm_data)/(np.abs(vpeak_data)**2.))**2.)**0.5
 
 plt.figure()
 plt.plot(incl_deg, fwhm1/np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
@@ -750,9 +750,9 @@ plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 ## Error propagation
-err_ratio = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. - (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
-err_ratio_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. - (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
-err_ratio_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. - (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+err_ratio = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
+err_ratio_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
+err_ratio_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
 
 plt.figure()
 plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
