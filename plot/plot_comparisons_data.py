@@ -282,9 +282,9 @@ plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 ## Error propagation
-err_ratio2 = (np.abs(err_fwhm2)/np.abs(vpeak_data2) - np.abs(err_vpeak2)/(np.abs(vpeak_data2)**2.)**0.5
-err_ratio3 = (np.abs(err_fwhm3)/np.abs(vpeak_data3) - np.abs(err_vpeak3)/(np.abs(vpeak_data3)**2.)**0.5
-err_ratio = (np.abs(err_fwhm)/np.abs(vpeak_data) - np.abs(err_vpeak)/(np.abs(vpeak_data)**2.)**0.5
+err_ratio2 = (np.abs(err_fwhm2)/np.abs(vpeak_data2) - np.abs(err_vpeak2)/(np.abs(vpeak_data2)**2.))**0.5
+err_ratio3 = (np.abs(err_fwhm3)/np.abs(vpeak_data3) - np.abs(err_vpeak3)/(np.abs(vpeak_data3)**2.))**0.5
+err_ratio = (np.abs(err_fwhm)/np.abs(vpeak_data) - np.abs(err_vpeak)/(np.abs(vpeak_data)**2.))**0.5
 
 plt.figure()
 plt.plot(incl_deg, fwhm1/np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
