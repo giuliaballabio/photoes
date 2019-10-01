@@ -294,7 +294,7 @@ plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vpeak_data), yerr=(np.abs(err_f
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, (np.abs(fwhm_data[i])/np.abs(vpeak_data[i]))+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{peak}) \, [km/s]$')
+plt.ylabel(r'$FWHM/(- v_{peak})$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[NeII] \, 12.81 \mu m$')
 plt.axis([-1., 91., -1., 40.])
@@ -318,7 +318,7 @@ plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vpeak_data), yerr=(np.abs(err_f
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, (np.abs(fwhm_data[i])/np.abs(vpeak_data[i]))+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{centroid}) \, [km/s]$')
+plt.ylabel(r'$FWHM/(- v_{centroid})$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[NeII] \, 12.81 \mu m$')
 plt.axis([-1., 91., -1., 40.])
@@ -756,7 +756,7 @@ plt.errorbar(incl_down, np.abs(fwhm_down)/np.abs(vcentr_down), yerr=(np.abs(err_
 for i in range(len(ID_down)):
     plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{centroid}) \, [km/s]$')
+plt.ylabel(r'$FWHM/(- v_{centroid})$')
 plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
 plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., -1., 100.])
