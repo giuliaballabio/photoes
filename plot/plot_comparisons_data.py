@@ -415,26 +415,26 @@ fwhm4 = np.array(fwhm4)*2.
 
 ## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
-vcentr_data = [0.3, -0.4, 0.9, -1.3, -5.3, -0.3, 0.4, -2.5, 5., -4., -12., -4.6]
-err_vcentr = [1.1, 0.5, 0.9, 5., 0.6, 5., 5., 3.6, 5.1, 1., 5., 5.]
-fwhm_data = [26., 14.5, 18., 13., 25.4, 12., 25., 29., 67., 47., 15., 18.] # km/s
-err_fwhm = [2., 0.4, 2., 1.2, 0.9, 1., 0.7, 1.5, 4., 2., 1., 2.]
+vcentr_data = [0.3, -0.4, 0.9, -1.3, -5.3, -0.3, 0.4, -2.5, 5., -12., -4.6]
+err_vcentr = [1.1, 0.5, 0.9, 5., 0.6, 5., 5., 3.6, 5.1, 5., 5.]
+fwhm_data = [26., 14.5, 18., 13., 25.4, 12., 25., 29., 67., 15., 18.] # km/s
+err_fwhm = [2., 0.4, 2., 1.2, 0.9, 1., 0.7, 1.5, 4., 1., 2.]
 ## Broad Component
-fwhm_data1 = [96., 54., 111., 67., 177., 53., 86., 162., 223., 288., 44., 36.] # km/s
-err_fwhm1 = [4.6, 2., 6., 2., 7., 5., 3., 10., 17., 28., 6., 6.]
+fwhm_data1 = [96., 54., 111., 67., 177., 53., 86., 162., 223., 44., 36.] # km/s
+err_fwhm1 = [4.6, 2., 6., 2., 7., 5., 3., 10., 17., 6., 6.]
 
-incl_data = [71., 20., 39., 60., 26., 9., 55., 38., 66., 37., 35., 50.]
-ID = ['AATau', 'AS205N', 'BPTau', 'DFTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RNO90', 'RULup', 'VVCrAS']
+incl_data = [71., 20., 39., 60., 26., 9., 55., 38., 66., 35., 50.]
+ID = ['AATau', 'AS205N', 'BPTau', 'DFTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RULup', 'VVCrAS']
 
 ## Divide the data in order to plot the ID labels clearly
-vcentr_sx = [-4., -11., 0.5]
-err_vcentr_sx = [1.,0.7, 0.6]
-fwhm_sx = [25., 18., 26.]
-err_fwhm_sx =[1.1, 0.5, 1.]
-fwhm1_sx = [120., 42., 84.]
-err_fwhm1_sx = [9., 2., 6.]
-incl_sx = [18., 32., 54.]
-ID_sx = ['AS353A', '  DGTau', 'RXJ1842']
+vcentr_sx = [-4., -11., 0.5, -4.]
+err_vcentr_sx = [1.,0.7, 0.6, 1.]
+fwhm_sx = [25., 18., 26., 47.]
+err_fwhm_sx =[1.1, 0.5, 1., 2.]
+fwhm1_sx = [120., 42., 84., 288.]
+err_fwhm1_sx = [9., 2., 6., 28.]
+incl_sx = [18., 32., 54., 37.]
+ID_sx = ['AS353A', '  DGTau', 'RXJ1842', 'RNO90']
 
 vcentr_down = [-2.6, -0.9]
 err_vcentr_down = [0.5, 1.1]
