@@ -69,3 +69,4 @@ for ((i=0;i<${#array_b[@]};++i)); do
 		done
 	done
 done
+echo "Simulations submitted succesfully!"
