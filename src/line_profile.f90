@@ -50,7 +50,7 @@ real,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
 real,parameter                       :: km=6.6846d-9,s=3.171d-8,eV=1.60218d-12
 real,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
 real,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.,m_e=9.1094d-28
-real,parameter                       :: cs=10.0d5
+real,parameter                       :: cs=3.0d5 
 real,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
 real,parameter                       :: CC=0.14,Phi_star=1.0d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
@@ -151,8 +151,8 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1
-r_outer=9.5
+r_inner=0.1 
+r_outer=9.5 
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -195,8 +195,8 @@ theta_max=atan(y_stream(npoints)/x_stream(npoints))
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 write(*,*) 'Normalizing the streamlines...'
-b_input=0.75
-ub=0.85
+b_input=0.75 
+ub=0.85 
 b=b_input
 
 rho2d(:,:)=0.0 !1.5e-17
@@ -216,9 +216,9 @@ do i=l_in,l_out
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
             !! V_PHI: KEPLERIAN ANGULAR MOMENTUM CONSERVATION
-            v_phi2d(i,j)=((r_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !*(Mstar/Msun)**0.5
+            !v_phi2d(i,j)=((r_stream(k)/(Rg/au))*Rb(i,j))**(-0.5) !*(Mstar/Msun)**0.5
             !! V_PHI: KEPLERIAN VELOCITY
-            !v_phi2d(i,j)=(x_stream(k)/(Rg/au))*(Rb(i,j)))**(-0.5) !*(Mstar/Msun)**0.5
+            v_phi2d(i,j)=((x_stream(k)/(Rg/au))*Rb(i,j))**(-0.5) !*(Mstar/Msun)**0.5
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
@@ -433,8 +433,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=27.0
-str_i='27.0'
+incl_deg=32.5 
+str_i='32.5' 
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
