@@ -14,7 +14,9 @@ plt.rc('legend', fontsize='large')
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT b ----------------------
 
 b = [0.75, 1.00, 1.50, 2.00]
-incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+incl_deg = []
+for i in range(0,38):
+    incl_deg.append(5.0*i)
 r_in = 0.1
 r_out = 9.5
 cs = 10
@@ -24,6 +26,7 @@ mdot = 'mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
+    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
     path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
@@ -158,7 +161,9 @@ plt.show()
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT cs ----------------------
 
 b = 1.00
-incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+incl_deg = []
+for i in range(0,38):
+    incl_deg.append(5.0*i)
 r_in = 0.1
 r_out = 9.5
 cs = [3, 5, 10]
@@ -360,7 +365,9 @@ plt.show()
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT b ----------------------
 
 b = [0.75, 1.00, 1.50, 2.00]
-incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+incl_deg = []
+for i in range(0,38):
+    incl_deg.append(5.0*i)
 r_in = 0.1
 r_out = 9.5
 cs = 10
@@ -629,7 +636,9 @@ plt.show()
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT cs ---------------------- ##
 
 b = 1.00
-incl_deg = [0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0, 35.0, 40.0, 45.0, 50.0, 55.0, 60.0, 65.0, 70.0, 75.0, 80.0, 85.0, 90.0]
+incl_deg = []
+for i in range(0,38):
+    incl_deg.append(5.0*i)
 r_in = 0.1
 r_out = 9.5
 cs = [3, 5, 10]
