@@ -63,7 +63,7 @@ r_in = 0.1
 r_out = 9.5
 cs = 10
 species = 'NeII'
-mdot= 'mdot10e-10'
+mdot= 'mdot10e-9'
 
 # Model data
 path_file = []
@@ -133,7 +133,7 @@ ax[1,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[2,0].set_ylabel(r'$Normalized \, L(v)$')
 plt.subplots_adjust(hspace=0., wspace=0.)
 plt.savefig('./lineprofiles/'+str(species)+'/line_profile_b_'+str(mdot)+'.png', format='png', bbox_inches='tight', dpi=300)
-plt.savefig('./lineprofiles/'+str(species)+'/line_profile_b_'+str(mdot)+'.eps', format='eps', bbox_inches='tight', dpi=300)
+plt.savefig('./lineprofiles/'+str(species)+'/eps/line_profile_b_'+str(mdot)+'.eps', format='eps', bbox_inches='tight', dpi=300)
 plt.show()
 
 
@@ -158,5 +158,5 @@ ax[1,0].set_ylabel(r'$Normalized \, L(v)$')
 ax[2,0].set_ylabel(r'$Normalized \, L(v)$')
 plt.subplots_adjust(hspace=0., wspace=0.)
 plt.savefig('./lineprofiles/NeII/line_profile_hydro.png', format='png', bbox_inches='tight', dpi=300)
-plt.savefig('./lineprofiles/NeII/line_profile_hydro.eps', format='eps', bbox_inches='tight', dpi=300)
+plt.savefig('./lineprofiles/NeII/eps/line_profile_hydro.eps', format='eps', bbox_inches='tight', dpi=300)
 plt.show()
