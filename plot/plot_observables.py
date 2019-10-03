@@ -152,46 +152,46 @@ plt.show()
 
 ## ---------------------- PLOT THE FWHM FOR DIFFERENT RESOLUTIONS ---------------------- ##
 
-# R = [3.e4, 10.e4]
-#
-# v_peak1 = []
-# v_centr1 = []
-# fwhm1 = []
-# for i in range(len(incl_deg)):
-#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
-#         lines = f1.readlines()[10:]
-#         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-#         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-#         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-# f1.close()
-# v_peak2 = []
-# v_centr2 = []
-# fwhm2 = []
-# for i in range(len(incl_deg)):
-#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
-#         lines = f2.readlines()[10:]
-#         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-#         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-#         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-# f2.close()
-#
-# ## WE NEED TO PLOT THE FWHM, NOT HALF
-# fwhm1 = np.array(fwhm1)*2.
-# fwhm2 = np.array(fwhm2)*2.
-#
-# plt.figure()
-# plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$R = '+str(R[0])+'$')
-# plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$R = '+str(R[1])+'$')
-# plt.xlabel(r'$i \, [^{\circ}]$')
-# plt.ylabel(r'$FWHM$')
-# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-# # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-# plt.axis([-1., 91., np.min(fwhm2)-2., np.max(fwhm2)+2.])
-# plt.tight_layout()
-# plt.legend(loc='best')
-# plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.png', format='png', dpi=300, bbox_inches='tight')
-# plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.eps', format='eps', dpi=300, bbox_inches='tight')
-# plt.show()
+R = [3.e4, 10.e4]
+
+v_peak1 = []
+v_centr1 = []
+fwhm1 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+        lines = f1.readlines()[10:]
+        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f1.close()
+v_peak2 = []
+v_centr2 = []
+fwhm2 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
+        lines = f2.readlines()[10:]
+        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f2.close()
+
+## WE NEED TO PLOT THE FWHM, NOT HALF
+fwhm1 = np.array(fwhm1)*2.
+fwhm2 = np.array(fwhm2)*2.
+
+plt.figure()
+plt.plot(incl_deg, fwhm1, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$R = '+str(R[0])+'$')
+plt.plot(incl_deg, fwhm2, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$R = '+str(R[1])+'$')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+plt.axis([-1., 91., np.min(fwhm2)-2., np.max(fwhm2)+2.])
+plt.tight_layout()
+plt.legend(loc='best')
+plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b)+'_cs'+str(cs[2])+'_mdot10e-8.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
 
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT SPECIES ----------------------
@@ -208,7 +208,7 @@ r_out = 9.5
 cs = 10
 R = 3.e4
 species = ['NeII', 'OI', 'SIIa', 'SIIc']
-mdot='mdot10e-9'
+mdot='mdot10e-8'
 
 path_file = []
 for j in range(len(species)):
@@ -266,7 +266,7 @@ plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
 plt.plot(incl_deg, np.abs(v_centr2), color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[1])+']$')
 plt.plot(incl_deg, np.abs(v_centr3), color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,4069\,\AA$')
-plt.plot(incl_deg, np.abs(v_centr4)*1.12, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
+plt.plot(incl_deg, np.abs(v_centr4), color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='hydro sim')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$- v_{centroid} \, [km/s]$')
@@ -286,7 +286,7 @@ plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
 plt.plot(incl_deg, np.abs(v_peak2), color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[1])+']$')
 plt.plot(incl_deg, np.abs(v_peak3), color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,4069\,\AA$')
-plt.plot(incl_deg, np.abs(v_peak4)*1.12, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
+plt.plot(incl_deg, np.abs(v_peak4), color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$- v_{peak} \, [km/s]$')
@@ -304,7 +304,7 @@ plt.figure()
 plt.plot(incl_deg, fwhm1, color='#b3cde3', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#b3cde3', label='$['+str(species[0])+']$')
 plt.plot(incl_deg, fwhm2, color='#8c96c6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8c96c6', label='$['+str(species[1])+']$')
 plt.plot(incl_deg, fwhm3, color='#8856a7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#8856a7', label='$[SII]\,4069\,\AA$')
-plt.plot(incl_deg, fwhm4*1.1, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
+plt.plot(incl_deg, fwhm4, color='#810f7c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#810f7c', label='$[SII]\,6718\,\AA$')
 # plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
 plt.xlabel(r'$i \, [^{\circ}]$')
 plt.ylabel(r'$FWHM \, [km/s]$')
