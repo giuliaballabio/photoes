@@ -462,7 +462,7 @@ plt.show()
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT b ----------------------
 
-b = [0.75, 1.00, 1.50] #, 2.00]
+b = [0.75, 1.00, 1.50, 2.00]
 incl_deg = []
 # for i in range(0,int(90/5+1)):
 #     incl_deg.append(5.0*i)
