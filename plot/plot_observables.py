@@ -23,15 +23,16 @@ for i in range(0,int(90/5+1)):
 #     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
-cs = ['3.0d5', '5.0d5', '10.0d5']
+cs = [3, 5, 10]
+# cs = ['3.0d5', '5.0d5', '10.0d5']
 R = 3.e4
 species = 'NeII'
 mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(cs)):
-    # path_file.append('../cs'+str(cs[j])+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
-    path_file.append('../cs'+str(cs[j])+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs[j])+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    # path_file.append('../cs'+str(cs[j])+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
 v_centr1 = []
