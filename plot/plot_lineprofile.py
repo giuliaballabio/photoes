@@ -65,6 +65,7 @@ cs = 10
 species = 'NeII'
 mdot= 'mdot10e-9'
 
+# Model data
 path_file = []
 path_file_hydro = []
 for j in range(len(b)):
@@ -78,8 +79,6 @@ v3 = []
 line_flux3 = []
 v4 = []
 line_flux4 = []
-v_hydro = []
-line_flux_hydro = []
 for i in range(len(incl_deg)):
     v1.append(map(float, [lines.split()[0] for lines in open(str(path_file[0])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
     line_flux1.append(map(float, [lines.split()[1] for lines in open(str(path_file[0])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
@@ -90,46 +89,12 @@ for i in range(len(incl_deg)):
     # v4.append(map(float, [lines.split()[0] for lines in open(str(path_file[3])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
     # line_flux4.append(map(float, [lines.split()[1] for lines in open(str(path_file[3])+'/incl_'+str(round(incl_deg[i], 2))+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
 
-    # path_file_hydro.append('../data_hydro/NeII/incl_'+str(round(incl_deg[i], 2)))
-    # v_hydro.append(map(float, [lines.split()[0] for lines in open(str(path_file_hydro[i])+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
-    # line_flux_hydro.append(map(float, [lines.split()[1] for lines in open(str(path_file_hydro[i])+'/line_profile_i'+str(round(incl_deg[i], 2))+'.txt', 'r')]))
-
 v1 = -1.*np.array(v1)
 v2 = -1.*np.array(v2)
 v3 = -1.*np.array(v3)
 # v4 = -1.*np.array(v4)
-# v_hydro = -1.*np.array(v_hydro)
 
-fig, ax = plt.subplots(3, 2, sharex='col', sharey='row')
-for row in range(3):
-    for col in range(2):
-        ax[row,col].plot(v1[2*row+col], line_flux1[2*row+col] / np.amax(line_flux1[2*row+col]), color='#fecc5c', label='$b='+str('{:.2f}'.format(round(b[0], 2)))+'$')
-        ax[row,col].plot(v2[2*row+col], line_flux2[2*row+col] / np.amax(line_flux2[2*row+col]), color='#fd8d3c', label='$b='+str('{:.2f}'.format(round(b[1], 2)))+'$')
-        ax[row,col].plot(v3[2*row+col], line_flux3[2*row+col] / np.amax(line_flux3[2*row+col]), color='#f03b20', label='$b='+str('{:.2f}'.format(round(b[2], 2)))+'$')
-        # ax[row,col].plot(v4[2*row+col], line_flux4[2*row+col] / np.amax(line_flux4[2*row+col]), color='#bd0026', label='$b='+str('{:.2f}'.format(round(b[3], 2)))+'$')
-        # ax[row,col].plot(v_hydro[2*row+col], line_flux_hydro[2*row+col] / np.amax(line_flux_hydro[2*row+col]), color='#2171b5', label='$hydro$')
-        leg1 = ax[0,0].legend(loc='upper right')
-        leg2 = ax[row,col].legend(['$i='+str(incl_deg[2*row+col])+'$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
-        for item in leg2.legendHandles:
-            item.set_visible(False)
-        ax[row,col].add_artist(leg2)
-        ax[row,col].axis([-39.,39.,0.,1.1])
-ax[2,0].set_xlabel(r'$v [\frac{km}{s}]$')
-ax[2,1].set_xlabel(r'$v [\frac{km}{s}]$')
-ax[0,0].set_ylabel(r'$Normalized \, L(v)$')
-ax[1,0].set_ylabel(r'$Normalized \, L(v)$')
-ax[2,0].set_ylabel(r'$Normalized \, L(v)$')
-plt.subplots_adjust(hspace=0., wspace=0.)
-plt.savefig('./lineprofiles/'+str(species)+'/line_profile_b_'+str(mdot)+'.png', format='png', bbox_inches='tight', dpi=300)
-plt.savefig('./lineprofiles/'+str(species)+'/line_profile_b_'+str(mdot)+'.eps', format='eps', bbox_inches='tight', dpi=300)
-plt.show()
-
-
-## --------- CREATE A MULTIPLOT WITH LINES AT DIFFERENT INCLINATIONS OF THE HYDRO DATA
-## --------- COMPARE THE LINE PROFILES FROM HYDRO AT DIFFERENT HEIGHTS
-
-incl_deg = [0.0, 20.0, 45.0, 60.0, 75.0, 90.0]
-
+## Hydro data
 path_hydro = []
 v_hydro = []
 line_flux_hydro = []
@@ -146,6 +111,35 @@ for i in range(len(incl_deg)):
 
 v_hydro = -1.*np.array(v_hydro)
 v_hydro_midplane = -1.*np.array(v_hydro_midplane)
+
+fig, ax = plt.subplots(3, 2, sharex='col', sharey='row')
+for row in range(3):
+    for col in range(2):
+        ax[row,col].plot(v1[2*row+col], line_flux1[2*row+col] / np.amax(line_flux1[2*row+col]), color='#fecc5c', label='$b='+str('{:.2f}'.format(round(b[0], 2)))+'$')
+        ax[row,col].plot(v2[2*row+col], line_flux2[2*row+col] / np.amax(line_flux2[2*row+col]), color='#fd8d3c', label='$b='+str('{:.2f}'.format(round(b[1], 2)))+'$')
+        ax[row,col].plot(v3[2*row+col], line_flux3[2*row+col] / np.amax(line_flux3[2*row+col]), color='#f03b20', label='$b='+str('{:.2f}'.format(round(b[2], 2)))+'$')
+        # ax[row,col].plot(v4[2*row+col], line_flux4[2*row+col] / np.amax(line_flux4[2*row+col]), color='#bd0026', label='$b='+str('{:.2f}'.format(round(b[3], 2)))+'$')
+        ax[row,col].plot(v_hydro[2*row+col], line_flux_hydro[2*row+col] / np.amax(line_flux_hydro[2*row+col]), color='#2171b5', label='$hydro$')
+        ax[row,col].plot(v_hydro_midplane[2*row+col], line_flux_hydro_midplane[2*row+col] / np.amax(line_flux_hydro_midplane[2*row+col]), color='#a1dab4', label='$hydro\,midplane$')
+        leg1 = ax[0,0].legend(loc='upper right')
+        leg2 = ax[row,col].legend(['$i='+str(incl_deg[2*row+col])+'$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
+        for item in leg2.legendHandles:
+            item.set_visible(False)
+        ax[row,col].add_artist(leg2)
+        ax[row,col].axis([-39.,39.,0.,1.1])
+ax[2,0].set_xlabel(r'$v [\frac{km}{s}]$')
+ax[2,1].set_xlabel(r'$v [\frac{km}{s}]$')
+ax[0,0].set_ylabel(r'$Normalized \, L(v)$')
+ax[1,0].set_ylabel(r'$Normalized \, L(v)$')
+ax[2,0].set_ylabel(r'$Normalized \, L(v)$')
+plt.subplots_adjust(hspace=0., wspace=0.)
+plt.savefig('./lineprofiles/'+str(species)+'/line_profile_comp_b_'+str(mdot)+'.png', format='png', bbox_inches='tight', dpi=300)
+plt.savefig('./lineprofiles/'+str(species)+'/line_profile_comp_b_'+str(mdot)+'.eps', format='eps', bbox_inches='tight', dpi=300)
+plt.show()
+
+
+## --------- CREATE A MULTIPLOT WITH LINES AT DIFFERENT INCLINATIONS OF THE HYDRO DATA
+## --------- COMPARE THE LINE PROFILES FROM HYDRO AT DIFFERENT HEIGHTS
 
 fig, ax = plt.subplots(3, 2, sharex='col', sharey='row')
 for row in range(3):
