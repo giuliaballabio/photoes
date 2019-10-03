@@ -471,7 +471,8 @@ for i in range(0,int(90/5+1)):
 #     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
-cs = '10.0d5'
+cs = 10
+# cs = '10.0d5'
 R = 3.e4
 species = 'NeII'
 mdot='mdot10e-9'
