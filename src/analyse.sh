@@ -25,10 +25,10 @@ for ((i=0;i<${#array_b[@]};++i)); do
       sed -i -e "s/incl_deg = .*/incl_deg = $incl /g" convolution.py
       sed -i -e "s/r_inner = .*/r_inner = $r_inner /g" convolution.py
       sed -i -e "s/r_outer = .*/r_outer = $r_outer /g" convolution.py
-			sed -i -e "s/cs = .*/cs = $cs /g" convolution.py
+			sed -i -e "s/cs = .*/cs = '$cs' /g" convolution.py
       python convolution.py
 
-			cd $RUNDIR/../cs$cs\kms/$species/$mdot/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+			cd $RUNDIR/../cs$cs/$species/$mdot/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
 			#cp photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.o* photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.txt
 			cp photoes_$species\_b${array_b[i]}\_cs$cs\_i$incl.o* photoes_$species\_b${array_b[i]}\_cs$cs\_i$incl.txt
 			#cd $RUNDIR/../data_hydro/$species/incl_$incl
