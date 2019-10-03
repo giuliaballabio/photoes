@@ -3,13 +3,12 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 plt.style.use('classic')
-plt.rcParams['font.size'] = 10
-plt.rcParams['axes.labelsize'] = 10
-plt.rcParams['axes.titlesize'] = 10
-plt.rcParams['xtick.labelsize'] = 8
-plt.rcParams['ytick.labelsize'] = 8
-plt.rcParams['legend.fontsize'] = 10
-plt.rcParams['figure.titlesize'] = 12
+plt.rc('font', family='serif')
+plt.rc('xtick', labelsize='medium')
+plt.rc('ytick', labelsize='medium')
+plt.rc('axes', titlesize='xx-large')
+plt.rc('axes', labelsize='xx-large')
+plt.rc('legend', fontsize='large')
 
 speed_light = 299792.458                     #km/s
 cs = 5
@@ -36,8 +35,8 @@ path_file = '../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}
 v = -1.*np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 line_flux = np.array(map(float, [lines.split()[1] for lines in open(str(path_file)+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 ## DATA FROM HYDRO SIMULATIONS
-# v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
-# line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+# v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
+# line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 # v = -1.*np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 # line_flux = np.array(map(float, [lines.split()[1] for lines in open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
 
@@ -59,7 +58,7 @@ def gaussian(x,norm,mean,sigma):
 # Telescope spectral resolution
 # VISIR R=30000
 # MIKE R=19000 25000
-R = 21000.
+R = 30000.
 delta_v = speed_light / R
 sigma_telescope = delta_v / 2.
 norm = 1./np.sqrt(2. * np.pi * sigma_telescope**2.)
@@ -72,11 +71,12 @@ convolution = convolution / np.amax(convolution)
 plt.figure()
 plt.plot(v, convolution, color='b', label='convolution')
 plt.plot(v, line_flux / np.amax(line_flux), color='r', label='line')
-plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
-plt.ylabel(r'Normalized L(v)', fontsize=15)
+plt.xlabel(r'v [$\frac{km}{s}$]')
+plt.ylabel(r'Normalized L(v)')
+plt.tight_layout()
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.show()
 
@@ -112,13 +112,14 @@ plt.figure()
 plt.plot(v, line_flux / np.amax(line_flux), color='r', label='Model')
 plt.plot(v, convolution,'b',label='R = '+str(R))
 plt.plot(v, gaussian(v,*popt),'k--',label='Gaussian fit')
-plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
-plt.ylabel(r'Normalized L(v)', fontsize=15)
+plt.xlabel(r'v [$\frac{km}{s}$]')
+plt.ylabel(r'Normalized L(v)')
+plt.tight_layout()
 plt.axis([-40., 40., 0., 1.2])
 plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg - i = '+str(incl_deg))
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.show()
 
@@ -147,17 +148,18 @@ plt.figure()
 plt.plot(-v, L_cum, color='r')
 plt.vlines(v_centr, 0., 2.5, 'k', linestyle='--')
 plt.hlines(L_centr, -50., 50., 'k', linestyle='--')
-plt.xlabel(r'v [$\frac{km}{s}$]', fontsize=15)
-plt.ylabel(r'Cumulative flux', fontsize=15)
+plt.xlabel(r'v [$\frac{km}{s}$]')
+plt.ylabel(r'Cumulative flux')
+plt.tight_layout()
 plt.axis([-40., 40., 0., 1.2])
 plt.savefig(str(path_file)+'/cumulative.png', format='png', bbox_inches='tight')
-# plt.savefig('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
+# plt.savefig('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/cumulative.png', format='png', bbox_inches='tight')
 # plt.show()
 
 ## WRITE THE OBSERVABLES INTO A FILE
 f = open(str(path_file)+'/observables_R'+str(R)+'.txt', 'w+')
-# f = open('../data_hydro_midplane/incl_'+str(round(incl_deg, 2))+'/observables_R'+str(R)+'.txt', 'w+')
+# f = open('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/observables_R'+str(R)+'.txt', 'w+')
 # f = open('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/observables_R'+str(R)+'.txt', 'w+')
 f.write('b = '+str(b)+' - R_in = '+str(r_in)+' Rg - R_out = '+str(r_out)+' Rg - i = '+str(incl_deg)+'\n')
 f.write('\n')
