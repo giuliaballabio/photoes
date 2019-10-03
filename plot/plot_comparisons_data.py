@@ -15,8 +15,11 @@ plt.rc('legend', fontsize='large')
 
 b = [0.75, 1.00, 1.50, 2.00]
 incl_deg = []
-for i in range(0,38):
+for i in range(0,int(90/5+1)):
     incl_deg.append(5.0*i)
+## for more inclinations
+# for i in range(0,int(90/2.5+1)):
+#     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
 cs = 10
@@ -162,8 +165,11 @@ plt.show()
 
 b = 1.00
 incl_deg = []
-for i in range(0,38):
+for i in range(0,int(90/5+1)):
     incl_deg.append(5.0*i)
+## for more inclinations
+# for i in range(0,int(90/2.5+1)):
+#     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
 cs = [3, 5, 10]
@@ -366,8 +372,11 @@ plt.show()
 
 b = [0.75, 1.00, 1.50, 2.00]
 incl_deg = []
-for i in range(0,38):
+for i in range(0,int(90/5+1)):
     incl_deg.append(5.0*i)
+## for more inclinations
+# for i in range(0,int(90/2.5+1)):
+#     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
 cs = 10
@@ -637,8 +646,11 @@ plt.show()
 
 b = 1.00
 incl_deg = []
-for i in range(0,38):
+for i in range(0,int(90/5+1)):
     incl_deg.append(5.0*i)
+## for more inclinations
+# for i in range(0,int(90/2.5+1)):
+#     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
 cs = [3, 5, 10]
