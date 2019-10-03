@@ -16,11 +16,11 @@ plt.rc('legend', fontsize='large')
 
 b = 1.00
 incl_deg = []
-# for i in range(0,int(90/5+1)):
-#     incl_deg.append(5.0*i)
+for i in range(0,int(90/5+1)):
+    incl_deg.append(5.0*i)
 ## for more inclinations
-for i in range(0,int(90/2.5+1)):
-    incl_deg.append(2.5*i)
+# for i in range(0,int(90/2.5+1)):
+#     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
 cs = ['3.0d5', '5.0d5', '10.0d5']
@@ -462,13 +462,13 @@ plt.show()
 
 ## ---------------------- PLOT OBSERVABLES FOR DIFFERENT b ----------------------
 
-b = [0.75, 1.00, 1.50] #, 2.00]
+b = [0.75, 1.00, 1.50, 2.00]
 incl_deg = []
-# for i in range(0,int(90/5+1)):
-#     incl_deg.append(5.0*i)
+for i in range(0,int(90/5+1)):
+    incl_deg.append(5.0*i)
 ## for more inclinations
-for i in range(0,int(90/2.5+1)):
-    incl_deg.append(2.5*i)
+# for i in range(0,int(90/2.5+1)):
+#     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
 cs = '10.0d5'
@@ -511,22 +511,22 @@ for i in range(len(incl_deg)):
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
-# v_peak4 = []
-# v_centr4 = []
-# fwhm4 = []
-# for i in range(len(incl_deg)):
-#     with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
-#         lines = f4.readlines()[10:]
-#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-# f4.close()
+v_peak4 = []
+v_centr4 = []
+fwhm4 = []
+for i in range(len(incl_deg)):
+    with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
+        lines = f4.readlines()[10:]
+        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f4.close()
 
 ## WE NEED TO PLOT THE FWHM, NOT HALF
 fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
-# fwhm4 = np.array(fwhm4)*2.
+fwhm4 = np.array(fwhm4)*2.
 
 #vpeak_modelhydro = []
 #vcentr_modelhydro = []
