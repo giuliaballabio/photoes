@@ -11,7 +11,7 @@ plt.rc('axes', labelsize='xx-large')
 plt.rc('legend', fontsize='large')
 
 speed_light = 299792.458                     #km/s
-cs = 5
+cs = '5'
 species = 'NeII'
 mdot = 'mdot10e-9'
 
