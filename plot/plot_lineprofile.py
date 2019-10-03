@@ -120,7 +120,6 @@ for row in range(3):
         ax[row,col].plot(v3[2*row+col], line_flux3[2*row+col] / np.amax(line_flux3[2*row+col]), color='#f03b20', label='$b='+str('{:.2f}'.format(round(b[2], 2)))+'$')
         # ax[row,col].plot(v4[2*row+col], line_flux4[2*row+col] / np.amax(line_flux4[2*row+col]), color='#bd0026', label='$b='+str('{:.2f}'.format(round(b[3], 2)))+'$')
         ax[row,col].plot(v_hydro[2*row+col], line_flux_hydro[2*row+col] / np.amax(line_flux_hydro[2*row+col]), color='#2171b5', label='$hydro$')
-        ax[row,col].plot(v_hydro_midplane[2*row+col], line_flux_hydro_midplane[2*row+col] / np.amax(line_flux_hydro_midplane[2*row+col]), color='#a1dab4', label='$hydro\,midplane$')
         leg1 = ax[0,0].legend(loc='upper right')
         leg2 = ax[row,col].legend(['$i='+str(incl_deg[2*row+col])+'$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
         for item in leg2.legendHandles:
@@ -145,7 +144,7 @@ fig, ax = plt.subplots(3, 2, sharex='col', sharey='row')
 for row in range(3):
     for col in range(2):
         ax[row,col].plot(v_hydro[2*row+col], line_flux_hydro[2*row+col] / np.amax(line_flux_hydro[2*row+col]), color='#2171b5', label='$hydro$')
-        ax[row,col].plot(v_hydro_midplane[2*row+col], line_flux_hydro_midplane[2*row+col] / np.amax(line_flux_hydro_midplane[2*row+col]), color='#a1dab4', label='$hydro\,midplane$')
+        ax[row,col].plot(v_hydro_midplane[2*row+col], line_flux_hydro_midplane[2*row+col] / np.amax(line_flux_hydro_midplane[2*row+col]), color='#a1dab4', label='$hydro\\midplane$')
         leg1 = ax[0,0].legend(loc='upper right')
         leg2 = ax[row,col].legend(['$i='+str(incl_deg[2*row+col])+'$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
         for item in leg2.legendHandles:
