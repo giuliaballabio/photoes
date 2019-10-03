@@ -63,7 +63,7 @@ r_in = 0.1
 r_out = 9.5
 cs = 10
 species = 'NeII'
-mdot= 'mdot10e-9'
+mdot= 'mdot10e-10'
 
 # Model data
 path_file = []
