@@ -792,9 +792,27 @@ plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 ## Error propagation
-err_ratio = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
-err_ratio_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
-err_ratio_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+err_max = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
+err_max_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
+err_max_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+ratio = np.abs(fwhm_data)/np.abs(vcentr_data)
+ratio_sx = np.abs(fwhm_sx)/np.abs(vcentr_sx)
+ratio_down = np.abs(fwhm_down)/np.abs(vcentr_down)
+err_min = []
+err_min_sx = []
+err_min_down = []
+for i in range(len(err_ratio)):
+    if (ratio-err_ratio)<0.0:
+        err_min.append(0.0)
+        err_min_sx.append(0.0)
+        err_min_down.append(0.0)
+    else:
+        err_min.append(err_max)
+        err_min_sx.append(err_max_sx)
+        err_min_down.append(err_max_down)
+err_ratio = np.array([err_min, err_max])
+err_ratio_sx = np.array([err_min_sx, err_max_sx])
+err_ratio_down = np.array([err_min_down, err_max_down])
 
 ## Another way of defining the error bars
 # err_min = (np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr))
@@ -811,13 +829,13 @@ plt.figure()
 plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, fwhm2/(np.abs(v_centr2)+1.e-8), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 plt.plot(incl_deg, fwhm3/(np.abs(v_centr3)+1.e-8), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vcentr_data), yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+plt.errorbar(incl_data, ratio, yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
-plt.errorbar(incl_sx, np.abs(fwhm_sx)/np.abs(vcentr_sx), yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+plt.errorbar(incl_sx, ratio_sx, yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_sx)):
     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
-plt.errorbar(incl_down, np.abs(fwhm_down)/np.abs(vcentr_down), yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+plt.errorbar(incl_down, ratio_down, yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
 for i in range(len(ID_down)):
     plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
 plt.xlabel(r'$i \, [^{\circ}]$')
