@@ -801,8 +801,8 @@ ratio_down = np.abs(fwhm_down)/np.abs(vcentr_down)
 err_min = []
 err_min_sx = []
 err_min_down = []
-for i in range(len(err_ratio)):
-    if (ratio-err_ratio)<0.0:
+for i in range(len(ratio)):
+    if (ratio[i]-err_max[i])<0.0:
         err_min.append(0.0)
         err_min_sx.append(0.0)
         err_min_down.append(0.0)
