@@ -797,14 +797,14 @@ err_ratio_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr
 err_ratio_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
 
 ## Another way of defining the error bars
-err_min = float(np.min((np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr))))
-err_max = float(np.max((np.abs(fwhm_data)+np.abs(err_fwhm))/(np.abs(vcentr_data)-np.abs(err_vcentr))))
+err_min = (np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr))
+err_max = (np.abs(fwhm_data)+np.abs(err_fwhm))/(np.abs(vcentr_data)-np.abs(err_vcentr))
 err_ratio = np.array([err_min, err_max])
-err_min_sx = float(np.min((np.abs(fwhm_sx)-np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)+np.abs(err_vcentr_sx))))
-err_max_sx = float(np.max((np.abs(fwhm_sx)+np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)-np.abs(err_vcentr_sx))))
+err_min_sx = (np.abs(fwhm_sx)-np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)+np.abs(err_vcentr_sx))
+err_max_sx = (np.abs(fwhm_sx)+np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)-np.abs(err_vcentr_sx))
 err_ratio_sx = np.array([err_min_sx, err_max_sx])
-err_min_down = float(np.min((np.abs(fwhm_down)-np.abs(err_fwhm_down))/(np.abs(vcentr_down)+np.abs(err_vcentr_down))))
-err_max_down = float(np.max((np.abs(fwhm_down)+np.abs(err_fwhm_down))/(np.abs(vcentr_down)-np.abs(err_vcentr_down))))
+err_min_down = (np.abs(fwhm_down)-np.abs(err_fwhm_down))/(np.abs(vcentr_down)+np.abs(err_vcentr_down))
+err_max_down = (np.abs(fwhm_down)+np.abs(err_fwhm_down))/(np.abs(vcentr_down)-np.abs(err_vcentr_down))
 err_ratio_down = np.array([err_min_down, err_max_down])
 
 plt.figure()
