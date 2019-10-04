@@ -466,51 +466,6 @@ err_fwhm1_down = [2., 8.]
 incl_down = [65., 54.]
 ID_down = ['CWtau', 'V853Oph']
 
-## CONSIDER THE DATA FROM Rigliaco et al. 2013
-# fwhm_data2 = [14.1, 42.6, 47.1, 8.2, 42.8, 44.1, 40.5, 34.8, 55.7, 45.1, 57.6, 28.3, 51.1, 28.9, 38.8] # km/s
-# err_fwhm2 = [2.7, 13.6, 8.4, 0.6, 20.0, 1.5, 6.6, 2., 6.3, 1.1, 6.9, 7.0, 5.6, 8.5, 5.9]
-# incl_data2 = [37., 30., 35., 4., 60., 80., 52., 63., 78., 35., 70., 37., 23., 45., 42.]
-# ID2 = ['DR Tau', 'MP Mus', 'V4046 Sgr', 'TW Hya', 'AS 353A', 'CW Tau', 'CY Tau', 'DF Tau', 'DN Tau', 'DQ Tau', 'FM Tau', 'GG Tau', 'GK Tau', 'GM Aur', 'UY Aur']
-
-# plt.figure()
-# plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
-# plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$')
-# plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
-# # plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
-# #plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-# plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-# for i in range(len(ID)):
-#     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3), color='k')
-# plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-# for i in range(len(ID_sx)):
-#     plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(fwhm_sx[i])+0.3), color='k')
-# plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-# for i in range(len(ID_down)):
-#     plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm_down[i])+0.3), color='k')
-# plt.errorbar(incl_data, np.abs(fwhm_data1), yerr=err_fwhm1, color='#969696', markeredgecolor='None', linestyle='None', marker='*', capsize=3, label='$BC$')
-# for i in range(len(ID)):
-#     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data1[i])+0.3), color='#969696')
-# plt.errorbar(incl_sx, np.abs(fwhm1_sx), yerr=err_fwhm1_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-# for i in range(len(ID_sx)):
-#     plt.annotate(ID_sx[i], (incl_sx[i]+0.3, np.abs(fwhm1_sx[i])+0.3), color='k')
-# plt.errorbar(incl_down, np.abs(fwhm1_down), yerr=err_fwhm1_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-# for i in range(len(ID_down)):
-#     plt.annotate(ID_down[i], (incl_down[i]+0.3, np.abs(fwhm1_down[i])+0.3), color='k')
-# # plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='d', capsize=3, label='$Rigliaco\,et\,al.\,(2013)$')
-# # for i in range(len(ID2)):
-# #     plt.annotate(ID2[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
-# plt.xlabel(r'$i \, [^{\circ}]$')
-# plt.ylabel(r'$FWHM$')
-# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-# plt.title('$[OI] \, 6300 \AA$')
-# # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-# plt.axis([-1.0, 91.0, 0.0, 300.0])
-# plt.tight_layout()
-# plt.legend(loc='best')
-# plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-# plt.savefig('./observables/'+str(species)+'/eps/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-# plt.show()
-
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
 plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$')
@@ -840,6 +795,17 @@ plt.show()
 err_ratio = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
 err_ratio_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
 err_ratio_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+
+## Another way of defining the error bars
+err_min = np.min((np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr)))
+err_max = np.max((np.abs(fwhm_data)+np.abs(err_fwhm))/(np.abs(vcentr_data)-np.abs(err_vcentr)))
+err_ratio = [err_min, err_max]
+err_min_sx = np.min((np.abs(fwhm_sx)-np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)+np.abs(err_vcentr_sx)))
+err_max_sx = np.max((np.abs(fwhm_sx)+np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)-np.abs(err_vcentr_sx)))
+err_ratio_sx = [err_min_sx, err_max_sx]
+err_min_down = np.min((np.abs(fwhm_down)-np.abs(err_fwhm_down))/(np.abs(vcentr_down)+np.abs(err_vcentr_down)))
+err_max_down = np.max((np.abs(fwhm_down)+np.abs(err_fwhm_down))/(np.abs(vcentr_down)-np.abs(err_vcentr_down)))
+err_ratio_down = [err_min_down, err_max_down]
 
 plt.figure()
 plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
