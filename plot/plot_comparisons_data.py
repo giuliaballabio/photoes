@@ -810,8 +810,8 @@ for i in range(len(ratio)):
         err_min.append(err_max)
         err_min_sx.append(err_max_sx)
         err_min_down.append(err_max_down)
-err_ratio = np.array([np.array(err_min), np.array(err_max)]))
-err_ratio_sx = np.array([np.array(err_min_sx), np.array(err_max_sx]))
+err_ratio = np.array([np.array(err_min), np.array(err_max)])
+err_ratio_sx = np.array([np.array(err_min_sx), np.array(err_max_sx])
 err_ratio_down = np.array([np.array(err_min_down), np.array(err_max_down])
 
 ## Another way of defining the error bars
