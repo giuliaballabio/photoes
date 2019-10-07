@@ -16,7 +16,7 @@ r_in = 0.1
 r_out = [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
 cs = 10
 R = 3.e4
-species = 'NeII'
+species = 'OI'
 
 ## N.B. When you change to nonorm, remember to change also f.readlines()[24:]
 ## for mdot10e-8 etc is f.readlines()[33:]
