@@ -791,39 +791,46 @@ plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_
 plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
-## Error propagation
-err_max = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
-err_max_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
-err_max_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+
 ratio = np.abs(fwhm_data)/np.abs(vcentr_data)
 ratio_sx = np.abs(fwhm_sx)/np.abs(vcentr_sx)
 ratio_down = np.abs(fwhm_down)/np.abs(vcentr_down)
-err_min = []
-err_min_sx = []
-err_min_down = []
-for i in range(len(ratio)):
-    if (ratio[i]-err_max[i])<0.0:
-        err_min.append(0.0)
-        err_min_sx.append(0.0)
-        err_min_down.append(0.0)
-    else:
-        err_min.append(err_max)
-        err_min_sx.append(err_max_sx)
-        err_min_down.append(err_max_down)
-err_ratio = np.array([np.array(err_min), np.array(err_max)])
-err_ratio_sx = np.array([np.array(err_min_sx), np.array(err_max_sx)])
-err_ratio_down = np.array([np.array(err_min_down), np.array(err_max_down)])
+
+## Error propagation
+err_ratio = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
+err_ratio_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
+err_ratio_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+
+## Set zero as minimum error for error bars that goes into negative values and maximum the error propagation
+# err_max = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
+# err_max_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
+# err_max_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+# err_min = []
+# err_min_sx = []
+# err_min_down = []
+# for i in range(len(ratio)):
+#     if (ratio[i]-err_max[i])<0.0:
+#         err_min.append(0.0)
+#         err_min_sx.append(0.0)
+#         err_min_down.append(0.0)
+#     else:
+#         err_min.append(err_max)
+#         err_min_sx.append(err_max_sx)
+#         err_min_down.append(err_max_down)
+# err_ratio = np.array([np.array(err_min), np.array(err_max)])
+# err_ratio_sx = np.array([np.array(err_min_sx), np.array(err_max_sx)])
+# err_ratio_down = np.array([np.array(err_min_down), np.array(err_max_down)])
 
 ## Another way of defining the error bars
-# err_min = (np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr))
-# err_max = (np.abs(fwhm_data)+np.abs(err_fwhm))/(np.abs(vcentr_data)-np.abs(err_vcentr))
-# err_ratio = np.array([np.abs(err_min), np.abs(err_max)])
-# err_min_sx = (np.abs(fwhm_sx)-np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)+np.abs(err_vcentr_sx))
-# err_max_sx = (np.abs(fwhm_sx)+np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)-np.abs(err_vcentr_sx))
-# err_ratio_sx = np.array([np.abs(err_min_sx), np.abs(err_max_sx)])
-# err_min_down = (np.abs(fwhm_down)-np.abs(err_fwhm_down))/(np.abs(vcentr_down)+np.abs(err_vcentr_down))
-# err_max_down = (np.abs(fwhm_down)+np.abs(err_fwhm_down))/(np.abs(vcentr_down)-np.abs(err_vcentr_down))
-# err_ratio_down = np.array([np.abs(err_min_down), np.abs(err_max_down)])
+err_min = (np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr))
+err_max = (np.abs(fwhm_data)+np.abs(err_fwhm))/(np.abs(vcentr_data)-np.abs(err_vcentr))
+err_ratio = np.array([np.abs(err_min), np.abs(err_max)])
+err_min_sx = (np.abs(fwhm_sx)-np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)+np.abs(err_vcentr_sx))
+err_max_sx = (np.abs(fwhm_sx)+np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)-np.abs(err_vcentr_sx))
+err_ratio_sx = np.array([np.abs(err_min_sx), np.abs(err_max_sx)])
+err_min_down = (np.abs(fwhm_down)-np.abs(err_fwhm_down))/(np.abs(vcentr_down)+np.abs(err_vcentr_down))
+err_max_down = (np.abs(fwhm_down)+np.abs(err_fwhm_down))/(np.abs(vcentr_down)-np.abs(err_vcentr_down))
+err_ratio_down = np.array([np.abs(err_min_down), np.abs(err_max_down)])
 
 plt.figure()
 plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
