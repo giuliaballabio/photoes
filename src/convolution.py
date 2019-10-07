@@ -11,9 +11,9 @@ plt.rc('axes', labelsize='xx-large')
 plt.rc('legend', fontsize='large')
 
 speed_light = 299792.458                     #km/s
-cs = '5'
-species = 'NeII'
-mdot = 'mdot10e-9'
+cs = '10'
+species = 'OI'
+mdot = 'nonorm'
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
 # incl_deg = 90.0
@@ -29,7 +29,8 @@ b = b_input
 r_in = r_inner
 r_out = r_outer
 
-path_file = '../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
+path_file = '../cs'+str(cs)+'km/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
+# path_file = '../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
 
 ## DATA FROM MODEL
 v = -1.*np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/line_profile_i'+str(round(incl_deg, 2))+'.txt', 'r')]))
