@@ -12,16 +12,16 @@ plt.rc('legend', fontsize='large')
 
 speed_light = 299792.458                     #km/s
 cs = '10'
-species = 'OI'
-mdot = 'nonorm'
+species = 'NeII'
+mdot = 'mdot10e-9'
 
 ## GET THE DATA FROM THE OUTPUT FILE FROM FORTRAN ##
 # incl_deg = 90.0
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 90.0
-b_input = 2.00
+incl_deg = 45.0
+b_input = 0.75
 r_inner = 1.0
 r_outer = 9.5
 
@@ -67,7 +67,7 @@ gauss_telescope = gaussian(v,norm,0.,sigma_telescope)
 
 ## CONVOLUTION ##
 convolution = np.convolve(line_flux, gauss_telescope, mode="same")
-convolution = convolution / np.amax(convolution)
+convolution = convolution #/ np.amax(convolution)
 
 plt.figure()
 plt.plot(v, convolution, color='b', label='convolution')
