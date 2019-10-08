@@ -22,7 +22,7 @@ mdot = 'mdot10e-9'
 # r_out = input("And the outer radius: ")
 incl_deg = 45.0
 b_input = 0.75
-r_inner = 1.0
+r_inner = 0.1
 r_outer = 9.5
 
 b = b_input
