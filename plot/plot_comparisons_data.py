@@ -436,16 +436,16 @@ fwhm4 = np.array(fwhm4)*2.
 
 ## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
-vcentr_data = [0.3, -0.4, 0.91, -1.3, -5.3, -0.3, 0.4, -2.5, 5., -12., -4.6]
-err_vcentr = [1.1, 0.5, 0.9, 5., 0.6, 5., 5., 3.6, 5.1, 5., 5.]
-fwhm_data = [26., 14.5, 18., 13., 25.4, 12., 25., 29., 67., 15., 18.] # km/s
-err_fwhm = [2., 0.4, 2., 1.2, 0.9, 1., 0.7, 1.5, 4., 1., 2.]
+vcentr_data = [0.3, -0.4, 0.91, -1.3, -5.3, -0.3, 0.4, -2.5, 5., -12., -4.6, 0.0]
+err_vcentr = [1.1, 0.5, 0.9, 5., 0.6, 5., 5., 3.6, 5.1, 5., 5., 0.7]
+fwhm_data = [26., 14.5, 18., 13., 25.4, 12., 25., 29., 67., 15., 18., 8.2] # km/s
+err_fwhm = [2., 0.4, 2., 1.2, 0.9, 1., 0.7, 1.5, 4., 1., 2., 0.6]
 ## Broad Component
 fwhm_data1 = [96., 54., 111., 67., 177., 53., 86., 162., 223., 44., 36.] # km/s
 err_fwhm1 = [4.6, 2., 6., 2., 7., 5., 3., 10., 17., 6., 6.]
 
-incl_data = [71., 20., 39., 60., 26., 9., 55., 38., 66., 35., 50.]
-ID = ['AATau', 'AS205N', 'BPTau', 'DFTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RULup', 'VVCrAS']
+incl_data = [71., 20., 39., 60., 26., 9., 55., 38., 66., 35., 50., 7.]
+ID = ['AATau', 'AS205N', 'BPTau', 'DFTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RULup', 'VVCrAS', 'TW Hya']
 
 ## Divide the data in order to plot the ID labels clearly
 vcentr_sx = [-4., -11., 0.5, -4.]
@@ -797,9 +797,9 @@ ratio_sx = np.abs(fwhm_sx)/np.abs(vcentr_sx)
 ratio_down = np.abs(fwhm_down)/np.abs(vcentr_down)
 
 ## Error propagation
-err_ratio = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
-err_ratio_sx = ((np.abs(err_fwhm_sx)/np.abs(vcentr_sx))**2. + (np.abs(err_vcentr_sx)*np.abs(fwhm_sx)/(np.abs(vcentr_sx)**2.))**2.)**0.5
-err_ratio_down = ((np.abs(err_fwhm_down)/np.abs(vcentr_down))**2. + (np.abs(err_vcentr_down)*np.abs(fwhm_down)/(np.abs(vcentr_down)**2.))**2.)**0.5
+err_ratio = (np.abs(fwhm_data)/np.abs(vcentr_data))*((np.abs(err_fwhm)/np.abs(fwhm_data))**2.+(np.abs(err_vcentr)/np.abs(vcentr_data))**2.)**0.5
+err_ratio = (np.abs(fwhm_sx)/np.abs(vcentr_sx))*((np.abs(err_fwhm_sx)/np.abs(fwhm_sx))**2.+(np.abs(err_vcentr_sx)/np.abs(vcentr_sx))**2.)**0.5
+err_ratio = (np.abs(fwhm_down)/np.abs(vcentr_down))*((np.abs(err_fwhm_down)/np.abs(fwhm_down))**2.+(np.abs(err_vcentr_down)/np.abs(vcentr_down))**2.)**0.5
 
 ## Set zero as minimum error for error bars that goes into negative values and maximum the error propagation
 # err_max = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
