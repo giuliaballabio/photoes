@@ -62,7 +62,7 @@ incl_deg = [0.0, 20.0, 45.0, 60.0, 75.0, 90.0]
 r_in = 0.1
 r_out = 9.5
 cs = 10
-species = 'NeII'
+species = 'NeII_newvphi'
 mdot= 'mdot10e-9'
 
 # Model data
