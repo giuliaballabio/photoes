@@ -36,7 +36,7 @@ dtheta = np.pi / len(theta)
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 0.0
+incl_deg = 45.0
 b = 0.75
 r_in = 0.1
 r_out = 9.5
@@ -236,8 +236,10 @@ ne_g = ne_r[i_ng]
 # plt.figure()
 plt.loglog(radius*Rg/au, ne_r, 'k')
 plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$n_{cr}$')
+# plt.annotate(n_cr, (radius[len(radius)-1]*Rg/au+1., n_cr+1.), color='r')
 plt.vlines(Rg/au, ne_r[0], ne_r[len(ne_r)-1], 'b', label='$R_g$')
-plt.annotate(ne_g, (Rg/au+0.5, ne_g+1.0), color='k')
+# plt.annotate(Rg/au, (ne_r[0], Rg/au+0.5), color='b')
+plt.annotate("{:.2e}".format(ne_g), (Rg/au+0.5, ne_g+1.), color='k')
 # plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 plt.xlabel(r'R / AU',fontsize=15)
 plt.ylabel(r'$n_e$', fontsize=15)
