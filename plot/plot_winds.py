@@ -36,13 +36,13 @@ dtheta = np.pi / len(theta)
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 90.0
-b = 1.00
+incl_deg = 0.0
+b = 0.75
 r_in = 0.1
 r_out = 9.5
 cs = 10.
 str_cs = 10
-mdot = 'nonorm'
+mdot = 'mdot10e-9'
 
 ## ––––– choose the species ––––– ##
 species = 'NeII'
@@ -225,12 +225,19 @@ plt.savefig('../data_hydro/'+str(species)+'/line_flux.pdf', format='pdf', bbox_i
 plt.show()
 plt.close()
 
+while(radius[i]<Rg):
+    i += 1
+i_ng = i
+ne_g = ne_r[i_ng]
+
 ne_r = []
 for i in range(len(radius)):
     ne_r.append(n_e[i][0])
 # plt.figure()
 plt.loglog(radius*Rg/au, ne_r, 'k')
-plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$n_{cr}$')
+plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r--', label=r'$n_{cr}$')
+plt.vlines(ne_r[0], ne_r[len(ne_r)-1], Rg, 'b', label='$R_g$')
+plt.annotate(ne_g, (Rg, ne_g), color='k')
 # plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 plt.xlabel(r'R / AU',fontsize=15)
 plt.ylabel(r'$n_e$', fontsize=15)
