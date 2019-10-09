@@ -201,7 +201,7 @@ for i in range(len(radius)):
     for j in range(len(theta)):
         ## N.B. n_cr is in cm^-3 so must be also n_e and dV
         dV[i][j] = (2.*np.pi) * radius[i]*Rg * radius[i]*Rg * np.sin(theta[j]) * dr[i]*Rg * dtheta[j]
-        n_e[i][j] = rho_hydro_2d[i][j]*rhog * (ng/rhog)
+        n_e[i][j] = rho_2d[i][j]*rhog * (ng/rhog)
         if (n_e[i][j] > 0.0):
             C_ul[i][j] = 1. + (n_cr/n_e[i][j])
             P_u[i][j] = 1. / ((2.*C_ul[i][j]*np.exp(T_ul/Temp)) + 1.)
@@ -211,19 +211,19 @@ for i in range(len(radius)):
 # if (species == 'NeII'):
 #     max_flux = np.amax(cell_flux)
 
-plt.figure()
-CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm() , vmin=1.e-1, vmax=1.e0)
-# plt.contour(r_cr*Rg/au, z_cr*Rg/au, n_cr_2d, color='k')
-cbar = plt.colorbar(CS)
-# plt.axis([0., 20., 0., 15.])
-plt.xlabel(r'R / AU',fontsize=15)
-plt.ylabel(r'z / AU',fontsize=15)
-cbar.set_label(r'Log(L)') # / L_{\odot}
-# plt.savefig(str(path_file)+'/line_flux.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('../data_hydro/'+str(species)+'/line_flux.png', format='png', bbox_inches='tight', dpi=300)
-plt.savefig('../data_hydro/'+str(species)+'/line_flux.pdf', format='pdf', bbox_inches='tight', dpi=300)
-# plt.show()
-plt.close()
+# plt.figure()
+# CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm() , vmin=1.e-1, vmax=1.e0)
+# # plt.contour(r_cr*Rg/au, z_cr*Rg/au, n_cr_2d, color='k')
+# cbar = plt.colorbar(CS)
+# # plt.axis([0., 20., 0., 15.])
+# plt.xlabel(r'R / AU',fontsize=15)
+# plt.ylabel(r'z / AU',fontsize=15)
+# cbar.set_label(r'Log(L)') # / L_{\odot}
+# # plt.savefig(str(path_file)+'/line_flux.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('../data_hydro/'+str(species)+'/line_flux.png', format='png', bbox_inches='tight', dpi=300)
+# plt.savefig('../data_hydro/'+str(species)+'/line_flux.pdf', format='pdf', bbox_inches='tight', dpi=300)
+# # plt.show()
+# plt.close()
 
 ne_r = []
 for i in range(len(radius)):
