@@ -21,7 +21,7 @@ plt.rcParams['font.family'] = 'serif'
 # plt.rcParams['font.serif'] = 'Helvetica'
 
 ## ––––– create a polar grid ––––– ##
-radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/grid_r.dat', 'r')]))
+radius = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/data_sim/grid_r.dat', 'r')]))
 theta = np.arange(0., 1.3089, np.pi/600.) + (np.pi/12.)
 ## This theta is to plot data_hydro_midplane
 # theta = np.arange(0., 1.5707, np.pi/600.)
@@ -84,10 +84,10 @@ path_file = '../cs'+str(str_cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str(
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/rho_grid.txt', 'r')]))
 v_phi = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/v_grid.txt', 'r')]))
 
-rho_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/rho_mean.dat', 'r')]))
-v_r_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_r_mean.dat', 'r')]))
-v_theta_hydro = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_th_mean.dat', 'r')]))
-v_phi_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/v_phi_mean.dat', 'r')]))
+rho_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/data_sim/rho_mean.dat', 'r')]))
+v_r_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/data_sim/v_r_mean.dat', 'r')]))
+v_theta_hydro = -np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/data_sim/v_th_mean.dat', 'r')]))
+v_phi_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/data_sim/v_phi_mean.dat', 'r')]))
 
 ## ––––– create a grid (r, theta) ––––– ##
 grid_r, grid_theta = np.meshgrid(radius, theta, indexing='ij')
@@ -167,7 +167,7 @@ plt.ylabel(r'z / R$_{g}$',fontsize=15)
 cbar.set_label(r'Log($\rho$ / $\rho_{g}$)')
 # plt.savefig(str(path_file)+'/density_polar.png', format='png', bbox_inches='tight', dpi=300)
 plt.savefig('../data_hydro/'+str(species)+'/density_polar_zoom.png', format='png', bbox_inches='tight', dpi=300)
-plt.show()
+# plt.show()
 plt.close()
 
 plt.figure()
@@ -222,22 +222,22 @@ cbar.set_label(r'Log(L)') # / L_{\odot}
 # plt.savefig(str(path_file)+'/line_flux.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('../data_hydro/'+str(species)+'/line_flux.png', format='png', bbox_inches='tight', dpi=300)
 plt.savefig('../data_hydro/'+str(species)+'/line_flux.pdf', format='pdf', bbox_inches='tight', dpi=300)
-plt.show()
+# plt.show()
 plt.close()
-
-while(radius[i]<Rg):
-    i += 1
-i_ng = i
-ne_g = ne_r[i_ng]
 
 ne_r = []
 for i in range(len(radius)):
     ne_r.append(n_e[i][0])
+i = 1
+while(radius[i]*Rg/au < Rg/au):
+    i += 1
+i_ng = i
+ne_g = ne_r[i_ng]
 # plt.figure()
 plt.loglog(radius*Rg/au, ne_r, 'k')
-plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r--', label=r'$n_{cr}$')
-plt.vlines(ne_r[0], ne_r[len(ne_r)-1], Rg, 'b', label='$R_g$')
-plt.annotate(ne_g, (Rg, ne_g), color='k')
+plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$n_{cr}$')
+plt.vlines(Rg/au, ne_r[0], ne_r[len(ne_r)-1], 'b', label='$R_g$')
+plt.annotate(ne_g, (Rg/au+0.5, ne_g+1.0), color='k')
 # plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 plt.xlabel(r'R / AU',fontsize=15)
 plt.ylabel(r'$n_e$', fontsize=15)
