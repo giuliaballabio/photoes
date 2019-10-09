@@ -36,13 +36,13 @@ dtheta = np.pi / len(theta)
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 45.0
+incl_deg = 0.0
 b = 0.75
 r_in = 0.1
 r_out = 9.5
 cs = 10.
 str_cs = 10
-mdot = 'mdot10e-9'
+mdot = 'mdot10e-10'
 
 ## ––––– choose the species ––––– ##
 species = 'NeII'
@@ -264,3 +264,21 @@ plt.savefig(str(path_file)+'/flux_midplane.png', format='png', dpi=300, bbox_inc
 # plt.savefig('../data_hydro/'+str(species)+'/flux_midplane.png', format='png', bbox_inches='tight')
 plt.show()
 plt.close()
+
+## Calculate ng after the normalization
+l=1
+while(radius[l]*Rg/au < 25.):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
