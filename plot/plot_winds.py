@@ -36,13 +36,13 @@ dtheta = np.pi / len(theta)
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 0.0
+incl_deg = 45.0
 b = 0.75
 r_in = 0.1
 r_out = 9.5
 cs = 10.
 str_cs = 10
-mdot = 'mdot10e-10'
+mdot = 'mdot10e-9'
 
 ## ––––– choose the species ––––– ##
 species = 'NeII'
@@ -82,7 +82,8 @@ else:
 path_file = '../cs'+str(str_cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out)+'/incl_'+str(round(incl_deg, 2))
 
 rho_mean = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/rho_grid.txt', 'r')]))
-v_phi = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/v_grid.txt', 'r')]))
+v_r = np.array(map(float, [lines.split()[0] for lines in open(str(path_file)+'/v_grid.txt', 'r')]))
+v_phi = np.array(map(float, [lines.split()[1] for lines in open(str(path_file)+'/v_grid.txt', 'r')]))
 
 rho_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/data_sim/rho_mean.dat', 'r')]))
 v_r_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/data_sim/v_r_mean.dat', 'r')]))
@@ -94,6 +95,7 @@ grid_r, grid_theta = np.meshgrid(radius, theta, indexing='ij')
 dr, dtheta = np.meshgrid(dr, dtheta, indexing='ij')
 
 rho_2d = rho_mean.reshape(len(radius), len(theta))
+v_r_2d = v_r.reshape(len(radius), len(theta))
 v_phi_2d = v_phi.reshape(len(radius), len(theta))
 rho_hydro_2d = rho_hydro.reshape(len(radius), len(theta))
 v_phi_hydro_2d = v_phi_hydro.reshape(len(radius), len(theta))
@@ -183,12 +185,32 @@ plt.savefig(str(path_file)+'/keplerian_velocity.png', format='png', bbox_inches=
 # plt.show()
 plt.close()
 
+## ––––– Convert to physical units  ––––– ##
+radius = radius * Rg / au
+dr = dr * Rg / au
+rho_2d = rho_2d * rhog / (Msun/(au**3.))
+v_r_2d = v_r_2d * cs * 1.e-5
+
+# ## ––––– Normalizing the density ––––– ##
+# l=1
+# while(radius[l] < 25.):
+#     l += 1
+# l_25 = l
+# dA = np.zeros((len(theta)))
+# dmass = np.zeros((len(theta)))
+# # print type(dA), type(radius), type(theta), type(rho_2d)
+# for j in range(len(theta)):
+#     dA[j] = radius[l_25] * radius[l_25] * np.sin(theta[j]) * dtheta[j]
+#     dmass[j] = rho_2d[l_25][j] * v_r_2d[l_25][j] * dA[j]
+# Mdot_25 = np.sum(dmass)
+# print Mdot_25
+
 ## ––––– Creating a 2D map of the flux ––––– ##
 v_th = cs / ((m_atom)**0.5)
 Temp = T_gas * (cs/10.)**2.
-nu = speed_light/lambda_ion
-A_hnu = A_ul*h_planck*nu
-constants = Ab*A_hnu*X_ion
+nu = speed_light / lambda_ion
+A_hnu = A_ul * h_planck * nu
+constants = Ab * A_hnu * X_ion
 
 dV = np.zeros((len(radius), len(theta)))
 r_cr = np.zeros((len(theta)))
@@ -200,8 +222,8 @@ cell_flux = np.zeros((len(radius), len(theta)))
 for i in range(len(radius)):
     for j in range(len(theta)):
         ## N.B. n_cr is in cm^-3 so must be also n_e and dV
-        dV[i][j] = (2.*np.pi) * radius[i]*Rg * radius[i]*Rg * np.sin(theta[j]) * dr[i]*Rg * dtheta[j]
-        n_e[i][j] = rho_2d[i][j]*rhog * (ng/rhog)
+        dV[i][j] = (2.*np.pi) * radius[i] * radius[i] * np.sin(theta[j]) * dr[i] * dtheta[j]
+        n_e[i][j] = rho_2d[i][j] * (ng/rhog) * (Msun/(au**3))
         if (n_e[i][j] > 0.0):
             C_ul[i][j] = 1. + (n_cr/n_e[i][j])
             P_u[i][j] = 1. / ((2.*C_ul[i][j]*np.exp(T_ul/Temp)) + 1.)
@@ -212,8 +234,8 @@ for i in range(len(radius)):
 #     max_flux = np.amax(cell_flux)
 
 # plt.figure()
-# CS = plt.pcolormesh(r*Rg/au, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm() , vmin=1.e-1, vmax=1.e0)
-# # plt.contour(r_cr*Rg/au, z_cr*Rg/au, n_cr_2d, color='k')
+# CS = plt.pcolormesh(r, z*Rg/au, cell_flux/np.amax(cell_flux), cmap='inferno', norm=LogNorm() , vmin=1.e-1, vmax=1.e0)
+# # plt.contour(r_cr, z_cr*Rg/au, n_cr_2d, color='k')
 # cbar = plt.colorbar(CS)
 # # plt.axis([0., 20., 0., 15.])
 # plt.xlabel(r'R / AU',fontsize=15)
@@ -229,14 +251,14 @@ ne_r = []
 for i in range(len(radius)):
     ne_r.append(n_e[i][0])
 i = 1
-while(radius[i]*Rg/au < Rg/au):
+while(radius[i] < Rg/au):
     i += 1
 i_ng = i
 ne_g = ne_r[i_ng]
 # plt.figure()
-plt.loglog(radius*Rg/au, ne_r, 'k')
-plt.hlines(n_cr, radius[0]*Rg/au, radius[len(radius)-1]*Rg/au, 'r', label=r'$n_{cr}$')
-# plt.annotate(n_cr, (radius[len(radius)-1]*Rg/au+1., n_cr+1.), color='r')
+plt.loglog(radius, ne_r, 'k')
+plt.hlines(n_cr, radius[0], radius[len(radius)-1], 'r', label=r'$n_{cr}$')
+# plt.annotate(n_cr, (radius[len(radius)-1]+1., n_cr+1.), color='r')
 plt.vlines(Rg/au, ne_r[0], ne_r[len(ne_r)-1], 'b', label='$R_g$')
 # plt.annotate(Rg/au, (ne_r[0], Rg/au+0.5), color='b')
 plt.annotate("{:.2e}".format(ne_g), (Rg/au+0.5, ne_g+1.), color='k')
@@ -253,8 +275,8 @@ flux_r = []
 for i in range(len(radius)):
     flux_r.append(cell_flux[i][1]/np.amax(cell_flux))
 plt.figure()
-plt.loglog(radius*Rg/au, flux_r, 'k')
-plt.plot(radius*Rg/au, (radius*Rg/au)**(-b), 'r', label='$R^{-b}$')
+plt.loglog(radius, flux_r, 'k')
+plt.plot(radius, (radius)**(-b), 'r', label='$R^{-b}$')
 # plt.yscale('log')
 # plt.axis([1.e-2, 50., 1.e-3, 1.e3])
 plt.xlabel(r'R / AU',fontsize=15)
@@ -262,23 +284,5 @@ plt.ylabel(r'Flux(R)', fontsize=15)
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/flux_midplane.png', format='png', dpi=300, bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/flux_midplane.png', format='png', bbox_inches='tight')
-plt.show()
+# plt.show()
 plt.close()
-
-## Calculate ng after the normalization
-l=1
-while(radius[l]*Rg/au < 25.):
-
-
-
-
-
-
-
-
-
-
-
-
-
-
