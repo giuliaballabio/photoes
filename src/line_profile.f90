@@ -52,7 +52,7 @@ real,parameter                       :: au=1.496d13,year=31536000.0,G=6.672d-8
 real,parameter                       :: km=6.6846d-9,s=3.171d-8,eV=1.60218d-12
 real,parameter                       :: Msun=1.989d33,Lsun=3.826d33,Mstar=1.*Msun,MJ=1.898d30
 real,parameter                       :: pi=3.14159,m_h=1.6726d-24,mu=1.,m_e=9.1094d-28
-real,parameter                       :: cs=10.0d5 
+real,parameter                       :: cs=10.0d5
 real,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
 real,parameter                       :: CC=0.14,Phi_star=1.0d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
@@ -153,8 +153,8 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1 
-r_outer=9.5 
+r_inner=0.1
+r_outer=9.5
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -197,8 +197,8 @@ theta_max=atan(y_stream(npoints)/x_stream(npoints))
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
 write(*,*) 'Normalizing the streamlines...'
-b_input=1.50 
-ub=0.56 
+b_input=1.50
+ub=0.56
 b=b_input
 
 rho2d(:,:)=0.0 !1.5e-17
@@ -444,8 +444,6 @@ write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total flux =',tot_flux/Lsun,'Lsun'
 write(*,*) '-----------------------------------------------------------'
 
-stop
-
 !! CREATE VELOCITY ARRAY !!
 do l=1,n_v
     v(l)=l*0.1-80.
@@ -456,8 +454,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=0.0 
-str_i='0.0' 
+incl_deg=0.0
+str_i='0.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
