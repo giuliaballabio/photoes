@@ -9,7 +9,8 @@
 !
 !        N.B. run the code with these flags:
 !        > gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow -pedantic
-!           -finit-real=snan -fbounds-check -g -fopenmp -o output line_profile.f90
+!           -finit-real=snan -fdefault-real-8 -fdefault-double-8 -fbounds-check -g
+!           -fopenmp -o output line_profile.f90
 !        or alternatively with:
 !        > ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o output
 !           line_profile.f90
@@ -30,13 +31,15 @@ real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 real,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
 real,dimension(1:n)                  :: rho_stream,v_r_stream,v_theta_stream
 real,dimension(1:n_theta)            :: theta,sinth,costh,centre_theta
-real,dimension(1:n_theta)            :: dA,dmass
+! real,dimension(1:n_theta)            :: dA,dmass,dmass_ng
+real,dimension(1:n_r)                :: dA,dmass,dmass_ng
+real,dimension(1:n_r)                :: dS
 real,dimension(1:n_phi)              :: phi,sinphi,cosphi
 real                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input,ub,theta_max
 real                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot,Mdot_25
 !real                                 :: t_in,t_fin
 real,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d,Rb
-real,dimension(1:n_r,1:n_theta)      :: rho,n_e,v_r,v_theta,v_phi
+real,dimension(1:n_r,1:n_theta)      :: rho,rho_ng,n_e,v_r,v_theta,v_phi
 real,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
 real,dimension(1:n_v)                :: v,line_flux
 real                                 :: Rg,ng,rhog,vth,vel_convert,nu,A_hnu,constants,Temp
@@ -341,48 +344,67 @@ enddo
 close(210)
 
 !! COMPUTE THE MASS FLUX FROM THE ANALYTHICAL MODEL !!
-write(*,*) 'Calculating the mass flux...'
-do j=1,n_theta
-    dA(j)=r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
-    dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
+! write(*,*) 'Calculating the mass flux at the outer radius...'
+! do j=1,n_theta
+!     dA(j)=r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
+!     dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
+! enddo
+! Mdot=sum(dmass) !*n_phi
+! write(*,*) '-----------------------------------------------------------'
+! write(*,*) '   Total mass flux =',Mdot,'Msun/yr'
+! write(*,*) '-----------------------------------------------------------'
+
+write(*,*) 'Calculating the mass flux at the base of the wind...'
+do i=1,n_r
+    dA(i)=r(i)*dr(i)
+    dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
 enddo
-Mdot=sum(dmass) !*n_phi
+Mdot=sum(dmass)
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total mass flux =',Mdot,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
-
 l=1
 do while (r(l).le.25.)
     l=l+1
 enddo
 l_25=l
-do j=1,n_theta
-    dA(j)=r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
-    dmass(j)=rho(l_25,j)*v_r(l_25,j)*dA(j)
+Mdot_25=0.0
+dmass=0.0
+do i=1,l_25
+    dA(i)=r(i)*dr(i)
+    dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
 enddo
-Mdot_25=sum(dmass) !*n_phi
+Mdot_25=sum(dmass)
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Mass flux (r<25 au) =',Mdot_25,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
 
-!! NORMALIZE THE DENSITY SUCH AS Mdot(r<25au) = 10^-9 Msun/yr
-rho(:,:)=rho(:,:)*(1.d-9/Mdot_25)
-do j=1,n_theta
-    dA(j)=r_out(l_25)*r_out(l_25)*sinth(j)*dtheta
-    dmass(j)=rho(l_25,j)*v_r(l_25,j)*dA(j)
+!! NORMALIZE THE DENSITY SUCH AS Mdot(r<25au) = 10^-10 Msun/yr
+rho_ng(:,:)=rho(:,:)/ng
+rho(:,:)=rho(:,:)*(1.d-10/Mdot_25)
+Mdot_25=0.0
+dmass=0.0
+do i=1,l_25
+    dA(i)=r(i)*dr(i)
+    dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
 enddo
-Mdot_25=sum(dmass) !*n_phi
+Mdot_25=sum(dmass)
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Normalised mass flux (r<25 au) =',Mdot_25,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
-
-do j=1,n_theta
-    dA(j)=r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
-    dmass(j)=rho(l_out,j)*v_r(l_out,j)*dA(j)
+!! Define the density without the correction for ng
+Mdot=0.0
+dmass=0.0
+do i=1,n_r
+    dA(i)=r(i)*dr(i)
+    dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
+    dmass_ng(i)=rho_ng(i,250)*v_theta(i,250)*dA(i)
 enddo
-Mdot=sum(dmass) !*n_phi
+Mdot=sum(dmass)
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Normalised total mass flux =',Mdot,'Msun/yr'
+write(*,*) '-----------------------------------------------------------'
+write(*,*) '   Normalised ng =',Mdot/sum(dmass_ng)
 write(*,*) '-----------------------------------------------------------'
 
 !! COMPUTE THE FLUX FOR A SINGLE CELL !!
@@ -422,6 +444,8 @@ tot_flux=sum(cell_flux)*n_phi
 write(*,*) '-----------------------------------------------------------'
 write(*,*) '   Total flux =',tot_flux/Lsun,'Lsun'
 write(*,*) '-----------------------------------------------------------'
+
+stop
 
 !! CREATE VELOCITY ARRAY !!
 do l=1,n_v
