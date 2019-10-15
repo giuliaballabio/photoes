@@ -25,7 +25,7 @@ use omp_lib
 implicit none
 
 integer                              :: i,j,k,l,npoints,l_in,l_out,l_25
-integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d7
+integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d7
 real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !real,dimension(1:n_r-1)             :: dr
 real,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
@@ -83,7 +83,7 @@ write(*,*) 'ng/rhog =',ng/rhog
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 !! The values of radii are in units of Rg
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=112,file='../../../../../src/grid_r.dat')
+open(unit=112,file='../../../../../src/grid_r_30.dat')
 do i=1,n_r
     read(112,*) r(i)
 enddo
@@ -154,7 +154,7 @@ close(145)
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
 r_inner=0.1
-r_outer=9.5
+r_outer=30.0
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -228,6 +228,13 @@ do i=l_in,l_out
             v_phi2d(i,j)=0.d0 !0.05
         endif
     enddo
+enddo
+
+!! SET THE DENSITY AT THE BASE EQUAL TO ZERO FOR r > 10Rg !!
+do i=l_in,l_out
+    if (centre_r(i)>10.) then
+        rho2d(i,250)=0.d0
+    endif
 enddo
 
 if(.not.init) then
