@@ -11,7 +11,7 @@
 !
 !         N.B. run the code with these flags:
 !        > gfortran -Wunused-variable -Wextra -ffpe-trap=invalid,zero,overflow
-!           -finit-real=snan -pedantic -fbounds-check -g -o output program.f90
+!           -finit-real=snan -fno-range-check -pedantic -fbounds-check -g -o output program.f90
 !        or alternatively with:
 !        > ifort -g -check all -fpe0 -warn -traceback -debug extended -qopenmp -o output
 !           program.f90
@@ -22,7 +22,7 @@ program selfsimilar
 
 implicit none
 integer                                          :: i
-integer,parameter                                :: n=10000000
+integer,parameter                                :: n=10e12
 double precision,parameter                       :: cs=10.0d5
 double precision,parameter                       :: pi=3.141592  !!,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
 double precision                                 :: b,ub,reff0,gm,b_input
