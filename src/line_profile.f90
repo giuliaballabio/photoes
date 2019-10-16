@@ -162,7 +162,7 @@ do while (r(l).le.r_inner)
 enddo
 l_in=l
 l=1
-do while (r(l).l.r_outer)
+do while (r(l).lt.r_outer)
     l=l+1
 enddo
 l_out=l
