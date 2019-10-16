@@ -25,7 +25,7 @@ use omp_lib
 implicit none
 
 integer                              :: i,j,k,l,npoints,l_in,l_out,l_25
-integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=1d12
+integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
 real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !real,dimension(1:n_r-1)             :: dr
 real,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
