@@ -1,12 +1,13 @@
           implicit real*8(a-h,o-z)
 c
-          b=1.00
+          b_input=1.00
           gm=0.0
           n=0
           pi=4.*datan(1.d0)
           x0=1.
           y0=0.
-          u0=0.77
+          ub=0.77
+          u0=ub
           phi=datan(y0/x0)
           th=0.5*pi
           reff0=u0**2.*x0/b
