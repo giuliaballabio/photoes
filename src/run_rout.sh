@@ -20,9 +20,9 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				echo "up to b="${array_b[i]}", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
 				# Update the code with the new variables
-				sed -i -e "s/b_input=.*/          b_input=${array_b[i]} /g" selfsimilar_solutions.f
-				sed -i -e "s/ub=.*/          ub=${array_ub[i]} /g" selfsimilar_solutions.f
-				# sed -i -e "s/cs=.*/          cs=$cs /g" selfsimilar_solutions.f
+				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f
+				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" selfsimilar_solutions.f
+				# sed -i -e "s/cs=.*/cs=$cs /g" selfsimilar_solutions.f
 				# sed -i -e "s/species_flag=.*/species_flag=$species_flag /g" line_profile.f90
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" line_profile.f90
 				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" line_profile.f90
@@ -37,7 +37,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 				sed -i -e "s/#PBS -N .*/#PBS -N photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl/g" submit-job-alice
 
 				# Actually compile the code
-				ifort -g -check all -fpe0 -fpp -r8 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
+				gfortran -Wunused-variable -fno-range-check -Wextra -ffpe-trap=invalid,zero,overflow -finit-real=snan -pedantic -fbounds-check -g -o selfsimilar_solutions selfsimilar_solutions.f
+				#ifort -g -check all -fpe0 -fpp -r8 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o selfsimilar_solutions selfsimilar_solutions.f
 				ifort -g -check all -fpe0 -fpp -r8 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o photoes line_profile.f90
 				# gfortran -Wunused-variable -fdefault-real-8 -fdefault-double-8 -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o selfsimilar_solutions selfsimilar_solutions.f90
 				# gfortran -Wunused-variable -fdefault-real-8 -fdefault-double-8 -Wextra -ffpe-trap=invalid,zero,overflow -pedantic -finit-real=snan -fbounds-check -g -fopenmp -o photoes line_profile.f90
@@ -66,6 +67,8 @@ for ((i=0;i<${#array_b[@]};++i)); do
 
 				# Submit the job on dial or alice
 				cd $RUNDIR/../cs$string_cs\kms/$species/$mdot/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
+				rm photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.*
+
 				qsub submit-job-alice
 				#qsub $RUNDIR/../submit-job-dial
 				cd $RUNDIR
