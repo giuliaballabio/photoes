@@ -3,27 +3,26 @@
 
 RUNDIR=${PWD}
 
-array_b=( 0.75 1.00 1.50 ) #2.00 )
-array_ub=( 0.85 0.77 0.56 ) #0.29 )
+array_b=( 0.75 1.00 1.50 2.00 )
+array_ub=( 0.85 0.77 0.56 0.29 )
 
 cs=10.0d5
 string_cs=10
-species=OI # REMEMBER to change it also in line_profile.f90
-mdot=nonorm # REMEMBER to change it also in line_profile.f90
+species=NeII # REMEMBER to change it also in line_profile.f90
+mdot=mdot10e-10 # REMEMBER to change it also in line_profile.f90
 
 for ((i=0;i<${#array_b[@]};++i)); do
   # echo "(${array_b[i]}, ${array_ub[i]})"
 	for r_inner in 0.1; do
-		for r_outer in 5.0 5.5 6.0 6.5 7.0 7.5 8.0 8.5 9.0 9.5; do
-			for incl in 0.0 5.0 10.0 15.0 20.0 25.0 30.0 35.0 40.0 45.0 50.0 55.0 60.0 65.0 70.0 75.0 80.0 85.0 90.0; do
-			# for incl in 2. 7. 12. 17. 22. 27. 32. 37. 42. 47. 52. 57. 62. 67. 72. 77. 82. 87.; do
+		for r_outer in 30.0; do
+			for incl in 0.0 20.0 30.0 45.0 60.0 75.0 90.0; do
 
 				echo "up to b="${array_b[i]}", R_out="$r_outer "and R_in="$r_inner "for i="$incl
 
 				# Update the code with the new variables
-				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" selfsimilar_solutions.f90
-				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" selfsimilar_solutions.f90
-				sed -i -e "s/cs=.*/cs=$cs /g" selfsimilar_solutions.f90
+				sed -i -e "s/b_input=.*/          b_input=${array_b[i]} /g" selfsimilar_solutions.f
+				sed -i -e "s/ub=.*/          ub=${array_ub[i]} /g" selfsimilar_solutions.f
+				# sed -i -e "s/cs=.*/          cs=$cs /g" selfsimilar_solutions.f
 				# sed -i -e "s/species_flag=.*/species_flag=$species_flag /g" line_profile.f90
 				sed -i -e "s/b_input=.*/b_input=${array_b[i]} /g" line_profile.f90
 				sed -i -e "s/ub=.*/ub=${array_ub[i]} /g" line_profile.f90
