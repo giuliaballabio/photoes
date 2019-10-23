@@ -42,8 +42,8 @@ for i in range(len(incl_deg)):
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        err_vpeak1.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        err_fwhm1.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+        # err_vpeak1.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        # err_fwhm1.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f1.close()
 v_peak2 = []
 v_centr2 = []
@@ -56,8 +56,8 @@ for i in range(len(incl_deg)):
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        err_vpeak2.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        err_fwhm2.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+        # err_vpeak2.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        # err_fwhm2.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f2.close()
 v_peak3 = []
 v_centr3 = []
@@ -70,8 +70,8 @@ for i in range(len(incl_deg)):
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        err_vpeak3.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        err_fwhm3.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+        # err_vpeak3.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        # err_fwhm3.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f3.close()
 v_peak4 = []
 v_centr4 = []
@@ -84,8 +84,8 @@ for i in range(len(incl_deg)):
         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        err_vpeak4.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        err_fwhm4.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+        # err_vpeak4.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        # err_fwhm4.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f4.close()
 
 ## WE NEED TO PLOT THE FWHM, NOT HALF
