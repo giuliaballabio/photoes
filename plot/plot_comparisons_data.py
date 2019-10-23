@@ -34,42 +34,58 @@ for j in range(len(b)):
 v_peak1 = []
 v_centr1 = []
 fwhm1 = []
+err_vpeak1 = []
+err_fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_vpeak1.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        err_fwhm1.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f1.close()
 v_peak2 = []
 v_centr2 = []
 fwhm2 = []
+err_vpeak2 = []
+err_fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_vpeak2.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        err_fwhm2.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f2.close()
 v_peak3 = []
 v_centr3 = []
 fwhm3 = []
+err_vpeak3 = []
+err_fwhm3 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
         lines = f3.readlines()[10:]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_vpeak3.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        err_fwhm3.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f3.close()
 v_peak4 = []
 v_centr4 = []
 fwhm4 = []
+err_vpeak4 = []
+err_fwhm4 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
         lines = f4.readlines()[10:]
         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_vpeak4.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        err_fwhm4.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f4.close()
 
 ## WE NEED TO PLOT THE FWHM, NOT HALF
@@ -183,32 +199,44 @@ for j in range(len(cs)):
 v_peak1 = []
 v_centr1 = []
 fwhm1 = []
+err_vpeak1 = []
+err_fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_vpeak1.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        err_fwhm1.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f1.close()
 v_peak2 = []
 v_centr2 = []
 fwhm2 = []
+err_vpeak2 = []
+err_fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_vpeak2.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        err_fwhm2.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f2.close()
 v_peak3 = []
 v_centr3 = []
 fwhm3 = []
+err_vpeak3 = []
+err_fwhm3 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
         lines = f3.readlines()[10:]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_vpeak3.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+        err_fwhm3.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
 f3.close()
 
 ## WE NEED TO PLOT THE FWHM, NOT HALF
@@ -218,8 +246,11 @@ fwhm3 = np.array(fwhm3)*2.
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.fill_between(incl_deg, np.abs(v_peak1)-err_vpeak1, np.abs(v_peak1)+err_vpeak1, color='#c6dbef', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.fill_between(incl_deg, np.abs(v_peak2)-err_vpeak2, np.abs(v_peak2)+err_vpeak2, color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.fill_between(incl_deg, np.abs(v_peak3)-err_vpeak3, np.abs(v_peak3)+err_vpeak3, color='#08306b', alpha=0.5)
 plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
