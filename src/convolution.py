@@ -79,8 +79,8 @@ dv = np.array(dv)
 #     add1 = gauss_telescope[i]*line_flux[i]*dv[i]
 
 ## TEST THE CONVOLUTION PYTHON LIBRARY WITH THE DELTA FUNCTION
-deltafunc = signal.unit_impulse(8,3)
-conv_delta = signal.fftconvolve(line_flux, deltafunc, mode='same')
+# deltafunc = signal.unit_impulse(8,3)
+# conv_delta = signal.fftconvolve(line_flux, deltafunc, mode='same')
 
 plt.figure()
 plt.plot(v, convolution, color='b', label='convolution')
