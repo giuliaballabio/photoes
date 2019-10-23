@@ -93,7 +93,7 @@ plt.legend(loc='best')
 plt.savefig(str(path_file)+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 ## FIT THE CONVOLUTION WITH A GAUSSIAN
 ## FIND THE VELOCITY AT THE PEAK OF THE CONVOLUTION
@@ -138,7 +138,7 @@ plt.legend(loc='best')
 plt.savefig(str(path_file)+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 ## CALCULATE THE CHI-SQUARE TEST FOR THE FIT
 ## To compute one standard deivation of the parameters use:
