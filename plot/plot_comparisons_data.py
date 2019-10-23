@@ -299,8 +299,11 @@ plt.show()
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.fill_between(incl_deg, np.abs(fwhm1)-err_fwhm1, np.abs(fwhm1)+err_fwhm1, color='#c6dbef', alpha=0.5)
 plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.fill_between(incl_deg, np.abs(fwhm2)-err_fwhm2, np.abs(fwhm2)+err_fwhm2, color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.fill_between(incl_deg, np.abs(fwhm3)-err_fwhm3, np.abs(fwhm3)+err_fwhm3, color='#08306b', alpha=0.5)
 plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
