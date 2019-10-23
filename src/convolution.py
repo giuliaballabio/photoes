@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
+from scipy import signal
 
 plt.style.use('classic')
 plt.rc('font', family='serif')
@@ -10,7 +11,6 @@ plt.rc('axes', titlesize='xx-large')
 plt.rc('axes', labelsize='xx-large')
 plt.rc('legend', fontsize='large')
 
-speed_light = 299792.458                     #km/s
 cs = '10'
 species = 'NeII'
 mdot = 'mdot10e-9'
@@ -60,26 +60,40 @@ def gaussian(x,norm,mean,sigma):
 # VISIR R=30000
 # MIKE R=19000 25000
 R = 30000.
+speed_light = 299792.458                     #km/s
 delta_v = speed_light / R
 sigma_telescope = delta_v / 2.
-norm = 1./np.sqrt(2. * np.pi * sigma_telescope**2.)
+norm = (2. * np.pi * sigma_telescope * sigma_telescope)**(-0.5)
 gauss_telescope = gaussian(v,norm,0.,sigma_telescope)
 
 ## CONVOLUTION ##
-convolution = np.convolve(line_flux, gauss_telescope, mode="same")
-convolution = convolution #/ np.amax(convolution)
+convolution = signal.fftconvolve(line_flux, gauss_telescope, mode='same')
+convolution = convolution / np.max(convolution)
+
+dv = []
+for i in range(len(v)-1):
+    dv.append(v[i+1]-v[i])
+dv = np.array(dv)
+
+# for i in range(len(v)):
+#     add1 = gauss_telescope[i]*line_flux[i]*dv[i]
+
+## TEST THE CONVOLUTION PYTHON LIBRARY WITH THE DELTA FUNCTION
+deltafunc = signal.unit_impulse(8,3)
+conv_delta = signal.fftconvolve(line_flux, deltafunc, mode='same')
 
 plt.figure()
 plt.plot(v, convolution, color='b', label='convolution')
-plt.plot(v, line_flux / np.amax(line_flux), color='r', label='line')
+plt.plot(v, line_flux / np.max(line_flux), color='r', label='line')
 plt.xlabel(r'v [$\frac{km}{s}$]')
 plt.ylabel(r'Normalized L(v)')
 plt.tight_layout()
+plt.axis([-40., 40., 0., 1.2])
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/convolution_R'+str(R)+'.png', format='png', bbox_inches='tight')
-# plt.show()
+plt.show()
 
 ## FIT THE CONVOLUTION WITH A GAUSSIAN
 ## FIND THE VELOCITY AT THE PEAK OF THE CONVOLUTION
@@ -107,7 +121,10 @@ def FWHM(X,Y):
 sigma_conv = FWHM(v,convolution)/2.
 
 ## FIND THE PARAMETERS OF THE GAUSSIAN FIT
-popt,pcov = curve_fit(gaussian,v,convolution,p0=[1.,v_peak_conv,sigma_conv[0]])
+## p0=[1,mean,sigma]
+## popt is the optimal values for the parameters so that the sum of the squared residuals is minimized
+## pcov is the estimated covariance of popt; the diagonals provide the variance of the parameter estimate
+popt, pcov = curve_fit(gaussian,v,convolution,p0=[1.,v_peak_conv,sigma_conv[0]])
 
 plt.figure()
 plt.plot(v, line_flux / np.amax(line_flux), color='r', label='Model')
@@ -117,12 +134,15 @@ plt.xlabel(r'v [$\frac{km}{s}$]')
 plt.ylabel(r'Normalized L(v)')
 plt.tight_layout()
 plt.axis([-40., 40., 0., 1.2])
-plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg - i = '+str(incl_deg))
 plt.legend(loc='best')
 plt.savefig(str(path_file)+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro_midplane/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
 # plt.savefig('../data_hydro/'+str(species)+'/incl_'+str(round(incl_deg, 2))+'/gaussian_fit_R'+str(R)+'.png', format='png', bbox_inches='tight')
-# plt.show()
+plt.show()
+
+## CALCULATE THE CHI-SQUARE TEST FOR THE FIT
+## To compute one standard deivation of the parameters use:
+perr = np.sqrt(np.diag(pcov))
 
 ## CALCULATE THE CUMULATIVE FUNCTION
 ## PYTHON MODULE TO CALCULATE THE CUMULATIVE FUNCTION
@@ -171,6 +191,6 @@ f.write(str(v_peak)+'\t\t\t'+str(v_peak_conv)+'\t\t\t'+str(sigma_conv[0])+'\n')
 f.write('\n')
 f.write('------------------------------------------------------------------------------- \n')
 f.write('PROPERTIES OF THE GAUSSIAN FIT \n')
-f.write('Velocity at peak [km/s] \t Centroid velocity [km/s] \t Half FWHM \n')
-f.write(str(popt[1])+'\t\t\t'+str(v_centr)+'\t\t\t'+str(popt[2]))
+f.write('Velocity at peak [km/s] \t Centroid velocity [km/s] \t Half FWHM \t Error on the mean \t Error on the FWHM \n')
+f.write(str(popt[1])+'\t\t\t'+str(v_centr)+'\t\t\t'+str(popt[2])+'\t\t\t'+str(perr[1])+'\t\t\t'+str(perr[2]))
 f.close()
