@@ -248,11 +248,11 @@ bottom1 = np.abs(v_peak1)-np.array(err_vpeak1)
 
 print v_peak1
 print err_vpeak1
-print bottom1[0]
+print bottom1
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, bottom1[0], np.abs(v_peak1)+np.array(err_vpeak1), color='#c6dbef', alpha=0.5)
+plt.fill_between(incl_deg, bottom1, np.abs(v_peak1)+np.array(err_vpeak1), color='#c6dbef', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 plt.fill_between(incl_deg, np.abs(v_peak2)-np.array(err_vpeak2), np.abs(v_peak2)+np.array(err_vpeak2), color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
