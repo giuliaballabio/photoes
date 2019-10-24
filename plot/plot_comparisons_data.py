@@ -244,11 +244,9 @@ fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
 
-bottom1 = []
-top1 = []
 for i in range(len(v_peak1)):
-    bottom1.append(np.abs(v_peak1[i])-np.array(err_vpeak1[i]))
-    top1.append(np.abs(v_peak1[i])+np.array(err_vpeak1[i]))
+    bottom1[i] = np.abs(v_peak1[i])-np.array(err_vpeak1[i])
+    top1[i] = np.abs(v_peak1[i])+np.array(err_vpeak1[i])
 
 print v_peak1
 print err_vpeak1
