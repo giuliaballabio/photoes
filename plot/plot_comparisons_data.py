@@ -243,14 +243,14 @@ f3.close()
 fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
-v_peak1 = np.reshape(v_peak1, (len(v_peak1),0))
-err_vpeak1 = np.reshape(err_vpeak1, (len(err_vpeak1,0)))
+v_peak1 = np.array(v_peak1)
+err_vpeak1 = np.array(err_vpeak1)
 
 bottom1 = []
 top1 = []
 for i in range(len(v_peak1)):
-    bottom1.append(np.abs(v_peak1[i])-err_vpeak1[i])
-    top1.append(np.abs(v_peak1[i])+err_vpeak1[i])
+    bottom1.append(np.abs(v_peak1[i][0])-err_vpeak1[i][0])
+    top1.append(np.abs(v_peak1[i][0])+err_vpeak1[i][0])
 bottom1 = np.array(bottom1)
 top1 = np.array(top1)
 incl_deg = np.array(incl_deg)
