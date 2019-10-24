@@ -246,27 +246,33 @@ fwhm3 = np.array(fwhm3)*2.
 v_peak1 = np.array(v_peak1)
 err_vpeak1 = np.array(err_vpeak1)
 
-bottom1 = []
-top1 = []
+bottom_vpeak1 = []
+bottom_vpeak2 = []
+bottom_vpeak3 = []
+top_vpeak1 = []
+top_vpeak2 = []
+top_vpeak3 = []
 for i in range(len(v_peak1)):
-    bottom1.append(np.abs(v_peak1[i][0])-err_vpeak1[i][0])
-    top1.append(np.abs(v_peak1[i][0])+err_vpeak1[i][0])
-bottom1 = np.array(bottom1)
-top1 = np.array(top1)
-incl_deg = np.array(incl_deg)
-
-print incl_deg.shape
-print v_peak1.shape
-print err_vpeak1.shape
-print bottom1
+    bottom_vpeak1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1[i][0]))
+    bottom_vpeak2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
+    bottom_vpeak3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
+    top_vpeak1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1[i][0]))
+    top_vpeak2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
+    top_vpeak3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
+bottom_vpeak1 = np.array(bottom_vpeak1)
+bottom_vpeak2 = np.array(bottom_vpeak2)
+bottom_vpeak3 = np.array(bottom_vpeak3)
+top_vpeak1 = np.array(top_vpeak1)
+top_vpeak2 = np.array(top_vpeak2)
+top_vpeak3 = np.array(top_vpeak3)
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, bottom1, top1, color='#c6dbef', alpha=0.5)
+plt.fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#c6dbef', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.fill_between(incl_deg, np.abs(v_peak2)-np.array(err_vpeak2), np.abs(v_peak2)+np.array(err_vpeak2), color='#2171b5', alpha=0.5)
+plt.fill_between(incl_deg, bottom_vpeak2, top_vpeak2, color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.fill_between(incl_deg, np.abs(v_peak3)-np.array(err_vpeak3), np.abs(v_peak3)-np.array(err_vpeak3), color='#08306b', alpha=0.5)
+plt.fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.5)
 plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
@@ -313,13 +319,33 @@ plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str
 plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
+bottom_fwhm1 = []
+bottom_fwhm2 = []
+bottom_fwhm3 = []
+top_fwhm1 = []
+top_fwhm2 = []
+top_fwhm3 = []
+for i in range(len(v_peak1)):
+    bottom_fwhm1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1[i][0]))
+    bottom_fwhm2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
+    bottom_fwhm3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
+    top_fwhm1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1[i][0]))
+    top_fwhm2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
+    top_fwhm3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
+bottom_fwhm1 = np.array(bottom_fwhm1)
+bottom_fwhm2 = np.array(bottom_fwhm2)
+bottom_fwhm3 = np.array(bottom_fwhm3)
+top_fwhm1 = np.array(top_fwhm1)
+top_fwhm2 = np.array(top_fwhm2)
+top_fwhm3 = np.array(top_fwhm3)
+
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, np.abs(fwhm1)-np.array(err_fwhm1), np.abs(fwhm1)+np.array(err_fwhm1), color='#c6dbef', alpha=0.5)
+plt.fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#c6dbef', alpha=0.5)
 plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.fill_between(incl_deg, np.abs(fwhm2)-np.array(err_fwhm2), np.abs(fwhm2)+np.array(err_fwhm2), color='#2171b5', alpha=0.5)
+plt.fill_between(incl_deg, bottom_fwhm2, top_fwhm2, color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.fill_between(incl_deg, np.abs(fwhm3)-np.array(err_fwhm3), np.abs(fwhm3)+np.array(err_fwhm3), color='#08306b', alpha=0.5)
+plt.fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.5)
 plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
