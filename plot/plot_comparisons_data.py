@@ -249,8 +249,8 @@ err_vpeak1 = np.array(err_vpeak1)
 bottom1 = []
 top1 = []
 for i in range(len(v_peak1)):
-    bottom1.append(np.abs(v_peak1[i])-np.array(err_vpeak1[i]))
-    top1.append(np.abs(v_peak1[i])+np.array(err_vpeak1[i]))
+    bottom1.append(np.abs(v_peak1[i])-err_vpeak1[i])
+    top1.append(np.abs(v_peak1[i])+err_vpeak1[i])
 
 print v_peak1
 print err_vpeak1
