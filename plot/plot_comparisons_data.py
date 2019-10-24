@@ -244,6 +244,9 @@ fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
 
+print v_peak1
+print err_vpeak1
+print np.abs(v_peak1)-np.array(err_vpeak1)
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
