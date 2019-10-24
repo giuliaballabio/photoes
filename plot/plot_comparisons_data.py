@@ -149,7 +149,7 @@ plt.tight_layout()
 plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
 plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# plt.show()
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
@@ -174,7 +174,7 @@ plt.tight_layout()
 plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
 plt.savefig('./observables/'+str(species)+'/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT cs ----------------------
 
@@ -253,6 +253,7 @@ for i in range(len(v_peak1)):
     top1.append(np.abs(v_peak1[i])+err_vpeak1[i])
 bottom1 = np.array(bottom1)
 top1 = np.array(top1)
+incl_deg = np.array(incl_deg)
 
 print incl_deg.shape
 print v_peak1.shape
