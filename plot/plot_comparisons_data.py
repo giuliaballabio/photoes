@@ -243,7 +243,7 @@ f3.close()
 fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
-v_peak1 = np.reshape(v_peak, (len(v_peak1),0))
+v_peak1 = np.reshape(v_peak1, (len(v_peak1),0))
 err_vpeak1 = np.reshape(err_vpeak1, (len(err_vpeak1,0)))
 
 bottom1 = []
