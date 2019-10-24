@@ -102,26 +102,26 @@ incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hy
 ## CONSIDER THE DATA FROM Sacco et al. 2012
 ## RX J1615.3-3255 IS TAKEN FROM de Boer et al. 2016
 vpeak_data = [-10.5, -4.4, -7.5, -8.3, -10.5] # km/s
-err_vpeak = [2.7, 2.1, 2.8, 2.7, 2.0]
+err_vpeak_data = [2.7, 2.1, 2.8, 2.7, 2.0]
 fwhm_data = [44.9, 15.9, 20.5, 15.1, 22.5]
-err_fwhm = [3.2, 1.4, 2.7, 1.2, 0.5]
+err_fwhm_data = [3.2, 1.4, 2.7, 1.2, 0.5]
 incl_data = [75.0, 30.0, 47.0, 20.0, 35.0]
 #incl_data = [75.0, 30.0, 5.0, 20.0, 35.0]
 ID = ['T Cha', 'MP Mus', 'RX J1615.3-3255', 'SR 21', 'V4046 Sgr']
 
 ## WE PLOT ALSO THE DATA FROM Pascucci & Sterzik 2009
 vpeak_data2 = [-6.2, -3.3, -4.7]
-err_vpeak2 = [0.3, 0.7, 2.5]
+err_vpeak_data2 = [0.3, 0.7, 2.5]
 fwhm_data2 = [14.6, 27., 42.]
-err_fwhm2 = [0.7, 2., 4.]
+err_fwhm_data2 = [0.7, 2., 4.]
 incl_data2 = [4.0, 45.0, 75.0]
 name = ['TW Hya', 'CS Cha', 'T Cha']
 
 ## MORE DATA FROM Baldovic-Saavedra et al. 2012
 vpeak_data3 = [-2.13, -3.6, -2.9]
-err_vpeak3 = [6.5, 1.5, 0.7]
+err_vpeak_data3 = [6.5, 1.5, 0.7]
 fwhm_data3 = [26., 55.2, 26.8]
-err_fwhm3 = [3.4, 3.3, 1.7]
+err_fwhm_data3 = [3.4, 3.3, 1.7]
 incl_data3 = [60.0, 87.0, 35.0]
 name3 = ['V892 Tau', 'CoKu Tau 1', 'FS Tau A']
 
@@ -131,13 +131,13 @@ plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2
 plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
 # plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
 # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
@@ -156,13 +156,13 @@ plt.plot(incl_deg, np.abs(v_peak1), color='#fecc5c', linestyle='-', linewidth=2.
 plt.plot(incl_deg, np.abs(v_peak2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
 plt.plot(incl_deg, np.abs(v_peak3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
 # plt.plot(incl_deg, np.abs(v_peak4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
@@ -244,20 +244,21 @@ fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
 
+
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.fill_between(incl_deg, np.abs(v_peak1)-np.array(err_vpeak1), np.abs(v_peak1)+np.array(err_vpeak1), color='#c6dbef', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 plt.fill_between(incl_deg, np.abs(v_peak2)-np.array(err_vpeak2), np.abs(v_peak2)+np.array(err_vpeak2), color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.fill_between(incl_deg, np.abs(v_peak3)-np.array(err_vpeak3), np.abs(v_peak3)+np.array(err_vpeak3), color='#08306b', alpha=0.5)
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+plt.fill_between(incl_deg, np.abs(v_peak3)-np.array(err_vpeak3), np.abs(v_peak3)-np.array(err_vpeak3), color='#08306b', alpha=0.5)
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
@@ -276,13 +277,13 @@ plt.figure()
 plt.plot(incl_deg, np.abs(v_centr1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, np.abs(v_centr2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 plt.plot(incl_deg, np.abs(v_centr3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
@@ -304,13 +305,13 @@ plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker=
 plt.fill_between(incl_deg, np.abs(fwhm2)-np.array(err_fwhm2), np.abs(fwhm2)+np.array(err_fwhm2), color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
 plt.fill_between(incl_deg, np.abs(fwhm3)-np.array(err_fwhm3), np.abs(fwhm3)+np.array(err_fwhm3), color='#08306b', alpha=0.5)
-plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+plt.errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 for i in range(len(name3)):
     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
 plt.xlabel(r'$i \, [^{\circ}]$')
@@ -326,9 +327,9 @@ plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 ## Error propagation
-err_ratio2 = ((np.abs(err_fwhm2)/np.abs(vpeak_data2))**2. + (np.abs(err_vpeak2)*np.abs(fwhm_data2)/(np.abs(vpeak_data2)**2.))**2.)**0.5
-err_ratio3 = ((np.abs(err_fwhm3)/np.abs(vpeak_data3))**2. + (np.abs(err_vpeak3)*np.abs(fwhm_data3)/(np.abs(vpeak_data3)**2.))**2.)**0.5
-err_ratio = ((np.abs(err_fwhm)/np.abs(vpeak_data))**2. + (np.abs(err_vpeak)*np.abs(fwhm_data)/(np.abs(vpeak_data)**2.))**2.)**0.5
+err_ratio2 = ((np.abs(err_fwhm_data2)/np.abs(vpeak_data2))**2. + (np.abs(err_vpeak_data2)*np.abs(fwhm_data2)/(np.abs(vpeak_data2)**2.))**2.)**0.5
+err_ratio3 = ((np.abs(err_fwhm_data3)/np.abs(vpeak_data3))**2. + (np.abs(err_vpeak_data3)*np.abs(fwhm_data3)/(np.abs(vpeak_data3)**2.))**2.)**0.5
+err_ratio = ((np.abs(err_fwhm_data)/np.abs(vpeak_data))**2. + (np.abs(err_vpeak_data)*np.abs(fwhm_data)/(np.abs(vpeak_data)**2.))**2.)**0.5
 
 plt.figure()
 plt.plot(incl_deg, fwhm1/np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
@@ -381,13 +382,13 @@ plt.show()
 # plt.plot(np.abs(v_centr1), fwhm1, color='#c6dbef', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 # plt.plot(np.abs(v_centr2), fwhm2, color='#2171b5', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 # plt.plot(np.abs(v_centr3), fwhm3, color='#08306b', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-# plt.errorbar(np.abs(vpeak_data2), np.abs(fwhm_data2), xerr=err_vpeak2, yerr=err_fwhm2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+# plt.errorbar(np.abs(vpeak_data2), np.abs(fwhm_data2), xerr=err_vpeak_data2, yerr=err_fwhm_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 # for i in range(len(name)):
 #     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
-# plt.errorbar(np.abs(vpeak_data3), np.abs(fwhm_data3), xerr=err_vpeak3, yerr=err_fwhm3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+# plt.errorbar(np.abs(vpeak_data3), np.abs(fwhm_data3), xerr=err_vpeak_data3, yerr=err_fwhm_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
 # for i in range(len(name3)):
 #     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
-# plt.errorbar(np.abs(vpeak_data), np.abs(fwhm_data), xerr=err_vpeak, yerr=err_fwhm, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+# plt.errorbar(np.abs(vpeak_data), np.abs(fwhm_data), xerr=err_vpeak_data, yerr=err_fwhm_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
 # for i in range(len(ID)):
 #     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
 # plt.xlabel(r'$- v_{centroid} \, [km/s]$')
