@@ -251,6 +251,8 @@ top1 = []
 for i in range(len(v_peak1)):
     bottom1.append(np.abs(v_peak1[i])-err_vpeak1[i])
     top1.append(np.abs(v_peak1[i])+err_vpeak1[i])
+bottom1 = np.array(bottom1)
+top1 = np.array(top1)
 
 print v_peak1
 print err_vpeak1
