@@ -209,13 +209,14 @@ for i in range(len(incl_deg)):
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f1.close()
+for i in range(len(incl_deg)):
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines2 = f1.readlines()[15:]
         err_vpeak1_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
         err_vpeak1_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
         err_fwhm1_inf.append(map(float, [x.split('\t\t\t')[2] for x in lines2]))
         err_fwhm1_sup.append(map(float, [x.split('\t\t\t')[3] for x in lines2]))
-# for i in range(len(incl_deg)):
-#     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
 f1.close()
 v_peak2 = []
 v_centr2 = []
