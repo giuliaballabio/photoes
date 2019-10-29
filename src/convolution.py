@@ -190,7 +190,7 @@ plt.tight_layout()
 # plt.legend([h[0]], ['$\chi^2 = 1.0$'])
 # plt.axis([0.,3.,5.,20.])
 plt.savefig(str(path_file)+'/chisquare_jk.png', format='png', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 ## FIND THE ERROR BARS ON v_peak AND FWHM
 k = 0
@@ -206,7 +206,7 @@ plt.plot(mean[idx_mean], chisq[idx_mean,k_bestsigma], 'bo')
 plt.xlabel(r'$v_{peak}$')
 plt.ylabel(r'$Reduced\,\chi^2$')
 plt.savefig(str(path_file)+'/chisquare_vpeak.png', format='png', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 err_mean_inf = np.abs(popt[1]-mean[idx_mean[0]])
 err_mean_sup = np.abs(popt[1]-mean[idx_mean[1]])
@@ -224,7 +224,7 @@ plt.plot(sigma[idx_sigma], chisq[j_bestmean,idx_sigma], 'bo')
 plt.xlabel(r'$FWHM$')
 plt.ylabel(r'$Reduced\,\chi^2$')
 plt.savefig(str(path_file)+'/chisquare_width.png', format='png', bbox_inches='tight')
-plt.show()
+# plt.show()
 
 err_sigma_inf = np.abs(popt[2]-sigma[idx_sigma[0]])
 err_sigma_sup = np.abs(popt[2]-sigma[idx_sigma[1]])
