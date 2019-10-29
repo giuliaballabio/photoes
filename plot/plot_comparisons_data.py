@@ -273,10 +273,10 @@ top_vpeak1 = []
 # top_vpeak2 = []
 # top_vpeak3 = []
 for i in range(len(v_peak1)):
-    bottom_vpeak1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0]))
+    bottom_vpeak1.append((np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0]))
 #     bottom_vpeak2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
 #     bottom_vpeak3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
-    top_vpeak1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0]))
+    top_vpeak1.append((np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0]))
 #     top_vpeak2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
 #     top_vpeak3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
 bottom_vpeak1 = np.array(bottom_vpeak1)
