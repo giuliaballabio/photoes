@@ -266,29 +266,29 @@ fwhm1 = np.array(fwhm1)*2.
 # fwhm2 = np.array(fwhm2)*2.
 # fwhm3 = np.array(fwhm3)*2.
 
-# bottom_vpeak1 = []
+bottom_vpeak1 = []
 # bottom_vpeak2 = []
 # bottom_vpeak3 = []
-# top_vpeak1 = []
+top_vpeak1 = []
 # top_vpeak2 = []
 # top_vpeak3 = []
-# for i in range(len(v_peak1)):
-#     bottom_vpeak1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1[i][0]))
+for i in range(len(v_peak1)):
+    bottom_vpeak1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0]))
 #     bottom_vpeak2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
 #     bottom_vpeak3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
-#     top_vpeak1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1[i][0]))
+    top_vpeak1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0]))
 #     top_vpeak2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
 #     top_vpeak3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
-# bottom_vpeak1 = np.array(bottom_vpeak1)
+bottom_vpeak1 = np.array(bottom_vpeak1)
 # bottom_vpeak2 = np.array(bottom_vpeak2)
 # bottom_vpeak3 = np.array(bottom_vpeak3)
-# top_vpeak1 = np.array(top_vpeak1)
+top_vpeak1 = np.array(top_vpeak1)
 # top_vpeak2 = np.array(top_vpeak2)
 # top_vpeak3 = np.array(top_vpeak3)
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, err_vpeak1_inf, err_vpeak1_sup, facecolor='#c6dbef', edgecolor='None', alpha=0.5)
+plt.fill_between(incl_deg, bottom_vpeak1, top_vpeak1, facecolor='#c6dbef', edgecolor='None', alpha=0.5)
 # plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 # plt.fill_between(incl_deg, err_vpeak2_inf, err_vpeak2_sup, facecolor='#2171b5', edgecolor='None', alpha=0.5)
 # plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
