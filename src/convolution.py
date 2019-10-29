@@ -149,7 +149,7 @@ def gaussfunc(x,mean,sigma):
     return 1./(sigma*np.sqrt(2.*np.pi))*np.exp(-(x-mean)**2./(2.*sigma**2.))
 
 mean = np.arange(-10., 10., 0.25)
-sigma = np.arange(4., 20., 0.25)
+sigma = np.arange(1., 20., 0.25)
 mean_grid, sigma_grid = np.meshgrid(mean, sigma, indexing='ij')
 
 def chi2reduced(x,y):
