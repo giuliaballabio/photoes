@@ -273,10 +273,10 @@ top_vpeak1 = []
 # top_vpeak2 = []
 # top_vpeak3 = []
 for i in range(len(v_peak1)):
-    bottom_vpeak1.append((np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0]))
+    bottom_vpeak1.append(np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0])
 #     bottom_vpeak2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
 #     bottom_vpeak3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
-    top_vpeak1.append((np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0]))
+    top_vpeak1.append(np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0])
 #     top_vpeak2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
 #     top_vpeak3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
 bottom_vpeak1 = np.array(bottom_vpeak1)
@@ -339,29 +339,29 @@ plt.show()
 # plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 # plt.show()
 #
-# bottom_fwhm1 = []
+bottom_fwhm1 = []
 # bottom_fwhm2 = []
 # bottom_fwhm3 = []
-# top_fwhm1 = []
+top_fwhm1 = []
 # top_fwhm2 = []
 # top_fwhm3 = []
-# for i in range(len(v_peak1)):
-#     bottom_fwhm1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1[i][0]))
+for i in range(len(v_peak1)):
+    bottom_fwhm1.append(np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0])
 #     bottom_fwhm2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
 #     bottom_fwhm3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
-#     top_fwhm1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1[i][0]))
+    top_fwhm1.append(np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0])
 #     top_fwhm2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
 #     top_fwhm3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
-# bottom_fwhm1 = np.array(bottom_fwhm1)
+bottom_fwhm1 = np.array(bottom_fwhm1)
 # bottom_fwhm2 = np.array(bottom_fwhm2)
 # bottom_fwhm3 = np.array(bottom_fwhm3)
-# top_fwhm1 = np.array(top_fwhm1)
+top_fwhm1 = np.array(top_fwhm1)
 # top_fwhm2 = np.array(top_fwhm2)
 # top_fwhm3 = np.array(top_fwhm3)
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, err_fwhm1_inf, err_fwhm1_sup, color='#c6dbef', alpha=0.5)
+plt.fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#c6dbef', alpha=0.5)
 # plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
 # plt.fill_between(incl_deg, err_fwhm2_inf, err_fwhm2_sup, color='#2171b5', alpha=0.5)
 # plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
