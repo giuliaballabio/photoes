@@ -26,7 +26,6 @@ for ((i=0;i<${#array_b[@]};++i)); do
         			python convolution.py
 
 							cd $RUNDIR/../cs$cs\kms/$species/$mdot/data_b${array_b[i]}\_r$r_inner\_r$r_outer/incl_$incl
-							rm photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.o2*
 							cp photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.o* photoes_b${array_b[i]}\_r$r_inner\_r$r_outer\_i$incl.txt
 
         			cd $RUNDIR
