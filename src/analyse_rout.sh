@@ -3,12 +3,12 @@
 
 RUNDIR=${PWD}
 
-array_b=( 0.75 1.00 1.50 ) #2.00 )
-array_ub=( 0.85 0.77 0.56 ) #0.29 )
+array_b=( 1.00 ) #( 0.75 1.00 1.50 ) #2.00 )
+array_ub=( 0.77 ) #( 0.85 0.77 0.56 ) #0.29 )
 
 cs=10
-species=OI
-mdot=nonorm
+species=NeII
+mdot=mdot10e-9
 
 for ((i=0;i<${#array_b[@]};++i)); do
 	for r_inner in 0.1; do
