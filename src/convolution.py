@@ -24,7 +24,7 @@ mdot = 'mdot10e-9'
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 45.0
+incl_deg = 0.0
 b_input = 0.75
 r_inner = 0.1
 r_outer = 9.5
@@ -149,7 +149,7 @@ def gaussfunc(x,mean,sigma):
     return 1./(sigma*np.sqrt(2.*np.pi))*np.exp(-(x-mean)**2./(2.*sigma**2.))
 
 mean = np.arange(-10., 10., 0.25)
-sigma = np.arange(5., 20., 0.25)
+sigma = np.arange(4., 20., 0.25)
 mean_grid, sigma_grid = np.meshgrid(mean, sigma, indexing='ij')
 
 def chi2reduced(x,y):
@@ -217,17 +217,17 @@ while(mean[j] <= popt[1]):
 j_bestmean = j
 idx_sigma = np.argwhere(np.diff(np.sign(chisq[j_bestmean,:] - 1.))).flatten()
 plt.figure()
-plt.plot(sigma, chisq[j_bestmean,:], 'r')
-plt.plot([min(sigma),max(sigma)], [1.,1.], 'k')
-plt.plot([popt[2],popt[2]], [min(chisq[j_bestmean,:]),max(chisq[j_bestmean,:])], 'k')
-plt.plot(sigma[idx_sigma], chisq[j_bestmean,idx_sigma], 'bo')
+plt.plot(2.*sigma, chisq[j_bestmean,:], 'r')
+plt.plot([2.*min(sigma),2.*max(sigma)], [1.,1.], 'k')
+plt.plot([2.*popt[2],2.*popt[2]], [min(chisq[j_bestmean,:]),max(chisq[j_bestmean,:])], 'k')
+plt.plot(2.*sigma[idx_sigma], chisq[j_bestmean,idx_sigma], 'bo')
 plt.xlabel(r'$FWHM$')
 plt.ylabel(r'$Reduced\,\chi^2$')
 plt.savefig(str(path_file)+'/chisquare_width.png', format='png', bbox_inches='tight')
 # plt.show()
 
-err_sigma_inf = np.abs(popt[2]-sigma[idx_sigma[0]])
-err_sigma_sup = np.abs(popt[2]-sigma[idx_sigma[1]])
+err_sigma_inf = 2.*np.abs(popt[2]-sigma[idx_sigma[0]])
+err_sigma_sup = 2.*np.abs(popt[2]-sigma[idx_sigma[1]])
 
 ## CALCULATE THE CUMULATIVE FUNCTION
 ## PYTHON MODULE TO CALCULATE THE CUMULATIVE FUNCTION
