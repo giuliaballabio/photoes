@@ -274,11 +274,11 @@ top_vpeak1 = []
 # top_vpeak3 = []
 for i in range(len(v_peak1)):
     bottom_vpeak1.append(np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0])
-#     bottom_vpeak2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
-#     bottom_vpeak3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
+#     bottom_vpeak2.append(np.abs(v_peak2[i][0])-err_vpeak2[i][0])
+#     bottom_vpeak3.append(np.abs(v_peak3[i][0])-err_vpeak3[i][0])
     top_vpeak1.append(np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0])
-#     top_vpeak2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
-#     top_vpeak3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
+#     top_vpeak2.append(np.abs(v_peak2[i][0])+err_vpeak2[i][0])
+#     top_vpeak3.append(np.abs(v_peak3[i][0])+err_vpeak3[i][0])
 bottom_vpeak1 = np.array(bottom_vpeak1)
 # bottom_vpeak2 = np.array(bottom_vpeak2)
 # bottom_vpeak3 = np.array(bottom_vpeak3)
@@ -345,13 +345,13 @@ bottom_fwhm1 = []
 top_fwhm1 = []
 # top_fwhm2 = []
 # top_fwhm3 = []
-for i in range(len(v_peak1)):
-    bottom_fwhm1.append(np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0])
-#     bottom_fwhm2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
-#     bottom_fwhm3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
-    top_fwhm1.append(np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0])
-#     top_fwhm2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
-#     top_fwhm3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
+for i in range(len(fwhm1)):
+    bottom_fwhm1.append(np.abs(fwhm1[i][0])-err_fwhm1_inf[i][0])
+#     bottom_fwhm2.append(np.abs(fwhm2[i][0])-err_fwhm2_inf[i][0])
+#     bottom_fwhm3.append(np.abs(fwhm3[i][0])-err_fwhm3_inf[i][0])
+    top_fwhm1.append(np.abs(fwhm1[i][0])+err_fwhm1_sup[i][0])
+#     top_fwhm2.append(np.abs(fwhm2[i][0])+err_fwhm2_sup[i][0])
+#     top_fwhm3.append(np.abs(fwhm3[i][0])+err_fwhm3_sup[i][0])
 bottom_fwhm1 = np.array(bottom_fwhm1)
 # bottom_fwhm2 = np.array(bottom_fwhm2)
 # bottom_fwhm3 = np.array(bottom_fwhm3)
