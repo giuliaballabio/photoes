@@ -199,80 +199,99 @@ for j in range(len(cs)):
 v_peak1 = []
 v_centr1 = []
 fwhm1 = []
-err_vpeak1 = []
-err_fwhm1 = []
+err_vpeak1_inf = []
+err_vpeak1_sup = []
+err_fwhm1_inf = []
+err_fwhm1_sup = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
         lines = f1.readlines()[10:]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        err_vpeak1.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        err_fwhm1.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+        lines = f1.readlines()[15:]
+        err_vpeak1_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        err_vpeak1_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        err_fwhm1_inf.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_fwhm1_sup.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
 f1.close()
 v_peak2 = []
 v_centr2 = []
 fwhm2 = []
-err_vpeak2 = []
-err_fwhm2 = []
+err_vpeak2_inf = []
+err_vpeak2_sup = []
+err_fwhm2_inf = []
+err_fwhm2_sup = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
         lines = f2.readlines()[10:]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        err_vpeak2.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        err_fwhm2.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+        lines = f2.readlines()[15:]
+        err_vpeak2_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        err_vpeak2_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        err_fwhm2_inf.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_fwhm2_sup.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
 f2.close()
 v_peak3 = []
 v_centr3 = []
 fwhm3 = []
-err_vpeak3 = []
-err_fwhm3 = []
+err_vpeak3_inf = []
+err_vpeak3_sup = []
+err_fwhm3_inf = []
+err_fwhm3_sup = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
         lines = f3.readlines()[10:]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        err_vpeak3.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        err_fwhm3.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+        lines = f3.readlines()[15:]
+        err_vpeak3_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+        err_vpeak3_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+        err_fwhm3_inf.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+        err_fwhm3_sup.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
 f3.close()
 
 ## WE NEED TO PLOT THE FWHM, NOT HALF
 fwhm1 = np.array(fwhm1)*2.
 fwhm2 = np.array(fwhm2)*2.
 fwhm3 = np.array(fwhm3)*2.
-v_peak1 = np.array(v_peak1)
-err_vpeak1 = np.array(err_vpeak1)
 
-bottom_vpeak1 = []
-bottom_vpeak2 = []
-bottom_vpeak3 = []
-top_vpeak1 = []
-top_vpeak2 = []
-top_vpeak3 = []
-for i in range(len(v_peak1)):
-    bottom_vpeak1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1[i][0]))
-    bottom_vpeak2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
-    bottom_vpeak3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
-    top_vpeak1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1[i][0]))
-    top_vpeak2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
-    top_vpeak3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
-bottom_vpeak1 = np.array(bottom_vpeak1)
-bottom_vpeak2 = np.array(bottom_vpeak2)
-bottom_vpeak3 = np.array(bottom_vpeak3)
-top_vpeak1 = np.array(top_vpeak1)
-top_vpeak2 = np.array(top_vpeak2)
-top_vpeak3 = np.array(top_vpeak3)
+# bottom_vpeak1 = []
+# bottom_vpeak2 = []
+# bottom_vpeak3 = []
+# top_vpeak1 = []
+# top_vpeak2 = []
+# top_vpeak3 = []
+# for i in range(len(v_peak1)):
+#     bottom_vpeak1.append(np.abs(np.abs(v_peak1[i][0])-err_vpeak1[i][0]))
+#     bottom_vpeak2.append(np.abs(np.abs(v_peak2[i][0])-err_vpeak2[i][0]))
+#     bottom_vpeak3.append(np.abs(np.abs(v_peak3[i][0])-err_vpeak3[i][0]))
+#     top_vpeak1.append(np.abs(np.abs(v_peak1[i][0])+err_vpeak1[i][0]))
+#     top_vpeak2.append(np.abs(np.abs(v_peak2[i][0])+err_vpeak2[i][0]))
+#     top_vpeak3.append(np.abs(np.abs(v_peak3[i][0])+err_vpeak3[i][0]))
+# bottom_vpeak1 = np.array(bottom_vpeak1)
+# bottom_vpeak2 = np.array(bottom_vpeak2)
+# bottom_vpeak3 = np.array(bottom_vpeak3)
+# top_vpeak1 = np.array(top_vpeak1)
+# top_vpeak2 = np.array(top_vpeak2)
+# top_vpeak3 = np.array(top_vpeak3)
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, bottom_vpeak1, top_vpeak1, facecolor='#c6dbef', edgecolor='None', alpha=0.5)
+plt.fill_between(incl_deg, err_vpeak1_inf, err_vpeak1_sup, facecolor='#c6dbef', edgecolor='None', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.fill_between(incl_deg, bottom_vpeak2, top_vpeak2, facecolor='#2171b5', edgecolor='None', alpha=0.5)
+plt.fill_between(incl_deg, err_vpeak2_inf, err_vpeak2_sup, facecolor='#2171b5', edgecolor='None', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.fill_between(incl_deg, bottom_vpeak3, top_vpeak3, facecolor='#08306b', edgecolor='None', alpha=0.5)
+plt.fill_between(incl_deg, err_vpeak3_inf, err_vpeak3_sup, facecolor='#08306b', edgecolor='None', alpha=0.5)
 plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
@@ -341,11 +360,11 @@ top_fwhm3 = np.array(top_fwhm3)
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#c6dbef', alpha=0.5)
+plt.fill_between(incl_deg, err_fwhm1_inf, err_fwhm1_sup, color='#c6dbef', alpha=0.5)
 plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.fill_between(incl_deg, bottom_fwhm2, top_fwhm2, color='#2171b5', alpha=0.5)
+plt.fill_between(incl_deg, err_fwhm2_inf, err_fwhm2_sup, color='#2171b5', alpha=0.5)
 plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.5)
+plt.fill_between(incl_deg, err_fwhm3_inf, err_fwhm3_sup, color='#08306b', alpha=0.5)
 plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
 for i in range(len(name)):
     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
