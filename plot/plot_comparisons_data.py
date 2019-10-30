@@ -890,14 +890,14 @@ plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 
-ratio = np.abs(fwhm_data)/np.abs(vcentr_data)
-ratio_sx = np.abs(fwhm_sx)/np.abs(vcentr_sx)
-ratio_down = np.abs(fwhm_down)/np.abs(vcentr_down)
-
-## Error propagation
-err_ratio = (np.abs(fwhm_data)/np.abs(vcentr_data))*((np.abs(err_fwhm)/np.abs(fwhm_data))**2.+(np.abs(err_vcentr)/np.abs(vcentr_data))**2.)**0.5
-err_ratio = (np.abs(fwhm_sx)/np.abs(vcentr_sx))*((np.abs(err_fwhm_sx)/np.abs(fwhm_sx))**2.+(np.abs(err_vcentr_sx)/np.abs(vcentr_sx))**2.)**0.5
-err_ratio = (np.abs(fwhm_down)/np.abs(vcentr_down))*((np.abs(err_fwhm_down)/np.abs(fwhm_down))**2.+(np.abs(err_vcentr_down)/np.abs(vcentr_down))**2.)**0.5
+# ratio = np.abs(fwhm_data)/np.abs(vcentr_data)
+# ratio_sx = np.abs(fwhm_sx)/np.abs(vcentr_sx)
+# ratio_down = np.abs(fwhm_down)/np.abs(vcentr_down)
+#
+# ## Error propagation
+# err_ratio = (np.abs(fwhm_data)/np.abs(vcentr_data))*((np.abs(err_fwhm)/np.abs(fwhm_data))**2.+(np.abs(err_vcentr)/np.abs(vcentr_data))**2.)**0.5
+# err_ratio = (np.abs(fwhm_sx)/np.abs(vcentr_sx))*((np.abs(err_fwhm_sx)/np.abs(fwhm_sx))**2.+(np.abs(err_vcentr_sx)/np.abs(vcentr_sx))**2.)**0.5
+# err_ratio = (np.abs(fwhm_down)/np.abs(vcentr_down))*((np.abs(err_fwhm_down)/np.abs(fwhm_down))**2.+(np.abs(err_vcentr_down)/np.abs(vcentr_down))**2.)**0.5
 
 ## Set zero as minimum error for error bars that goes into negative values and maximum the error propagation
 # err_max = ((np.abs(err_fwhm)/np.abs(vcentr_data))**2. + (np.abs(err_vcentr)*np.abs(fwhm_data)/(np.abs(vcentr_data)**2.))**2.)**0.5
@@ -920,119 +920,119 @@ err_ratio = (np.abs(fwhm_down)/np.abs(vcentr_down))*((np.abs(err_fwhm_down)/np.a
 # err_ratio_down = np.array([np.array(err_min_down), np.array(err_max_down)])
 
 ## Another way of defining the error bars
-err_min = (np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr))
-err_max = (np.abs(fwhm_data)+np.abs(err_fwhm))/(np.abs(vcentr_data)-np.abs(err_vcentr))
-err_ratio = np.array([np.abs(err_min), np.abs(err_max)])
-err_min_sx = (np.abs(fwhm_sx)-np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)+np.abs(err_vcentr_sx))
-err_max_sx = (np.abs(fwhm_sx)+np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)-np.abs(err_vcentr_sx))
-err_ratio_sx = np.array([np.abs(err_min_sx), np.abs(err_max_sx)])
-err_min_down = (np.abs(fwhm_down)-np.abs(err_fwhm_down))/(np.abs(vcentr_down)+np.abs(err_vcentr_down))
-err_max_down = (np.abs(fwhm_down)+np.abs(err_fwhm_down))/(np.abs(vcentr_down)-np.abs(err_vcentr_down))
-err_ratio_down = np.array([np.abs(err_min_down), np.abs(err_max_down)])
-
-plt.figure()
-plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm2/(np.abs(v_centr2)+1.e-8), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm3/(np.abs(v_centr3)+1.e-8), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data, ratio, yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
-plt.errorbar(incl_sx, ratio_sx, yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
-plt.errorbar(incl_down, ratio_down, yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{centroid})$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., -1., 100.])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
-plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
-
-plt.figure()
-plt.plot(incl_deg, fwhm4/(np.abs(v_centr4)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm5/(np.abs(v_centr5)+1.e-8), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm6/(np.abs(v_centr6)+1.e-8), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vcentr_data), yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
-plt.errorbar(incl_sx, np.abs(fwhm_sx)/np.abs(vcentr_sx), yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
-plt.errorbar(incl_down, np.abs(fwhm_down)/np.abs(vcentr_down), yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{centroid})$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., -1., 100.])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.05), loc='upper left')
-plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
-
-plt.figure()
-plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
-plt.plot(incl_deg, fwhm2/(np.abs(v_centr2)+1.e-8), color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
-plt.plot(incl_deg, fwhm3/(np.abs(v_centr3)+1.e-8), color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-plt.plot(incl_deg, fwhm4/(np.abs(v_centr4)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm5/(np.abs(v_centr5)+1.e-8), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm6/(np.abs(v_centr6)+1.e-8), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.plot([], [], color='k', linestyle='-', linewidth=2.5, label='$R = '+str(R[1])+'$')
-plt.plot([], [], color='k', linestyle='--', linewidth=2.5, label='$R = '+str(R[0])+'$')
-plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vcentr_data), yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
-plt.errorbar(incl_sx, np.abs(fwhm_sx)/np.abs(vcentr_sx), yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
-plt.errorbar(incl_down, np.abs(fwhm_down)/np.abs(vcentr_down), yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{centroid})$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., -1., 100.])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
-
-## --------- PLOT THE RATIO V_PEAK/FWHM ---------- ##
-## Error propagation
-err_ratio = ((np.abs(err_vcentr)/np.abs(fwhm_data))**2. + (np.abs(err_fwhm)*np.abs(vcentr_data)/(np.abs(fwhm_data)**2.))**2.)**0.5
-err_ratio_sx = ((np.abs(err_vcentr_sx)/np.abs(fwhm_sx))**2. + (np.abs(err_fwhm_sx)*np.abs(vcentr_sx)/(np.abs(fwhm_sx)**2.))**2.)**0.5
-err_ratio_down = ((np.abs(err_vcentr_down)/np.abs(fwhm_down))**2. + (np.abs(err_fwhm_down)*np.abs(vcentr_down)/(np.abs(fwhm_down)**2.))**2.)**0.5
-
-plt.figure()
-plt.plot(incl_deg, (np.abs(v_centr4)+1.e-8)/fwhm4, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, (np.abs(v_centr5)+1.e-8)/fwhm5, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, (np.abs(v_centr6)+1.e-8)/fwhm6, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data, np.abs(vcentr_data)/np.abs(fwhm_data), yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(vcentr_data[i])/np.abs(fwhm_data[i]))+0.5), color='k')
-plt.errorbar(incl_sx, np.abs(vcentr_sx)/np.abs(fwhm_sx), yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(vcentr_sx[i])/np.abs(fwhm_sx[i]))-0.4), color='k')
-plt.errorbar(incl_down, np.abs(vcentr_down)/np.abs(fwhm_down), yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(vcentr_down[i])/np.abs(fwhm_down[i]))-1.2), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$(- v_{centroid})/FWHM$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., -0.1, 0.9])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.05), loc='upper left')
-plt.savefig('./observables/'+str(species)+'/vcentroverfwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/vcentroverfwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# err_min = (np.abs(fwhm_data)-np.abs(err_fwhm))/(np.abs(vcentr_data)+np.abs(err_vcentr))
+# err_max = (np.abs(fwhm_data)+np.abs(err_fwhm))/(np.abs(vcentr_data)-np.abs(err_vcentr))
+# err_ratio = np.array([np.abs(err_min), np.abs(err_max)])
+# err_min_sx = (np.abs(fwhm_sx)-np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)+np.abs(err_vcentr_sx))
+# err_max_sx = (np.abs(fwhm_sx)+np.abs(err_fwhm_sx))/(np.abs(vcentr_sx)-np.abs(err_vcentr_sx))
+# err_ratio_sx = np.array([np.abs(err_min_sx), np.abs(err_max_sx)])
+# err_min_down = (np.abs(fwhm_down)-np.abs(err_fwhm_down))/(np.abs(vcentr_down)+np.abs(err_vcentr_down))
+# err_max_down = (np.abs(fwhm_down)+np.abs(err_fwhm_down))/(np.abs(vcentr_down)-np.abs(err_vcentr_down))
+# err_ratio_down = np.array([np.abs(err_min_down), np.abs(err_max_down)])
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+# plt.plot(incl_deg, fwhm2/(np.abs(v_centr2)+1.e-8), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+# plt.plot(incl_deg, fwhm3/(np.abs(v_centr3)+1.e-8), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+# plt.errorbar(incl_data, ratio, yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
+# plt.errorbar(incl_sx, ratio_sx, yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
+# plt.errorbar(incl_down, ratio_down, yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM/(- v_{centroid})$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., -1., 100.])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
+# plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm4/(np.abs(v_centr4)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+# plt.plot(incl_deg, fwhm5/(np.abs(v_centr5)+1.e-8), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+# plt.plot(incl_deg, fwhm6/(np.abs(v_centr6)+1.e-8), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+# plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vcentr_data), yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
+# plt.errorbar(incl_sx, np.abs(fwhm_sx)/np.abs(vcentr_sx), yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
+# plt.errorbar(incl_down, np.abs(fwhm_down)/np.abs(vcentr_down), yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM/(- v_{centroid})$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., -1., 100.])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.05), loc='upper left')
+# plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1/(np.abs(v_centr1)+1.e-8), color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
+# plt.plot(incl_deg, fwhm2/(np.abs(v_centr2)+1.e-8), color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
+# plt.plot(incl_deg, fwhm3/(np.abs(v_centr3)+1.e-8), color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+# plt.plot(incl_deg, fwhm4/(np.abs(v_centr4)+1.e-8), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+# plt.plot(incl_deg, fwhm5/(np.abs(v_centr5)+1.e-8), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+# plt.plot(incl_deg, fwhm6/(np.abs(v_centr6)+1.e-8), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+# plt.plot([], [], color='k', linestyle='-', linewidth=2.5, label='$R = '+str(R[1])+'$')
+# plt.plot([], [], color='k', linestyle='--', linewidth=2.5, label='$R = '+str(R[0])+'$')
+# plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vcentr_data), yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(fwhm_data[i])/np.abs(vcentr_data[i]))+0.5), color='k')
+# plt.errorbar(incl_sx, np.abs(fwhm_sx)/np.abs(vcentr_sx), yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(fwhm_sx[i])/np.abs(vcentr_sx[i]))-0.4), color='k')
+# plt.errorbar(incl_down, np.abs(fwhm_down)/np.abs(vcentr_down), yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(fwhm_down[i])/np.abs(vcentr_down[i]))-1.2), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM/(- v_{centroid})$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., -1., 100.])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+# plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
+#
+# ## --------- PLOT THE RATIO V_PEAK/FWHM ---------- ##
+# ## Error propagation
+# err_ratio = ((np.abs(err_vcentr)/np.abs(fwhm_data))**2. + (np.abs(err_fwhm)*np.abs(vcentr_data)/(np.abs(fwhm_data)**2.))**2.)**0.5
+# err_ratio_sx = ((np.abs(err_vcentr_sx)/np.abs(fwhm_sx))**2. + (np.abs(err_fwhm_sx)*np.abs(vcentr_sx)/(np.abs(fwhm_sx)**2.))**2.)**0.5
+# err_ratio_down = ((np.abs(err_vcentr_down)/np.abs(fwhm_down))**2. + (np.abs(err_fwhm_down)*np.abs(vcentr_down)/(np.abs(fwhm_down)**2.))**2.)**0.5
+#
+# plt.figure()
+# plt.plot(incl_deg, (np.abs(v_centr4)+1.e-8)/fwhm4, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+# plt.plot(incl_deg, (np.abs(v_centr5)+1.e-8)/fwhm5, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+# plt.plot(incl_deg, (np.abs(v_centr6)+1.e-8)/fwhm6, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+# plt.errorbar(incl_data, np.abs(vcentr_data)/np.abs(fwhm_data), yerr=err_ratio, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.5, (np.abs(vcentr_data[i])/np.abs(fwhm_data[i]))+0.5), color='k')
+# plt.errorbar(incl_sx, np.abs(vcentr_sx)/np.abs(fwhm_sx), yerr=err_ratio_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, (np.abs(vcentr_sx[i])/np.abs(fwhm_sx[i]))-0.4), color='k')
+# plt.errorbar(incl_down, np.abs(vcentr_down)/np.abs(fwhm_down), yerr=err_ratio_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, (np.abs(vcentr_down[i])/np.abs(fwhm_down[i]))-1.2), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$(- v_{centroid})/FWHM$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., -0.1, 0.9])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.05), loc='upper left')
+# plt.savefig('./observables/'+str(species)+'/vcentroverfwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/vcentroverfwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
