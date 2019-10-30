@@ -716,32 +716,68 @@ for j in range(len(cs)):
 v_peak1 = []
 v_centr1 = []
 fwhm1 = []
+err_vpeak1_inf = []
+err_vpeak1_sup = []
+err_fwhm1_inf = []
+err_fwhm1_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+        lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f1.close()
+for i in range(len(incl_deg)):
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+        lines2 = f1.readlines()[15:]
+        err_vpeak1_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
+        err_vpeak1_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
+        err_fwhm1_inf.append(map(float, [x.split('\t\t\t')[2] for x in lines2]))
+        err_fwhm1_sup.append(map(float, [x.split('\t\t\t')[3] for x in lines2]))
+f1.close()
 v_peak2 = []
 v_centr2 = []
 fwhm2 = []
+err_vpeak2_inf = []
+err_vpeak2_sup = []
+err_fwhm2_inf = []
+err_fwhm2_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+        lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f2.close()
+for i in range(len(incl_deg)):
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+        lines2 = f2.readlines()[15:]
+        err_vpeak2_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
+        err_vpeak2_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
+        err_fwhm2_inf.append(map(float, [x.split('\t\t\t')[2] for x in lines2]))
+        err_fwhm2_sup.append(map(float, [x.split('\t\t\t')[3] for x in lines2]))
+f2.close()
 v_peak3 = []
 v_centr3 = []
 fwhm3 = []
+err_vpeak3_inf = []
+err_vpeak3_sup = []
+err_fwhm3_inf = []
+err_fwhm3_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+        lines = f3.readlines()[10:11]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+f3.close()
+for i in range(len(incl_deg)):
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+        lines2 = f3.readlines()[15:]
+        err_vpeak3_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
+        err_vpeak3_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
+        err_fwhm3_inf.append(map(float, [x.split('\t\t\t')[2] for x in lines2]))
+        err_fwhm3_sup.append(map(float, [x.split('\t\t\t')[3] for x in lines2]))
 f3.close()
 
 ## WE NEED TO PLOT THE FWHM, NOT HALF
@@ -773,6 +809,26 @@ plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str
 plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
+bottom_vpeak1 = []
+bottom_vpeak2 = []
+bottom_vpeak3 = []
+top_vpeak1 = []
+top_vpeak2 = []
+top_vpeak3 = []
+for i in range(len(v_peak1)):
+    bottom_vpeak1.append(np.abs(v_peak1[i][0])-err_vpeak1_inf[i][0])
+    bottom_vpeak2.append(np.abs(v_peak2[i][0])-err_vpeak2_inf[i][0])
+    bottom_vpeak3.append(np.abs(v_peak3[i][0])-err_vpeak3_inf[i][0])
+    top_vpeak1.append(np.abs(v_peak1[i][0])+err_vpeak1_sup[i][0])
+    top_vpeak2.append(np.abs(v_peak2[i][0])+err_vpeak2_sup[i][0])
+    top_vpeak3.append(np.abs(v_peak3[i][0])+err_vpeak3_sup[i][0])
+bottom_vpeak1 = np.array(bottom_vpeak1)
+bottom_vpeak2 = np.array(bottom_vpeak2)
+bottom_vpeak3 = np.array(bottom_vpeak3)
+top_vpeak1 = np.array(top_vpeak1)
+top_vpeak2 = np.array(top_vpeak2)
+top_vpeak3 = np.array(top_vpeak3)
+
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
@@ -796,6 +852,26 @@ plt.legend(loc='upper right')
 plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
+
+bottom_fwhm1 = []
+bottom_fwhm2 = []
+bottom_fwhm3 = []
+top_fwhm1 = []
+top_fwhm2 = []
+top_fwhm3 = []
+for i in range(len(fwhm1)):
+    bottom_fwhm1.append(np.abs(fwhm1[i][0])-err_fwhm1_inf[i][0])
+    bottom_fwhm2.append(np.abs(fwhm2[i][0])-err_fwhm2_inf[i][0])
+    bottom_fwhm3.append(np.abs(fwhm3[i][0])-err_fwhm3_inf[i][0])
+    top_fwhm1.append(np.abs(fwhm1[i][0])+err_fwhm1_sup[i][0])
+    top_fwhm2.append(np.abs(fwhm2[i][0])+err_fwhm2_sup[i][0])
+    top_fwhm3.append(np.abs(fwhm3[i][0])+err_fwhm3_sup[i][0])
+bottom_fwhm1 = np.array(bottom_fwhm1)
+bottom_fwhm2 = np.array(bottom_fwhm2)
+bottom_fwhm3 = np.array(bottom_fwhm3)
+top_fwhm1 = np.array(top_fwhm1)
+top_fwhm2 = np.array(top_fwhm2)
+top_fwhm3 = np.array(top_fwhm3)
 
 plt.figure()
 plt.plot(incl_deg, np.abs(fwhm1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
