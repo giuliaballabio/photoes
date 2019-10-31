@@ -721,14 +721,14 @@ err_vpeak1_sup = []
 err_fwhm1_inf = []
 err_fwhm1_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
         lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f1.close()
 for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
         lines2 = f1.readlines()[15:]
         err_vpeak1_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
         err_vpeak1_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
@@ -743,14 +743,14 @@ err_vpeak2_sup = []
 err_fwhm2_inf = []
 err_fwhm2_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f2:
         lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f2.close()
 for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f2:
         lines2 = f2.readlines()[15:]
         err_vpeak2_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
         err_vpeak2_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
@@ -765,14 +765,14 @@ err_vpeak3_sup = []
 err_fwhm3_inf = []
 err_fwhm3_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f3:
         lines = f3.readlines()[10:11]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f3:
         lines2 = f3.readlines()[15:]
         err_vpeak3_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
         err_vpeak3_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
@@ -831,8 +831,11 @@ top_vpeak3 = np.array(top_vpeak3)
 
 plt.figure()
 plt.plot(incl_deg, np.abs(v_peak1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.fill_between(incl_deg, bottom_vpeak1, top_vpeak1, facecolor='#c6dbef', edgecolor='None', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.fill_between(incl_deg, bottom_vpeak2, top_vpeak2, facecolor='#2171b5', edgecolor='None', alpha=0.5)
 plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.fill_between(incl_deg, bottom_vpeak3, top_vpeak3, facecolor='#08306b', edgecolor='None', alpha=0.5)
 plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
@@ -874,9 +877,12 @@ top_fwhm2 = np.array(top_fwhm2)
 top_fwhm3 = np.array(top_fwhm3)
 
 plt.figure()
-plt.plot(incl_deg, np.abs(fwhm1), color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, np.abs(fwhm2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, np.abs(fwhm3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+plt.fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#c6dbef', alpha=0.5)
+plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.fill_between(incl_deg, bottom_fwhm2, top_fwhm2, color='#2171b5', alpha=0.5)
+plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.5)
 plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
