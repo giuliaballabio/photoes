@@ -148,8 +148,8 @@ perr = np.sqrt(np.diag(pcov))
 def gaussfunc(x,mean,sigma):
     return 1./(sigma*np.sqrt(2.*np.pi))*np.exp(-(x-mean)**2./(2.*sigma**2.))
 
-mean = np.arange(-10., 10., 0.25)
-sigma = np.arange(1., 20., 0.25)
+mean = np.arange(-10., 10., 0.1)
+sigma = np.arange(1., 20., 0.1)
 mean_grid, sigma_grid = np.meshgrid(mean, sigma, indexing='ij')
 
 def chi2reduced(x,y):
@@ -160,7 +160,7 @@ def chi2reduced(x,y):
             add = []
             for i in range(len(v)):
                 gauss.append(gaussfunc(v[i],x[j],y[k]))
-                add.append((gauss[i]-convolution[i])**2./(0.1*np.max(convolution))**2.)
+                add.append((gauss[i]-convolution[i])**2./(0.07*np.max(convolution))**2.)
             # Reduced chi-squared
             chisq.append(np.sum(add)/(len(convolution)-2))
     chisq = np.array(chisq)
