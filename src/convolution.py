@@ -24,7 +24,7 @@ mdot = 'mdot10e-9'
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 0.0
+incl_deg = 45.0
 b_input = 0.75
 r_inner = 0.1
 r_outer = 9.5
@@ -152,7 +152,7 @@ mean = np.arange(-10., 10., 0.1)
 sigma = np.arange(1., 20., 0.1)
 mean_grid, sigma_grid = np.meshgrid(mean, sigma, indexing='ij')
 
-def chi2reduced(x,y):
+def chi2(x,y):
     chisq = []
     for j in range(len(x)):
         for k in range(len(y)):
@@ -160,28 +160,25 @@ def chi2reduced(x,y):
             add = []
             for i in range(len(v)):
                 gauss.append(gaussfunc(v[i],x[j],y[k]))
-                add.append((gauss[i]-convolution[i])**2./(0.07*np.max(convolution))**2.)
-            # Reduced chi-squared
-            chisq.append(np.sum(add)/(len(convolution)-2))
+                if (incl_deg == 0.0):
+                    add.append((gauss[i]-convolution[i])**2./(gauss[i]+1.e-10))
+                else:
+                    add.append((gauss[i]-convolution[i])**2./convolution[i]) #(0.06*np.max(convolution))**2.)
+            chisq.append(np.sum(add)) #/(len(convolution)-2))
     chisq = np.array(chisq)
     chisq = np.reshape(chisq,(len(x),len(y)))
     return chisq
 
-chisq = chi2reduced(mean,sigma)
-# chisq = ((mean_grid[:]-np.abs(popt[1]))**2./np.abs(popt[1])) + ((sigma_grid[:]-np.abs(popt[2]))**2./np.abs(popt[2]))
+chisq = chi2(mean,sigma)
 chisq = np.where(chisq <= 15.,chisq,15.)
-# chisq = np.where(chisq <= 9.,chisq,9.)
-# mask_white = np.ma.array(chisq, mask=chisq<=15.)
 mask_1chisq = np.ma.array(chisq, mask=chisq>=1.5)
 
 plt.figure()
-# plt.plot(mean_grid, sigma_grid, marker='.', color='k', linestyle='none')
 plt.contourf(mean_grid, 2.*sigma_grid, chisq, cmap='viridis')
 plt.plot([min(mean),max(mean)], [2.*popt[2],2.*popt[2]], 'k')
 plt.plot([popt[1],popt[1]], [2.*min(sigma),2.*max(sigma)], 'k')
 # plt.pcolormesh(mean_grid, 2.*sigma_grid, chisq, cmap='viridis', vmin=0., vmax=7.)
 cbar = plt.colorbar()
-# plt.contourf(mean_grid, sigma_grid, mask_white, colors='white')
 CS = plt.contour(mean_grid, 2.*sigma_grid, mask_1chisq, levels=[1.0], colors='k')
 plt.xlabel(r'<$v_{peak}$>')
 plt.ylabel(r'<$FWHM$>')
@@ -192,42 +189,41 @@ plt.tight_layout()
 plt.savefig(str(path_file)+'/chisquare_jk.png', format='png', bbox_inches='tight')
 # plt.show()
 
+idx_min = np.where(chisq==np.min(chisq))
+# print idx_min[0][0], idx_min[1][0]
+
 ## FIND THE ERROR BARS ON v_peak AND FWHM
-k = 0
-while(sigma[k] <= popt[2]):
-    k += 1
-k_bestsigma = k
-idx_mean = np.argwhere(np.diff(np.sign(chisq[:,k_bestsigma] - 1.))).flatten()
+# Such that delta_chisq=chisq-min_chisq=1
+# This corresponds to 1 sigma error
+delta_chi = chisq-np.min(chisq)
+
+idx_mean = np.argwhere(np.diff(np.sign(delta_chi[:,idx_min[1][0]] - 1.))).flatten()
 plt.figure()
-plt.plot(mean, chisq[:,k_bestsigma], 'r')
-plt.plot([min(mean),max(mean)], [1.,1.], 'k')
-plt.plot([popt[1],popt[1]], [min(chisq[:,k_bestsigma]),max(chisq[:,k_bestsigma])], 'k')
-plt.plot(mean[idx_mean], chisq[idx_mean,k_bestsigma], 'bo')
+plt.plot(mean, chisq[:,idx_min[1][0]], 'r')
+plt.plot([min(mean),max(mean)], [1.+chisq[idx_min[0][0],idx_min[1][0]],1.+chisq[idx_min[0][0],idx_min[1][0]]], 'k')
+plt.plot([mean[idx_min[0][0]],mean[idx_min[0][0]]], [min(chisq[:,idx_min[1][0]]),max(chisq[:,idx_min[1][0]])], 'k')
+plt.plot(mean[idx_mean], chisq[idx_mean,idx_min[1][0]], 'bo')
 plt.xlabel(r'$v_{peak}$')
 plt.ylabel(r'$Reduced\,\chi^2$')
 plt.savefig(str(path_file)+'/chisquare_vpeak.png', format='png', bbox_inches='tight')
 # plt.show()
 
-err_mean_inf = np.abs(popt[1]-mean[idx_mean[0]])
-err_mean_sup = np.abs(popt[1]-mean[idx_mean[1]])
+err_mean_inf = np.abs(mean[idx_min[0][0]]-mean[idx_mean[0]])
+err_mean_sup = np.abs(mean[idx_min[0][0]]-mean[idx_mean[1]])
 
-j = 0
-while(mean[j] <= popt[1]):
-    j += 1
-j_bestmean = j
-idx_sigma = np.argwhere(np.diff(np.sign(chisq[j_bestmean,:] - 1.))).flatten()
+idx_sigma = np.argwhere(np.diff(np.sign(delta_chi[idx_min[0][0],:] - 1.))).flatten()
 plt.figure()
-plt.plot(2.*sigma, chisq[j_bestmean,:], 'r')
-plt.plot([2.*min(sigma),2.*max(sigma)], [1.,1.], 'k')
-plt.plot([2.*popt[2],2.*popt[2]], [min(chisq[j_bestmean,:]),max(chisq[j_bestmean,:])], 'k')
-plt.plot(2.*sigma[idx_sigma], chisq[j_bestmean,idx_sigma], 'bo')
+plt.plot(2.*sigma, chisq[idx_min[0][0],:], 'r')
+plt.plot([2.*min(sigma),2.*max(sigma)], [1.+chisq[idx_min[0][0],idx_min[1][0]],1.+chisq[idx_min[0][0],idx_min[1][0]]], 'k')
+plt.plot([2.*sigma[idx_min[1][0]],2.*sigma[idx_min[1][0]]], [min(chisq[idx_min[0][0],:]),max(chisq[idx_min[0][0],:])], 'k')
+plt.plot(2.*sigma[idx_sigma], chisq[idx_min[0][0],idx_sigma], 'bo')
 plt.xlabel(r'$FWHM$')
 plt.ylabel(r'$Reduced\,\chi^2$')
 plt.savefig(str(path_file)+'/chisquare_width.png', format='png', bbox_inches='tight')
 # plt.show()
 
-err_sigma_inf = 2.*np.abs(popt[2]-sigma[idx_sigma[0]])
-err_sigma_sup = 2.*np.abs(popt[2]-sigma[idx_sigma[1]])
+err_sigma_inf = 2.*np.abs(sigma[idx_min[1][0]]-sigma[idx_sigma[0]])
+err_sigma_sup = 2.*np.abs(sigma[idx_min[1][0]]-sigma[idx_sigma[1]])
 
 ## CALCULATE THE CUMULATIVE FUNCTION
 ## PYTHON MODULE TO CALCULATE THE CUMULATIVE FUNCTION
