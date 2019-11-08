@@ -24,7 +24,7 @@ mdot = 'mdot10e-9'
 # b = input("Insert the value of b: ")
 # r_in = input("Insert the inner radius: ")
 # r_out = input("And the outer radius: ")
-incl_deg = 45.0
+incl_deg = 0.0
 b_input = 0.75
 r_inner = 0.1
 r_outer = 9.5
@@ -161,7 +161,7 @@ def chi2(x,y):
             for i in range(len(v)):
                 gauss.append(gaussfunc(v[i],x[j],y[k]))
                 if (incl_deg == 0.0):
-                    add.append((gauss[i]-convolution[i])**2./(gauss[i]+1.e-10))
+                    add.append((gauss[i]-convolution[i])**2./(convolution[i]+1.e-20))
                 else:
                     add.append((gauss[i]-convolution[i])**2./convolution[i]) #(0.06*np.max(convolution))**2.)
             chisq.append(np.sum(add)) #/(len(convolution)-2))
