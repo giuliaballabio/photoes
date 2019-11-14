@@ -721,14 +721,14 @@ err_vpeak1_sup = []
 err_fwhm1_inf = []
 err_fwhm1_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f1:
         lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f1.close()
 for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f1:
         lines2 = f1.readlines()[15:]
         err_vpeak1_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
         err_vpeak1_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
@@ -743,14 +743,14 @@ err_vpeak2_sup = []
 err_fwhm2_inf = []
 err_fwhm2_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f2:
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
         lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f2.close()
 for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f2:
+    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
         lines2 = f2.readlines()[15:]
         err_vpeak2_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
         err_vpeak2_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
@@ -765,14 +765,14 @@ err_vpeak3_sup = []
 err_fwhm3_inf = []
 err_fwhm3_sup = []
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f3:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f3:
         lines = f3.readlines()[10:11]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
 f3.close()
 for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f3:
+    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f3:
         lines2 = f3.readlines()[15:]
         err_vpeak3_inf.append(map(float, [x.split('\t\t\t')[0] for x in lines2]))
         err_vpeak3_sup.append(map(float, [x.split('\t\t\t')[1] for x in lines2]))
@@ -805,8 +805,8 @@ plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., -0.5, 14.])
 plt.tight_layout()
 plt.legend(loc='upper right')
-plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/vcentr_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vcentr_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
 bottom_vpeak1 = []
@@ -852,8 +852,77 @@ plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., -0.5, 14.])
 plt.tight_layout()
 plt.legend(loc='upper right')
-plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
+plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
+plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]-10., np.abs(vcentr_sx[i])-0.3), color='k')
+plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$- v_{peak} \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[OI] \, 6300 \AA$')
+plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
+plt.legend(loc='upper right')
+plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_10kms.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_10kms.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.fill_between(incl_deg, bottom_vpeak2, top_vpeak2, color='#2171b5', alpha=0.3)
+plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
+plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]-10., np.abs(vcentr_sx[i])-0.3), color='k')
+plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$- v_{peak} \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[OI] \, 6300 \AA$')
+plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
+plt.legend(loc='upper right')
+plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_5kms.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_5kms.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, np.abs(v_peak1), color='#bdd7e7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bdd7e7', label='$c_{s} = 3 \, km/s$')
+plt.fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#bdd7e7', alpha=0.3)
+plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
+plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]-10., np.abs(vcentr_sx[i])-0.3), color='k')
+plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$- v_{peak} \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[OI] \, 6300 \AA$')
+plt.axis([-1., 91., -0.5, 14.])
+plt.tight_layout()
+plt.legend(loc='upper right')
+plt.savefig('./observables/'+str(species)+'/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_3kms.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_3kms.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
 bottom_fwhm1 = []
@@ -899,76 +968,76 @@ plt.title('$[OI] \, 6300 \AA$')
 plt.axis([-1., 91., 5., 40.])
 plt.tight_layout()
 plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
-plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R[0])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT cs and R ---------------------- ##
 
-v_peak4 = []
-v_centr4 = []
-fwhm4 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:11]
-        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f4.close()
-v_peak5 = []
-v_centr5 = []
-fwhm5 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f5:
-        lines = f5.readlines()[10:11]
-        v_peak5.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr5.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm5.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f5.close()
-v_peak6 = []
-v_centr6 = []
-fwhm6 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f6:
-        lines = f6.readlines()[10:11]
-        v_peak6.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr6.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm6.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f6.close()
-
-## WE NEED TO PLOT THE FWHM, NOT HALF
-fwhm4 = np.array(fwhm4)*2.
-fwhm5 = np.array(fwhm5)*2.
-fwhm6 = np.array(fwhm6)*2.
-
-plt.figure()
-plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
-plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
-plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.plot([], [], color='k', linestyle='-', linewidth=2.5, label='$R = '+str(R[1])+'$')
-plt.plot([], [], color='k', linestyle='--', linewidth=2.5, label='$R = '+str(R[0])+'$')
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
-plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
-plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., 9., 39.])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# v_peak4 = []
+# v_centr4 = []
+# fwhm4 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f4:
+#         lines = f4.readlines()[10:11]
+#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f4.close()
+# v_peak5 = []
+# v_centr5 = []
+# fwhm5 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f5:
+#         lines = f5.readlines()[10:11]
+#         v_peak5.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr5.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm5.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f5.close()
+# v_peak6 = []
+# v_centr6 = []
+# fwhm6 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f6:
+#         lines = f6.readlines()[10:11]
+#         v_peak6.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr6.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm6.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f6.close()
+#
+# ## WE NEED TO PLOT THE FWHM, NOT HALF
+# fwhm4 = np.array(fwhm4)*2.
+# fwhm5 = np.array(fwhm5)*2.
+# fwhm6 = np.array(fwhm6)*2.
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1, color='#c6dbef', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#c6dbef')
+# plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
+# plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='--', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+# plt.plot(incl_deg, fwhm4, color='#c6dbef', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#c6dbef', label='$c_{s} = 3 \, km/s$')
+# plt.plot(incl_deg, fwhm5, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+# plt.plot(incl_deg, fwhm6, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+# plt.plot([], [], color='k', linestyle='-', linewidth=2.5, label='$R = '+str(R[1])+'$')
+# plt.plot([], [], color='k', linestyle='--', linewidth=2.5, label='$R = '+str(R[0])+'$')
+# plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+# plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
+# plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM \, [km/s]$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., 9., 39.])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+# plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_res_b'+str(b)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 
