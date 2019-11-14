@@ -494,7 +494,7 @@ for row in range(2):
         plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
         for i in range(len(ID)):
             ax[row,col].annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
-        ax[row,col].xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+        ax[row,col].set_xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
         leg1 = ax[0,0].legend(loc='upper left')
         leg2 = ax[row,col].legend(['$c_{s} = '+str(cs[row])+' \, km/s$'], loc='upper right', frameon=False, handlelength=0, handletextpad=0)
         # for item in leg2.legendHandles:
