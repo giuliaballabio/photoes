@@ -426,7 +426,7 @@ for col in range(3):
         ax[1,col].annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
     ax[1,col].errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
     for i in range(len(name3)):
-        ax[1,col].annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
+        ax[1,col].annotate(name3[i], (incl_data3[i]-13.0, np.abs(fwhm_data3[i])-0.3))
     ax[1,col].errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
     for i in range(len(ID)):
         ax[1,col].annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
