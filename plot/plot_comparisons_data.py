@@ -460,7 +460,7 @@ plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.pdf', format='pdf', dpi=300, bbox_inches='tight')
 plt.show()
 
-fig, ax = plt.subplots(2, 3, sharex='col', sharey='row', figsize=(15,10))
+fig, ax = plt.subplots(2, 3, sharex='col', sharey='row', figsize=(19.2,9.7))
 ax[0,0].plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
 ax[0,0].fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
 ax[0,0].set_ylabel(r'$- v_{peak} \, [km/s]$')
@@ -509,7 +509,7 @@ for col in range(3):
     for item in leg2.legendHandles:
         item.set_visible(False)
     ax[1,col].add_artist(leg2)
-ax[0,0].legend(bbox_to_anchor=(0., 1.), loc='upper right')
+ax[0,0].legend(bbox_to_anchor=(0.5, 1.1), loc='upper right')
 plt.subplots_adjust(hspace=0.1, wspace=0.)
 # plt.tight_layout()
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data_subplt.png', format='png', dpi=300, bbox_inches='tight')
