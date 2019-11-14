@@ -509,7 +509,7 @@ for col in range(3):
     for item in leg2.legendHandles:
         item.set_visible(False)
     ax[1,col].add_artist(leg2)
-ax[0,0].legend(bbox_to_anchor=(0.5, 1.1), loc='upper right')
+ax[0,0].legend(bbox_to_anchor=(1., 1.1), loc='upper right')
 plt.subplots_adjust(hspace=0.1, wspace=0.)
 # plt.tight_layout()
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data_subplt.png', format='png', dpi=300, bbox_inches='tight')
