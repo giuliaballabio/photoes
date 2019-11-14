@@ -403,7 +403,7 @@ for col in range(3):
         ax[0,col].annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
     ax[0,col].errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
     for i in range(len(name3)):
-        ax[0,col].annotate(name3[i], (incl_data3[i]-14.0, np.abs(vpeak_data3[i])+0.1))
+        ax[0,col].annotate(name3[i], (incl_data3[i]-13.0, np.abs(vpeak_data3[i])+0.1))
     ax[0,col].errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
     for i in range(len(ID)):
         ax[0,col].annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
@@ -974,10 +974,10 @@ for col in range(3):
         ax[0,col].annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
     ax[0,col].errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
     for i in range(len(ID_sx)):
-        ax[0,col].annotate(ID_sx[i], (incl_sx[i]-14., np.abs(vcentr_sx[i])-0.3), color='k')
+        ax[0,col].annotate(ID_sx[i], (incl_sx[i]-12., np.abs(vcentr_sx[i])-0.3), color='k')
     ax[0,col].errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
     for i in range(len(ID_down)):
-        ax[0,col].annotate(ID_down[i], (incl_down[i]-5.0, np.abs(vcentr_down[i])+3.0), color='k')
+        ax[0,col].annotate(ID_down[i], (incl_down[i]-5.0, np.abs(vcentr_down[i])+0.5), color='k')
     ax[0,col].axis([-1., 91., -0.5, 14.])
     ax[0,col].set_xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
     leg2 = ax[0,col].legend(['$c_{s} = '+str(cs[col])+' \, km/s$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
