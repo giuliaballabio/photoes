@@ -460,27 +460,46 @@ plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.pdf', format='pdf', dpi=300, bbox_inches='tight')
 plt.show()
 
-plt.figure()
-plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
-plt.errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-for i in range(len(name)):
-    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
-for i in range(len(name3)):
-    plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[NeII] \, 12.81 \mu m$')
-plt.axis([-1., 91., 5., 60.])
+fig, ax = plt.subplots(2, 3, sharex='col', sharey='row')
+ax[0,0].plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+ax[0,0].fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
+ax[0,0].ylabel(r'$- v_{peak} \, [km/s]$')
+ax[0,1].plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
+ax[0,1].fill_between(incl_deg, bottom_vpeak2, top_vpeak2, color='#2171b5', alpha=0.3)
+ax[0,1].title('$[NeII] \, 12.81 \mu m$')
+ax[0,2].plot(incl_deg, np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
+ax[0,2].fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#6baed6', alpha=0.3)
+ax[1,0].plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+ax[1,0].fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
+ax[1,0].xlabel(r'$i \, [^{\circ}]$')
+ax[1,0].ylabel(r'$FWHM \, [km/s]$')
+ax[1,1].plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
+ax[1,1].fill_between(incl_deg, bottom_fwhm2, top_fwhm2, color='#2171b5', alpha=0.3)
+ax[1,2].plot(incl_deg, fwhm1, color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
+ax[1,2].fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#6baed6', alpha=0.3)
+for row in range(2):
+    for col in range(3):
+        ax[row,col].errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+        for i in range(len(name)):
+            ax[row,col].annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
+        ax[row,col].errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+        for i in range(len(name3)):
+            ax[row,col].annotate(name3[i], (incl_data3[i]-12.0, np.abs(fwhm_data3[i])-0.1))
+        plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+        for i in range(len(ID)):
+            ax[row,col].annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
+        ax[row,col].xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+        ax[row,col].axis([-1., 91., 5., 60.])
+        leg1 = ax[0,0].legend(loc='upper left')
+        leg2 = ax[row,col].legend(['$c_{s} = '+str(cs[row])+' \, km/s$'], loc='upper right', frameon=False, handlelength=0, handletextpad=0)
+        # for item in leg2.legendHandles:
+        #     item.set_visible(False)
+        ax[row,col].add_artist(leg2)
+# plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+plt.subplots_adjust(hspace=0., wspace=0.)
 plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data_10kms.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data_10kms.pdf', format='pdf', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data_subplt.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data_subplt.pdf', format='pdf', dpi=300, bbox_inches='tight')
 plt.show()
 
 plt.figure()
@@ -531,57 +550,57 @@ plt.show()
 
 ## --------- PLOT THE RATIO FWHM/V_PEAK ---------- ##
 ## Error propagation
-err_ratio2 = ((np.abs(err_fwhm_data2)/np.abs(vpeak_data2))**2. + (np.abs(err_vpeak_data2)*np.abs(fwhm_data2)/(np.abs(vpeak_data2)**2.))**2.)**0.5
-err_ratio3 = ((np.abs(err_fwhm_data3)/np.abs(vpeak_data3))**2. + (np.abs(err_vpeak_data3)*np.abs(fwhm_data3)/(np.abs(vpeak_data3)**2.))**2.)**0.5
-err_ratio = ((np.abs(err_fwhm_data)/np.abs(vpeak_data))**2. + (np.abs(err_vpeak_data)*np.abs(fwhm_data)/(np.abs(vpeak_data)**2.))**2.)**0.5
-
-plt.figure()
-plt.plot(incl_deg, fwhm1/np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm2/np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm3/np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data2, np.abs(fwhm_data2)/np.abs(vpeak_data2), yerr=err_ratio2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-for i in range(len(name)):
-    plt.annotate(name[i], (incl_data2[i]+0.3, (np.abs(fwhm_data2[i])/np.abs(vpeak_data2[i]))+0.3))
-plt.errorbar(incl_data3, np.abs(fwhm_data3)/np.abs(vpeak_data3), yerr=err_ratio3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
-for i in range(len(name3)):
-    plt.annotate(name3[i], (incl_data3[i]-12.0, (np.abs(fwhm_data3[i])/np.abs(vpeak_data3[i]))-0.1))
-plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vpeak_data), yerr=err_ratio, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, (np.abs(fwhm_data[i])/np.abs(vpeak_data[i]))+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{peak})$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[NeII] \, 12.81 \mu m$')
-plt.axis([-1., 91., -1., 40.])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/fwhmovervpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhmovervpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
-
-plt.figure()
-plt.plot(incl_deg, fwhm1/np.abs(v_centr1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6', label='$c_{s} = 3 \, km/s$')
-plt.plot(incl_deg, fwhm2/np.abs(v_centr2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
-plt.plot(incl_deg, fwhm3/np.abs(v_centr3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
-plt.errorbar(incl_data2, np.abs(fwhm_data2)/np.abs(vpeak_data2), yerr=err_ratio2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-for i in range(len(name)):
-    plt.annotate(name[i], (incl_data2[i]+0.3, (np.abs(fwhm_data2[i])/np.abs(vpeak_data2[i]))+0.3))
-plt.errorbar(incl_data3, np.abs(fwhm_data3)/np.abs(vpeak_data3), yerr=err_ratio3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
-for i in range(len(name3)):
-    plt.annotate(name3[i], (incl_data3[i]-12.0, (np.abs(fwhm_data3[i])/np.abs(vpeak_data3[i]))-0.1))
-plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vpeak_data), yerr=err_ratio, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, (np.abs(fwhm_data[i])/np.abs(vpeak_data[i]))+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM/(- v_{centroid})$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[NeII] \, 12.81 \mu m$')
-plt.axis([-1., 91., -1., 40.])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# err_ratio2 = ((np.abs(err_fwhm_data2)/np.abs(vpeak_data2))**2. + (np.abs(err_vpeak_data2)*np.abs(fwhm_data2)/(np.abs(vpeak_data2)**2.))**2.)**0.5
+# err_ratio3 = ((np.abs(err_fwhm_data3)/np.abs(vpeak_data3))**2. + (np.abs(err_vpeak_data3)*np.abs(fwhm_data3)/(np.abs(vpeak_data3)**2.))**2.)**0.5
+# err_ratio = ((np.abs(err_fwhm_data)/np.abs(vpeak_data))**2. + (np.abs(err_vpeak_data)*np.abs(fwhm_data)/(np.abs(vpeak_data)**2.))**2.)**0.5
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1/np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6', label='$c_{s} = 3 \, km/s$')
+# plt.plot(incl_deg, fwhm2/np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+# plt.plot(incl_deg, fwhm3/np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+# plt.errorbar(incl_data2, np.abs(fwhm_data2)/np.abs(vpeak_data2), yerr=err_ratio2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+# for i in range(len(name)):
+#     plt.annotate(name[i], (incl_data2[i]+0.3, (np.abs(fwhm_data2[i])/np.abs(vpeak_data2[i]))+0.3))
+# plt.errorbar(incl_data3, np.abs(fwhm_data3)/np.abs(vpeak_data3), yerr=err_ratio3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+# for i in range(len(name3)):
+#     plt.annotate(name3[i], (incl_data3[i]-12.0, (np.abs(fwhm_data3[i])/np.abs(vpeak_data3[i]))-0.1))
+# plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vpeak_data), yerr=err_ratio, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.3, (np.abs(fwhm_data[i])/np.abs(vpeak_data[i]))+0.3))
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM/(- v_{peak})$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[NeII] \, 12.81 \mu m$')
+# plt.axis([-1., 91., -1., 40.])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+# plt.savefig('./observables/'+str(species)+'/fwhmovervpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhmovervpeak_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1/np.abs(v_centr1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6', label='$c_{s} = 3 \, km/s$')
+# plt.plot(incl_deg, fwhm2/np.abs(v_centr2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+# plt.plot(incl_deg, fwhm3/np.abs(v_centr3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+# plt.errorbar(incl_data2, np.abs(fwhm_data2)/np.abs(vpeak_data2), yerr=err_ratio2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+# for i in range(len(name)):
+#     plt.annotate(name[i], (incl_data2[i]+0.3, (np.abs(fwhm_data2[i])/np.abs(vpeak_data2[i]))+0.3))
+# plt.errorbar(incl_data3, np.abs(fwhm_data3)/np.abs(vpeak_data3), yerr=err_ratio3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+# for i in range(len(name3)):
+#     plt.annotate(name3[i], (incl_data3[i]-12.0, (np.abs(fwhm_data3[i])/np.abs(vpeak_data3[i]))-0.1))
+# plt.errorbar(incl_data, np.abs(fwhm_data)/np.abs(vpeak_data), yerr=err_ratio, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.3, (np.abs(fwhm_data[i])/np.abs(vpeak_data[i]))+0.3))
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM/(- v_{centroid})$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[NeII] \, 12.81 \mu m$')
+# plt.axis([-1., 91., -1., 40.])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+# plt.savefig('./observables/'+str(species)+'/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhmovervcentr_soundspeed_b'+str(b)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
 
 # plt.plot(np.abs(v_centr1), fwhm1, color='#6baed6', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#6baed6', label='$c_{s} = 3 \, km/s$')
 # plt.plot(np.abs(v_centr2), fwhm2, color='#2171b5', linestyle='None', linewidth=2.5, marker='o', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
