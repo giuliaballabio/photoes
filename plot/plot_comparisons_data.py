@@ -903,8 +903,8 @@ plt.savefig('./observables/'+str(species)+'/eps/vpeak_soundspeed_b'+str(b)+'_R'+
 plt.show()
 
 plt.figure()
-plt.plot(incl_deg, np.abs(v_peak1), color='#bdd7e7', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bdd7e7', label='$c_{s} = 3 \, km/s$')
-plt.fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#bdd7e7', alpha=0.3)
+plt.plot(incl_deg, np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6', label='$c_{s} = 3 \, km/s$')
+plt.fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#6baed6', alpha=0.5)
 plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
 for i in range(len(ID)):
     plt.annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
@@ -970,6 +970,75 @@ plt.tight_layout()
 plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
 plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
 plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b', label='$c_{s} = 10 \, km/s$')
+plt.fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
+plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[OI] \, 6300 \AA$')
+plt.axis([-1., 91., 5., 40.])
+plt.tight_layout()
+plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
+plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_10kms.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_10kms.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5', label='$c_{s} = 5 \, km/s$')
+plt.fill_between(incl_deg, bottom_fwhm2, top_fwhm2, color='#2171b5', alpha=0.3)
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
+plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[OI] \, 6300 \AA$')
+plt.axis([-1., 91., 5., 40.])
+plt.tight_layout()
+plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
+plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_5kms.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_5kms.eps', format='eps', dpi=300, bbox_inches='tight')
+plt.show()
+
+plt.figure()
+plt.plot(incl_deg, fwhm1, color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6', label='$c_{s} = 3 \, km/s$')
+plt.fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#6baed6', alpha=0.5)
+plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+for i in range(len(ID)):
+    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_sx)):
+    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
+plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+for i in range(len(ID_down)):
+    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+plt.xlabel(r'$i \, [^{\circ}]$')
+plt.ylabel(r'$FWHM \, [km/s]$')
+plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+plt.title('$[OI] \, 6300 \AA$')
+plt.axis([-1., 91., 5., 40.])
+plt.tight_layout()
+plt.legend(bbox_to_anchor=(0., 1.1), loc='upper left')
+plt.savefig('./observables/'+str(species)+'/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_3kms.png', format='png', dpi=300, bbox_inches='tight')
+plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_3kms.eps', format='eps', dpi=300, bbox_inches='tight')
 plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT cs and R ---------------------- ##
