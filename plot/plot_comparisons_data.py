@@ -403,7 +403,7 @@ for col in range(3):
         ax[0,col].annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
     ax[0,col].errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
     for i in range(len(name3)):
-        ax[0,col].annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
+        ax[0,col].annotate(name3[i], (incl_data3[i]-14.0, np.abs(vpeak_data3[i])+0.1))
     ax[0,col].errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
     for i in range(len(ID)):
         ax[0,col].annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
@@ -426,10 +426,10 @@ for col in range(3):
         ax[1,col].annotate(name[i], (incl_data2[i]+0.3, np.abs(fwhm_data2[i])+0.3))
     ax[1,col].errorbar(incl_data3, np.abs(fwhm_data3), yerr=err_fwhm_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
     for i in range(len(name3)):
-        ax[1,col].annotate(name3[i], (incl_data3[i]-13.0, np.abs(fwhm_data3[i])-0.5))
+        ax[1,col].annotate(name3[i], (incl_data3[i]-13.0, np.abs(fwhm_data3[i])-0.8))
     ax[1,col].errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
     for i in range(len(ID)):
-        ax[1,col].annotate(ID[i], (incl_data[i]+0.3, np.abs(fwhm_data[i])+0.3))
+        ax[1,col].annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.3))
     ax[1,col].set_xlabel(r'$i \, [^{\circ}]$')
     ax[1,col].axis([-1., 91., 5., 60.])
     ax[1,col].set_xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -590,16 +590,16 @@ fwhm4 = np.array(fwhm4)*2.
 
 ## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
-vcentr_data = [0.3, -0.4, 0.91, -1.3, -5.3, -0.3, 0.4, -2.5, 5., -12., -4.6, 0.0]
-err_vcentr = [1.1, 0.5, 0.9, 5., 0.6, 5., 5., 3.6, 5.1, 5., 5., 0.7]
-fwhm_data = [26., 14.5, 18., 13., 25.4, 12., 25., 29., 67., 15., 18., 8.2] # km/s
-err_fwhm = [2., 0.4, 2., 1.2, 0.9, 1., 0.7, 1.5, 4., 1., 2., 0.6]
+vcentr_data = [0.3, -0.4, 0.91, -1.3, -5.3, 0.4, -2.5, 5., -12., -4.6, 0.0]
+err_vcentr = [1.1, 0.5, 0.9, 5., 0.6, 5., 3.6, 5.1, 5., 5., 0.7]
+fwhm_data = [26., 14.5, 18., 13., 25.4, 25., 29., 67., 15., 18., 8.2] # km/s
+err_fwhm = [2., 0.4, 2., 1.2, 0.9, 0.7, 1.5, 4., 1., 2., 0.6]
 ## Broad Component
-fwhm_data1 = [96., 54., 111., 67., 177., 53., 86., 162., 223., 44., 36.] # km/s
-err_fwhm1 = [4.6, 2., 6., 2., 7., 5., 3., 10., 17., 6., 6.]
+fwhm_data1 = [96., 54., 111., 67., 177., 86., 162., 223., 44., 36.] # km/s
+err_fwhm1 = [4.6, 2., 6., 2., 7., 3., 10., 17., 6., 6.]
 
-incl_data = [71., 20., 39., 60., 26., 9., 55., 38., 66., 35., 50., 7.]
-ID = ['AATau', 'AS205N', 'BPTau', 'DFTau', 'DKTau', 'DRTau', 'FMTau', 'FZTau', 'ITTau', 'RULup', 'VVCrAS', 'TW Hya']
+incl_data = [71., 20., 39., 60., 26., 55., 38., 66., 35., 50., 7.]
+ID = ['AATau', 'AS205N', 'BPTau', 'DFTau', 'DKTau', 'FMTau', 'FZTau', 'ITTau', 'RULup', 'VVCrAS', 'TW Hya']
 
 ## Divide the data in order to plot the ID labels clearly
 vcentr_sx = [-4., -11., 0.5, -4.]
@@ -611,14 +611,14 @@ err_fwhm1_sx = [9., 2., 6., 28.]
 incl_sx = [18., 32., 54., 37.]
 ID_sx = ['AS353A', '  DGTau', 'RXJ1842', 'RNO90']
 
-vcentr_down = [-2.6, -0.9]
-err_vcentr_down = [0.5, 1.1]
-fwhm_down = [24., 18.]
-err_fwhm_down =[0.6, 1.]
-fwhm1_down =[80., 79.]
-err_fwhm1_down = [2., 8.]
-incl_down = [65., 54.]
-ID_down = ['CWtau', 'V853Oph']
+vcentr_down = [-2.6, -0.9, -0.3]
+err_vcentr_down = [0.5, 1.1, 5.]
+fwhm_down = [24., 18., 12.]
+err_fwhm_down =[0.6, 1., 1.]
+fwhm1_down =[80., 79., 53.]
+err_fwhm1_down = [2., 8., 5.]
+incl_down = [65., 54., 9.]
+ID_down = ['CWtau', 'V853Oph', 'DRTau']
 
 plt.figure()
 plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
@@ -974,10 +974,10 @@ for col in range(3):
         ax[0,col].annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
     ax[0,col].errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
     for i in range(len(ID_sx)):
-        ax[0,col].annotate(ID_sx[i], (incl_sx[i]-10., np.abs(vcentr_sx[i])-0.3), color='k')
+        ax[0,col].annotate(ID_sx[i], (incl_sx[i]-14., np.abs(vcentr_sx[i])-0.3), color='k')
     ax[0,col].errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
     for i in range(len(ID_down)):
-        ax[0,col].annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
+        ax[0,col].annotate(ID_down[i], (incl_down[i]-5.0, np.abs(vcentr_down[i])+3.0), color='k')
     ax[0,col].axis([-1., 91., -0.5, 14.])
     ax[0,col].set_xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
     leg2 = ax[0,col].legend(['$c_{s} = '+str(cs[col])+' \, km/s$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
@@ -1000,7 +1000,7 @@ for col in range(3):
         ax[1,col].annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
     ax[1,col].errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
     for i in range(len(ID_down)):
-        ax[1,col].annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+        ax[1,col].annotate(ID_down[i], (incl_down[i]+0.7, np.abs(fwhm_down[i])-1.2), color='k')
     ax[1,col].set_xlabel(r'$i \, [^{\circ}]$')
     ax[1,col].axis([-1., 91., 5., 40.])
     ax[1,col].set_xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
@@ -1008,7 +1008,7 @@ for col in range(3):
     for item in leg2.legendHandles:
         item.set_visible(False)
     ax[1,col].add_artist(leg2)
-ax[0,0].legend(bbox_to_anchor=(1., 1.1), loc='upper right')
+ax[0,0].legend(bbox_to_anchor=(1., 1.), loc='upper right')
 plt.subplots_adjust(hspace=0., wspace=0.)
 plt.tight_layout()
 plt.savefig('./observables/'+str(species)+'/soundspeed_b'+str(b)+'_R'+str(R[1])+'_'+str(mdot)+'_data_subplt.png', format='png', dpi=300, bbox_inches='tight')
