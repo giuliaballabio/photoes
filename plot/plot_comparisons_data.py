@@ -464,7 +464,7 @@ fig, ax = plt.subplots(2, 3, sharex='col', sharey='row')
 ax[0,0].plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
 ax[0,0].fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
 ax[0,0].set_ylabel(r'$- v_{peak} \, [km/s]$')
-leg1 = ax[0,0].legend(loc='upper right')
+ax[0,0].legend(bbox_to_anchor=(0., 1.), loc='upper right')
 ax[0,1].plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 ax[0,1].fill_between(incl_deg, bottom_vpeak2, top_vpeak2, color='#2171b5', alpha=0.3)
 ax[0,1].title.set_text('$[NeII] \, 12.81 \mu m$')
@@ -482,9 +482,9 @@ for col in range(3):
         ax[0,col].annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
     ax[0,col].axis([-1., 91., -0.5, 17.5])
     ax[0,col].set_xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-    leg2 = ax[0,col].legend(['$c_{s} = '+str(cs[col])+' \, km/s$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
-    # for item in leg2.legendHandles:
-    #     item.set_visible(False)
+    leg2 = ax[0,col].legend(['$c_{s} = '+str(cs[col])+' \, km/s$'], loc='upper left') #, frameon=False, handlelength=0, handletextpad=0)
+    for item in leg2.legendHandles:
+        item.set_visible(False)
     ax[0,col].add_artist(leg2)
 ax[1,0].plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
 ax[1,0].fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
@@ -507,8 +507,8 @@ for col in range(3):
     ax[1,col].axis([-1., 91., 5., 60.])
     ax[1,col].set_xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
     leg2 = ax[1,col].legend(['$c_{s} = '+str(cs[col])+' \, km/s$'], loc='upper left', frameon=False, handlelength=0, handletextpad=0)
-    # for item in leg2.legendHandles:
-    #     item.set_visible(False)
+    for item in leg2.legendHandles:
+        item.set_visible(False)
     ax[1,col].add_artist(leg2)
 # plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
 plt.subplots_adjust(hspace=0., wspace=0.)
