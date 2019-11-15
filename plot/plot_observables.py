@@ -39,7 +39,7 @@ v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
+        lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -49,7 +49,7 @@ v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
+        lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -59,7 +59,7 @@ v_centr3 = []
 fwhm3 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
+        lines = f3.readlines()[10:11]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -160,7 +160,7 @@ v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
+        lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -170,7 +170,7 @@ v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
+        lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -221,7 +221,7 @@ v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
+        lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -231,7 +231,7 @@ v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
+        lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -241,7 +241,7 @@ v_centr3 = []
 fwhm3 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
+        lines = f3.readlines()[10:11]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -251,7 +251,7 @@ v_centr4 = []
 fwhm4 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:]
+        lines = f4.readlines()[10:11]
         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -381,7 +381,7 @@ v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
+        lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -391,7 +391,7 @@ v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
+        lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -401,7 +401,7 @@ v_centr3 = []
 fwhm3 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
+        lines = f3.readlines()[10:11]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -489,7 +489,7 @@ v_centr1 = []
 fwhm1 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
+        lines = f1.readlines()[10:11]
         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -499,7 +499,7 @@ v_centr2 = []
 fwhm2 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:]
+        lines = f2.readlines()[10:11]
         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -509,7 +509,7 @@ v_centr3 = []
 fwhm3 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
+        lines = f3.readlines()[10:11]
         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
@@ -519,7 +519,7 @@ v_centr4 = []
 fwhm4 = []
 for i in range(len(incl_deg)):
     with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:]
+        lines = f4.readlines()[10:11]
         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
