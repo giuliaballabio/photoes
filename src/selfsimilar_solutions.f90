@@ -21,16 +21,16 @@
 program selfsimilar
 
 implicit none
-integer                                          :: i
+integer(kind=8)                                  :: i
 integer(kind=8),parameter                        :: n=10e12
-double precision,parameter                       :: cs=10.0d5
-double precision,parameter                       :: pi=3.141592  !!,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
-double precision                                 :: b,ub,reff0,gm,b_input
-double precision                                 :: x0,y0,u0,dx,dy,rho,r,phi,theta,flux !,uph
-double precision                                 :: x1,y1,u1,tanth1,a1,phi1,theta1
-double precision                                 :: x2,y2,u2,ur2,uth2,tanth2,a2,phi2,theta2
-double precision                                 :: dudy,ddx1,ddx2,ddxdy
-double precision                                 :: rk4,dphi,dphidy,ft
+real,parameter                                   :: cs=10.0d5
+real,parameter                                   :: pi=3.141592  !!,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
+real                                             :: b,ub,reff0,gm,b_input
+real                                             :: x0,y0,u0,dx,dy,rho,r,phi,theta,flux !,uph
+real                                             :: x1,y1,u1,tanth1,a1,phi1,theta1
+real                                             :: x2,y2,u2,ur2,uth2,tanth2,a2,phi2,theta2
+real                                             :: dudy,ddx1,ddx2,ddxdy
+real                                             :: rk4,dphi,dphidy,ft
 
 !write (*,*) 'Insert a value for b: '
 !read (*,*) b
