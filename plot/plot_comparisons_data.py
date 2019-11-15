@@ -389,14 +389,14 @@ plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+s
 plt.show()
 
 fig, ax = plt.subplots(2, 3, sharex='col', sharey='row', figsize=(20.,10.031))
-ax[0,0].plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-ax[0,0].fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
+ax[0,0].plot(incl_deg, np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
+ax[0,0].fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#6baed6', alpha=0.3)
 ax[0,0].set_ylabel(r'$- v_{peak} \, [km/s]$')
 ax[0,1].plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 ax[0,1].fill_between(incl_deg, bottom_vpeak2, top_vpeak2, color='#2171b5', alpha=0.3)
 ax[0,1].title.set_text('$[NeII] \, 12.81 \mu m$')
-ax[0,2].plot(incl_deg, np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
-ax[0,2].fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#6baed6', alpha=0.3)
+ax[0,2].plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+ax[0,2].fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
 for col in range(3):
     ax[0,col].errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
     for i in range(len(name)):
@@ -413,13 +413,13 @@ for col in range(3):
     for item in leg2.legendHandles:
         item.set_visible(False)
     ax[0,col].add_artist(leg2)
-ax[1,0].plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-ax[1,0].fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
+ax[1,0].plot(incl_deg, fwhm1, color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
+ax[1,0].fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#6baed6', alpha=0.3)
 ax[1,0].set_ylabel(r'$FWHM \, [km/s]$')
 ax[1,1].plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 ax[1,1].fill_between(incl_deg, bottom_fwhm2, top_fwhm2, color='#2171b5', alpha=0.3)
-ax[1,2].plot(incl_deg, fwhm1, color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
-ax[1,2].fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#6baed6', alpha=0.3)
+ax[1,2].plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+ax[1,2].fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
 for col in range(3):
     ax[1,col].errorbar(incl_data2, np.abs(fwhm_data2), yerr=err_fwhm_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
     for i in range(len(name)):
@@ -960,14 +960,14 @@ plt.savefig('./observables/'+str(species)+'/eps/fwhm_soundspeed_b'+str(b)+'_R'+s
 plt.show()
 
 fig, ax = plt.subplots(2, 3, sharex='col', sharey='row', figsize=(20.,10.031))
-ax[0,0].plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-ax[0,0].fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
+ax[0,0].plot(incl_deg, np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
+ax[0,0].fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#6baed6', alpha=0.3)
 ax[0,0].set_ylabel(r'$- v_{peak} \, [km/s]$')
 ax[0,1].plot(incl_deg, np.abs(v_peak2), color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 ax[0,1].fill_between(incl_deg, bottom_vpeak2, top_vpeak2, color='#2171b5', alpha=0.3)
 ax[0,1].title.set_text('$[OI] \, 6300 \AA$')
-ax[0,2].plot(incl_deg, np.abs(v_peak1), color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
-ax[0,2].fill_between(incl_deg, bottom_vpeak1, top_vpeak1, color='#6baed6', alpha=0.3)
+ax[0,2].plot(incl_deg, np.abs(v_peak3), color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+ax[0,2].fill_between(incl_deg, bottom_vpeak3, top_vpeak3, color='#08306b', alpha=0.3)
 for col in range(3):
     ax[0,col].errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
     for i in range(len(ID)):
@@ -984,13 +984,13 @@ for col in range(3):
     for item in leg2.legendHandles:
         item.set_visible(False)
     ax[0,col].add_artist(leg2)
-ax[1,0].plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
-ax[1,0].fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
+ax[1,0].plot(incl_deg, fwhm1, color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
+ax[1,0].fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#6baed6', alpha=0.3)
 ax[1,0].set_ylabel(r'$FWHM \, [km/s]$')
 ax[1,1].plot(incl_deg, fwhm2, color='#2171b5', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#2171b5')
 ax[1,1].fill_between(incl_deg, bottom_fwhm2, top_fwhm2, color='#2171b5', alpha=0.3)
-ax[1,2].plot(incl_deg, fwhm1, color='#6baed6', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#6baed6')
-ax[1,2].fill_between(incl_deg, bottom_fwhm1, top_fwhm1, color='#6baed6', alpha=0.3)
+ax[1,2].plot(incl_deg, fwhm3, color='#08306b', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#08306b')
+ax[1,2].fill_between(incl_deg, bottom_fwhm3, top_fwhm3, color='#08306b', alpha=0.3)
 for col in range(3):
     ax[1,col].errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
     for i in range(len(ID)):
