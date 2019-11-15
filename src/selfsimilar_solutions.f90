@@ -22,8 +22,7 @@ program selfsimilar
 
 implicit none
 integer                                          :: i
-integer,parameter                                :: mykind = selected_int_kind (12)
-integer (kind=mykind),parameter                  :: n=10e12
+integer(kind=8),parameter                        :: n=10e12
 double precision,parameter                       :: cs=10.0d5
 double precision,parameter                       :: pi=3.141592  !!,G=6.672d-8,Msun=1.989d33,Mstar=1.*Msun
 double precision                                 :: b,ub,reff0,gm,b_input
