@@ -13,14 +13,14 @@ plt.rc('legend', fontsize='large')
 b = [0.75, 1.00, 1.50] #, 2.00]
 incl_deg = 90.0
 r_in = 0.1
-r_out = [5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
+r_out = [2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 9.0, 9.5]
 cs = 10
 R = 3.e4
-species = 'OI'
+species = 'NeII'
 
 ## N.B. When you change to nonorm, remember to change also f.readlines()[24:]
 ## for mdot10e-8 etc is f.readlines()[33:]
-mdot = 'nonorm'
+mdot = 'mdot10e-10'
 
 path_file = []
 for j in range(len(b)):
@@ -32,8 +32,8 @@ for j in range(len(b)):
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        lines = f.readlines()[24:]
-        # lines = f.readlines()[33:]
+        # lines = f.readlines()[24:]
+        lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
@@ -47,8 +47,8 @@ flux1 = np.array(flux1)
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        lines = f.readlines()[24:]
-        # lines = f.readlines()[33:]
+        # lines = f.readlines()[24:]
+        lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
@@ -62,8 +62,8 @@ flux2 = np.array(flux2)
 value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
-        lines = f.readlines()[24:]
-        # lines = f.readlines()[33:]
+        # lines = f.readlines()[24:]
+        lines = f.readlines()[33:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
