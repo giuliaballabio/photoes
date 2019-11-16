@@ -19,7 +19,7 @@ R = 3.e4
 species = 'NeII'
 
 ## N.B. When you change to nonorm, remember to change also f.readlines()[24:]
-## for mdot10e-8 etc is f.readlines()[36:]
+## for mdot10e-8 etc is f.readlines()[35:]
 mdot = 'mdot10e-10'
 
 path_file = []
@@ -33,7 +33,7 @@ value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[0], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
         # lines = f.readlines()[24:]
-        lines = f.readlines()[36:]
+        lines = f.readlines()[35:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
@@ -48,7 +48,7 @@ value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[1], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
         # lines = f.readlines()[24:]
-        lines = f.readlines()[36:]
+        lines = f.readlines()[35:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
@@ -63,7 +63,7 @@ value = []
 for i in range(len(r_out)):
     with open('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'/incl_'+str(round(incl_deg,2))+'/photoes_b'+str('{:.2f}'.format(round(b[2], 2)))+'_r'+str(r_in)+'_r'+str(r_out[i])+'_i'+str(round(incl_deg,2))+'.txt', 'r') as f:
         # lines = f.readlines()[24:]
-        lines = f.readlines()[36:]
+        lines = f.readlines()[35:]
         value.append([x.split('\n')[0] for x in lines])
 f.close()
 string = []
