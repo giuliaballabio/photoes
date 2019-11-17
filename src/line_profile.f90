@@ -25,7 +25,9 @@ use omp_lib
 implicit none
 
 integer                              :: i,j,k,l,npoints,l_in,l_out,l_25
-integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
+! This line is for a bigger grid pu to 30 Rg
+!integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
+integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
 real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
 !real,dimension(1:n_r-1)             :: dr
 real,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
@@ -83,7 +85,7 @@ write(*,*) 'ng/rhog =',ng/rhog
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 !! The values of radii are in units of Rg
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=112,file='../../../../../src/grid_r_30.dat')
+open(unit=112,file='../../../../../src/grid_r.dat')
 do i=1,n_r
     read(112,*) r(i)
 enddo
@@ -218,9 +220,9 @@ do i=l_in,l_out
             v_r2d(i,j)=ub*v_r_stream(k)
             v_theta2d(i,j)=ub*v_theta_stream(k)
             !! V_PHI: KEPLERIAN ANGULAR MOMENTUM CONSERVATION
-            !v_phi2d(i,j)=((r_stream(k)/(Rg/au))*Rb(i,j))**(-0.5) !*(Mstar/Msun)**0.5
+            v_phi2d(i,j)=((r_stream(k)/(Rg/au))*Rb(i,j))**(-0.5) !*(Mstar/Msun)**0.5
             !! V_PHI: KEPLERIAN VELOCITY
-            v_phi2d(i,j)=((x_stream(k)/(Rg/au))*Rb(i,j))**(-0.5) !*(Mstar/Msun)**0.5
+            ! v_phi2d(i,j)=((x_stream(k)/(Rg/au))*Rb(i,j))**(-0.5) !*(Mstar/Msun)**0.5
         elseif (centre_theta(j)>theta_max) then
             rho2d(i,j)=0.d0 !1.5e-15
             v_r2d(i,j)=0.d0 !5.e-1
