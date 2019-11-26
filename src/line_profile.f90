@@ -24,7 +24,7 @@ use omp_lib
 
 implicit none
 
-integer                              :: i,j,k,l,npoints,l_in,l_out,l_25
+integer                              :: i,j,k,l,npoints,l_in,l_out,l_25,l_Rg
 ! This line is for a bigger grid pu to 30 Rg
 !integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
 integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
