@@ -85,7 +85,7 @@ write(*,*) 'ng/rhog =',ng/rhog
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 !! The values of radii are in units of Rg
 write(*,*) 'Creating the 2D grid from the hydro simulations...'
-open(unit=112,file='../../../../../src/grid_r.dat')
+open(unit=112,file='../../../../../src/grid_r_30.dat')
 do i=1,n_r
     read(112,*) r(i)
 enddo
@@ -155,7 +155,7 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.1
+r_inner=0.03
 r_outer=30.0
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
@@ -189,6 +189,7 @@ close(156)
 
 !! DEFINE A THETA MAX FOR THE FORBIDDEN REGION !!
 theta_max=atan(y_stream(npoints)/x_stream(npoints))
+write(*,*) theta_max
 ! j=1
 ! do while (centre_theta(j).le.theta_max)
 !     j=j+1
@@ -203,10 +204,10 @@ b_input=1.50
 ub=0.56
 b=b_input
 
-rho2d(:,:)=0.0 !1.5e-17
+rho2d(:,:)=0.0
 v_r2d(:,:)=0.0
 v_theta2d(:,:)=0.0
-v_phi2d(:,:)=0.0 !0001
+v_phi2d(:,:)=0.0
 Rb(:,:)=0.0
 do i=l_in,l_out
     do j=1,n_theta0
@@ -224,19 +225,21 @@ do i=l_in,l_out
             !! V_PHI: KEPLERIAN VELOCITY
             ! v_phi2d(i,j)=((x_stream(k)/(Rg/au))*Rb(i,j))**(-0.5) !*(Mstar/Msun)**0.5
         elseif (centre_theta(j)>theta_max) then
-            rho2d(i,j)=0.d0 !1.5e-15
-            v_r2d(i,j)=0.d0 !5.e-1
-            v_theta2d(i,j)=0.d0 !0.5
-            v_phi2d(i,j)=0.d0 !0.05
+            rho2d(i,j)=0.d0
+            v_r2d(i,j)=0.d0
+            v_theta2d(i,j)=0.d0
+            v_phi2d(i,j)=0.d0
         endif
     enddo
 enddo
 
-!! SET THE DENSITY AT THE BASE EQUAL TO ZERO FOR r > 10Rg !!
+!! SET THE DENSITY EQUAL TO ZERO FOR r > 10Rg !!
 do i=l_in,l_out
-    if (centre_r(i)>10.) then
-        rho2d(i,250)=0.d0
-    endif
+    do j=1,n_theta0
+        if (centre_r(i)>10.) then
+            rho2d(i,j)=0.d0
+        endif
+    enddo
 enddo
 
 if(.not.init) then
@@ -351,6 +354,16 @@ do i=1,n_r
 enddo
 close(210)
 
+!! NORMALIZAING THE DENSITY IN A DIFFERENT WAY
+write(*,*) 'Normalizing the density such as n_0(R_g)=n_g'
+l=1
+do while ((r(l)*au).le.1.)
+    l=l+1
+enddo
+l_Rg=l
+rho(:,:)=rho(:,:)*rhog/rho(l_Rg,250)
+
+
 !! COMPUTE THE MASS FLUX FROM THE ANALYTHICAL MODEL !!
 ! write(*,*) 'Calculating the mass flux at the outer radius...'
 ! do j=1,n_theta
@@ -388,32 +401,32 @@ write(*,*) '   Mass flux (r<25 au) =',Mdot_25,'Msun/yr'
 write(*,*) '-----------------------------------------------------------'
 
 !! NORMALIZE THE DENSITY SUCH AS Mdot(r<25au) = 10^-10 Msun/yr
-rho_ng(:,:)=rho(:,:)/ng
-rho(:,:)=rho(:,:)*(1.d-10/Mdot_25)
-Mdot_25=0.0
-dmass=0.0
-do i=1,l_25
-    dA(i)=r(i)*dr(i)
-    dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
-enddo
-Mdot_25=sum(dmass)
-write(*,*) '-----------------------------------------------------------'
-write(*,*) '   Normalised mass flux (r<25 au) =',Mdot_25,'Msun/yr'
-write(*,*) '-----------------------------------------------------------'
-!! Define the density without the correction for ng
-Mdot=0.0
-dmass=0.0
-do i=1,n_r
-    dA(i)=r(i)*dr(i)
-    dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
-    dmass_ng(i)=rho_ng(i,250)*v_theta(i,250)*dA(i)
-enddo
-Mdot=sum(dmass)
-write(*,*) '-----------------------------------------------------------'
-write(*,*) '   Normalised total mass flux =',Mdot,'Msun/yr'
-write(*,*) '-----------------------------------------------------------'
-write(*,*) '   Normalised ng =',Mdot/sum(dmass_ng)
-write(*,*) '-----------------------------------------------------------'
+! rho_ng(:,:)=rho(:,:)/ng
+! rho(:,:)=rho(:,:)*(1.d-10/Mdot_25)
+! Mdot_25=0.0
+! dmass=0.0
+! do i=1,l_25
+!     dA(i)=r(i)*dr(i)
+!     dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
+! enddo
+! Mdot_25=sum(dmass)
+! write(*,*) '-----------------------------------------------------------'
+! write(*,*) '   Normalised mass flux (r<25 au) =',Mdot_25,'Msun/yr'
+! write(*,*) '-----------------------------------------------------------'
+! !! Define the density without the correction for ng
+! Mdot=0.0
+! dmass=0.0
+! do i=1,n_r
+!     dA(i)=r(i)*dr(i)
+!     dmass(i)=rho(i,250)*v_theta(i,250)*dA(i)
+!     dmass_ng(i)=rho_ng(i,250)*v_theta(i,250)*dA(i)
+! enddo
+! Mdot=sum(dmass)
+! write(*,*) '-----------------------------------------------------------'
+! write(*,*) '   Normalised total mass flux =',Mdot,'Msun/yr'
+! write(*,*) '-----------------------------------------------------------'
+! write(*,*) '   Normalised ng =',Mdot/sum(dmass_ng)
+! write(*,*) '-----------------------------------------------------------'
 
 !! COMPUTE THE FLUX FOR A SINGLE CELL !!
 !! N.B. THE CONSTANTS ARE ALL IN CGS: CONVERT QUANTITIES IN CGS !!
