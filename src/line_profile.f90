@@ -328,6 +328,15 @@ enddo
 close(198)
 close(200)
 
+!! NORMALIZAING THE DENSITY IN A DIFFERENT WAY
+write(*,*) 'Normalizing the density such as n_0(R_g)=n_g'
+l=1
+do while (r(l).le.1.)
+    l=l+1
+enddo
+l_Rg=l
+rho(:,:)=rho(:,:)/rho(l_Rg,250)
+
 !! CONVERT TO PHYSICAL UNITS !!
 write(*,*) 'Converting to physical units...'
 !! CONVERSION: code units -> cm -> au !!
@@ -353,16 +362,6 @@ do i=1,n_r
     !write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
 enddo
 close(210)
-
-!! NORMALIZAING THE DENSITY IN A DIFFERENT WAY
-write(*,*) 'Normalizing the density such as n_0(R_g)=n_g'
-l=1
-do while ((r(l)*au).le.1.)
-    l=l+1
-enddo
-l_Rg=l
-rho(:,:)=rho(:,:)*rhog/rho(l_Rg,250)
-
 
 !! COMPUTE THE MASS FLUX FROM THE ANALYTHICAL MODEL !!
 ! write(*,*) 'Calculating the mass flux at the outer radius...'
