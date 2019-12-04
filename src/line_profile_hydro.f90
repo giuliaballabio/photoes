@@ -19,7 +19,7 @@ use omp_lib
 
 implicit none
 
-integer                                          :: i,j,k,l
+integer                                          :: i,j,k,l,l_Rg
 integer,parameter                                :: n_r=1113,n_theta0=300,n_theta=2*300,n_phi=4*300,n_v=800
 double precision,dimension(1:n_r)                :: r,r_in,r_out,dr
 !double precision,dimension(1:n_r-1)             :: dr
@@ -36,6 +36,7 @@ double precision                                 :: Rg,ng,rhog,vth,vel_convert,n
 double precision                                 :: v_los_r,v_los_th,v_los_phi
 logical,save                                     :: init=.false.
 character(len=6)                                 :: str_i,species_flag
+real                                             :: ng_norm
 real                                             :: m_atom,Ab,A_ul,lambda,X_ion,n_cr,T_ul
 
 !! PHYSICAL CONSTANTS !!
@@ -47,7 +48,7 @@ double precision,parameter                       :: h_planck=6.6261d-27,speed_li
 double precision,parameter                       :: CC=0.14,Phi_star=0.75d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
 
-species_flag='SIIa'
+species_flag='NeII'
 call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
 
 !! PHYSICS SCALING FACTORS !!
@@ -71,7 +72,7 @@ print *,'ng/rhog=',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 print *,'Creating the 2D grid...'
-open(unit=100,file='../../data_hydro/grid_r.dat')
+open(unit=100,file='../../../../../photoes/data_hydro/grid_r.dat')
 do i=1,n_r
 		read(100,*) r(i)
 enddo
@@ -122,10 +123,10 @@ enddo
 
 !! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
 print *,'Reading data from files...'
-open(unit=200,file='../../data_hydro/rho_mean.dat')
-open(unit=210,file='../../data_hydro/v_r_mean.dat')
-open(unit=220,file='../../data_hydro/v_th_mean.dat')
-open(unit=230,file='../../data_hydro/v_phi_mean.dat')
+open(unit=200,file='../../../../../photoes/data_hydro/rho_mean.dat')
+open(unit=210,file='../../../../../photoes/data_hydro/v_r_mean.dat')
+open(unit=220,file='../../../../../photoes/data_hydro/v_th_mean.dat')
+open(unit=230,file='../../../../../photoes/data_hydro/v_phi_mean.dat')
 do i=1,n_r
 		do j=1,n_theta0
 				read(200,*) rho2d(i,j)
@@ -165,6 +166,17 @@ do i=1,n_r
 		v_theta(i,n_theta0+1:n_theta/2+50)=0.d0
 		v_phi(i,n_theta0+1:n_theta/2+50)=0.d0
 enddo
+
+!! NORMALIZAING THE DENSITY IN A DIFFERENT WAY
+write(*,*) 'Normalizing the density such as n_0(R_g)=n_g'
+l=1
+do while (r(l).le.1.)
+    l=l+1
+enddo
+l_Rg=l
+rho(:,:)=rho(:,:)/rho(l_Rg,250)
+ng_norm=10.0 
+rho(:,:)=rho(:,:)*ng_norm
 
 !! CONVERT TO PHYSICAL UNITS !!
 print *,'Converting to physical units...'
@@ -207,9 +219,9 @@ print *,'-----------------------------------------------------------'
 !! N.B. THE CONSTANTS ARE ALL IN CGS: CONVERT QUANTITIES IN CGS !!
 print *,'Calculating the flux for a single cell...'
 Temp=T0*(cs/10.0d5)**2.
-nu=speed_light/lambda_ne
+nu=speed_light/lambda
 A_hnu=A_ul*h_planck*nu
-constants=Ab_ne*A_hnu*X_II
+constants=Ab*A_hnu*X_ion
 do i=1,n_r
 		do j=1,n_theta
 				!! CONVERSION: volume [au**3] -> [cm**3] !!
@@ -218,7 +230,7 @@ do i=1,n_r
 				n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
 				if(n_e(i,j) > 0.0) then
 						C(i,j)=1.d0+(n_cr/n_e(i,j))
-						cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/T))+1.d0)*n_e(i,j)*dV(i,j)
+						cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
 				else
 						cell_flux(i,j)=0.d0
 				endif
@@ -250,8 +262,8 @@ enddo
 !! DEFINE THE INCLINATION ANGLE !!
 !print *,'Please enter the inclination angle of the disc in degrees: '
 !read(*,*) incl_deg
-incl_deg=90.0
-str_i='90.0'
+incl_deg=0.0 
+str_i='0.0' 
 incl_rad=incl_deg*(pi/180.)
 
 !! COMPUTE THE LINE PROFILE !!
