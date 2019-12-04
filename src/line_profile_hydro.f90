@@ -72,11 +72,11 @@ print *,'ng/rhog=',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 print *,'Creating the 2D grid...'
-open(unit=100,file='../../../grid_r.dat')
+open(unit=107,file='../../../grid_r.dat')
 do i=1,n_r
-		read(100,*) r(i)
+		read(107,*) r(i)
 enddo
-close(100)
+close(107)
 ratio_r=sqrt(r(2)/r(1))
 do i=1,n_r
 		r_in(i)=r(i)/ratio_r
@@ -123,22 +123,22 @@ enddo
 
 !! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
 print *,'Reading data from files...'
-open(unit=200,file='../../../rho_mean.dat')
-open(unit=210,file='../../../v_r_mean.dat')
-open(unit=220,file='../../../v_th_mean.dat')
-open(unit=230,file='../../../v_phi_mean.dat')
+open(unit=112,file='../../../rho_mean.dat')
+open(unit=145,file='../../../v_r_mean.dat')
+open(unit=157,file='../../../v_th_mean.dat')
+open(unit=168,file='../../../v_phi_mean.dat')
 do i=1,n_r
 		do j=1,n_theta0
-				read(200,*) rho2d(i,j)
-				read(210,*) v_r2d(i,j)
-				read(220,*) v_theta2d(i,j)
-				read(230,*) v_phi2d(i,j)
+				read(112,*) rho2d(i,j)
+				read(145,*) v_r2d(i,j)
+				read(157,*) v_theta2d(i,j)
+				read(168,*) v_phi2d(i,j)
 		enddo
 enddo
-close(200)
-close(210)
-close(220)
-close(230)
+close(112)
+close(145)
+close(157)
+close(168)
 
 !! REVERSE ALONG THETA AXIS !!
 print *,'Building the 3D field...'
@@ -175,7 +175,7 @@ do while (r(l).le.1.)
 enddo
 l_Rg=l
 rho(:,:)=rho(:,:)/rho(l_Rg,250)
-ng_norm=10.0
+ng_norm=10.0 
 rho(:,:)=rho(:,:)*ng_norm
 
 !! CONVERT TO PHYSICAL UNITS !!
@@ -195,14 +195,14 @@ vth=vth*1.d-5
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
-		open(unit=300,file='bound_cond.txt')
+		open(unit=178,file='bound_cond.txt')
 else
-		open(unit=300,file='bound_cond.txt',status='old',position='append')
+		open(unit=178,file='bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
-		write(300,'(4(es18.10,1X))') r(i),rho(i,299),v_theta(i,299),v_phi(i,299)
+		write(178,'(4(es18.10,1X))') r(i),rho(i,299),v_theta(i,299),v_phi(i,299)
 enddo
-close(300)
+close(178)
 
 !! COMPUTE THE MASS FLUX !!
 print *,'Calculating the mass flux...'
@@ -238,16 +238,16 @@ do i=1,n_r
 enddo
 !! WRITE THE DATA INTO A FILE TO PLOT A MAP OF THE FLUX !!
 if(.not.init) then
-    open(unit=400,file='./cellflux.txt')
+    open(unit=189,file='./cellflux.txt')
 else
-    open(unit=400,file='./cellflux.txt',status='old',position='append')
+    open(unit=189,file='./cellflux.txt',status='old',position='append')
 endif
 do i=1,n_r
     do j=1,n_theta
-        write(400,'(1(es20.10e5,1X))') cell_flux(i,j)
+        write(189,'(1(es20.10e5,1X))') cell_flux(i,j)
     enddo
 enddo
-close(400)
+close(189)
 
 tot_flux=sum(cell_flux)*n_phi
 print *,'-----------------------------------------------------------'
@@ -262,8 +262,8 @@ enddo
 !! DEFINE THE INCLINATION ANGLE !!
 !print *,'Please enter the inclination angle of the disc in degrees: '
 !read(*,*) incl_deg
-incl_deg=0.0
-str_i='0.0'
+incl_deg=0.0 
+str_i='0.0' 
 incl_rad=incl_deg*(pi/180.)
 
 !! COMPUTE THE LINE PROFILE !!
@@ -298,14 +298,14 @@ enddo
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE LINE PROFILE !!
 if(.not.init) then
-		open(unit=500,file='line_profile_i'//trim(str_i)//'.txt')
+		open(unit=210,file='line_profile_i'//trim(str_i)//'.txt')
 else
-		open(unit=500,file='line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
+		open(unit=210,file='line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
-		write(500,'(2(es18.10,1X))') v(l),line_flux(l)
+		write(210,'(2(es18.10,1X))') v(l),line_flux(l)
 enddo
-close(500)
+close(210)
 
 print *,'-----------------------------------------------------------'
 
