@@ -71,7 +71,7 @@ print *,'ng/rhog=',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 print *,'Creating the 2D grid...'
-open(unit=100,file='../../data_hydro/data_sim/grid_r.dat')
+open(unit=100,file='../../data_hydro/grid_r.dat')
 do i=1,n_r
 		read(100,*) r(i)
 enddo
@@ -122,10 +122,10 @@ enddo
 
 !! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
 print *,'Reading data from files...'
-open(unit=200,file='../../data_hydro/data_sim/rho_mean.dat')
-open(unit=210,file='../../data_hydro/data_sim/v_r_mean.dat')
-open(unit=220,file='../../data_hydro/data_sim/v_th_mean.dat')
-open(unit=230,file='../../data_hydro/data_sim/v_phi_mean.dat')
+open(unit=200,file='../../data_hydro/rho_mean.dat')
+open(unit=210,file='../../data_hydro/v_r_mean.dat')
+open(unit=220,file='../../data_hydro/v_th_mean.dat')
+open(unit=230,file='../../data_hydro/v_phi_mean.dat')
 do i=1,n_r
 		do j=1,n_theta0
 				read(200,*) rho2d(i,j)
