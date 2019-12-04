@@ -72,7 +72,7 @@ print *,'ng/rhog=',ng/rhog
 
 !! READ GRID FILE AND CREATE A GRID AT THE BOUNDARY OF THE CELL !!
 print *,'Creating the 2D grid...'
-open(unit=100,file='../../../../../photoes/data_hydro/grid_r.dat')
+open(unit=100,file='../../../grid_r.dat')
 do i=1,n_r
 		read(100,*) r(i)
 enddo
@@ -123,10 +123,10 @@ enddo
 
 !! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
 print *,'Reading data from files...'
-open(unit=200,file='../../../../../photoes/data_hydro/rho_mean.dat')
-open(unit=210,file='../../../../../photoes/data_hydro/v_r_mean.dat')
-open(unit=220,file='../../../../../photoes/data_hydro/v_th_mean.dat')
-open(unit=230,file='../../../../../photoes/data_hydro/v_phi_mean.dat')
+open(unit=200,file='../../../rho_mean.dat')
+open(unit=210,file='../../../v_r_mean.dat')
+open(unit=220,file='../../../v_th_mean.dat')
+open(unit=230,file='../../../v_phi_mean.dat')
 do i=1,n_r
 		do j=1,n_theta0
 				read(200,*) rho2d(i,j)
@@ -175,7 +175,7 @@ do while (r(l).le.1.)
 enddo
 l_Rg=l
 rho(:,:)=rho(:,:)/rho(l_Rg,250)
-ng_norm=10.0 
+ng_norm=10.0
 rho(:,:)=rho(:,:)*ng_norm
 
 !! CONVERT TO PHYSICAL UNITS !!
@@ -262,8 +262,8 @@ enddo
 !! DEFINE THE INCLINATION ANGLE !!
 !print *,'Please enter the inclination angle of the disc in degrees: '
 !read(*,*) incl_deg
-incl_deg=0.0 
-str_i='0.0' 
+incl_deg=0.0
+str_i='0.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! COMPUTE THE LINE PROFILE !!
