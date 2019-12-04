@@ -475,8 +475,8 @@ enddo
 !read(*,*) incl_deg
 !write(*,*) 'Write the value of i in the format for the name of the file: '
 !read(*,*) str_i
-incl_deg=0.0
-str_i='0.0'
+incl_deg=0.0 
+str_i='0.0' 
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
