@@ -23,24 +23,24 @@ for incl in 0.0; do
 		# Actually compile the code
 		ifort -g -check all -fpe0 -fpp -r8 -warn -traceback -pedantic -traceback -debug extended -qopenmp -o photoes line_profile_hydro.f90
 
-		if [ ! -d $RUNDIR/../../output_photoes/data_hydro/$species/ng$ng_norm/incl_$incl ]; then
-			if [ ! -d $RUNDIR/../../output_photoes/data_hydro/$species/ng$ng_norm ]; then
-				if [ ! -d $RUNDIR/../../output_photoes/data_hydro/$species ]; then
-					mkdir $RUNDIR/../../output_photoes/data_hydro/$species
+		if [ ! -d $RUNDIR/../data_hydro/$species/ng$ng_norm/incl_$incl ]; then
+			if [ ! -d $RUNDIR/../data_hydro/$species/ng$ng_norm ]; then
+				if [ ! -d $RUNDIR/../data_hydro/$species ]; then
+					mkdir $RUNDIR/../data_hydro/$species
 				fi
-				mkdir $RUNDIR/../../output_photoes/data_hydro/$species/ng$ng_norm
+				mkdir $RUNDIR/../data_hydro/$species/ng$ng_norm
 			fi
-			mkdir $RUNDIR/../../output_photoes/data_hydro/$species/ng$ng_norm/incl_$incl
+			mkdir $RUNDIR/../data_hydro/$species/ng$ng_norm/incl_$incl
 		fi
 
 		# Copy files to this new directory
-		cp photoes submit-job* $RUNDIR/../../output_photoes/data_hydro/$species/ng$ng_norm/incl_$incl
+		cp photoes submit-job* $RUNDIR/../data_hydro/$species/ng$ng_norm/incl_$incl
 
 		# Remove unuseful files
 		rm photoes
 
 		# Submit the job on dial or alice
-		cd $RUNDIR/../../output_photoes/data_hydro/$species/ng$ng_norm/incl_$incl
+		cd $RUNDIR/../data_hydro/$species/ng$ng_norm/incl_$incl
 		qsub submit-job-alice
 
 		cd $RUNDIR
