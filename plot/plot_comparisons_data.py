@@ -13,91 +13,91 @@ plt.rc('legend', fontsize='large')
 
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT b ----------------------
 
-b = [0.75, 1.00, 1.50, 2.00]
-incl_deg = []
-for i in range(0,int(90/5+1)):
-    incl_deg.append(5.0*i)
-## for more inclinations
-# for i in range(0,int(90/2.5+1)):
-#     incl_deg.append(2.5*i)
-r_in = 0.1
-r_out = 9.5
-cs = '10.0d5'
-R = 3.e4
-species = 'NeII'
-mdot = 'mdot10e-9'
-
-path_file = []
-for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
-
-v_peak1 = []
-v_centr1 = []
-fwhm1 = []
-err_vpeak1 = []
-err_fwhm1 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
-        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        # err_vpeak1.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        # err_fwhm1.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
-f1.close()
-v_peak2 = []
-v_centr2 = []
-fwhm2 = []
-err_vpeak2 = []
-err_fwhm2 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:11]
-        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        # err_vpeak2.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        # err_fwhm2.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
-f2.close()
-v_peak3 = []
-v_centr3 = []
-fwhm3 = []
-err_vpeak3 = []
-err_fwhm3 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
-        v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        # err_vpeak3.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        # err_fwhm3.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
-f3.close()
-v_peak4 = []
-v_centr4 = []
-fwhm4 = []
-err_vpeak4 = []
-err_fwhm4 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:]
-        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-        # err_vpeak4.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
-        # err_fwhm4.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
-f4.close()
-
-## WE NEED TO PLOT THE FWHM, NOT HALF
-fwhm1 = np.array(fwhm1)*2.
-fwhm2 = np.array(fwhm2)*2.
-fwhm3 = np.array(fwhm3)*2.
-fwhm4 = np.array(fwhm4)*2.
-
-## UPLOAD THE DATA FROM RICHARD'S HYDRO SIMULATIONS
-vpeak_hydro = np.array(map(float, [lines.split()[3] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
-fwhm_hydro = np.array(map(float, [lines.split()[4] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
-incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
+# b = [0.75, 1.00, 1.50, 2.00]
+# incl_deg = []
+# for i in range(0,int(90/5+1)):
+#     incl_deg.append(5.0*i)
+# ## for more inclinations
+# # for i in range(0,int(90/2.5+1)):
+# #     incl_deg.append(2.5*i)
+# r_in = 0.1
+# r_out = 9.5
+# cs = '10.0d5'
+# R = 3.e4
+# species = 'NeII'
+# mdot = 'mdot10e-9'
+#
+# path_file = []
+# for j in range(len(b)):
+#     path_file.append('../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+#
+# v_peak1 = []
+# v_centr1 = []
+# fwhm1 = []
+# err_vpeak1 = []
+# err_fwhm1 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+#         lines = f1.readlines()[10:]
+#         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+#         # err_vpeak1.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+#         # err_fwhm1.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+# f1.close()
+# v_peak2 = []
+# v_centr2 = []
+# fwhm2 = []
+# err_vpeak2 = []
+# err_fwhm2 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+#         lines = f2.readlines()[10:11]
+#         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+#         # err_vpeak2.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+#         # err_fwhm2.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+# f2.close()
+# v_peak3 = []
+# v_centr3 = []
+# fwhm3 = []
+# err_vpeak3 = []
+# err_fwhm3 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+#         lines = f3.readlines()[10:]
+#         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+#         # err_vpeak3.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+#         # err_fwhm3.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+# f3.close()
+# v_peak4 = []
+# v_centr4 = []
+# fwhm4 = []
+# err_vpeak4 = []
+# err_fwhm4 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
+#         lines = f4.readlines()[10:]
+#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+#         # err_vpeak4.append(map(float, [x.split('\t\t\t')[3] for x in lines]))
+#         # err_fwhm4.append(map(float, [x.split('\t\t\t')[4] for x in lines]))
+# f4.close()
+#
+# ## WE NEED TO PLOT THE FWHM, NOT HALF
+# fwhm1 = np.array(fwhm1)*2.
+# fwhm2 = np.array(fwhm2)*2.
+# fwhm3 = np.array(fwhm3)*2.
+# fwhm4 = np.array(fwhm4)*2.
+#
+# ## UPLOAD THE DATA FROM RICHARD'S HYDRO SIMULATIONS
+# vpeak_hydro = np.array(map(float, [lines.split()[3] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
+# fwhm_hydro = np.array(map(float, [lines.split()[4] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
+# incl_hydro = np.array(map(float, [lines.split()[0] for lines in open('../data_hydro/NeII_inclination.dat', 'r')]))
 
 ## CONSIDER THE DATA FROM Sacco et al. 2012
 ## RX J1615.3-3255 IS TAKEN FROM de Boer et al. 2016
@@ -125,56 +125,56 @@ err_fwhm_data3 = [3.4, 3.3, 1.7]
 incl_data3 = [60.0, 87.0, 35.0]
 name3 = ['V892 Tau', 'CoKu Tau 1', 'FS Tau A']
 
-plt.figure()
-plt.plot(incl_deg, np.abs(v_centr1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
-plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
-plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
-# plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
-# plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-for i in range(len(name)):
-    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
-for i in range(len(name3)):
-    plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$- v_{centroid} \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-1., 91., -0.5, 17.5])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-# plt.show()
-
-plt.figure()
-plt.plot(incl_deg, np.abs(v_peak1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
-plt.plot(incl_deg, np.abs(v_peak2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
-plt.plot(incl_deg, np.abs(v_peak3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
-# plt.plot(incl_deg, np.abs(v_peak4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
-plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
-for i in range(len(name)):
-    plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
-plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
-for i in range(len(name3)):
-    plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
-plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$- v_{peak} \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-# plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
-plt.axis([-1., 91., -0.5, 17.5])
-plt.tight_layout()
-plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
-plt.savefig('./observables/'+str(species)+'/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-# plt.show()
+# plt.figure()
+# plt.plot(incl_deg, np.abs(v_centr1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
+# plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
+# plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
+# # plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
+# # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
+# plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+# for i in range(len(name)):
+#     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+# plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+# for i in range(len(name3)):
+#     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
+# plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$- v_{centroid} \, [km/s]$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+# plt.axis([-1., 91., -0.5, 17.5])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+# plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# # plt.show()
+#
+# plt.figure()
+# plt.plot(incl_deg, np.abs(v_peak1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
+# plt.plot(incl_deg, np.abs(v_peak2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
+# plt.plot(incl_deg, np.abs(v_peak3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
+# # plt.plot(incl_deg, np.abs(v_peak4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
+# plt.errorbar(incl_data2, np.abs(vpeak_data2), yerr=err_vpeak_data2, color='k', linestyle='None', marker='*', capsize=3, label='$Pascucci\,&\,Sterzik\,(2009)$')
+# for i in range(len(name)):
+#     plt.annotate(name[i], (incl_data2[i]+0.3, np.abs(vpeak_data2[i])+0.3))
+# plt.errorbar(incl_data3, np.abs(vpeak_data3), yerr=err_vpeak_data3, color='k', linestyle='None', marker='d', capsize=3, label='$Baldovin-Saavedra\,(2012)$')
+# for i in range(len(name3)):
+#     plt.annotate(name3[i], (incl_data3[i]-12.0, np.abs(vpeak_data3[i])-0.1))
+# plt.errorbar(incl_data, np.abs(vpeak_data), yerr=err_vpeak_data, color='k', linestyle='None', marker='o', capsize=3, label='$Sacco\,et\,al.\,(2012)$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.3, np.abs(vpeak_data[i])+0.3))
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$- v_{peak} \, [km/s]$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# # plt.title('b = '+str(b)+' - R$_{in}$ = '+str(r_in)+' Rg - R$_{out}$ = '+str(r_out)+' Rg')
+# plt.axis([-1., 91., -0.5, 17.5])
+# plt.tight_layout()
+# plt.legend(bbox_to_anchor=(0., 1.), loc='upper left', ncol=2)
+# plt.savefig('./observables/'+str(species)+'/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/vpeak_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# # plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT cs ----------------------
 
@@ -523,70 +523,70 @@ plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT b ----------------------
 
-b = [0.75, 1.00, 1.50, 2.00]
-incl_deg = []
-for i in range(0,int(90/5+1)):
-    incl_deg.append(5.0*i)
-## for more inclinations
-# for i in range(0,int(90/2.5+1)):
-#     incl_deg.append(2.5*i)
-r_in = 0.1
-r_out = 9.5
-cs = '10.0d5'
-R = 3.e4
-species = 'OI'
-mdot = 'mdot10e-9'
-
-path_file = []
-for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
-
-v_peak1 = []
-v_centr1 = []
-fwhm1 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:]
-        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f1.close()
-v_peak2 = []
-v_centr2 = []
-fwhm2 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:11]
-        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f2.close()
-v_peak3 = []
-v_centr3 = []
-fwhm3 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:]
-        v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f3.close()
-v_peak4 = []
-v_centr4 = []
-fwhm4 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:]
-        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f4.close()
-
-## WE NEED TO PLOT THE FWHM, NOT HALF
-fwhm1 = np.array(fwhm1)*2.
-fwhm2 = np.array(fwhm2)*2.
-fwhm3 = np.array(fwhm3)*2.
-fwhm4 = np.array(fwhm4)*2.
+# b = [0.75, 1.00, 1.50, 2.00]
+# incl_deg = []
+# for i in range(0,int(90/5+1)):
+#     incl_deg.append(5.0*i)
+# ## for more inclinations
+# # for i in range(0,int(90/2.5+1)):
+# #     incl_deg.append(2.5*i)
+# r_in = 0.1
+# r_out = 9.5
+# cs = '10.0d5'
+# R = 3.e4
+# species = 'OI'
+# mdot = 'mdot10e-9'
+#
+# path_file = []
+# for j in range(len(b)):
+#     path_file.append('../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+#
+# v_peak1 = []
+# v_centr1 = []
+# fwhm1 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[0])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f1:
+#         lines = f1.readlines()[10:]
+#         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f1.close()
+# v_peak2 = []
+# v_centr2 = []
+# fwhm2 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[1])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f2:
+#         lines = f2.readlines()[10:11]
+#         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f2.close()
+# v_peak3 = []
+# v_centr3 = []
+# fwhm3 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f3:
+#         lines = f3.readlines()[10:]
+#         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f3.close()
+# v_peak4 = []
+# v_centr4 = []
+# fwhm4 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[3])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R)+'.txt', 'r') as f4:
+#         lines = f4.readlines()[10:]
+#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f4.close()
+#
+# ## WE NEED TO PLOT THE FWHM, NOT HALF
+# fwhm1 = np.array(fwhm1)*2.
+# fwhm2 = np.array(fwhm2)*2.
+# fwhm3 = np.array(fwhm3)*2.
+# fwhm4 = np.array(fwhm4)*2.
 
 ## CONSIDER THE DATA FROM Banzatti et al. 2019
 ## Narrow Component
@@ -620,135 +620,135 @@ err_fwhm1_down = [2., 8., 5.]
 incl_down = [65., 54., 9.]
 ID_down = ['CWtau', 'V853Oph', 'DRTau']
 
-plt.figure()
-plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
-plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$')
-plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
-# plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
-#plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
-plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
-plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., 5., 51.])
-plt.tight_layout()
-plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
-
-plt.figure()
-plt.plot(incl_deg, np.abs(v_centr1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
-plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
-plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
-# plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
-# plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
-plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
-plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10., np.abs(vcentr_sx[i])-0.3), color='k')
-plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$- v_{centroid} \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., -0.5, 14.])
-plt.tight_layout()
-plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# plt.figure()
+# plt.plot(incl_deg, fwhm1, color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$')
+# plt.plot(incl_deg, fwhm2, color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$')
+# plt.plot(incl_deg, fwhm3, color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$')
+# # plt.plot(incl_deg, fwhm4, color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$')
+# #plt.plot(incl_hydro, fwhm_hydro, color='k', linestyle='dotted', label='$Alexander \, (2008)$')
+# plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+# plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
+# plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM \, [km/s]$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., 5., 51.])
+# plt.tight_layout()
+# plt.legend(loc='best')
+# plt.savefig('./observables/'+str(species)+'/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhm_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_dataNC.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
+#
+# plt.figure()
+# plt.plot(incl_deg, np.abs(v_centr1), color='#fecc5c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fecc5c', label='$b='+str(b[0])+'$') #a50f15
+# plt.plot(incl_deg, np.abs(v_centr2), color='#fd8d3c', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#fd8d3c', label='$b='+str(b[1])+'$') #de2d26
+# plt.plot(incl_deg, np.abs(v_centr3), color='#f03b20', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#f03b20', label='$b='+str(b[2])+'$') #fb6a4a
+# # plt.plot(incl_deg, np.abs(v_centr4), color='#bd0026', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#bd0026', label='$b='+str(b[3])+'$') #fcae91
+# # plt.plot(incl_hydro, np.abs(vpeak_hydro), color='k', linestyle='dotted', label='$Alexander \, (2008)$')
+# plt.errorbar(incl_data, np.abs(vcentr_data), yerr=err_vcentr, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.8, np.abs(vcentr_data[i])-0.1), color='k')
+# plt.errorbar(incl_sx, np.abs(vcentr_sx), yerr=err_vcentr_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10., np.abs(vcentr_sx[i])-0.3), color='k')
+# plt.errorbar(incl_down, np.abs(vcentr_down), yerr=err_vcentr_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(vcentr_down[i])-0.1), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$- v_{centroid} \, [km/s]$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., -0.5, 14.])
+# plt.tight_layout()
+# plt.legend(loc='best')
+# plt.savefig('./observables/'+str(species)+'/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/vcentr_b_cs'+str(cs)+'_R'+str(R)+'_'+str(mdot)+'_data.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
 
 ## ---------------------- PLOT THE [OI] FWHM FOR DIFFERENT RESOLUTIONS ---------------------- ##
 
-R = [30.e3, 21.e3, 15.e3, 10.e3]
-species = 'OI'
-mdot = 'mdot10e-9'
-
-v_peak1 = []
-v_centr1 = []
-fwhm1 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
-        lines = f1.readlines()[10:11]
-        v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f1.close()
-v_peak2 = []
-v_centr2 = []
-fwhm2 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
-        lines = f2.readlines()[10:11]
-        v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f2.close()
-v_peak3 = []
-v_centr3 = []
-fwhm3 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[2])+'.txt', 'r') as f3:
-        lines = f3.readlines()[10:11]
-        v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f3.close()
-v_peak4 = []
-v_centr4 = []
-fwhm4 = []
-for i in range(len(incl_deg)):
-    with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[3])+'.txt', 'r') as f4:
-        lines = f4.readlines()[10:11]
-        v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
-        v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
-        fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
-f4.close()
-
-## WE NEED TO PLOT THE FWHM, NOT HALF
-fwhm1 = np.array(fwhm1)*2.
-fwhm2 = np.array(fwhm2)*2.
-fwhm3 = np.array(fwhm3)*2.
-fwhm4 = np.array(fwhm4)*2.
-
-plt.figure()
-plt.plot(incl_deg, fwhm1, color='#edf8b1', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#edf8b1', label='$R = '+str(R[0])+'$')
-plt.plot(incl_deg, fwhm2, color='#a1dab4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#a1dab4', label='$R = '+str(R[1])+'$')
-plt.plot(incl_deg, fwhm3, color='#41b6c4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#41b6c4', label='$R = '+str(R[2])+'$')
-plt.plot(incl_deg, fwhm4, color='#225ea8', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#225ea8', label='$R = '+str(R[3])+'$')
-plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
-for i in range(len(ID)):
-    plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
-plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_sx)):
-    plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
-plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
-for i in range(len(ID_down)):
-    plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
-plt.xlabel(r'$i \, [^{\circ}]$')
-plt.ylabel(r'$FWHM \, [km/s]$')
-plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
-plt.title('$[OI] \, 6300 \AA$')
-plt.axis([-1., 91., 5., 51.])
-plt.tight_layout()
-plt.legend(loc='best')
-plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b[2])+'_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
-plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b[2])+'_cs'+str(cs)+'_'+str(mdot)+'.eps', format='eps', dpi=300, bbox_inches='tight')
-plt.show()
+# R = [30.e3, 21.e3, 15.e3, 10.e3]
+# species = 'OI'
+# mdot = 'mdot10e-9'
+#
+# v_peak1 = []
+# v_centr1 = []
+# fwhm1 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[0])+'.txt', 'r') as f1:
+#         lines = f1.readlines()[10:11]
+#         v_peak1.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr1.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm1.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f1.close()
+# v_peak2 = []
+# v_centr2 = []
+# fwhm2 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[1])+'.txt', 'r') as f2:
+#         lines = f2.readlines()[10:11]
+#         v_peak2.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr2.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm2.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f2.close()
+# v_peak3 = []
+# v_centr3 = []
+# fwhm3 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[2])+'.txt', 'r') as f3:
+#         lines = f3.readlines()[10:11]
+#         v_peak3.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr3.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm3.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f3.close()
+# v_peak4 = []
+# v_centr4 = []
+# fwhm4 = []
+# for i in range(len(incl_deg)):
+#     with open(str(path_file[2])+'/incl_'+str(round(incl_deg[i],2))+'/observables_R'+str(R[3])+'.txt', 'r') as f4:
+#         lines = f4.readlines()[10:11]
+#         v_peak4.append(map(float, [x.split('\t\t\t')[0] for x in lines]))
+#         v_centr4.append(map(float, [x.split('\t\t\t')[1] for x in lines]))
+#         fwhm4.append(map(float, [x.split('\t\t\t')[2] for x in lines]))
+# f4.close()
+#
+# ## WE NEED TO PLOT THE FWHM, NOT HALF
+# fwhm1 = np.array(fwhm1)*2.
+# fwhm2 = np.array(fwhm2)*2.
+# fwhm3 = np.array(fwhm3)*2.
+# fwhm4 = np.array(fwhm4)*2.
+#
+# plt.figure()
+# plt.plot(incl_deg, fwhm1, color='#edf8b1', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#edf8b1', label='$R = '+str(R[0])+'$')
+# plt.plot(incl_deg, fwhm2, color='#a1dab4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#a1dab4', label='$R = '+str(R[1])+'$')
+# plt.plot(incl_deg, fwhm3, color='#41b6c4', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#41b6c4', label='$R = '+str(R[2])+'$')
+# plt.plot(incl_deg, fwhm4, color='#225ea8', linestyle='-', linewidth=2.5, marker='None', markeredgecolor='#225ea8', label='$R = '+str(R[3])+'$')
+# plt.errorbar(incl_data, np.abs(fwhm_data), yerr=err_fwhm, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3, label='$NC$')
+# for i in range(len(ID)):
+#     plt.annotate(ID[i], (incl_data[i]+0.5, np.abs(fwhm_data[i])+0.5), color='k')
+# plt.errorbar(incl_sx, np.abs(fwhm_sx), yerr=err_fwhm_sx, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_sx)):
+#     plt.annotate(ID_sx[i], (incl_sx[i]-10.0, np.abs(fwhm_sx[i])+0.5), color='k')
+# plt.errorbar(incl_down, np.abs(fwhm_down), yerr=err_fwhm_down, color='k', markeredgecolor='None', linestyle='None', marker='o', capsize=3)
+# for i in range(len(ID_down)):
+#     plt.annotate(ID_down[i], (incl_down[i]+0.5, np.abs(fwhm_down[i])-1.2), color='k')
+# plt.xlabel(r'$i \, [^{\circ}]$')
+# plt.ylabel(r'$FWHM \, [km/s]$')
+# plt.xticks(np.arange(min(incl_deg), max(incl_deg)+10., 10.0))
+# plt.title('$[OI] \, 6300 \AA$')
+# plt.axis([-1., 91., 5., 51.])
+# plt.tight_layout()
+# plt.legend(loc='best')
+# plt.savefig('./observables/'+str(species)+'/fwhm_resolution_b'+str(b[2])+'_cs'+str(cs)+'_'+str(mdot)+'.png', format='png', dpi=300, bbox_inches='tight')
+# plt.savefig('./observables/'+str(species)+'/eps/fwhm_resolution_b'+str(b[2])+'_cs'+str(cs)+'_'+str(mdot)+'.eps', format='eps', dpi=300, bbox_inches='tight')
+# plt.show()
 
 ## ---------------- COMPARE WITH DATA OF [OI] LINE FOR DIFFERENT cs ---------------------- ##
 
