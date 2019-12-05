@@ -22,14 +22,14 @@ for i in range(0,int(90/5+1)):
 #     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
-cs = 10
+cs = '10.0d5'
 R = 3.e4
 species = 'NeII'
 mdot = 'mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
 v_centr1 = []
@@ -178,7 +178,7 @@ plt.savefig('./observables/'+str(species)+'/eps/vpeak_b_cs'+str(cs)+'_R'+str(R)+
 
 ## ---------------- COMPARE WITH DATA OF [NeII] LINE FOR DIFFERENT cs ----------------------
 
-b = 1.00
+b = 1.50
 incl_deg = []
 for i in range(0,int(90/5+1)):
     incl_deg.append(5.0*i)
@@ -187,14 +187,14 @@ for i in range(0,int(90/5+1)):
 #     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
-cs = [3, 5, 10]
+cs = ['3.0d5', '5.0d5', '10.0d5']
 R = 3.e4
 species = 'NeII'
 mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(cs)):
-    path_file.append('../cs'+str(cs[j])+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs[j])+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
 v_centr1 = []
@@ -532,14 +532,14 @@ for i in range(0,int(90/5+1)):
 #     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
-cs = 10
+cs = '10.0d5'
 R = 3.e4
 species = 'OI'
 mdot = 'mdot10e-9'
 
 path_file = []
 for j in range(len(b)):
-    path_file.append('../cs'+str(cs)+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs)+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b[j], 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
 v_centr1 = []
@@ -761,13 +761,13 @@ for i in range(0,int(90/5+1)):
 #     incl_deg.append(2.5*i)
 r_in = 0.1
 r_out = 9.5
-cs = [3, 5, 10]
+cs = ['3.0d5', '5.0d5', '10.0d5']
 species = 'OI'
 mdot='mdot10e-9'
 
 path_file = []
 for j in range(len(cs)):
-    path_file.append('../cs'+str(cs[j])+'kms/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
+    path_file.append('../cs'+str(cs[j])+'/'+str(species)+'/'+str(mdot)+'/data_b'+str('{:.2f}'.format(round(b, 2)))+'_r'+str(r_in)+'_r'+str(r_out))
 
 v_peak1 = []
 v_centr1 = []
