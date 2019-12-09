@@ -175,7 +175,7 @@ do while (r(l).le.1.)
 enddo
 l_Rg=l
 rho(:,:)=rho(:,:)/rho(l_Rg,250)
-ng_norm=10.0 
+ng_norm=10.0
 rho(:,:)=rho(:,:)*ng_norm
 
 !! CONVERT TO PHYSICAL UNITS !!
@@ -262,8 +262,8 @@ enddo
 !! DEFINE THE INCLINATION ANGLE !!
 !print *,'Please enter the inclination angle of the disc in degrees: '
 !read(*,*) incl_deg
-incl_deg=0.0 
-str_i='0.0' 
+incl_deg=0.0
+str_i='0.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! COMPUTE THE LINE PROFILE !!
