@@ -25,20 +25,21 @@ use omp_lib
 implicit none
 
 integer                              :: i,j,k,l,npoints,l_in,l_out,l_25,l_Rg
-! This line is for a bigger grid pu to 30 Rg
-integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
-!integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
+!! THIS LINE IS TO CREATE AN EXTENDED GRID UP TO 30R_g
+!integer,parameter                    :: n_r=1324,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
+integer,parameter                    :: n_r=1113,n_theta0=250,n_theta=2*300,n_phi=4*300,n_v=1600,n=5d7
 real,dimension(1:n_r)                :: r,r_in,r_out,dr,centre_r
+!! THIS LINE IS TO DEFINE THE GRID AT THE CENTRE OF THE CELL
 !real,dimension(1:n_r-1)             :: dr
 real,dimension(1:n)                  :: r_stream,theta_stream,x_stream,y_stream
 real,dimension(1:n)                  :: rho_stream,v_r_stream,v_theta_stream
 real,dimension(1:n_theta)            :: theta,sinth,costh,centre_theta
+!! THIS LINE IS FOR THE NORMALIZATION BY THE MASS LOSS
 ! real,dimension(1:n_theta)            :: dA,dmass,dmass_ng
 real,dimension(1:n_r)                :: dA,dmass,dmass_ng
 real,dimension(1:n_phi)              :: phi,sinphi,cosphi
 real                                 :: ratio_r,dtheta,dphi,r_inner,r_outer,b,b_input,ub,theta_max
 real                                 :: incl_deg,incl_rad,sinincl,cosincl,tot_flux,Mdot,Mdot_25
-!real                                 :: t_in,t_fin
 real,dimension(1:n_r,1:n_theta0)     :: rho2d,v_r2d,v_theta2d,v_phi2d,Rb
 real,dimension(1:n_r,1:n_theta)      :: rho,rho_ng,n_e,v_r,v_theta,v_phi
 real,dimension(1:n_r,1:n_theta)      :: dV,C,cell_flux,v_los
@@ -58,8 +59,7 @@ real,parameter                       :: cs=10.0d5
 real,parameter                       :: h_planck=6.6261d-27,speed_light=2.9979d10
 real,parameter                       :: CC=0.14,Phi_star=1.0d41,alphab=2.60d-13,T0=1.d4,k_b=1.38d-16
 
-! call cpu_time(t_in)
-
+!! CHOOSE YOUR LINE !!
 species_flag='NeII'
 call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
 
@@ -155,8 +155,8 @@ close(145)
 
 !! DEFINING THE WIND LAUNCHING REGION !!
 write(*,*) 'Setting the wind launching region...'
-r_inner=0.03
-r_outer=30.0
+r_inner=0.1
+r_outer=10.0
 !! FIND THE INDEX THAT CORRESPONDS TO THE INNER AND OUTER RADII !!
 l=1
 do while (r(l).le.r_inner)
@@ -179,7 +179,7 @@ do j=1,n_theta-1
     centre_theta(j)=theta(j)+(dtheta/2.)
 enddo
 
-!! GET THE DATA FROM THE SCLAE-FREE STREAMLINE !!
+!! GET THE DATA FROM THE SCALE-FREE STREAMLINE !!
 write(*,*) 'Reading data from files...'
 open(unit=156,file='./rhov_fields.txt',status='old')
 do i=1,npoints
@@ -199,7 +199,7 @@ write(*,*) theta_max
 !! NORMALISATION FACTOR FOR THE DENSITY DETERMINED AT THE FLOW BASE !!
 !! rho(R=Rg) = rhog !!
 !! N.B. THE CONVERSION IN PHYSICAL UNITS IS DONE LATER !!
-write(*,*) 'Normalizing the streamlines...'
+write(*,*) 'Sampling the streamlines...'
 b_input=1.50
 ub=0.56
 b=b_input
@@ -234,6 +234,7 @@ do i=l_in,l_out
 enddo
 
 !! SET THE DENSITY EQUAL TO ZERO FOR r > 10Rg !!
+!! N.B. THIS IS FOR WHEN YOU ARE USING AN EXTENDED SPHERICAL GRID !!
 do i=l_in,l_out
     do j=1,n_theta0
         if (centre_r(i)>10.) then
@@ -328,7 +329,8 @@ enddo
 close(198)
 close(200)
 
-!! NORMALIZAING THE DENSITY IN A DIFFERENT WAY
+!! NORMALIZE THE DENSITY SUCH AS n_0(R_g)=n_g !!
+!! N.B. BELOW YOU CAN CHOOSE TO NORMALIZE BY THE MASS LOSS !!
 write(*,*) 'Normalizing the density such as n_0(R_g)=n_g'
 l=1
 do while (r(l).le.1.)
@@ -359,11 +361,10 @@ else
 endif
 do i=1,n_r
     write(210,'(4(es18.10,1X))') r(i),rho(i,250),v_theta(i,250),v_phi(i,250)
-    !write(11,'(4(es18.10,1X))') r(i),rho(i,249),v_theta(i,249),v_phi(i,250)
 enddo
 close(210)
 
-!! COMPUTE THE MASS FLUX FROM THE ANALYTHICAL MODEL !!
+!! COMPUTE THE MASS FLUX FROM THE ANALYTICAL MODEL !!
 ! write(*,*) 'Calculating the mass flux at the outer radius...'
 ! do j=1,n_theta
 !     dA(j)=r_out(l_out)*r_out(l_out)*sinth(j)*dtheta
@@ -471,19 +472,16 @@ do l=1,n_v
 enddo
 
 !! DEFINE THE INCLINATION ANGLE !!
-!write(*,*) 'Please enter the inclination angle of the disc in degrees: '
-!read(*,*) incl_deg
-!write(*,*) 'Write the value of i in the format for the name of the file: '
-!read(*,*) str_i
-incl_deg=0.0 
-str_i='0.0' 
+incl_deg=0.0
+!! THIS VARIABLE IS PURELY FOR THE SCRIPT TO RUN AND CREATE FILES !!
+str_i='0.0'
 incl_rad=incl_deg*(pi/180.)
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
 sinincl=sin(incl_rad)
 cosincl=cos(incl_rad)
 
-!! COMPUTE THE LINE PROFILE !!
+!! COMPUTE THE LINE PROFILES !!
 write(*,*) 'Computing the line profile...'
 line_flux(:)=0.d0
 !$OMP PARALLEL &
@@ -519,11 +517,6 @@ do l=1,n_v
 enddo
 close(223)
 
-! call cpu_time(t_fin)
-!
-! write(*,*) t_fin-t_in,'seconds'
-! write(*,*) (t_fin-t_in)/60.,'minutes'
-! write(*,*) (t_fin-t_in)/3600.,'hours'
 write(*,*) '-----------------------------------------------------------'
 
 contains
@@ -532,19 +525,6 @@ subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x
     implicit none
     character(len=6),intent(in)          :: species_flag
     real,intent(out)                     :: m_atom_x,Ab_x,A_ul_x,lambda_x,X_ion_x,n_cr_x,T_ul_x
-
-    ! !! [NEII] CONSTANTS !!
-    ! real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
-    ! real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
-    !
-    ! !! [SII] CONSTANTS !!
-    ! real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
-    ! real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
-    ! real,parameter                       :: Ipot_s=10.36 !value in eV
-    !
-    ! !! [OI] CONSTANTS !!
-    ! real,parameter                       :: m_atom_o=16.,Ab_o=5.37d-4,A_ul_o=5.6d-3,lambda_o=630.0d-7
-    ! real,parameter                       :: X_ion_o=1.0,n_cr_o=1.8d6,T_ul_o=22830.
 
     if (species_flag=='NeII') then
         m_atom_x=20.
