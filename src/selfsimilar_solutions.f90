@@ -32,18 +32,10 @@ real                                             :: x2,y2,u2,ur2,uth2,tanth2,a2,
 real                                             :: dudy,ddx1,ddx2,ddxdy
 real                                             :: rk4,dphi,dphidy,ft
 
-!write (*,*) 'Insert a value for b: '
-!read (*,*) b
-!write (*,*) 'Now, insert the corrisponding value for ub: '
-!read (*,*) ub
-
-!b_array=(0.5,0.75,1.,1.5,2.)
-!ub_array=(0.92,0.85,0.77,0.56,0.29)
-
+!! INITIAL CONDITIONS
 b_input=0.75
 ub=0.85
 
-!! INITIAL CONDITIONS
 x0=1.
 y0=0.
 u0=ub
@@ -51,15 +43,13 @@ b=b_input
 theta=0.5*pi
 phi=datan(y0/x0)
 
-!! I don't know what this parameter does,but it's very important!
-!! It should be the gravity, therefore set to zero according to the model
-gm=0.0 !1.d-6
+!! This parameter is the gravity, therefore set to zero according to the model
+gm=0.0
 reff0=u0*u0*x0/b
 dx=1.d-6
 dy=1.d-6
 x1=x0+dx
 y1=(2.*reff0*dx-dx*dx)**0.5
-! dy=y1-y0
 u1=u0
 theta1=datan((reff0-dx)/y1)
 phi1=datan(y1/x1)
@@ -86,13 +76,10 @@ do i=1,n
     phi2=datan(y2/x2)
     theta2=datan(tanth2)
     r=(x1*x1+y1*y1)**0.5
-    !!uph=(1/x1)**0.5
     open(unit=1,file='./streamline_cartcoord.txt')
-    write(1,'(3(es18.10,1X))') x1,y1
+    write(1,'(3(es18.10,1X))') x2,y2
     open(unit=2,file='./streamline_polarcoord.txt')
-    write(2,'(2(es18.10,1X))') r,phi1
-    !open(unit=3,file='./velocity.txt')
-    !write(3,'(1(es18.10,1X))') u1
+    write(2,'(2(es18.10,1X))') r,phi2,theta2
     open(unit=4,file='./rhov_fields.txt')
     write(4,'(4(es18.10,1X))') rho, ur2, uth2 !!, uph
     x1=x2
