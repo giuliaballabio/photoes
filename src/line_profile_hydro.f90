@@ -52,10 +52,10 @@ species_flag='NeII'
 call which_species(species_flag,m_atom,Ab,A_ul,T_ul,n_cr,X_ion,lambda)
 
 !! PHYSICS SCALING FACTORS !!
-Rg=(G*Mstar)/(cs**2)                                                      ! [cm]
+Rg=(G*Mstar)/(cs**2)                                                    ! [cm]
 ng=CC*sqrt((3.0*Phi_star)/(4.0*pi*alphab*(Rg*Rg*Rg)))                   ! [cm^-3]
 rhog=mu*m_h*ng                                                          ! [g/cm^3]
-vth=cs/sqrt(m_atom)                                                         ! [cm/s]
+vth=cs/sqrt(m_atom)                                                     ! [cm/s]
 !! CONVERSION: [km/s] in [au/years]
 vel_convert=km/s
 
@@ -74,27 +74,27 @@ print *,'ng/rhog=',ng/rhog
 print *,'Creating the 2D grid...'
 open(unit=107,file='../../../grid_r.dat')
 do i=1,n_r
-		read(107,*) r(i)
+    read(107,*) r(i)
 enddo
 close(107)
 ratio_r=sqrt(r(2)/r(1))
 do i=1,n_r
-		r_in(i)=r(i)/ratio_r
-		r_out(i)=r(i)*ratio_r
-		dr(i)=r_out(i)-r_in(i)
+    r_in(i)=r(i)/ratio_r
+    r_out(i)=r(i)*ratio_r
+    dr(i)=r_out(i)-r_in(i)
 enddo
 ! open(unit=110,file='../grid_th.dat')
 ! do j=1,n_theta0
-! 		read(110,*) theta(j)
+!     read(110,*) theta(j)
 ! enddo
 ! close(110)
 dtheta=pi/dble(n_theta)
 do j=1,n_theta
-		theta(j)=(j+0.5)*dtheta
+    theta(j)=(j+0.5)*dtheta
 enddo
 dphi=2.*pi/dble(n_phi)
 do k=1,n_phi
-		phi(k)=(k+0.5)*dphi
+    phi(k)=(k+0.5)*dphi
 enddo
 
 !! UNCOMMENT THESE LINES TO DEFINE AN ANGULAR GRID AT THE CENTRE OF THE CELL !!
@@ -113,12 +113,12 @@ enddo
 
 !! USEFUL VARIABLES TO MAKE THE COMPUTATION FASTER !!
 do j=1,n_theta
-		sinth(j)=sin(theta(j))
-		costh(j)=cos(theta(j))
+    sinth(j)=sin(theta(j))
+    costh(j)=cos(theta(j))
 enddo
 do k=1,n_phi
-		sinphi(k)=sin(phi(k))
-		cosphi(k)=cos(phi(k))
+    sinphi(k)=sin(phi(k))
+    cosphi(k)=cos(phi(k))
 enddo
 
 !! GET THE DATA FROM THE HYDRO-SIMULATIONS AND CREATE 2D ARRAYS !!
@@ -128,12 +128,12 @@ open(unit=145,file='../../../v_r_mean.dat')
 open(unit=157,file='../../../v_th_mean.dat')
 open(unit=168,file='../../../v_phi_mean.dat')
 do i=1,n_r
-		do j=1,n_theta0
-				read(112,*) rho2d(i,j)
-				read(145,*) v_r2d(i,j)
-				read(157,*) v_theta2d(i,j)
-				read(168,*) v_phi2d(i,j)
-		enddo
+    do j=1,n_theta0
+        read(112,*) rho2d(i,j)
+        read(145,*) v_r2d(i,j)
+        read(157,*) v_theta2d(i,j)
+        read(168,*) v_phi2d(i,j)
+    enddo
 enddo
 close(112)
 close(145)
@@ -143,28 +143,28 @@ close(168)
 !! REVERSE ALONG THETA AXIS !!
 print *,'Building the 3D field...'
 do i=1,n_r
-		do j=1,n_theta0
-				!! DISC ZONE FOR z>0 !!
-				rho(i,j)=rho2d(i,n_theta0+1-j)
-				v_r(i,j)=v_r2d(i,n_theta0+1-j)
-				v_theta(i,j)=v_theta2d(i,n_theta0+1-j)
-				v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
-				!! DISC ZONE FOR z<0 !!
-				rho(i,n_theta/2+50+j)=rho2d(i,j)
-				v_r(i,n_theta/2+50+j)=v_r2d(i,j)
-				v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
-				v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
-				!! CODE FOR A WIND STARTING FROM THE MIDPLANE !!
-				! rho(i,n_theta0+j)=rho2d(i,j)
-				! v_r(i,n_theta0+j)=v_r2d(i,j)
-				! v_theta(i,n_theta0+j)=v_theta2d(i,j)
-				! v_phi(i,n_theta0+j)=v_phi2d(i,j)
-		enddo
-		!! DISC ZONE ON THE MIDPLANE !!
-		rho(i,n_theta0+1:n_theta/2+50)=0.d0
-		v_r(i,n_theta0+1:n_theta/2+50)=0.d0
-		v_theta(i,n_theta0+1:n_theta/2+50)=0.d0
-		v_phi(i,n_theta0+1:n_theta/2+50)=0.d0
+    do j=1,n_theta0
+        !! DISC ZONE FOR z>0 !!
+        rho(i,j)=rho2d(i,n_theta0+1-j)
+        v_r(i,j)=v_r2d(i,n_theta0+1-j)
+        v_theta(i,j)=v_theta2d(i,n_theta0+1-j)
+        v_phi(i,j)=v_phi2d(i,n_theta0+1-j)
+        !! DISC ZONE FOR z<0 !!
+        rho(i,n_theta/2+50+j)=rho2d(i,j)
+        v_r(i,n_theta/2+50+j)=v_r2d(i,j)
+        v_theta(i,n_theta/2+50+j)=v_theta2d(i,j)
+        v_phi(i,n_theta/2+50+j)=v_phi2d(i,j)
+        !! CODE FOR A WIND STARTING FROM THE MIDPLANE !!
+        ! rho(i,n_theta0+j)=rho2d(i,j)
+        ! v_r(i,n_theta0+j)=v_r2d(i,j)
+        ! v_theta(i,n_theta0+j)=v_theta2d(i,j)
+        ! v_phi(i,n_theta0+j)=v_phi2d(i,j)
+    enddo
+    !! DISC ZONE ON THE MIDPLANE !!
+    rho(i,n_theta0+1:n_theta/2+50)=0.d0
+    v_r(i,n_theta0+1:n_theta/2+50)=0.d0
+    v_theta(i,n_theta0+1:n_theta/2+50)=0.d0
+    v_phi(i,n_theta0+1:n_theta/2+50)=0.d0
 enddo
 
 !! NORMALIZAING THE DENSITY IN A DIFFERENT WAY
@@ -195,20 +195,20 @@ vth=vth*1.d-5
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE BOUNDARY CONDITION !!
 if(.not.init) then
-		open(unit=178,file='bound_cond.txt')
+    open(unit=178,file='bound_cond.txt')
 else
-		open(unit=178,file='bound_cond.txt',status='old',position='append')
+    open(unit=178,file='bound_cond.txt',status='old',position='append')
 endif
 do i=1,n_r
-		write(178,'(4(es18.10,1X))') r(i),rho(i,299),v_theta(i,299),v_phi(i,299)
+    write(178,'(4(es18.10,1X))') r(i),rho(i,299),v_theta(i,299),v_phi(i,299)
 enddo
 close(178)
 
 !! COMPUTE THE MASS FLUX !!
 print *,'Calculating the mass flux...'
 do j=1,n_theta
-		dA(j)=2.0*r(1113)*r(1113)*sinth(j)*dtheta
-		dmass(j)=rho(1113,j)*v_r(1113,j)*dA(j)
+    dA(j)=2.0*r(1113)*r(1113)*sinth(j)*dtheta
+    dmass(j)=rho(1113,j)*v_r(1113,j)*dA(j)
 enddo
 Mdot=sum(dmass)
 print *,'-----------------------------------------------------------'
@@ -223,18 +223,18 @@ nu=speed_light/lambda
 A_hnu=A_ul*h_planck*nu
 constants=Ab*A_hnu*X_ion
 do i=1,n_r
-		do j=1,n_theta
-				!! CONVERSION: volume [au**3] -> [cm**3] !!
-				dV(i,j)=r(i)*r(i)*sinth(j)*dr(i)*dtheta*dphi*(au**3)
-				!! CONVERSION: mass density [Msun/au**3] -> numerical density [particles/cm**3] !!
-				n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
-				if(n_e(i,j) > 0.0) then
-						C(i,j)=1.d0+(n_cr/n_e(i,j))
-						cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
-				else
-						cell_flux(i,j)=0.d0
-				endif
-		enddo
+    do j=1,n_theta
+        !! CONVERSION: volume [au**3] -> [cm**3] !!
+        dV(i,j)=r(i)*r(i)*sinth(j)*dr(i)*dtheta*dphi*(au**3)
+        !! CONVERSION: mass density [Msun/au**3] -> numerical density [particles/cm**3] !!
+        n_e(i,j)=rho(i,j)*(ng/rhog)*(Msun/(au**3))
+        if(n_e(i,j) > 0.0) then
+            C(i,j)=1.d0+(n_cr/n_e(i,j))
+            cell_flux(i,j)=constants/((2.d0*C(i,j)*exp(-1.0*T_ul/Temp))+1.d0)*n_e(i,j)*dV(i,j)
+        else
+            cell_flux(i,j)=0.d0
+        endif
+    enddo
 enddo
 !! WRITE THE DATA INTO A FILE TO PLOT A MAP OF THE FLUX !!
 if(.not.init) then
@@ -280,30 +280,30 @@ cosincl=cos(incl_rad)
 !$OMP REDUCTION(+: line_flux)
 !$OMP DO SCHEDULE(runtime)
 do k=1,n_phi
-		do j=1,n_theta
-				do i=1,n_r
-						v_los_r=(costh(j)*cosphi(k)*sinincl+sinth(j)*cosincl)*v_r(i,j)
-						v_los_th=(-sinth(j)*cosphi(k)*sinincl+costh(j)*cosincl)*v_theta(i,j)
-						v_los_phi=(-sinphi(k)*sinincl)*v_phi(i,j)
-						v_los(i,j)=v_los_r+v_los_th+v_los_phi
-						do l=1,n_v
-								line_flux(l)=line_flux(l)+(cell_flux(i,j)/(sqrt(2.d0*pi)*vth)) &
-									*exp((-1.d0*(v(l)-v_los(i,j))*(v(l)-v_los(i,j)))/(2.d0*(vth*vth)))
-						enddo
-				enddo
-		enddo
+    do j=1,n_theta
+        do i=1,n_r
+            v_los_r=(costh(j)*cosphi(k)*sinincl+sinth(j)*cosincl)*v_r(i,j)
+            v_los_th=(-sinth(j)*cosphi(k)*sinincl+costh(j)*cosincl)*v_theta(i,j)
+            v_los_phi=(-sinphi(k)*sinincl)*v_phi(i,j)
+            v_los(i,j)=v_los_r+v_los_th+v_los_phi
+            do l=1,n_v
+                line_flux(l)=line_flux(l)+(cell_flux(i,j)/(sqrt(2.d0*pi)*vth)) &
+                	*exp((-1.d0*(v(l)-v_los(i,j))*(v(l)-v_los(i,j)))/(2.d0*(vth*vth)))
+            enddo
+        enddo
+    enddo
 enddo
 !$OMP END DO
 !$OMP END PARALLEL
 
 !! WRITE THE DATA INTO A FILE TO PLOT THE LINE PROFILE !!
 if(.not.init) then
-		open(unit=210,file='line_profile_i'//trim(str_i)//'.txt')
+    open(unit=210,file='line_profile_i'//trim(str_i)//'.txt')
 else
-		open(unit=210,file='line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
+    open(unit=210,file='line_profile_i'//trim(str_i)//'.txt',status='old',position='append')
 endif
 do l=1,n_v
-		write(210,'(2(es18.10,1X))') v(l),line_flux(l)
+    write(210,'(2(es18.10,1X))') v(l),line_flux(l)
 enddo
 close(210)
 
@@ -315,19 +315,6 @@ subroutine which_species(species_flag,m_atom_x,Ab_x,A_ul_x,T_ul_x,n_cr_x,X_ion_x
     implicit none
     character(len=6),intent(in)          :: species_flag
     real,intent(out)                     :: m_atom_x,Ab_x,A_ul_x,lambda_x,X_ion_x,n_cr_x,T_ul_x
-
-    ! !! [NEII] CONSTANTS !!
-    ! real,parameter                       :: m_atom_ne=20.,Ab_ne=1.d-4,A_ul_ne=8.39d-3,lambda_ne=12.81d-4
-    ! real,parameter                       :: X_ion_ne=0.75,n_cr_ne=5.0d5,T_ul_ne=1122.8
-    !
-    ! !! [SII] CONSTANTS !!
-    ! real,parameter                       :: m_atom_s=32.,Ab_s=1.45d-5,A_ul_s=1.9d-1,lambda_s=406.98d-7
-    ! real,parameter                       :: X_ion_s=1.0,n_cr_s=2.6d6,T_ul_s=35354.
-    ! real,parameter                       :: Ipot_s=10.36 !value in eV
-    !
-    ! !! [OI] CONSTANTS !!
-    ! real,parameter                       :: m_atom_o=16.,Ab_o=5.37d-4,A_ul_o=5.6d-3,lambda_o=630.0d-7
-    ! real,parameter                       :: X_ion_o=1.0,n_cr_o=1.8d6,T_ul_o=22830.
 
     if (species_flag=='NeII') then
         m_atom_x=20.
