@@ -77,11 +77,11 @@ do i=1,n
     theta2=datan(tanth2)
     r=(x1*x1+y1*y1)**0.5
     open(unit=1,file='./streamline_cartcoord.txt')
-    write(1,'(3(es18.10,1X))') x2,y2
+    write(1,'(3(es18.10,1X))') x1,y1
     open(unit=2,file='./streamline_polarcoord.txt')
-    write(2,'(2(es18.10,1X))') r,phi2,theta2
+    write(2,'(3(es18.10,1X))') r,phi1,tanth1
     open(unit=4,file='./rhov_fields.txt')
-    write(4,'(4(es18.10,1X))') rho, ur2, uth2 !!, uph
+    write(4,'(4(es18.10,1X))') rho, ur2, uth2, u1
     x1=x2
     y1=y2
     u1=u2
